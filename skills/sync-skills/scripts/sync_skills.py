@@ -31,6 +31,7 @@ def run(
     check: bool = True,
     text: bool = True,
     timeout: int | None = None,
+    env: dict[str, str] | None = None,
 ) -> subprocess.CompletedProcess:
     try:
         result = subprocess.run(
@@ -40,6 +41,7 @@ def run(
             capture_output=True,
             text=text,
             timeout=timeout,
+            env=env,
         )
     except subprocess.TimeoutExpired as error:
         raise SyncError(f"命令超时: {' '.join(args)}") from error
@@ -50,10 +52,16 @@ def run(
 
 
 def run_network_git(*args: str, cwd: Path) -> subprocess.CompletedProcess:
-    command = ("rtk", "git", *args) if shutil.which("rtk") else ("git", *args)
+    git = ("rtk", "git") if shutil.which("rtk") else ("git",)
+    env = os.environ.copy()
+    if shutil.which("gh"):
+        env["GIT_CONFIG_GLOBAL"] = os.devnull
+        command = (*git, "-c", "credential.helper=!gh auth git-credential", *args)
+    else:
+        command = (*git, *args)
     last_result = None
     for attempt in range(3):
-        last_result = run(*command, cwd=cwd, check=False, timeout=120)
+        last_result = run(*command, cwd=cwd, check=False, timeout=120, env=env)
         if last_result.returncode == 0:
             return last_result
         if attempt < 2:
