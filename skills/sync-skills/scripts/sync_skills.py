@@ -214,7 +214,7 @@ def update_mirror(repo: Path, url: str) -> Path:
         if valid.returncode != 0 or valid.stdout.strip() != "true" or head.returncode != 0:
             shutil.rmtree(mirror)
     if mirror.exists():
-        run("git", "remote", "update", "--prune", cwd=mirror)
+        run("git", "fetch", "origin", "--prune", cwd=mirror)
     else:
         try:
             seed = cached_checkout(url)
@@ -222,7 +222,7 @@ def update_mirror(repo: Path, url: str) -> Path:
                 shutil.copytree(seed / ".git", mirror, symlinks=True)
                 run("git", "config", "core.bare", "true", cwd=mirror)
                 run("git", "remote", "set-url", "origin", url, cwd=mirror)
-                run("git", "remote", "update", "--prune", cwd=mirror)
+                run("git", "fetch", "origin", "--prune", cwd=mirror)
             else:
                 run("git", "clone", "--mirror", "--filter=blob:none", url, str(mirror), cwd=repo)
         except SyncError:
