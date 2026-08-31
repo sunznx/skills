@@ -13,7 +13,7 @@
       "source": "mattpocock/skills",
       "url": "https://github.com/mattpocock/skills.git",
       "path": "skills/engineering/codebase-design/SKILL.md",
-      "base_tree": "20b7cd1dd1fe5b0bd37ba72649f3a29375574b5b"
+      "base_tree": "344e3efc88ee60663b2e989555c2efdb548fbd42"
     },
     {
       "name": "cua-driver",
@@ -26,14 +26,14 @@
       "source": "cathrynlavery/diagram-design",
       "url": "https://github.com/cathrynlavery/diagram-design.git",
       "path": "skills/diagram-design/SKILL.md",
-      "base_tree": "2eccc56b36bb2491c4628888ace9cb1d0472547e"
+      "base_tree": "1bf319831137412e8ab71df321b510fa561fd262"
     },
     {
       "name": "domain-modeling",
       "source": "mattpocock/skills",
       "url": "https://github.com/mattpocock/skills.git",
       "path": "skills/engineering/domain-modeling/SKILL.md",
-      "base_tree": "959e63161ff78b4b1cd553b2c0e09e0c68418e5f"
+      "base_tree": "388c9822641805ca2dcd5038e68a1d5282437ee5"
     },
     {
       "name": "eli5",
@@ -47,7 +47,7 @@
       "source": "herdrdev/herdr",
       "url": "https://github.com/herdrdev/herdr.git",
       "path": "skills/herdr/SKILL.md",
-      "base_tree": "4821f1d39ccae24b9b274b03184edaaf198a3994"
+      "base_tree": "f8bb649bb92ddc99e6af463ab9a635da98c7b129"
     },
     {
       "name": "human-context-rebuild",
@@ -61,7 +61,7 @@
       "source": "mattpocock/skills",
       "url": "https://github.com/mattpocock/skills.git",
       "path": "skills/engineering/improve-codebase-architecture/SKILL.md",
-      "base_tree": "6a971d1f5b109ac817e18c0f0419c2a32d60f26a"
+      "base_tree": "3d35cd438f4067b03c8b3792e038960e4ac11526"
     },
     {
       "name": "karpathy-guidelines",
@@ -75,14 +75,14 @@
       "source": "larksuite/cli",
       "url": "https://github.com/larksuite/cli.git",
       "path": "skills/lark-doc/SKILL.md",
-      "base_tree": "2214189831946a4adb97d008b158e72d44d8de0f"
+      "base_tree": "6d6f6ec71996a0e50be0a5d52cc7689eeae71b0c"
     },
     {
       "name": "lark-shared",
       "source": "larksuite/cli",
       "url": "https://github.com/larksuite/cli.git",
       "path": "skills/lark-shared/SKILL.md",
-      "base_tree": "e7818ff487738e13d692e44dbb9eeb799ac7e706"
+      "base_tree": "1ee7e9dce1377a7038ab798e1ac5813ed608f4e1"
     },
     {
       "name": "manage-taskboard",
@@ -94,7 +94,7 @@
       "source": "jackwener/opencli",
       "url": "https://github.com/jackwener/opencli.git",
       "path": "skills/opencli-adapter-author/SKILL.md",
-      "base_tree": "edd8714a2c1ded0daf2f1d9ce694b07c1df4d56b"
+      "base_tree": "8069b5d4cdbc1bd44456e2ba18f48b49fb907591"
     },
     {
       "name": "opencli-autofix",
@@ -136,7 +136,7 @@
       "source": "mattpocock/skills",
       "url": "https://github.com/mattpocock/skills.git",
       "path": "skills/engineering/prototype/SKILL.md",
-      "base_tree": "57569dda16077a016b8fb82494dbf9f6430d7cc4"
+      "base_tree": "e41d92e171f074a2b6887d8f6faca4a15c83d1ca"
     },
     {
       "name": "ra-人话",
@@ -183,21 +183,21 @@
       "source": "mattpocock/skills",
       "url": "https://github.com/mattpocock/skills.git",
       "path": "skills/productivity/wait-what/SKILL.md",
-      "base_tree": "6abe708f1bf253158a037ac49faea2944e2809dc"
+      "base_tree": "c119d66111cc1bac94cbc51322cd34ed21aa0446"
     },
     {
       "name": "whats-next",
       "source": "lycfyi/yskills",
       "url": "https://github.com/lycfyi/yskills.git",
       "path": "skills/whats-next/SKILL.md",
-      "base_tree": "07e1f671a1e4f45ee4eebf28ba55c167fa82dcd8"
+      "base_tree": "1f41059c47549d6f80bf65ead98eb022e56ef642"
     },
     {
       "name": "writing-for-agents",
       "source": "mattpocock/skills",
       "url": "https://github.com/mattpocock/skills.git",
       "path": "skills/productivity/writing-for-agents/SKILL.md",
-      "base_tree": "bd9c9c4762db0a9a094fd419316ebd4b0444d06e"
+      "base_tree": "ad2925850efb8973a72d2e666f7a975f9a2d4a9b"
     }
   ]
 }
