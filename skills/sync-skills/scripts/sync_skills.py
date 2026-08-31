@@ -60,15 +60,22 @@ def run_network_git(*args: str, cwd: Path) -> subprocess.CompletedProcess:
         attempts.append(((*git, "-c", "credential.helper=!gh auth git-credential", *args), env))
     attempts.append(((*git, *args), os.environ.copy()))
     last_result = None
+    last_error = ""
     for command, env in attempts:
         for attempt in range(3):
-            last_result = run(*command, cwd=cwd, check=False, timeout=120, env=env)
-            if last_result.returncode == 0:
+            try:
+                last_result = run(*command, cwd=cwd, check=False, timeout=120, env=env)
+                last_error = last_result.stderr.strip()
+            except SyncError as error:
+                last_result = None
+                last_error = str(error)
+            if last_result and last_result.returncode == 0:
                 return last_result
+            if args and args[0] == "clone":
+                remove_path(Path(args[-1]))
             if attempt < 2:
                 time.sleep(1)
-    stderr = last_result.stderr.strip() if last_result else ""
-    raise SyncError(f"命令失败: {' '.join(command)}\n{stderr}")
+    raise SyncError(f"命令失败: {' '.join(command)}\n{last_error}")
 
 
 def config_path() -> Path:
