@@ -199,6 +199,12 @@ def mirror_for(repo: Path, url: str) -> Path:
     return repo / ".cache/sync-skills/repos" / f"{key}.git"
 
 
+def cached_checkout(url: str) -> Path | None:
+    key = hashlib.sha256(url.encode()).hexdigest()[:16]
+    candidate = Path.home() / ".skills-manager/cache/repos" / key
+    return candidate if (candidate / ".git").is_dir() else None
+
+
 def update_mirror(repo: Path, url: str) -> Path:
     mirror = mirror_for(repo, url)
     mirror.parent.mkdir(parents=True, exist_ok=True)
@@ -211,7 +217,14 @@ def update_mirror(repo: Path, url: str) -> Path:
         run("git", "remote", "update", "--prune", cwd=mirror)
     else:
         try:
-            run("git", "clone", "--mirror", "--filter=blob:none", url, str(mirror), cwd=repo)
+            seed = cached_checkout(url)
+            clone_source = str(seed) if seed else url
+            run(
+                "git", "clone", "--mirror", "--filter=blob:none", clone_source, str(mirror), cwd=repo
+            )
+            if seed:
+                run("git", "remote", "set-url", "origin", url, cwd=mirror)
+                run("git", "remote", "update", "--prune", cwd=mirror)
         except SyncError:
             if mirror.exists():
                 shutil.rmtree(mirror)
