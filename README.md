@@ -14,6 +14,7 @@
 - `添加` 从 `~/.agents/skills` 导入指定 skill，并更新来源目录。
 - `删除` 从仓库、来源目录和 `~/.agents/skills` 移除指定 skill。
 - 没有冲突时，仓库清单会同步到 `~/.agents/skills`。
+- 上游 Git 缓存保存在 `~/.agents/cache/sync-skills`。
 
 出现合并冲突时，脚本会留下冲突标记并停止 commit 和本机同步。
 

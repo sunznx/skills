@@ -213,9 +213,9 @@ def copy_contents(source: Path, destination: Path, keep: set[str] | None = None)
             shutil.copy2(child, target)
 
 
-def mirror_for(repo: Path, url: str) -> Path:
+def mirror_for(url: str) -> Path:
     key = hashlib.sha256(url.encode()).hexdigest()[:16]
-    return repo / ".cache/sync-skills/repos" / f"{key}.git"
+    return local_skills_dir().parent / "cache/sync-skills/repos" / f"{key}.git"
 
 
 def cached_checkout(url: str) -> Path | None:
@@ -225,12 +225,18 @@ def cached_checkout(url: str) -> Path | None:
 
 
 def update_mirror(repo: Path, url: str) -> Path:
-    mirror = mirror_for(repo, url)
+    mirror = mirror_for(url)
     mirror.parent.mkdir(parents=True, exist_ok=True)
     if mirror.exists():
         valid = run("git", "rev-parse", "--is-bare-repository", cwd=mirror, check=False)
         head = run("git", "rev-parse", "--verify", "HEAD^{commit}", cwd=mirror, check=False)
-        if valid.returncode != 0 or valid.stdout.strip() != "true" or head.returncode != 0:
+        partial = run("git", "config", "--get", "remote.origin.promisor", cwd=mirror, check=False)
+        if (
+            valid.returncode != 0
+            or valid.stdout.strip() != "true"
+            or head.returncode != 0
+            or partial.stdout.strip() == "true"
+        ):
             shutil.rmtree(mirror)
     if mirror.exists():
         run_network_git("fetch", "origin", "--prune", cwd=mirror)
@@ -243,9 +249,7 @@ def update_mirror(repo: Path, url: str) -> Path:
                 run("git", "remote", "set-url", "origin", url, cwd=mirror)
                 run_network_git("fetch", "origin", "--prune", cwd=mirror)
             else:
-                run_network_git(
-                    "clone", "--mirror", "--filter=blob:none", url, str(mirror), cwd=repo
-                )
+                run_network_git("clone", "--mirror", url, str(mirror), cwd=repo)
         except SyncError:
             if mirror.exists():
                 shutil.rmtree(mirror)

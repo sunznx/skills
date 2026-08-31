@@ -19,5 +19,6 @@ repo="$(cat ~/.config/sync-skills/repo)"
 - `删除` 会删除仓库目录和来源目录，commit 成功后再删除 `~/.agents/skills/<skill-name>`。
 - 上游有更新时使用旧上游、本地版本和新上游做三方合并。合并成功后自动 commit，再同步本机目录。
 - 出现冲突时检查 `skills/.sync-conflicts.json` 和文件内的冲突标记。解决冲突并手动 commit 前，不同步本机目录。
+- 上游 Git 缓存统一写入 `~/.agents/cache/sync-skills`。
 
 每次添加、删除或更换来源后，确认 `README.md` 与 `skills/sources.json` 一致。
