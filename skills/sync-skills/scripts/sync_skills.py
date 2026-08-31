@@ -233,7 +233,11 @@ def update_mirror(repo: Path, url: str) -> Path:
 
 
 def resolve_revision(mirror: Path, ref: str | None) -> str:
-    candidates = [ref, f"refs/heads/{ref}", f"refs/tags/{ref}"] if ref else ["HEAD"]
+    candidates = (
+        [ref, f"refs/remotes/origin/{ref}", f"refs/heads/{ref}", f"refs/tags/{ref}"]
+        if ref
+        else ["refs/remotes/origin/HEAD", "HEAD"]
+    )
     for candidate in candidates:
         result = run(
             "git", "rev-parse", "--verify", f"{candidate}^{{commit}}", cwd=mirror, check=False
