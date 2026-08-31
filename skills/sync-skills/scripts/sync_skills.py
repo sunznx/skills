@@ -43,6 +43,11 @@ def run(
     return result
 
 
+def run_network_git(*args: str, cwd: Path) -> subprocess.CompletedProcess:
+    command = ("rtk", "git", *args) if shutil.which("rtk") else ("git", *args)
+    return run(*command, cwd=cwd)
+
+
 def config_path() -> Path:
     configured = os.environ.get("SYNC_SKILLS_CONFIG")
     return Path(configured).expanduser() if configured else Path.home() / ".config/sync-skills/repo"
@@ -214,7 +219,7 @@ def update_mirror(repo: Path, url: str) -> Path:
         if valid.returncode != 0 or valid.stdout.strip() != "true" or head.returncode != 0:
             shutil.rmtree(mirror)
     if mirror.exists():
-        run("git", "fetch", "origin", "--prune", cwd=mirror)
+        run_network_git("fetch", "origin", "--prune", cwd=mirror)
     else:
         try:
             seed = cached_checkout(url)
@@ -222,9 +227,11 @@ def update_mirror(repo: Path, url: str) -> Path:
                 shutil.copytree(seed / ".git", mirror, symlinks=True)
                 run("git", "config", "core.bare", "true", cwd=mirror)
                 run("git", "remote", "set-url", "origin", url, cwd=mirror)
-                run("git", "fetch", "origin", "--prune", cwd=mirror)
+                run_network_git("fetch", "origin", "--prune", cwd=mirror)
             else:
-                run("git", "clone", "--mirror", "--filter=blob:none", url, str(mirror), cwd=repo)
+                run_network_git(
+                    "clone", "--mirror", "--filter=blob:none", url, str(mirror), cwd=repo
+                )
         except SyncError:
             if mirror.exists():
                 shutil.rmtree(mirror)
