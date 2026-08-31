@@ -232,6 +232,13 @@ def cached_checkout(url: str) -> Path | None:
     return candidate if (candidate / ".git").is_dir() else None
 
 
+def remove_conflicted_git_refs(mirror: Path) -> None:
+    for root in (mirror / "refs", mirror / "logs/refs"):
+        if root.is_dir():
+            for path in root.rglob("*conflicted copy*"):
+                remove_path(path)
+
+
 def update_mirror(repo: Path, url: str) -> Path:
     mirror = mirror_for(url)
     mirror.parent.mkdir(parents=True, exist_ok=True)
@@ -247,12 +254,14 @@ def update_mirror(repo: Path, url: str) -> Path:
         ):
             shutil.rmtree(mirror)
     if mirror.exists():
+        remove_conflicted_git_refs(mirror)
         run_network_git("fetch", "origin", "--prune", cwd=mirror)
     else:
         try:
             seed = cached_checkout(url)
             if seed:
                 shutil.copytree(seed / ".git", mirror, symlinks=True)
+                remove_conflicted_git_refs(mirror)
                 run("git", "config", "core.bare", "true", cwd=mirror)
                 run("git", "remote", "set-url", "origin", url, cwd=mirror)
                 run_network_git("fetch", "origin", "--prune", cwd=mirror)
