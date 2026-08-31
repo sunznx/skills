@@ -218,13 +218,13 @@ def update_mirror(repo: Path, url: str) -> Path:
     else:
         try:
             seed = cached_checkout(url)
-            clone_source = str(seed) if seed else url
-            run(
-                "git", "clone", "--mirror", "--filter=blob:none", clone_source, str(mirror), cwd=repo
-            )
             if seed:
+                shutil.copytree(seed / ".git", mirror, symlinks=True)
+                run("git", "config", "core.bare", "true", cwd=mirror)
                 run("git", "remote", "set-url", "origin", url, cwd=mirror)
                 run("git", "remote", "update", "--prune", cwd=mirror)
+            else:
+                run("git", "clone", "--mirror", "--filter=blob:none", url, str(mirror), cwd=repo)
         except SyncError:
             if mirror.exists():
                 shutil.rmtree(mirror)
