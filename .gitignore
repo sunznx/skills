@@ -1,0 +1,6 @@
+.cache/
+.idea/
+.DS_Store
+__pycache__/
+*.pyc
+skills/.sync-conflicts.json

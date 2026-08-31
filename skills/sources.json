@@ -1,0 +1,203 @@
+{
+  "version": 1,
+  "skills": [
+    {
+      "name": "code-simplification",
+      "source": "addyosmani/agent-skills",
+      "url": "https://github.com/addyosmani/agent-skills.git",
+      "path": "skills/code-simplification/SKILL.md",
+      "base_tree": "15b6e21924188ee46402a8c91963162fd9056c7d"
+    },
+    {
+      "name": "codebase-design",
+      "source": "mattpocock/skills",
+      "url": "https://github.com/mattpocock/skills.git",
+      "path": "skills/engineering/codebase-design/SKILL.md",
+      "base_tree": "20b7cd1dd1fe5b0bd37ba72649f3a29375574b5b"
+    },
+    {
+      "name": "cua-driver",
+      "managed": false,
+      "note": "本机链接 /Users/sunx/.cua-driver/skills/cua-driver，仓库保留快照但不覆盖该链接",
+      "deploy": false
+    },
+    {
+      "name": "diagram-design",
+      "source": "cathrynlavery/diagram-design",
+      "url": "https://github.com/cathrynlavery/diagram-design.git",
+      "path": "skills/diagram-design/SKILL.md",
+      "base_tree": "2eccc56b36bb2491c4628888ace9cb1d0472547e"
+    },
+    {
+      "name": "domain-modeling",
+      "source": "mattpocock/skills",
+      "url": "https://github.com/mattpocock/skills.git",
+      "path": "skills/engineering/domain-modeling/SKILL.md",
+      "base_tree": "959e63161ff78b4b1cd553b2c0e09e0c68418e5f"
+    },
+    {
+      "name": "eli5",
+      "source": "anthropics/claude-plugins-community",
+      "url": "https://github.com/anthropics/claude-plugins-community.git",
+      "path": "eli5/skills/eli5/SKILL.md",
+      "base_tree": "d16165120b7658216c79601b0ee568f42e540961"
+    },
+    {
+      "name": "herdr",
+      "source": "herdrdev/herdr",
+      "url": "https://github.com/herdrdev/herdr.git",
+      "path": "skills/herdr/SKILL.md",
+      "base_tree": "4821f1d39ccae24b9b274b03184edaaf198a3994"
+    },
+    {
+      "name": "human-context-rebuild",
+      "source": "lycfyi/yskills",
+      "url": "https://github.com/lycfyi/yskills.git",
+      "path": "skills/human-context-rebuild/SKILL.md",
+      "base_tree": "424478b5dba49cbd4da9ebae2d3df74c124994c9"
+    },
+    {
+      "name": "improve-codebase-architecture",
+      "source": "mattpocock/skills",
+      "url": "https://github.com/mattpocock/skills.git",
+      "path": "skills/engineering/improve-codebase-architecture/SKILL.md",
+      "base_tree": "6a971d1f5b109ac817e18c0f0419c2a32d60f26a"
+    },
+    {
+      "name": "karpathy-guidelines",
+      "source": "CezarDrumea/andrej-karpathy-skills",
+      "url": "https://github.com/CezarDrumea/andrej-karpathy-skills.git",
+      "path": "skills/karpathy-guidelines/SKILL.md",
+      "base_tree": "6b43798076d4697bb9011f2332ff47145ce31b0f"
+    },
+    {
+      "name": "lark-doc",
+      "source": "larksuite/cli",
+      "url": "https://github.com/larksuite/cli.git",
+      "path": "skills/lark-doc/SKILL.md",
+      "base_tree": "2214189831946a4adb97d008b158e72d44d8de0f"
+    },
+    {
+      "name": "lark-shared",
+      "source": "larksuite/cli",
+      "url": "https://github.com/larksuite/cli.git",
+      "path": "skills/lark-shared/SKILL.md",
+      "base_tree": "e7818ff487738e13d692e44dbb9eeb799ac7e706"
+    },
+    {
+      "name": "manage-taskboard",
+      "managed": false,
+      "note": "本地维护，暂无外部 Git 来源"
+    },
+    {
+      "name": "opencli-adapter-author",
+      "source": "jackwener/opencli",
+      "url": "https://github.com/jackwener/opencli.git",
+      "path": "skills/opencli-adapter-author/SKILL.md",
+      "base_tree": "edd8714a2c1ded0daf2f1d9ce694b07c1df4d56b"
+    },
+    {
+      "name": "opencli-autofix",
+      "source": "jackwener/opencli",
+      "url": "https://github.com/jackwener/opencli.git",
+      "path": "skills/opencli-autofix/SKILL.md",
+      "base_tree": "1f9cc52aa2fb2d927b5585de7ae649556f3b683b"
+    },
+    {
+      "name": "opencli-browser",
+      "source": "jackwener/opencli",
+      "url": "https://github.com/jackwener/opencli.git",
+      "path": "skills/opencli-browser/SKILL.md",
+      "base_tree": "2c69ee9542d1452c2cee22de3e73fad04b2a3580"
+    },
+    {
+      "name": "opencli-browser-sitemap",
+      "source": "jackwener/opencli",
+      "url": "https://github.com/jackwener/opencli.git",
+      "path": "skills/opencli-browser-sitemap/SKILL.md",
+      "base_tree": "499277a8824aa67010925f713896fbe821fcc1a4"
+    },
+    {
+      "name": "opencli-sitemap-author",
+      "source": "jackwener/opencli",
+      "url": "https://github.com/jackwener/opencli.git",
+      "path": "skills/opencli-sitemap-author/SKILL.md",
+      "base_tree": "890322538dec444f0d8c51a5c4ceff9a5570fcef"
+    },
+    {
+      "name": "opencli-usage",
+      "source": "jackwener/opencli",
+      "url": "https://github.com/jackwener/opencli.git",
+      "path": "skills/opencli-usage/SKILL.md",
+      "base_tree": "c7cac9d1683cdd169233ace6b4cff62ec2a17fd2"
+    },
+    {
+      "name": "prototype",
+      "source": "mattpocock/skills",
+      "url": "https://github.com/mattpocock/skills.git",
+      "path": "skills/engineering/prototype/SKILL.md",
+      "base_tree": "57569dda16077a016b8fb82494dbf9f6430d7cc4"
+    },
+    {
+      "name": "ra-人话",
+      "source": "Pluviobyte/rnskill",
+      "url": "https://github.com/Pluviobyte/rnskill.git",
+      "path": "skills/ra-人话/SKILL.md",
+      "base_tree": "a2abef2930e8d3c5fad68604577f36bcf191c46f"
+    },
+    {
+      "name": "resolve-merge-conflicts",
+      "source": "warpdotdev/common-skills",
+      "url": "https://github.com/warpdotdev/common-skills.git",
+      "path": ".agents/skills/resolve-merge-conflicts/SKILL.md",
+      "base_tree": "f62fff286d3ba22ae59e8c99c3ad0b5c96a5a8e8"
+    },
+    {
+      "name": "skill-doctor",
+      "source": "warpdotdev/common-skills",
+      "url": "https://github.com/warpdotdev/common-skills.git",
+      "path": ".agents/skills/skill-doctor/SKILL.md",
+      "base_tree": "cb24c48dc82ced19c1061453decc4bc0e5328c15"
+    },
+    {
+      "name": "smart-search",
+      "source": "jackwener/opencli",
+      "url": "https://github.com/jackwener/opencli.git",
+      "path": "skills/smart-search/SKILL.md",
+      "base_tree": "2d42a77425f4d8b740610e6d91c670ae76f5c47f"
+    },
+    {
+      "name": "sync-skills",
+      "managed": false,
+      "note": "本仓库维护的同步 skill"
+    },
+    {
+      "name": "update-skill",
+      "source": "warpdotdev/common-skills",
+      "url": "https://github.com/warpdotdev/common-skills.git",
+      "path": ".agents/skills/update-skill/SKILL.md",
+      "base_tree": "84f703bb1c52d3fb9697f3a570c54b5103a3fbf0"
+    },
+    {
+      "name": "wait-what",
+      "source": "mattpocock/skills",
+      "url": "https://github.com/mattpocock/skills.git",
+      "path": "skills/productivity/wait-what/SKILL.md",
+      "base_tree": "6abe708f1bf253158a037ac49faea2944e2809dc"
+    },
+    {
+      "name": "whats-next",
+      "source": "lycfyi/yskills",
+      "url": "https://github.com/lycfyi/yskills.git",
+      "path": "skills/whats-next/SKILL.md",
+      "base_tree": "07e1f671a1e4f45ee4eebf28ba55c167fa82dcd8"
+    },
+    {
+      "name": "writing-for-agents",
+      "source": "mattpocock/skills",
+      "url": "https://github.com/mattpocock/skills.git",
+      "path": "skills/productivity/writing-for-agents/SKILL.md",
+      "base_tree": "bd9c9c4762db0a9a094fd419316ebd4b0444d06e"
+    }
+  ]
+}

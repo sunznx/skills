@@ -1,0 +1,6 @@
+interface:
+  display_name: "ra-人话"
+  short_description: "中英文技术写作去 AI 味精修"
+  default_prompt: "Use $ra-人话 to revise this Chinese, English, or mixed-language technical draft while preserving my judgment, details, source language, and voice."
+policy:
+  allow_implicit_invocation: true
