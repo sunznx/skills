@@ -204,13 +204,14 @@ def update_mirror(repo: Path, url: str) -> Path:
     mirror.parent.mkdir(parents=True, exist_ok=True)
     if mirror.exists():
         valid = run("git", "rev-parse", "--is-bare-repository", cwd=mirror, check=False)
-        if valid.returncode != 0 or valid.stdout.strip() != "true":
+        head = run("git", "rev-parse", "--verify", "HEAD^{commit}", cwd=mirror, check=False)
+        if valid.returncode != 0 or valid.stdout.strip() != "true" or head.returncode != 0:
             shutil.rmtree(mirror)
     if mirror.exists():
         run("git", "remote", "update", "--prune", cwd=mirror)
     else:
         try:
-            run("git", "clone", "--mirror", url, str(mirror), cwd=repo)
+            run("git", "clone", "--mirror", "--filter=blob:none", url, str(mirror), cwd=repo)
         except SyncError:
             if mirror.exists():
                 shutil.rmtree(mirror)
