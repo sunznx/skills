@@ -53,19 +53,20 @@ def run(
 
 def run_network_git(*args: str, cwd: Path) -> subprocess.CompletedProcess:
     git = ("rtk", "git") if shutil.which("rtk") else ("git",)
-    env = os.environ.copy()
+    attempts = []
     if shutil.which("gh"):
+        env = os.environ.copy()
         env["GIT_CONFIG_GLOBAL"] = os.devnull
-        command = (*git, "-c", "credential.helper=!gh auth git-credential", *args)
-    else:
-        command = (*git, *args)
+        attempts.append(((*git, "-c", "credential.helper=!gh auth git-credential", *args), env))
+    attempts.append(((*git, *args), os.environ.copy()))
     last_result = None
-    for attempt in range(3):
-        last_result = run(*command, cwd=cwd, check=False, timeout=120, env=env)
-        if last_result.returncode == 0:
-            return last_result
-        if attempt < 2:
-            time.sleep(1)
+    for command, env in attempts:
+        for attempt in range(3):
+            last_result = run(*command, cwd=cwd, check=False, timeout=120, env=env)
+            if last_result.returncode == 0:
+                return last_result
+            if attempt < 2:
+                time.sleep(1)
     stderr = last_result.stderr.strip() if last_result else ""
     raise SyncError(f"命令失败: {' '.join(command)}\n{stderr}")
 
