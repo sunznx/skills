@@ -12,6 +12,7 @@ import subprocess
 import sys
 import tarfile
 import tempfile
+import time
 from pathlib import Path, PurePosixPath
 
 
@@ -29,14 +30,19 @@ def run(
     cwd: Path | None = None,
     check: bool = True,
     text: bool = True,
+    timeout: int | None = None,
 ) -> subprocess.CompletedProcess:
-    result = subprocess.run(
-        args,
-        cwd=cwd,
-        check=False,
-        capture_output=True,
-        text=text,
-    )
+    try:
+        result = subprocess.run(
+            args,
+            cwd=cwd,
+            check=False,
+            capture_output=True,
+            text=text,
+            timeout=timeout,
+        )
+    except subprocess.TimeoutExpired as error:
+        raise SyncError(f"命令超时: {' '.join(args)}") from error
     if check and result.returncode != 0:
         stderr = result.stderr.strip() if text else ""
         raise SyncError(f"命令失败: {' '.join(args)}\n{stderr}")
@@ -45,7 +51,15 @@ def run(
 
 def run_network_git(*args: str, cwd: Path) -> subprocess.CompletedProcess:
     command = ("rtk", "git", *args) if shutil.which("rtk") else ("git", *args)
-    return run(*command, cwd=cwd)
+    last_result = None
+    for attempt in range(3):
+        last_result = run(*command, cwd=cwd, check=False, timeout=120)
+        if last_result.returncode == 0:
+            return last_result
+        if attempt < 2:
+            time.sleep(1)
+    stderr = last_result.stderr.strip() if last_result else ""
+    raise SyncError(f"命令失败: {' '.join(command)}\n{stderr}")
 
 
 def config_path() -> Path:
