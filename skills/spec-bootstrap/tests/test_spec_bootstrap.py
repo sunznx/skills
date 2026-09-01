@@ -15,6 +15,44 @@ SPEC.loader.exec_module(MODULE)
 
 
 class InitWorkflowTest(unittest.TestCase):
+    def test_ponytail_is_installed_only_when_missing(self) -> None:
+        with mock.patch.object(MODULE, "codex_json") as command:
+            command.side_effect = [
+                {"marketplaces": []},
+                {"name": "ponytail"},
+                {"installed": []},
+                {"pluginId": MODULE.PONYTAIL_PLUGIN},
+            ]
+            self.assertEqual(
+                MODULE.ensure_ponytail(),
+                [
+                    "added Codex marketplace ponytail",
+                    "installed Codex plugin ponytail@ponytail",
+                ],
+            )
+            self.assertEqual(
+                command.call_args_list,
+                [
+                    mock.call("plugin", "marketplace", "list"),
+                    mock.call("plugin", "marketplace", "add", MODULE.PONYTAIL_SOURCE),
+                    mock.call("plugin", "list"),
+                    mock.call("plugin", "add", MODULE.PONYTAIL_PLUGIN),
+                ],
+            )
+
+        with mock.patch.object(MODULE, "codex_json") as command:
+            command.side_effect = [
+                {"marketplaces": [{"name": MODULE.PONYTAIL_MARKETPLACE}]},
+                {"installed": [{"pluginId": MODULE.PONYTAIL_PLUGIN, "enabled": True}]},
+            ]
+            self.assertEqual(
+                MODULE.ensure_ponytail(),
+                [
+                    "preserved Codex marketplace ponytail",
+                    "preserved Codex plugin ponytail@ponytail",
+                ],
+            )
+
     def test_agents_file_is_created_empty_or_preserved(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
             path = Path(directory) / "AGENTS.md"

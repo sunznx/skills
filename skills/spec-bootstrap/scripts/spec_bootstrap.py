@@ -17,6 +17,9 @@ from typing import Any
 
 
 PWF_URL = "https://github.com/OthmanAdi/planning-with-files.git"
+PONYTAIL_MARKETPLACE = "ponytail"
+PONYTAIL_SOURCE = "DietrichGebert/ponytail"
+PONYTAIL_PLUGIN = "ponytail@ponytail"
 SERENA_SOURCE = "git+https://github.com/oraios/serena"
 SERENA_HOOK = f"uvx -p 3.13 --from {SERENA_SOURCE} serena-hooks"
 BLOCK_START = "# AGENT-WORKFLOW:START"
@@ -65,6 +68,56 @@ SERENA_HOOKS = {
 
 class InitError(RuntimeError):
     pass
+
+
+def codex_json(*args: str) -> dict[str, Any]:
+    try:
+        result = subprocess.run(
+            ["codex", *args, "--json"],
+            text=True,
+            capture_output=True,
+            check=False,
+        )
+    except FileNotFoundError as exc:
+        raise InitError("未找到 codex CLI，无法安装 Ponytail。") from exc
+    if result.returncode:
+        detail = result.stderr.strip() or result.stdout.strip()
+        raise InitError(f"Codex plugin 命令失败：{detail}")
+    try:
+        payload = json.loads(result.stdout)
+    except json.JSONDecodeError as exc:
+        raise InitError(f"Codex plugin 返回了无效 JSON：{exc}") from exc
+    if not isinstance(payload, dict):
+        raise InitError("Codex plugin 返回格式不正确。")
+    return payload
+
+
+def ensure_ponytail() -> list[str]:
+    statuses: list[str] = []
+    marketplaces = codex_json("plugin", "marketplace", "list").get("marketplaces", [])
+    configured = any(
+        isinstance(item, dict) and item.get("name") == PONYTAIL_MARKETPLACE
+        for item in marketplaces
+    )
+    if configured:
+        statuses.append("preserved Codex marketplace ponytail")
+    else:
+        codex_json("plugin", "marketplace", "add", PONYTAIL_SOURCE)
+        statuses.append("added Codex marketplace ponytail")
+
+    installed = codex_json("plugin", "list").get("installed", [])
+    present = any(
+        isinstance(item, dict)
+        and item.get("pluginId") == PONYTAIL_PLUGIN
+        and item.get("enabled", True)
+        for item in installed
+    )
+    if present:
+        statuses.append("preserved Codex plugin ponytail@ponytail")
+    else:
+        codex_json("plugin", "add", PONYTAIL_PLUGIN)
+        statuses.append("installed Codex plugin ponytail@ponytail")
+    return statuses
 
 
 def replace_block(text: str, start: str, end: str, block: str) -> str:
@@ -329,9 +382,11 @@ def main() -> int:
     try:
         repo = sync_repo_path()
         mirror = refresh_mirror(repo)
+        for line in ensure_ponytail():
+            print(line)
         for line in install(target, mirror):
             print(line)
-        print("next: start a new Codex session and review project hooks with /hooks")
+        print("next: start a new Codex session and review Ponytail and project hooks with /hooks")
     except InitError as exc:
         print(f"spec-bootstrap: {exc}", file=sys.stderr)
         return 1

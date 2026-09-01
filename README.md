@@ -36,7 +36,6 @@ $sync-skills 更新 agent-messaging 删除某个功能
 | 本仓库 skill | 外部来源 | 外部 skill 路径 | 管理方式 |
 | --- | --- | --- | --- |
 | `agent-messaging` | 本地维护，暂无外部 Git 来源 | — | 本地维护 |
-| `code-simplification` | [addyosmani/agent-skills](https://github.com/addyosmani/agent-skills) | `skills/code-simplification/SKILL.md` | 三方合并 |
 | `codebase-design` | [mattpocock/skills](https://github.com/mattpocock/skills) | `skills/engineering/codebase-design/SKILL.md` | 三方合并 |
 | `cua-driver` | 本机链接 ~/.cua-driver/skills/cua-driver，仓库保留快照但不覆盖该链接 | — | 仅仓库维护 |
 | `diagram-design` | [cathrynlavery/diagram-design](https://github.com/cathrynlavery/diagram-design) | `skills/diagram-design/SKILL.md` | 三方合并 |
@@ -45,7 +44,6 @@ $sync-skills 更新 agent-messaging 删除某个功能
 | `herdr` | [herdrdev/herdr](https://github.com/herdrdev/herdr) | `skills/herdr/SKILL.md` | 三方合并 |
 | `human-context-rebuild` | [lycfyi/yskills](https://github.com/lycfyi/yskills) | `skills/human-context-rebuild/SKILL.md` | 三方合并 |
 | `improve-codebase-architecture` | [mattpocock/skills](https://github.com/mattpocock/skills) | `skills/engineering/improve-codebase-architecture/SKILL.md` | 三方合并 |
-| `karpathy-guidelines` | [CezarDrumea/andrej-karpathy-skills](https://github.com/CezarDrumea/andrej-karpathy-skills) | `skills/karpathy-guidelines/SKILL.md` | 三方合并 |
 | `lark-doc` | [larksuite/cli](https://github.com/larksuite/cli) | `skills/lark-doc/SKILL.md` | 三方合并 |
 | `lark-shared` | [larksuite/cli](https://github.com/larksuite/cli) | `skills/lark-shared/SKILL.md` | 三方合并 |
 | `opencli-adapter-author` | [jackwener/opencli](https://github.com/jackwener/opencli) | `skills/opencli-adapter-author/SKILL.md` | 三方合并 |
@@ -60,7 +58,7 @@ $sync-skills 更新 agent-messaging 删除某个功能
 | `resolve-merge-conflicts` | [warpdotdev/common-skills](https://github.com/warpdotdev/common-skills) | `.agents/skills/resolve-merge-conflicts/SKILL.md` | 三方合并 |
 | `skill-doctor` | [warpdotdev/common-skills](https://github.com/warpdotdev/common-skills) | `.agents/skills/skill-doctor/SKILL.md` | 三方合并 |
 | `smart-search` | [jackwener/opencli](https://github.com/jackwener/opencli) | `skills/smart-search/SKILL.md` | 三方合并 |
-| `spec-bootstrap` | 本地维护，安装项目级 PWF skill 与官方 hooks，并配置 Serena、Semble | — | 本地维护 |
+| `spec-bootstrap` | 本地维护，安装 Ponytail、项目级 PWF skill 与官方 hooks，并配置 Serena、Semble | — | 本地维护 |
 | `sync-skills` | 本仓库维护的同步 skill | — | 本地维护 |
 | `update-skill` | [warpdotdev/common-skills](https://github.com/warpdotdev/common-skills) | `.agents/skills/update-skill/SKILL.md` | 三方合并 |
 | `wait-what` | [mattpocock/skills](https://github.com/mattpocock/skills) | `skills/productivity/wait-what/SKILL.md` | 三方合并 |
