@@ -168,7 +168,11 @@ python3 "$SKILL_ROOT/scripts/render_report.py" "$REPORT_DIR/report.json"
 
 This writes a single self-contained `$REPORT_DIR/report.html`. The scorecard, findings, and suggested skill edits appear on one page. Long diffs are collapsed behind a "show more" toggle, and a "share as png" button exports a 1200x675 share image locally. There is no separate card file to open or screenshot.
 
-After rendering, use `chrome:control-chrome`. Name the Chrome session `skill-doctor`, open the absolute `file://` URL for `$REPORT_DIR/report.html`, and verify that the page loaded in Chrome's `skill-doctor` group.
+After rendering:
+
+1. Prefer `chrome:control-chrome`. Name the Chrome session `skill-doctor` before creating the tab so the report opens in Chrome's `skill-doctor` group.
+2. Open the absolute `file://` URL for `$REPORT_DIR/report.html` in a new agent-controlled tab and verify that the page loaded.
+3. If Chrome control is unavailable or rejects the local file, run `open "$REPORT_DIR/report.html"` on macOS and check that the command succeeds. Tell the user that this fallback opened outside the named Chrome group.
 
 ## Step 6: Output
 
