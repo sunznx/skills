@@ -17,6 +17,16 @@ SPEC.loader.exec_module(MODULE)
 
 
 class SpecBootstrapTest(unittest.TestCase):
+    def test_uvx_tools_are_prepared_first(self) -> None:
+        completed = MODULE.subprocess.CompletedProcess([], 0, "", "")
+        with mock.patch.object(MODULE.subprocess, "run", return_value=completed) as run:
+            statuses = MODULE.prepare_uvx_tools()
+        self.assertEqual(statuses, ["prepared uvx tool Semble", "prepared uvx tool Serena"])
+        self.assertEqual(
+            [call.args[0] for call in run.call_args_list],
+            [command for _name, command in MODULE.UVX_TOOLS],
+        )
+
     def test_config_preserves_existing_server_without_duplicate(self) -> None:
         original = '[mcp_servers.serena]\ncommand = "custom"\n'
         result = MODULE.managed_config(original)
@@ -84,10 +94,11 @@ class SpecBootstrapTest(unittest.TestCase):
             )
             with (
                 mock.patch.dict(os.environ, {"CODEX_HOME": str(home)}),
+                mock.patch.object(MODULE, "prepare_uvx_tools", return_value=["uvx ok"]),
                 mock.patch.object(MODULE, "ensure_plugins", return_value=["plugins ok"]),
             ):
                 statuses = MODULE.install_global()
-            self.assertEqual(statuses[0], "plugins ok")
+            self.assertEqual(statuses[:2], ["uvx ok", "plugins ok"])
             config = (home / "config.toml").read_text(encoding="utf-8")
             self.assertIn("[mcp_servers.serena]", config)
             self.assertIn("[mcp_servers.semble]", config)

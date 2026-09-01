@@ -14,6 +14,10 @@ from typing import Any
 
 SERENA_SOURCE = "git+https://github.com/oraios/serena"
 SERENA_HOOK = f"uvx -p 3.13 --from {SERENA_SOURCE} serena-hooks"
+UVX_TOOLS = (
+    ("Semble", ["uvx", "--from", "semble[mcp]", "semble", "--help"]),
+    ("Serena", ["uvx", "-p", "3.13", "--from", SERENA_SOURCE, "serena", "--help"]),
+)
 BLOCK_START = "# AGENT-WORKFLOW:START"
 BLOCK_END = "# AGENT-WORKFLOW:END"
 SERENA_CLIENT = re.compile(r"--client(?:=|\s+)codex(?:\s|$)")
@@ -121,6 +125,20 @@ def ensure_plugins() -> list[str]:
     return statuses
 
 
+def prepare_uvx_tools() -> list[str]:
+    statuses: list[str] = []
+    for name, command in UVX_TOOLS:
+        try:
+            result = subprocess.run(command, text=True, capture_output=True, check=False)
+        except FileNotFoundError as exc:
+            raise InitError("未找到 uvx，无法安装 Semble 和 Serena。") from exc
+        if result.returncode:
+            detail = result.stderr.strip() or result.stdout.strip()
+            raise InitError(f"uvx 安装 {name} 失败：{detail}")
+        statuses.append(f"prepared uvx tool {name}")
+    return statuses
+
+
 def managed_config(existing: str) -> str:
     stripped = re.sub(
         rf"(?:^|\n){re.escape(BLOCK_START)}\n.*?\n{re.escape(BLOCK_END)}(?=\n|$)",
@@ -200,7 +218,8 @@ def write_if_changed(path: Path, content: str) -> str:
 
 
 def install_global() -> list[str]:
-    statuses = ensure_plugins()
+    statuses = prepare_uvx_tools()
+    statuses.extend(ensure_plugins())
     home = codex_home()
 
     config = home / "config.toml"

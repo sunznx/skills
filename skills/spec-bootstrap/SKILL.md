@@ -13,6 +13,7 @@ python3 "$SKILL_ROOT/scripts/spec_bootstrap.py"
 
 脚本会：
 
+- 先通过 `uvx` 在本机预取 Semble 和 Serena；
 - 通过 Codex marketplace 全局安装 Ponytail plugin；
 - 通过 Codex marketplace 全局安装 Planning with Files plugin；
 - 将 Serena 和 Semble MCP 合并到 `~/.codex/config.toml`；
