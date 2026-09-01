@@ -177,7 +177,7 @@
     {
       "name": "spec-bootstrap",
       "managed": false,
-      "note": "本地维护，初始化项目级 PWF、Serena 与 Semble 工作流"
+      "note": "本地维护，配置 PWF plugin、Serena 与 Semble 工作流"
     },
     {
       "name": "sync-skills",
