@@ -4,6 +4,7 @@ import importlib.util
 import tempfile
 import unittest
 from pathlib import Path
+from unittest import mock
 
 
 SCRIPT = Path(__file__).parents[1] / "scripts" / "spec_bootstrap.py"
@@ -41,18 +42,71 @@ class InitWorkflowTest(unittest.TestCase):
         self.assertEqual(result.count("[mcp_servers.semble]"), 1)
         self.assertEqual(result, MODULE.managed_config(result))
 
-    def test_install_leaves_plugin_hooks_to_codex(self) -> None:
+    def test_hook_merge_preserves_other_hooks_and_is_idempotent(self) -> None:
+        existing = {
+            "hooks": {
+                "UserPromptSubmit": [
+                    {"hooks": [{"type": "command", "command": "echo keep"}]},
+                    {"hooks": [{"type": "command", "command": "python3 .codex/hooks/pwf_session_router.py run_sh.py user-prompt-submit.sh"}]},
+                ]
+            }
+        }
+        upstream = {
+            "hooks": {
+                "UserPromptSubmit": [
+                    {"hooks": [{"type": "command", "command": "python3 .codex/hooks/run_sh.py user-prompt-submit.sh 2>/dev/null || true"}]}
+                ]
+            }
+        }
+        once = MODULE.merge_hooks(existing, upstream)
+        twice = MODULE.merge_hooks(once, upstream)
+        text = str(twice)
+        self.assertEqual(once, twice)
+        self.assertIn("echo keep", text)
+        self.assertEqual(len(twice["hooks"]["UserPromptSubmit"]), 2)
+        self.assertNotIn("pwf_session_router.py", text)
+        official = twice["hooks"]["UserPromptSubmit"][1]["hooks"][0]
+        self.assertEqual(official, upstream["hooks"]["UserPromptSubmit"][0]["hooks"][0])
+
+    def test_install_uses_project_skill_and_official_hooks(self) -> None:
+        def fake_extract(_mirror: Path, destination: Path) -> None:
+            skill = destination / ".agents/skills/planning-with-files"
+            skill.mkdir(parents=True)
+            (skill / "SKILL.md").write_text("official skill\n", encoding="utf-8")
+
+            hooks = destination / ".codex/hooks"
+            hooks.mkdir(parents=True)
+            (hooks / "run_sh.py").write_text("# official hook\n", encoding="utf-8")
+            (destination / ".codex/hooks.json").write_text(
+                '{"hooks":{"UserPromptSubmit":[{"hooks":[{"type":"command",'
+                '"command":"python3 .codex/hooks/run_sh.py user-prompt-submit.sh"}]}]}}\n',
+                encoding="utf-8",
+            )
+
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
-            hooks = root / ".codex/hooks.json"
-            hooks.parent.mkdir(parents=True)
-            hooks.write_text('{"hooks":{"UserPromptSubmit":[]}}\n', encoding="utf-8")
+            old_paths = [
+                root / ".agents/skills/pwf",
+                root / ".codex/skills/planning-with-files",
+            ]
+            for path in old_paths:
+                path.mkdir(parents=True)
+            router = root / ".codex/hooks/pwf_session_router.py"
+            router.parent.mkdir(parents=True)
+            router.write_text("old router\n", encoding="utf-8")
 
-            MODULE.install(root)
+            with mock.patch.object(MODULE, "extract_upstream", side_effect=fake_extract):
+                MODULE.install(root, Path("/unused-mirror"))
 
-            self.assertEqual(hooks.read_text(encoding="utf-8"), '{"hooks":{"UserPromptSubmit":[]}}\n')
-            self.assertFalse((root / ".codex/hooks").exists())
-            self.assertFalse((root / ".agents/skills/pwf").exists())
+            self.assertEqual(
+                (root / ".agents/skills/planning-with-files/SKILL.md").read_text(encoding="utf-8"),
+                "official skill\n",
+            )
+            self.assertTrue((root / ".codex/hooks/run_sh.py").is_file())
+            self.assertIn(".codex/hooks/run_sh.py", (root / ".codex/hooks.json").read_text(encoding="utf-8"))
+            self.assertFalse(router.exists())
+            for path in old_paths:
+                self.assertFalse(path.exists())
 
 
 if __name__ == "__main__":
