@@ -32,11 +32,13 @@ class InitWorkflowTest(unittest.TestCase):
         self.assertEqual(once.splitlines()[0], "@AGENTS.md")
         self.assertIn("Keep this.", once)
         self.assertEqual(once.count(MODULE.AGENTS_BLOCK_START), 1)
-        self.assertIn("$planning-with-files", once)
-        self.assertNotIn("$pwf", once)
-        self.assertIn("使用 Serena 激活当前项目并读取初始指引", once)
+        self.assertIn("`task_plan.md`", once)
+        self.assertIn("`update_plan`", once)
         self.assertIn("使用 Semble 做自然语言或概念搜索", once)
         self.assertIn("仅在需要全仓精确字面量匹配时使用文本搜索", once)
+        self.assertNotIn("$planning-with-files", once)
+        self.assertNotIn("Serena", once)
+        self.assertNotIn("开始代码工作前先读取本文件", once)
 
     def test_config_preserves_existing_server_without_duplicate(self) -> None:
         original = '[mcp_servers.serena]\ncommand = "custom"\n'
@@ -51,7 +53,10 @@ class InitWorkflowTest(unittest.TestCase):
                 "UserPromptSubmit": [
                     {"hooks": [{"type": "command", "command": "echo keep"}]},
                     {"hooks": [{"type": "command", "command": "python3 .codex/hooks/pwf_session_router.py run_sh.py user-prompt-submit.sh"}]},
-                ]
+                ],
+                "SessionStart": [
+                    {"hooks": [{"type": "command", "command": "serena-hooks activate --client=codex"}]}
+                ],
             }
         }
         upstream = {
@@ -70,12 +75,23 @@ class InitWorkflowTest(unittest.TestCase):
         self.assertNotIn("pwf_session_router.py", text)
         official = twice["hooks"]["UserPromptSubmit"][1]["hooks"][0]
         self.assertEqual(official, upstream["hooks"]["UserPromptSubmit"][0]["hooks"][0])
+        self.assertEqual(text.count("serena-hooks"), 3)
+        self.assertIn("remind --client=codex", text)
+        self.assertIn("activate --client=codex", text)
+        self.assertIn("cleanup --client=codex", text)
 
     def test_install_uses_project_skill_and_official_hooks(self) -> None:
         def fake_extract(_mirror: Path, destination: Path) -> None:
             skill = destination / ".agents/skills/planning-with-files"
             skill.mkdir(parents=True)
             (skill / "SKILL.md").write_text("official skill\n", encoding="utf-8")
+
+            runtime = destination / ".codex/skills/planning-with-files"
+            scripts = runtime / "scripts"
+            scripts.mkdir(parents=True)
+            (runtime / "SKILL.md").write_text("official runtime skill\n", encoding="utf-8")
+            for name in ("resolve-plan-dir.sh", "check-complete.sh", "session-catchup.py"):
+                (scripts / name).write_text(f"# {name}\n", encoding="utf-8")
 
             hooks = destination / ".codex/hooks"
             hooks.mkdir(parents=True)
@@ -91,13 +107,15 @@ class InitWorkflowTest(unittest.TestCase):
             root = Path(directory)
             old_paths = [
                 root / ".agents/skills/pwf",
-                root / ".codex/skills/planning-with-files",
             ]
             for path in old_paths:
                 path.mkdir(parents=True)
             router = root / ".codex/hooks/pwf_session_router.py"
             router.parent.mkdir(parents=True)
             router.write_text("old router\n", encoding="utf-8")
+            old_runtime = root / ".codex/skills/planning-with-files/old.txt"
+            old_runtime.parent.mkdir(parents=True)
+            old_runtime.write_text("old\n", encoding="utf-8")
 
             with mock.patch.object(MODULE, "extract_upstream", side_effect=fake_extract):
                 MODULE.install(root, Path("/unused-mirror"))
@@ -108,8 +126,13 @@ class InitWorkflowTest(unittest.TestCase):
             )
             self.assertTrue((root / ".codex/hooks/run_sh.py").is_file())
             self.assertTrue((root / ".codex/hooks/plugin_dispatch.py").is_file())
-            self.assertIn(".codex/hooks/run_sh.py", (root / ".codex/hooks.json").read_text(encoding="utf-8"))
+            for name in ("resolve-plan-dir.sh", "check-complete.sh", "session-catchup.py"):
+                self.assertTrue((root / ".codex/skills/planning-with-files/scripts" / name).is_file())
+            hooks_text = (root / ".codex/hooks.json").read_text(encoding="utf-8")
+            self.assertIn(".codex/hooks/run_sh.py", hooks_text)
+            self.assertEqual(hooks_text.count("serena-hooks"), 3)
             self.assertFalse(router.exists())
+            self.assertFalse(old_runtime.exists())
             for path in old_paths:
                 self.assertFalse(path.exists())
 

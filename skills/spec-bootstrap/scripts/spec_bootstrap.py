@@ -17,6 +17,8 @@ from typing import Any
 
 
 PWF_URL = "https://github.com/OthmanAdi/planning-with-files.git"
+SERENA_SOURCE = "git+https://github.com/oraios/serena"
+SERENA_HOOK = f"uvx -p 3.13 --from {SERENA_SOURCE} serena-hooks"
 BLOCK_START = "# AGENT-WORKFLOW:START"
 BLOCK_END = "# AGENT-WORKFLOW:END"
 AGENTS_BLOCK_START = "<!-- agent-workflow:start -->"
@@ -24,6 +26,41 @@ AGENTS_BLOCK_END = "<!-- agent-workflow:end -->"
 PWF_HANDLER = re.compile(
     r"\.codex[/\\]hooks[/\\](?:pwf_session_router\.py|run_sh\.py|pre_tool_use\.py|post_tool_use\.py|permission_request\.py|stop\.py)"
 )
+SERENA_CLIENT = re.compile(r"--client(?:=|\s+)codex(?:\s|$)")
+SERENA_HOOKS = {
+    "PreToolUse": [
+        {
+            "matcher": "Bash",
+            "hooks": [
+                {
+                    "type": "command",
+                    "command": f"{SERENA_HOOK} remind --client=codex",
+                }
+            ],
+        }
+    ],
+    "SessionStart": [
+        {
+            "matcher": "startup|resume",
+            "hooks": [
+                {
+                    "type": "command",
+                    "command": f"{SERENA_HOOK} activate --client=codex",
+                }
+            ],
+        }
+    ],
+    "SessionEnd": [
+        {
+            "hooks": [
+                {
+                    "type": "command",
+                    "command": f"{SERENA_HOOK} cleanup --client=codex",
+                }
+            ]
+        }
+    ],
+}
 
 
 class InitError(RuntimeError):
@@ -46,11 +83,11 @@ def managed_config(existing: str) -> str:
     sections: list[str] = []
     if not re.search(r"(?m)^\s*\[mcp_servers\.serena\]\s*$", stripped):
         sections.append(
-            """[mcp_servers.serena]
+            f"""[mcp_servers.serena]
 command = "uvx"
 args = [
   "-p", "3.13",
-  "--from", "git+https://github.com/oraios/serena",
+  "--from", "{SERENA_SOURCE}",
   "serena", "start-mcp-server",
   "--project-from-cwd",
   "--context=codex",
@@ -80,12 +117,8 @@ def managed_agents(existing: str) -> str:
     block = f"""{AGENTS_BLOCK_START}
 ## Agent 编码工作流
 
-- 复杂任务使用 `$planning-with-files` 创建和维护项目计划。
 - 以 `task_plan.md` 为权威，并用 `update_plan` 完整镜像步骤和状态。
-- 每个 session 开始时使用 Serena 激活当前项目并读取初始指引；若 hook 已完成则不要重复。
-- 使用 Serena 做符号级代码阅读、定位和修改；使用 Semble 做自然语言或概念搜索。
-- Semble 返回路径和行号后直接阅读目标代码，不要对同一内容重复搜索；仅在需要全仓精确字面量匹配时使用文本搜索。
-- 开始代码工作前先读取本文件，并继续遵循本区块之外的项目规则。
+- 使用 Semble 做自然语言或概念搜索；返回路径和行号后直接阅读目标代码，不要对同一内容重复搜索；仅在需要全仓精确字面量匹配时使用文本搜索。
 {AGENTS_BLOCK_END}"""
     body = replace_block(remainder, AGENTS_BLOCK_START, AGENTS_BLOCK_END, block)
     return "@AGENTS.md\n\n" + body.lstrip()
@@ -94,6 +127,15 @@ def managed_agents(existing: str) -> str:
 def is_pwf_hook(item: dict[str, Any]) -> bool:
     command = item.get("command", "")
     return isinstance(command, str) and bool(PWF_HANDLER.search(command))
+
+
+def is_serena_hook(item: dict[str, Any]) -> bool:
+    command = item.get("command", "")
+    return isinstance(command, str) and "serena-hooks" in command and bool(SERENA_CLIENT.search(command))
+
+
+def is_managed_hook(item: dict[str, Any]) -> bool:
+    return is_pwf_hook(item) or is_serena_hook(item)
 
 
 def merge_hooks(existing: dict[str, Any], upstream: dict[str, Any]) -> dict[str, Any]:
@@ -115,7 +157,7 @@ def merge_hooks(existing: dict[str, Any], upstream: dict[str, Any]) -> dict[str,
             if not isinstance(commands, list):
                 kept_groups.append(group)
                 continue
-            kept = [item for item in commands if not (isinstance(item, dict) and is_pwf_hook(item))]
+            kept = [item for item in commands if not (isinstance(item, dict) and is_managed_hook(item))]
             if kept:
                 copy = dict(group)
                 copy["hooks"] = kept
@@ -125,6 +167,10 @@ def merge_hooks(existing: dict[str, Any], upstream: dict[str, Any]) -> dict[str,
     for event, groups in upstream_hooks.items():
         if not isinstance(groups, list):
             continue
+        hooks.setdefault(event, [])
+        hooks[event].extend(groups)
+
+    for event, groups in SERENA_HOOKS.items():
         hooks.setdefault(event, [])
         hooks[event].extend(groups)
 
@@ -172,7 +218,12 @@ def refresh_mirror(repo: Path) -> Path:
 
 
 def extract_upstream(mirror: Path, destination: Path) -> None:
-    paths = [".agents/skills/planning-with-files", ".codex/hooks", ".codex/hooks.json"]
+    paths = [
+        ".agents/skills/planning-with-files",
+        ".codex/skills/planning-with-files",
+        ".codex/hooks",
+        ".codex/hooks.json",
+    ]
     result = subprocess.run(
         ["git", f"--git-dir={mirror}", "archive", "HEAD", *paths],
         capture_output=True,
@@ -233,8 +284,11 @@ def install(target: Path, mirror: Path) -> list[str]:
             extracted / ".agents/skills/planning-with-files",
             target / ".agents/skills/planning-with-files",
         )
+        copy_tree(
+            extracted / ".codex/skills/planning-with-files",
+            target / ".codex/skills/planning-with-files",
+        )
 
-        remove_path(target / ".codex/skills/planning-with-files")
         remove_path(target / ".agents/skills/pwf")
 
         copy_tree(extracted / ".codex/hooks", target / ".codex/hooks")
