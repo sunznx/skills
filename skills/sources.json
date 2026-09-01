@@ -23,7 +23,7 @@
     {
       "name": "cua-driver",
       "managed": false,
-      "note": "本机链接 /Users/sunx/.cua-driver/skills/cua-driver，仓库保留快照但不覆盖该链接",
+      "note": "本机链接 ~/.cua-driver/skills/cua-driver，仓库保留快照但不覆盖该链接",
       "deploy": false
     },
     {

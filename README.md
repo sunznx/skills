@@ -5,12 +5,14 @@
 ## 使用
 
 ```bash
-./sync-skills
-./sync-skills 添加 <skill-name>
-./sync-skills 删除 <skill-name>
+./sync-skills                    # 检查并更新全部外部 skills
+./sync-skills 更新 <skill-name>  # 只检查并更新指定 skill
+./sync-skills 添加 <skill-name>  # 从 ~/.agents/skills 导入一个 skill
+./sync-skills 删除 <skill-name>  # 从仓库和本机删除一个 skill
 ```
 
 - 无参数调用会直接对比全部上游；有更新时合并并 commit。
+- `更新` 只对比指定 skill 的上游；英文别名为 `update`。
 - `添加` 从 `~/.agents/skills` 导入指定 skill，并更新来源目录。
 - `删除` 从仓库、来源目录和 `~/.agents/skills` 移除指定 skill。
 - 没有冲突时，仓库清单会同步到 `~/.agents/skills`。
@@ -26,7 +28,7 @@
 | `agent-messaging` | 本地维护，暂无外部 Git 来源 | — | 本地维护 |
 | `code-simplification` | [addyosmani/agent-skills](https://github.com/addyosmani/agent-skills) | `skills/code-simplification/SKILL.md` | 三方合并 |
 | `codebase-design` | [mattpocock/skills](https://github.com/mattpocock/skills) | `skills/engineering/codebase-design/SKILL.md` | 三方合并 |
-| `cua-driver` | 本机链接 /Users/sunx/.cua-driver/skills/cua-driver，仓库保留快照但不覆盖该链接 | — | 仅仓库维护 |
+| `cua-driver` | 本机链接 ~/.cua-driver/skills/cua-driver，仓库保留快照但不覆盖该链接 | — | 仅仓库维护 |
 | `diagram-design` | [cathrynlavery/diagram-design](https://github.com/cathrynlavery/diagram-design) | `skills/diagram-design/SKILL.md` | 三方合并 |
 | `domain-modeling` | [mattpocock/skills](https://github.com/mattpocock/skills) | `skills/engineering/domain-modeling/SKILL.md` | 三方合并 |
 | `eli5` | [anthropics/claude-plugins-community](https://github.com/anthropics/claude-plugins-community) | `eli5/skills/eli5/SKILL.md` | 三方合并 |

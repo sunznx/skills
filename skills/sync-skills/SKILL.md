@@ -10,11 +10,13 @@ description: 同步本仓库与外部上游及 ~/.agents/skills。用户要求�
 ```bash
 repo="$(cat ~/.config/sync-skills/repo)"
 "$repo/sync-skills"
+"$repo/sync-skills" 更新 <skill-name>
 "$repo/sync-skills" 添加 <skill-name>
 "$repo/sync-skills" 删除 <skill-name>
 ```
 
 - 无参数调用直接对比全部上游。没有更新时继续使用仓库版本，并同步到 `~/.agents/skills`。
+- `更新` 只对比指定 skill 的上游；英文别名为 `update`。
 - `添加` 从 `~/.agents/skills/<skill-name>` 导入。脚本会读取 `~/.agents/.skill-lock.json` 记录外部来源；没有来源记录时按本地 skill 管理。
 - `删除` 会删除仓库目录和来源目录，commit 成功后再删除 `~/.agents/skills/<skill-name>`。
 - 上游有更新时使用旧上游、本地版本和新上游做三方合并。合并成功后自动 commit，再同步本机目录。

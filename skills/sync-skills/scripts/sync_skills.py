@@ -469,18 +469,24 @@ def deploy_skills(repo: Path, skills_dir: Path, manifest: dict, local_dir: Path)
     print(f"已同步到 {local_dir}")
 
 
-def sync_upstream() -> int:
+def sync_upstream(only_name: str | None = None) -> int:
     repo, skills_dir, manifest_path, _, conflict_report = paths()
     local_dir = local_skills_dir()
     require_clean_repo(repo)
     manifest = load_manifest(manifest_path)
+    entries = manifest["skills"]
+    if only_name is not None:
+        only_name = valid_skill_name(only_name)
+        entries = [entry for entry in entries if entry["name"] == only_name]
+        if not entries:
+            raise SyncError(f"skill 不在仓库中: {only_name}")
     updated: list[str] = []
     all_conflicts: list[dict[str, str]] = []
     mirrors: dict[str, Path] = {}
 
     with tempfile.TemporaryDirectory(prefix="sync-skills-") as temp:
         staging_root = Path(temp)
-        for entry in manifest["skills"]:
+        for entry in entries:
             name = entry["name"]
             if entry.get("managed") is False:
                 print(f"跳过 {name}: 本地维护")
@@ -528,7 +534,10 @@ def sync_upstream() -> int:
         commit_paths(repo, SYNC_COMMIT, changed)
         print(f"已更新 {len(updated)} 个 skills。")
     else:
-        print("所有外部 skills 都没有更新；继续使用仓库版本。")
+        if only_name is None:
+            print("所有外部 skills 都没有更新；继续使用仓库版本。")
+        else:
+            print(f"{only_name} 没有外部更新；继续使用仓库版本。")
     deploy_skills(repo, skills_dir, manifest, local_dir)
     return 0
 
@@ -565,8 +574,13 @@ def manifest_entry_for_add(local_dir: Path, name: str, source: Path) -> dict:
         return entry
     entry = {"name": name, "managed": False, "note": "本地维护，暂无外部 Git 来源"}
     if source.is_symlink():
+        target = source.resolve()
+        try:
+            target = Path("~") / target.relative_to(Path.home())
+        except ValueError:
+            pass
         entry["deploy"] = False
-        entry["note"] = f"本机链接 {source.resolve()}，仓库保留快照但不覆盖该链接"
+        entry["note"] = f"本机链接 {target}，仓库保留快照但不覆盖该链接"
     return entry
 
 
@@ -623,11 +637,18 @@ def parse_command(arguments: list[str]) -> tuple[str, str | None]:
     if not arguments:
         return "sync", None
     if len(arguments) != 2:
-        raise SyncError("用法: sync-skills [添加|删除] <skill-name>")
+        raise SyncError("用法: sync-skills [更新|添加|删除] <skill-name>")
     command, name = arguments
-    commands = {"添加": "add", "add": "add", "删除": "remove", "remove": "remove"}
+    commands = {
+        "更新": "sync",
+        "update": "sync",
+        "添加": "add",
+        "add": "add",
+        "删除": "remove",
+        "remove": "remove",
+    }
     if command not in commands:
-        raise SyncError("用法: sync-skills [添加|删除] <skill-name>")
+        raise SyncError("用法: sync-skills [更新|添加|删除] <skill-name>")
     return commands[command], name
 
 
@@ -637,7 +658,7 @@ def main(arguments: list[str]) -> int:
         return add_skill(name or "")
     if command == "remove":
         return remove_skill(name or "")
-    return sync_upstream()
+    return sync_upstream(name)
 
 
 if __name__ == "__main__":
