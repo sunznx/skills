@@ -31,6 +31,8 @@ class InitWorkflowTest(unittest.TestCase):
         self.assertEqual(once.splitlines()[0], "@AGENTS.md")
         self.assertIn("Keep this.", once)
         self.assertEqual(once.count(MODULE.AGENTS_BLOCK_START), 1)
+        self.assertIn("$planning-with-files", once)
+        self.assertNotIn("$pwf", once)
 
     def test_config_preserves_existing_server_without_duplicate(self) -> None:
         original = '[mcp_servers.serena]\ncommand = "custom"\n'
@@ -39,29 +41,18 @@ class InitWorkflowTest(unittest.TestCase):
         self.assertEqual(result.count("[mcp_servers.semble]"), 1)
         self.assertEqual(result, MODULE.managed_config(result))
 
-    def test_hook_merge_preserves_other_hooks_and_is_idempotent(self) -> None:
-        existing = {
-            "hooks": {
-                "UserPromptSubmit": [
-                    {"hooks": [{"type": "command", "command": "echo keep"}]},
-                    {"hooks": [{"type": "command", "command": "python3 .codex/hooks/pwf_session_router.py run_sh.py user-prompt-submit.sh"}]},
-                ]
-            }
-        }
-        upstream = {
-            "hooks": {
-                "UserPromptSubmit": [
-                    {"hooks": [{"type": "command", "command": "python3 .codex/hooks/run_sh.py user-prompt-submit.sh 2>/dev/null || true"}]}
-                ]
-            }
-        }
-        once = MODULE.merge_hooks(existing, upstream)
-        twice = MODULE.merge_hooks(once, upstream)
-        text = str(twice)
-        self.assertEqual(once, twice)
-        self.assertIn("echo keep", text)
-        self.assertEqual(len(twice["hooks"]["UserPromptSubmit"]), 2)
-        self.assertEqual(text.count("pwf_session_router.py"), 2)  # POSIX + Windows
+    def test_install_leaves_plugin_hooks_to_codex(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            hooks = root / ".codex/hooks.json"
+            hooks.parent.mkdir(parents=True)
+            hooks.write_text('{"hooks":{"UserPromptSubmit":[]}}\n', encoding="utf-8")
+
+            MODULE.install(root)
+
+            self.assertEqual(hooks.read_text(encoding="utf-8"), '{"hooks":{"UserPromptSubmit":[]}}\n')
+            self.assertFalse((root / ".codex/hooks").exists())
+            self.assertFalse((root / ".agents/skills/pwf").exists())
 
 
 if __name__ == "__main__":
