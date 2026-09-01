@@ -127,7 +127,10 @@ def require_clean_repo(repo: Path) -> None:
         raise SyncError(f"不是 Git 仓库: {repo}")
     status = run("git", "status", "--porcelain", "--untracked-files=all", cwd=repo).stdout
     if status:
-        raise SyncError("Git working tree 不干净。请先 commit 或 stash 当前改动。")
+        raise SyncError(
+            "Git working tree 不干净。请先 commit 或 stash 以下改动：\n"
+            f"{status.rstrip()}"
+        )
 
 
 def load_manifest(manifest_path: Path) -> dict:
