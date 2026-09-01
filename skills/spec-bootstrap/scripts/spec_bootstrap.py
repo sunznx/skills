@@ -230,6 +230,13 @@ def write_if_changed(path: Path, content: str) -> str:
     return "created" if current is None else "updated"
 
 
+def ensure_empty_file(path: Path) -> str:
+    if path.exists() or path.is_symlink():
+        return "preserved"
+    path.touch()
+    return "created"
+
+
 def install(target: Path, sync_repo: Path, mirror: Path) -> list[str]:
     target = target.expanduser().resolve()
     if not target.is_dir():
@@ -264,6 +271,9 @@ def install(target: Path, sync_repo: Path, mirror: Path) -> list[str]:
     config = target / ".codex/config.toml"
     config_text = config.read_text(encoding="utf-8") if config.is_file() else ""
     statuses.append(f"{write_if_changed(config, managed_config(config_text))} {config}")
+
+    base_agents = target / "AGENTS.md"
+    statuses.append(f"{ensure_empty_file(base_agents)} {base_agents}")
 
     agents = target / "AGENTS.override.md"
     agents_text = agents.read_text(encoding="utf-8") if agents.is_file() else ""

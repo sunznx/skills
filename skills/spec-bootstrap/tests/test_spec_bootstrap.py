@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import importlib.util
+import tempfile
 import unittest
 from pathlib import Path
 
@@ -13,6 +14,15 @@ SPEC.loader.exec_module(MODULE)
 
 
 class InitWorkflowTest(unittest.TestCase):
+    def test_agents_file_is_created_empty_or_preserved(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            path = Path(directory) / "AGENTS.md"
+            self.assertEqual(MODULE.ensure_empty_file(path), "created")
+            self.assertEqual(path.read_bytes(), b"")
+            path.write_text("keep\n", encoding="utf-8")
+            self.assertEqual(MODULE.ensure_empty_file(path), "preserved")
+            self.assertEqual(path.read_text(encoding="utf-8"), "keep\n")
+
     def test_agents_first_line_and_idempotent_block(self) -> None:
         original = "# Project rule\n\nKeep this.\n"
         once = MODULE.managed_agents(original)

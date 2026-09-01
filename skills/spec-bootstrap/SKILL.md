@@ -20,6 +20,7 @@ python3 "$SKILL_ROOT/scripts/spec_bootstrap.py" "<目标路径>"
 - 检查并更新 Planning with Files mirror；
 - 安装项目级 Planning with Files、`$pwf` 和 Codex hooks；
 - 将 Serena 与 Semble 写入项目 `.codex/config.toml`；
+- 保留已有 `AGENTS.md`；不存在时创建空文件；
 - 维护 `AGENTS.override.md` 中本工作流的区块；
 - 缺少 `.sembleignore` 时创建它。
 
