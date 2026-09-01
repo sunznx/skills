@@ -24,6 +24,7 @@ repo="$(cat ~/.config/sync-skills/repo)"
 - 上游有更新时使用旧上游、本地版本和新上游做三方合并。合并成功后自动 commit，再同步本机目录。
 - 出现冲突时检查 `skills/.sync-conflicts.json` 和文件内的冲突标记。解决冲突并手动 commit 前，不同步本机目录。
 - 上游 Git 缓存统一写入 `~/.agents/cache/sync-skills`。
+- 拉取上游失败但本地镜像可用时，警告后继续使用缓存并部署；没有可用镜像时停止。
 - 每次成功调用最后都执行 `git push`。没有改动时不创建空 commit；push 失败时报告错误，但不要撤销已经完成的 commit 或本机同步。
 
 ## 本地更新 skill

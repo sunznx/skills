@@ -250,6 +250,18 @@ def remove_conflicted_git_refs(mirror: Path) -> None:
                 remove_path(path)
 
 
+def fetch_mirror(mirror: Path) -> None:
+    try:
+        run_network_git("fetch", "origin", "--prune", cwd=mirror)
+    except SyncError as error:
+        head = run(
+            "git", "rev-parse", "--verify", "HEAD^{commit}", cwd=mirror, check=False
+        )
+        if head.returncode != 0:
+            raise
+        print(f"  无法更新上游镜像，继续使用本地缓存：{error}", file=sys.stderr)
+
+
 def update_mirror(repo: Path, url: str) -> Path:
     mirror = mirror_for(url)
     mirror.parent.mkdir(parents=True, exist_ok=True)
@@ -266,7 +278,7 @@ def update_mirror(repo: Path, url: str) -> Path:
             shutil.rmtree(mirror)
     if mirror.exists():
         remove_conflicted_git_refs(mirror)
-        run_network_git("fetch", "origin", "--prune", cwd=mirror)
+        fetch_mirror(mirror)
     else:
         try:
             seed = cached_checkout(url)
@@ -275,7 +287,7 @@ def update_mirror(repo: Path, url: str) -> Path:
                 remove_conflicted_git_refs(mirror)
                 run("git", "config", "core.bare", "true", cwd=mirror)
                 run("git", "remote", "set-url", "origin", url, cwd=mirror)
-                run_network_git("fetch", "origin", "--prune", cwd=mirror)
+                fetch_mirror(mirror)
             else:
                 run_network_git("clone", "--mirror", url, str(mirror), cwd=repo)
         except SyncError:

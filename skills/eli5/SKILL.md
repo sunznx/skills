@@ -13,28 +13,19 @@ Topic: $ARGUMENTS
 
 Generating the HTML is required. Do not substitute Mermaid, Markdown, or an inline chat diagram.
 
-Resolve `PROJECT_ROOT` in this order:
-
-1. Use the absolute `$PWF_PLAN_ROOT` when it names an existing directory.
-2. Otherwise use the current Git repository root.
-3. Without a project root, leave `PROJECT_ROOT` unset.
-
-Resolve `ARTIFACT_PARENT` in this order:
-
-1. Without `PROJECT_ROOT`, use `${TMPDIR:-/tmp}`.
-2. When `$PLAN_ID` names an existing `$PROJECT_ROOT/.planning/$PLAN_ID` directory, use its `artifacts` subdirectory.
-3. When `$PROJECT_ROOT/.active_plan` names an existing `.planning/<plan>` directory, use its `artifacts` subdirectory.
-4. Otherwise use `$PROJECT_ROOT/.planning`.
-
-Accept a plan name only when it is one path segment and does not contain `..`.
-
-Create a fresh directory for every run:
+Create a fresh directory under the current Git project's `.planning` directory. Outside a Git project, use `${TMPDIR:-/tmp}`.
 
 ```bash
+if PROJECT_ROOT="$(git rev-parse --show-toplevel 2>/dev/null)"; then
+  ARTIFACT_PARENT="$PROJECT_ROOT/.planning"
+else
+  ARTIFACT_PARENT="${TMPDIR:-/tmp}"
+fi
+mkdir -p "$ARTIFACT_PARENT"
 ARTIFACT_DIR="$(mktemp -d "$ARTIFACT_PARENT/eli5-XXXXXXXX")"
 ```
 
-Create `$ARTIFACT_PARENT` first when needed. Write the complete explainer to `$ARTIFACT_DIR/index.html`, then read the file back and confirm it is non-empty HTML.
+Write the complete explainer to `$ARTIFACT_DIR/index.html`, then read the file back and confirm it is non-empty HTML.
 
 ## Open the artifact
 
