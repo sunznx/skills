@@ -7,6 +7,1833 @@
       "note": "本地维护，暂无外部 Git 来源"
     },
     {
+      "name": "alibabacloud-ack-cli",
+      "source": "aliyun/alibabacloud-aiops-skills",
+      "url": "https://github.com/aliyun/alibabacloud-aiops-skills.git",
+      "path": "skills/container/csk/alibabacloud-ack-cli/SKILL.md",
+      "base_tree": "864a4ef164e45f700a42dd6755b46b3f79dca564"
+    },
+    {
+      "name": "alibabacloud-actiontrail-diagnosis",
+      "source": "aliyun/alibabacloud-aiops-skills",
+      "url": "https://github.com/aliyun/alibabacloud-aiops-skills.git",
+      "path": "skills/others/cseskillshub/alibabacloud-actiontrail-diagnosis/SKILL.md",
+      "base_tree": "2e439697a60ec1656fd9b4aa2ba6ada4647ba08d"
+    },
+    {
+      "name": "alibabacloud-aes-ack-pod-performance-profiling",
+      "source": "aliyun/alibabacloud-aiops-skills",
+      "url": "https://github.com/aliyun/alibabacloud-aiops-skills.git",
+      "path": "skills/playbooks/trouboper/alibabacloud-aes-ack-pod-performance-profiling/SKILL.md",
+      "base_tree": "f27e3ba523c2042df7c4af3456fe5b208c5bc863"
+    },
+    {
+      "name": "alibabacloud-aes-sysom-lingjun-diagnosis",
+      "source": "aliyun/alibabacloud-aiops-skills",
+      "url": "https://github.com/aliyun/alibabacloud-aiops-skills.git",
+      "path": "skills/others/devopsimpl/alibabacloud-aes-sysom-lingjun-diagnosis/SKILL.md",
+      "base_tree": "5a3bcb05e4c7cd8741912d1142aaef02c1820926"
+    },
+    {
+      "name": "alibabacloud-aes-sysom-os-diagnosis",
+      "source": "aliyun/alibabacloud-aiops-skills",
+      "url": "https://github.com/aliyun/alibabacloud-aiops-skills.git",
+      "path": "skills/others/devopsimpl/alibabacloud-aes-sysom-os-diagnosis/SKILL.md",
+      "base_tree": "3218a11be442134835d460b067f1ee0f31adde29"
+    },
+    {
+      "name": "alibabacloud-aes-sysom-pai-diagnosis",
+      "source": "aliyun/alibabacloud-aiops-skills",
+      "url": "https://github.com/aliyun/alibabacloud-aiops-skills.git",
+      "path": "skills/playbooks/trouboper/alibabacloud-aes-sysom-pai-diagnosis/SKILL.md",
+      "base_tree": "8faafac5ac2b10b5d240ae46666dc4f6c960395e"
+    },
+    {
+      "name": "alibabacloud-agent-toolkit-install",
+      "source": "aliyun/alibabacloud-aiops-skills",
+      "url": "https://github.com/aliyun/alibabacloud-aiops-skills.git",
+      "path": "skills/developertools/openapiexplorer/alibabacloud-agent-toolkit-install/SKILL.md",
+      "base_tree": "7713f41443f0527ee5efab7fce2f38481749d693"
+    },
+    {
+      "name": "alibabacloud-agentbay-aio-skills",
+      "source": "aliyun/alibabacloud-aiops-skills",
+      "url": "https://github.com/aliyun/alibabacloud-aiops-skills.git",
+      "path": "skills/aiml/agentbay/alibabacloud-agentbay-aio-skills/SKILL.md",
+      "base_tree": "a6daf823ba8606e80937d18e50382f1311651467"
+    },
+    {
+      "name": "alibabacloud-agentloop-contextstore",
+      "source": "aliyun/alibabacloud-aiops-skills",
+      "url": "https://github.com/aliyun/alibabacloud-aiops-skills.git",
+      "path": "skills/middleware/cms/alibabacloud-agentloop-contextstore/SKILL.md",
+      "base_tree": "a42b7588c541cd599ec6348a0aefd532ac047e34"
+    },
+    {
+      "name": "alibabacloud-agentloop-dataset",
+      "source": "aliyun/alibabacloud-aiops-skills",
+      "url": "https://github.com/aliyun/alibabacloud-aiops-skills.git",
+      "path": "skills/aiml/agentloop/alibabacloud-agentloop-dataset/SKILL.md",
+      "base_tree": "1e8d1a0b0811a5279009785bb268a13fbd9e5bd7"
+    },
+    {
+      "name": "alibabacloud-agentloop-evaluation",
+      "source": "aliyun/alibabacloud-aiops-skills",
+      "url": "https://github.com/aliyun/alibabacloud-aiops-skills.git",
+      "path": "skills/aiml/agentloop/alibabacloud-agentloop-evaluation/SKILL.md",
+      "base_tree": "bbe4b5109a1ac57d27e86dbee287216706decb2b"
+    },
+    {
+      "name": "alibabacloud-agentloop-experience",
+      "source": "aliyun/alibabacloud-aiops-skills",
+      "url": "https://github.com/aliyun/alibabacloud-aiops-skills.git",
+      "path": "skills/aiml/agentloop/alibabacloud-agentloop-experience/SKILL.md",
+      "base_tree": "841f1fea7fd292df1605f38d39c1f93359f079c2"
+    },
+    {
+      "name": "alibabacloud-agentloop-management",
+      "source": "aliyun/alibabacloud-aiops-skills",
+      "url": "https://github.com/aliyun/alibabacloud-aiops-skills.git",
+      "path": "skills/aiml/agentloop/alibabacloud-agentloop-management/SKILL.md",
+      "base_tree": "34f2acf3ac7fb6b0a4f636572d94f56e278dc83d"
+    },
+    {
+      "name": "alibabacloud-ai-innovation-lab-skill",
+      "source": "aliyun/alibabacloud-aiops-skills",
+      "url": "https://github.com/aliyun/alibabacloud-aiops-skills.git",
+      "path": "skills/computing/ecs/alibabacloud-ai-innovation-lab-skill/SKILL.md",
+      "base_tree": "7730708b3bb4ac8afea70664dad6f2a37975750b"
+    },
+    {
+      "name": "alibabacloud-aidbs-dgate-skill",
+      "source": "aliyun/alibabacloud-aiops-skills",
+      "url": "https://github.com/aliyun/alibabacloud-aiops-skills.git",
+      "path": "skills/database/dms/alibabacloud-aidbs-dgate-skill/SKILL.md",
+      "base_tree": "839adadfabe509504d5cda4cdabc4540825a348b"
+    },
+    {
+      "name": "alibabacloud-aisc-skill-inspection",
+      "source": "aliyun/alibabacloud-aiops-skills",
+      "url": "https://github.com/aliyun/alibabacloud-aiops-skills.git",
+      "path": "skills/security/asc/alibabacloud-aisc-skill-inspection/SKILL.md",
+      "base_tree": "6889aa723a5ae9ceb7119cec11f6455acb360ca6"
+    },
+    {
+      "name": "alibabacloud-ak-leak-incident-response",
+      "source": "aliyun/alibabacloud-aiops-skills",
+      "url": "https://github.com/aliyun/alibabacloud-aiops-skills.git",
+      "path": "skills/others/cseskillshub/alibabacloud-ak-leak-incident-response/SKILL.md",
+      "base_tree": "d20d8755794b16f4be20aa926352d7f13cccdc97"
+    },
+    {
+      "name": "alibabacloud-alb-ingress-doctor",
+      "source": "aliyun/alibabacloud-aiops-skills",
+      "url": "https://github.com/aliyun/alibabacloud-aiops-skills.git",
+      "path": "skills/others/devopsimpl/alibabacloud-alb-ingress-doctor/SKILL.md",
+      "base_tree": "1dbf450730e27c149d3c6e495458e7229d6ade6a"
+    },
+    {
+      "name": "alibabacloud-alinux-sysom-inspection",
+      "source": "aliyun/alibabacloud-aiops-skills",
+      "url": "https://github.com/aliyun/alibabacloud-aiops-skills.git",
+      "path": "skills/computing/alinux/alibabacloud-alinux-sysom-inspection/SKILL.md",
+      "base_tree": "6823199b3cba44556e6e3b8094436ece59e7cf6c"
+    },
+    {
+      "name": "alibabacloud-analyticdb-mysql-copilot",
+      "source": "aliyun/alibabacloud-aiops-skills",
+      "url": "https://github.com/aliyun/alibabacloud-aiops-skills.git",
+      "path": "skills/database/adb/alibabacloud-analyticdb-mysql-copilot/SKILL.md",
+      "base_tree": "13b9281c5a435e72ff80406264ebc5a36221fd4a"
+    },
+    {
+      "name": "alibabacloud-analyticdb-postgresql-ai-coaching-best-practice",
+      "source": "aliyun/alibabacloud-aiops-skills",
+      "url": "https://github.com/aliyun/alibabacloud-aiops-skills.git",
+      "path": "skills/database/solutions/alibabacloud-analyticdb-postgresql-ai-coaching-best-practice/SKILL.md",
+      "base_tree": "68f11aeb23e8c5271ba1fcb21b51625352eed51a"
+    },
+    {
+      "name": "alibabacloud-analyticdb-postgresql-knowledgebase-ops",
+      "source": "aliyun/alibabacloud-aiops-skills",
+      "url": "https://github.com/aliyun/alibabacloud-aiops-skills.git",
+      "path": "skills/database/adb/alibabacloud-analyticdb-postgresql-knowledgebase-ops/SKILL.md",
+      "base_tree": "79092ac3d7324f4b43480834130a2c767e1c5e9b"
+    },
+    {
+      "name": "alibabacloud-analyticdb-postgresql-supabase-ops",
+      "source": "aliyun/alibabacloud-aiops-skills",
+      "url": "https://github.com/aliyun/alibabacloud-aiops-skills.git",
+      "path": "skills/database/gpdb/alibabacloud-analyticdb-postgresql-supabase-ops/SKILL.md",
+      "base_tree": "421b5edbc6feb158a867a4161a270c4f4510156e"
+    },
+    {
+      "name": "alibabacloud-analyticdb-spark-application-analysis-helper",
+      "source": "aliyun/alibabacloud-aiops-skills",
+      "url": "https://github.com/aliyun/alibabacloud-aiops-skills.git",
+      "path": "skills/database/ads/alibabacloud-analyticdb-spark-application-analysis-helper/SKILL.md",
+      "base_tree": "ade404656fe2fc538366233b29fb40c89cc38b6d"
+    },
+    {
+      "name": "alibabacloud-apigw-inspection",
+      "source": "aliyun/alibabacloud-aiops-skills",
+      "url": "https://github.com/aliyun/alibabacloud-aiops-skills.git",
+      "path": "skills/middleware/apigateway/alibabacloud-apigw-inspection/SKILL.md",
+      "base_tree": "c7a8644472105a1e8af36708cfa3a67e897690a7"
+    },
+    {
+      "name": "alibabacloud-avatar-video",
+      "source": "aliyun/alibabacloud-aiops-skills",
+      "url": "https://github.com/aliyun/alibabacloud-aiops-skills.git",
+      "path": "skills/aiml/avatar/alibabacloud-avatar-video/SKILL.md",
+      "base_tree": "7bb7a40a2aad092cbfd82d5fcf3130a7945631fb"
+    },
+    {
+      "name": "alibabacloud-bailian-image-creator",
+      "source": "aliyun/alibabacloud-aiops-skills",
+      "url": "https://github.com/aliyun/alibabacloud-aiops-skills.git",
+      "path": "skills/aiml/sfm/alibabacloud-bailian-image-creator/SKILL.md",
+      "base_tree": "7ca65cfd82e4a0a3cde8eda5b198002e43d5e651"
+    },
+    {
+      "name": "alibabacloud-bailian-memory",
+      "source": "aliyun/alibabacloud-aiops-skills",
+      "url": "https://github.com/aliyun/alibabacloud-aiops-skills.git",
+      "path": "skills/aiml/sfm/alibabacloud-bailian-memory/SKILL.md",
+      "base_tree": "ab35eb179190b1425361229db3c768f863f29301"
+    },
+    {
+      "name": "alibabacloud-bailian-rag-knowledgebase",
+      "source": "aliyun/alibabacloud-aiops-skills",
+      "url": "https://github.com/aliyun/alibabacloud-aiops-skills.git",
+      "path": "skills/aiml/sfm/alibabacloud-bailian-rag-knowledgebase/SKILL.md",
+      "base_tree": "3fbade48674d3a437153f0ab69a37beb0a8f4e87"
+    },
+    {
+      "name": "alibabacloud-bailian-video-creator",
+      "source": "aliyun/alibabacloud-aiops-skills",
+      "url": "https://github.com/aliyun/alibabacloud-aiops-skills.git",
+      "path": "skills/aiml/sfm/alibabacloud-bailian-video-creator/SKILL.md",
+      "base_tree": "5460fc0f6966dc43c8d3627be87f9d605222189b"
+    },
+    {
+      "name": "alibabacloud-bailian-videoanalysis",
+      "source": "aliyun/alibabacloud-aiops-skills",
+      "url": "https://github.com/aliyun/alibabacloud-aiops-skills.git",
+      "path": "skills/aiml/sfm/alibabacloud-bailian-videoanalysis/SKILL.md",
+      "base_tree": "54d8952ecdbdae3e5d6fea424942ed4162c8e060"
+    },
+    {
+      "name": "alibabacloud-bailian-voice-creator",
+      "source": "aliyun/alibabacloud-aiops-skills",
+      "url": "https://github.com/aliyun/alibabacloud-aiops-skills.git",
+      "path": "skills/aiml/sfm/alibabacloud-bailian-voice-creator/SKILL.md",
+      "base_tree": "a4cfd2d27abbb4d188d24a2c05220efa7ccef95c"
+    },
+    {
+      "name": "alibabacloud-cadt-arch-draw",
+      "source": "aliyun/alibabacloud-aiops-skills",
+      "url": "https://github.com/aliyun/alibabacloud-aiops-skills.git",
+      "path": "skills/migrationom/bpstudio/alibabacloud-cadt-arch-draw/SKILL.md",
+      "base_tree": "6b6680a1c989c4d60e0de585744e11dba2cb8ac9"
+    },
+    {
+      "name": "alibabacloud-cadt-deploy-on-aliyun",
+      "source": "aliyun/alibabacloud-aiops-skills",
+      "url": "https://github.com/aliyun/alibabacloud-aiops-skills.git",
+      "path": "skills/migrationom/bpstudio/alibabacloud-cadt-deploy-on-aliyun/SKILL.md",
+      "base_tree": "58c5bf59e1eda0dd33fcdbc4c03718feef2d3fa9"
+    },
+    {
+      "name": "alibabacloud-cadt-probe",
+      "source": "aliyun/alibabacloud-aiops-skills",
+      "url": "https://github.com/aliyun/alibabacloud-aiops-skills.git",
+      "path": "skills/migrationom/bpstudio/alibabacloud-cadt-probe/SKILL.md",
+      "base_tree": "09a2e7b9882c351d2c8077ed8138df035df1f7bb"
+    },
+    {
+      "name": "alibabacloud-cas-ssl-cert-deploy",
+      "source": "aliyun/alibabacloud-aiops-skills",
+      "url": "https://github.com/aliyun/alibabacloud-aiops-skills.git",
+      "path": "skills/security/cas/alibabacloud-cas-ssl-cert-deploy/SKILL.md",
+      "base_tree": "d5e1c6eb323569f5bc1fd23800771f819893435e"
+    },
+    {
+      "name": "alibabacloud-cas-ssl-cert-purchase",
+      "source": "aliyun/alibabacloud-aiops-skills",
+      "url": "https://github.com/aliyun/alibabacloud-aiops-skills.git",
+      "path": "skills/security/cas/alibabacloud-cas-ssl-cert-purchase/SKILL.md",
+      "base_tree": "f344eb5cf097fb04121a55183107c66558fb863f"
+    },
+    {
+      "name": "alibabacloud-cas-ssl-common-tools",
+      "source": "aliyun/alibabacloud-aiops-skills",
+      "url": "https://github.com/aliyun/alibabacloud-aiops-skills.git",
+      "path": "skills/security/cas/alibabacloud-cas-ssl-common-tools/SKILL.md",
+      "base_tree": "9c57b7d18b755473a942c2e4cc31a95ea772031b"
+    },
+    {
+      "name": "alibabacloud-cdn-refresh-preload",
+      "source": "aliyun/alibabacloud-aiops-skills",
+      "url": "https://github.com/aliyun/alibabacloud-aiops-skills.git",
+      "path": "skills/others/cseskillshub/alibabacloud-cdn-refresh-preload/SKILL.md",
+      "base_tree": "9653e33e8bfe19969009225d58d21914bf42e3de"
+    },
+    {
+      "name": "alibabacloud-cdn-traffic-anomaly",
+      "source": "aliyun/alibabacloud-aiops-skills",
+      "url": "https://github.com/aliyun/alibabacloud-aiops-skills.git",
+      "path": "skills/others/cseskillshub/alibabacloud-cdn-traffic-anomaly/SKILL.md",
+      "base_tree": "79a606d652135f2833398a9dd308d2746ae724a1"
+    },
+    {
+      "name": "alibabacloud-cfw-acl-diagnosis",
+      "source": "aliyun/alibabacloud-aiops-skills",
+      "url": "https://github.com/aliyun/alibabacloud-aiops-skills.git",
+      "path": "skills/playbooks/trouboper/alibabacloud-cfw-acl-diagnosis/SKILL.md",
+      "base_tree": "649106fd18f18840cb7000f9ee372556f1ae3de3"
+    },
+    {
+      "name": "alibabacloud-cfw-exposure-detection",
+      "source": "aliyun/alibabacloud-aiops-skills",
+      "url": "https://github.com/aliyun/alibabacloud-aiops-skills.git",
+      "path": "skills/security/cloudfw/alibabacloud-cfw-exposure-detection/SKILL.md",
+      "base_tree": "38834020e71cc218892f5acc5bd97b445d084fd4"
+    },
+    {
+      "name": "alibabacloud-cfw-internet-firewall-protect",
+      "source": "aliyun/alibabacloud-aiops-skills",
+      "url": "https://github.com/aliyun/alibabacloud-aiops-skills.git",
+      "path": "skills/security/cfw/alibabacloud-cfw-internet-firewall-protect/SKILL.md",
+      "base_tree": "b0079c8a764aa7f564bfc7c27924e0bcf1fa285f"
+    },
+    {
+      "name": "alibabacloud-cfw-ips-event",
+      "source": "aliyun/alibabacloud-aiops-skills",
+      "url": "https://github.com/aliyun/alibabacloud-aiops-skills.git",
+      "path": "skills/security/cloudfw/alibabacloud-cfw-ips-event/SKILL.md",
+      "base_tree": "87b0082831a743e13dce7a16ba6bd1cda5f8e757"
+    },
+    {
+      "name": "alibabacloud-cfw-nat-firewall-protect",
+      "source": "aliyun/alibabacloud-aiops-skills",
+      "url": "https://github.com/aliyun/alibabacloud-aiops-skills.git",
+      "path": "skills/security/cfw/alibabacloud-cfw-nat-firewall-protect/SKILL.md",
+      "base_tree": "2523b7090980b81b70d6efdb635aaf8cfb0aa78c"
+    },
+    {
+      "name": "alibabacloud-cfw-status-overview",
+      "source": "aliyun/alibabacloud-aiops-skills",
+      "url": "https://github.com/aliyun/alibabacloud-aiops-skills.git",
+      "path": "skills/security/cloudfw/alibabacloud-cfw-status-overview/SKILL.md",
+      "base_tree": "63dad2caa0b8a76faf4c1095a0e5c0cc1f4a012d"
+    },
+    {
+      "name": "alibabacloud-chatapp-message-send",
+      "source": "aliyun/alibabacloud-aiops-skills",
+      "url": "https://github.com/aliyun/alibabacloud-aiops-skills.git",
+      "path": "skills/entcmc/cams/alibabacloud-chatapp-message-send/SKILL.md",
+      "base_tree": "ea69066bb697d72809dc6ec987ed5aaf9cbfde79"
+    },
+    {
+      "name": "alibabacloud-cksync-plan",
+      "source": "aliyun/alibabacloud-aiops-skills",
+      "url": "https://github.com/aliyun/alibabacloud-aiops-skills.git",
+      "path": "skills/database/clickhouse/alibabacloud-cksync-plan/SKILL.md",
+      "base_tree": "872ac6ca601c84f9c7126d163a857eb0121e701e"
+    },
+    {
+      "name": "alibabacloud-cli-guidance",
+      "source": "aliyun/alibabacloud-aiops-skills",
+      "url": "https://github.com/aliyun/alibabacloud-aiops-skills.git",
+      "path": "skills/developertools/solutions/alibabacloud-cli-guidance/SKILL.md",
+      "base_tree": "a4b2519484b1c115778affda36397ca2c394c052"
+    },
+    {
+      "name": "alibabacloud-cloud-native-internet-diagnostics",
+      "source": "aliyun/alibabacloud-aiops-skills",
+      "url": "https://github.com/aliyun/alibabacloud-aiops-skills.git",
+      "path": "skills/others/cseskillshub/alibabacloud-cloud-native-internet-diagnostics/SKILL.md",
+      "base_tree": "4fee6e863b98765fdebac2334744dea691679697"
+    },
+    {
+      "name": "alibabacloud-cloudbackup-ecs-file-backup-essential-edition",
+      "source": "aliyun/alibabacloud-aiops-skills",
+      "url": "https://github.com/aliyun/alibabacloud-aiops-skills.git",
+      "path": "skills/storage/hbr/alibabacloud-cloudbackup-ecs-file-backup-essential-edition/SKILL.md",
+      "base_tree": "4f633e67e57d3383b0a5f773860a7627592490d6"
+    },
+    {
+      "name": "alibabacloud-cloudfw-vpc-firewall-diagnosis",
+      "source": "aliyun/alibabacloud-aiops-skills",
+      "url": "https://github.com/aliyun/alibabacloud-aiops-skills.git",
+      "path": "skills/playbooks/trouboper/alibabacloud-cloudfw-vpc-firewall-diagnosis/SKILL.md",
+      "base_tree": "02782e1d559b3e5bb2187e48c96132084fb649a9"
+    },
+    {
+      "name": "alibabacloud-cms-alert-rule-create",
+      "source": "aliyun/alibabacloud-aiops-skills",
+      "url": "https://github.com/aliyun/alibabacloud-aiops-skills.git",
+      "path": "skills/middleware/cms/alibabacloud-cms-alert-rule-create/SKILL.md",
+      "base_tree": "33b7ff7b17672560a306f9cb351b2d1b849396be"
+    },
+    {
+      "name": "alibabacloud-cms-dataset",
+      "source": "aliyun/alibabacloud-aiops-skills",
+      "url": "https://github.com/aliyun/alibabacloud-aiops-skills.git",
+      "path": "skills/middleware/cms/alibabacloud-cms-dataset/SKILL.md",
+      "base_tree": "19dba0ac7cf67021904b92426e748e369f6f8a25"
+    },
+    {
+      "name": "alibabacloud-cms-manage",
+      "source": "aliyun/alibabacloud-aiops-skills",
+      "url": "https://github.com/aliyun/alibabacloud-aiops-skills.git",
+      "path": "skills/middleware/cms/alibabacloud-cms-manage/SKILL.md",
+      "base_tree": "6ede28ee7099153ba0f2c0d6e4d1eab2a840ba1e"
+    },
+    {
+      "name": "alibabacloud-csas-user-device-ops",
+      "source": "aliyun/alibabacloud-aiops-skills",
+      "url": "https://github.com/aliyun/alibabacloud-aiops-skills.git",
+      "path": "skills/security/csas/alibabacloud-csas-user-device-ops/SKILL.md",
+      "base_tree": "d6927a78d298d1bdd55ed5a8bac1e187ba6d8850"
+    },
+    {
+      "name": "alibabacloud-das-agent",
+      "source": "aliyun/alibabacloud-aiops-skills",
+      "url": "https://github.com/aliyun/alibabacloud-aiops-skills.git",
+      "path": "skills/database/hdm/alibabacloud-das-agent/SKILL.md",
+      "base_tree": "5d3b92d78c0d42e3663115e5c74cb1cca9520702"
+    },
+    {
+      "name": "alibabacloud-data-agent-skill",
+      "source": "aliyun/alibabacloud-aiops-skills",
+      "url": "https://github.com/aliyun/alibabacloud-aiops-skills.git",
+      "path": "skills/database/dms/alibabacloud-data-agent-skill/SKILL.md",
+      "base_tree": "e40734a4ed9275e5baaa474d808db07a60bc5c01"
+    },
+    {
+      "name": "alibabacloud-datahub-manage",
+      "source": "aliyun/alibabacloud-aiops-skills",
+      "url": "https://github.com/aliyun/alibabacloud-aiops-skills.git",
+      "path": "skills/analyticscomputing/datahub/alibabacloud-datahub-manage/SKILL.md",
+      "base_tree": "3caedd7043b63f78e99cf1c699acad7520d0091d"
+    },
+    {
+      "name": "alibabacloud-dataphin-skills",
+      "source": "aliyun/alibabacloud-aiops-skills",
+      "url": "https://github.com/aliyun/alibabacloud-aiops-skills.git",
+      "path": "skills/analyticscomputing/dataphin/alibabacloud-dataphin-skills/SKILL.md",
+      "base_tree": "97ef4833741d73e040d6c80f2657c877a0859394"
+    },
+    {
+      "name": "alibabacloud-dataworks-data-agent",
+      "source": "aliyun/alibabacloud-aiops-skills",
+      "url": "https://github.com/aliyun/alibabacloud-aiops-skills.git",
+      "path": "skills/analyticscomputing/dide/alibabacloud-dataworks-data-agent/SKILL.md",
+      "base_tree": "9d07307374de57f0c66bbf18350cc3955ad254ac"
+    },
+    {
+      "name": "alibabacloud-dataworks-data-ops",
+      "source": "aliyun/alibabacloud-aiops-skills",
+      "url": "https://github.com/aliyun/alibabacloud-aiops-skills.git",
+      "path": "skills/analyticscomputing/dide/alibabacloud-dataworks-data-ops/SKILL.md",
+      "base_tree": "d8d6e7f614111637a84fa832976c589d42a4df71"
+    },
+    {
+      "name": "alibabacloud-dataworks-datastudio-develop",
+      "source": "aliyun/alibabacloud-aiops-skills",
+      "url": "https://github.com/aliyun/alibabacloud-aiops-skills.git",
+      "path": "skills/analyticscomputing/dide/alibabacloud-dataworks-datastudio-develop/SKILL.md",
+      "base_tree": "ed67a8603b53e742b42e30b38f9a5a53f04f0279"
+    },
+    {
+      "name": "alibabacloud-dataworks-infra-manage",
+      "source": "aliyun/alibabacloud-aiops-skills",
+      "url": "https://github.com/aliyun/alibabacloud-aiops-skills.git",
+      "path": "skills/analyticscomputing/dide/alibabacloud-dataworks-infra-manage/SKILL.md",
+      "base_tree": "3d5dc25135ef690d2a0bf702e455c7850b1a7d1f"
+    },
+    {
+      "name": "alibabacloud-dataworks-metadata",
+      "source": "aliyun/alibabacloud-aiops-skills",
+      "url": "https://github.com/aliyun/alibabacloud-aiops-skills.git",
+      "path": "skills/analyticscomputing/dide/alibabacloud-dataworks-metadata/SKILL.md",
+      "base_tree": "e607fb7e4464b038f03dac868165d1e6a8d5ead2"
+    },
+    {
+      "name": "alibabacloud-dataworks-semantic",
+      "source": "aliyun/alibabacloud-aiops-skills",
+      "url": "https://github.com/aliyun/alibabacloud-aiops-skills.git",
+      "path": "skills/analyticscomputing/dide/alibabacloud-dataworks-semantic/SKILL.md",
+      "base_tree": "a77a3495085c1c9b91719f486037263f9bdbe3df"
+    },
+    {
+      "name": "alibabacloud-dataworks-workspace-manage",
+      "source": "aliyun/alibabacloud-aiops-skills",
+      "url": "https://github.com/aliyun/alibabacloud-aiops-skills.git",
+      "path": "skills/analyticscomputing/dide/alibabacloud-dataworks-workspace-manage/SKILL.md",
+      "base_tree": "ac78252e26ffb4ee5fd2ead77e2edffca677b371"
+    },
+    {
+      "name": "alibabacloud-ddos-native-intercept-query",
+      "source": "aliyun/alibabacloud-aiops-skills",
+      "url": "https://github.com/aliyun/alibabacloud-aiops-skills.git",
+      "path": "skills/security/ddos/alibabacloud-ddos-native-intercept-query/SKILL.md",
+      "base_tree": "b6b8f272daab4ff27667e9832d65c3da834a1584"
+    },
+    {
+      "name": "alibabacloud-ddos-origin-exposure-detector",
+      "source": "aliyun/alibabacloud-aiops-skills",
+      "url": "https://github.com/aliyun/alibabacloud-aiops-skills.git",
+      "path": "skills/security/ddos/alibabacloud-ddos-origin-exposure-detector/SKILL.md",
+      "base_tree": "56d96e8aec2ed28595ab4b3a0f61192cbe086a14"
+    },
+    {
+      "name": "alibabacloud-ddos-security-monitor",
+      "source": "aliyun/alibabacloud-aiops-skills",
+      "url": "https://github.com/aliyun/alibabacloud-aiops-skills.git",
+      "path": "skills/security/ddos/alibabacloud-ddos-security-monitor/SKILL.md",
+      "base_tree": "27497ae7448277b3e2e704f63423f6f5c7675dd8"
+    },
+    {
+      "name": "alibabacloud-ddoscoo-domain-configuration-backup",
+      "source": "aliyun/alibabacloud-aiops-skills",
+      "url": "https://github.com/aliyun/alibabacloud-aiops-skills.git",
+      "path": "skills/security/ddos/alibabacloud-ddoscoo-domain-configuration-backup/SKILL.md",
+      "base_tree": "4bf142b66a8f2dce81e22843571c23e34395a903"
+    },
+    {
+      "name": "alibabacloud-ddoscoo-intercept-query",
+      "source": "aliyun/alibabacloud-aiops-skills",
+      "url": "https://github.com/aliyun/alibabacloud-aiops-skills.git",
+      "path": "skills/security/ddos/alibabacloud-ddoscoo-intercept-query/SKILL.md",
+      "base_tree": "b295cb02364b87ec1bf2e9ba3d1e1e7f637c8ca5"
+    },
+    {
+      "name": "alibabacloud-devops",
+      "source": "aliyun/alibabacloud-aiops-skills",
+      "url": "https://github.com/aliyun/alibabacloud-aiops-skills.git",
+      "path": "skills/developertools/rdc/alibabacloud-devops/SKILL.md",
+      "base_tree": "28ca4304d497bc3380ce6cecff3082f66a54da3f"
+    },
+    {
+      "name": "alibabacloud-dlf-manage",
+      "source": "aliyun/alibabacloud-aiops-skills",
+      "url": "https://github.com/aliyun/alibabacloud-aiops-skills.git",
+      "path": "skills/analyticscomputing/dlf/alibabacloud-dlf-manage/SKILL.md",
+      "base_tree": "387f7025d7f2c354e22fea0eb5876d5442143e2f"
+    },
+    {
+      "name": "alibabacloud-dms-data-agent-platform-setup",
+      "source": "aliyun/alibabacloud-aiops-skills",
+      "url": "https://github.com/aliyun/alibabacloud-aiops-skills.git",
+      "path": "skills/database/dms/alibabacloud-dms-data-agent-platform-setup/SKILL.md",
+      "base_tree": "f03f698b80f73e186d51e74c8cfc655721542df6"
+    },
+    {
+      "name": "alibabacloud-dms-skill",
+      "source": "aliyun/alibabacloud-aiops-skills",
+      "url": "https://github.com/aliyun/alibabacloud-aiops-skills.git",
+      "path": "skills/database/dms/alibabacloud-dms-skill/SKILL.md",
+      "base_tree": "adc0a9e6cbc91cb417e168ed17d63342a2b95230"
+    },
+    {
+      "name": "alibabacloud-dns-resolve-diagnose-customer",
+      "source": "aliyun/alibabacloud-aiops-skills",
+      "url": "https://github.com/aliyun/alibabacloud-aiops-skills.git",
+      "path": "skills/others/devopsimpl/alibabacloud-dns-resolve-diagnose-customer/SKILL.md",
+      "base_tree": "00d6079c8e0829f69ff352403e6073542f0015ec"
+    },
+    {
+      "name": "alibabacloud-docmind-parse",
+      "source": "aliyun/alibabacloud-aiops-skills",
+      "url": "https://github.com/aliyun/alibabacloud-aiops-skills.git",
+      "path": "skills/aiml/docmind/alibabacloud-docmind-parse/SKILL.md",
+      "base_tree": "4a175c8d92519ffadf7e3b91390b40b1718934cf"
+    },
+    {
+      "name": "alibabacloud-dsc-audit",
+      "source": "aliyun/alibabacloud-aiops-skills",
+      "url": "https://github.com/aliyun/alibabacloud-aiops-skills.git",
+      "path": "skills/security/sddp/alibabacloud-dsc-audit/SKILL.md",
+      "base_tree": "a57b0e921970598b6205c0fba1aedf0353f9f017"
+    },
+    {
+      "name": "alibabacloud-dts-task-manager",
+      "source": "aliyun/alibabacloud-aiops-skills",
+      "url": "https://github.com/aliyun/alibabacloud-aiops-skills.git",
+      "path": "skills/database/dts/alibabacloud-dts-task-manager/SKILL.md",
+      "base_tree": "a0e40ac17603196725500827a6d969f14b85012e"
+    },
+    {
+      "name": "alibabacloud-dts-task-query",
+      "source": "aliyun/alibabacloud-aiops-skills",
+      "url": "https://github.com/aliyun/alibabacloud-aiops-skills.git",
+      "path": "skills/others/devopsimpl/alibabacloud-dts-task-query/SKILL.md",
+      "base_tree": "a158949e254a9b7ce3a25fcc45e793c43690f9ec"
+    },
+    {
+      "name": "alibabacloud-ebs-disk-events",
+      "source": "aliyun/alibabacloud-aiops-skills",
+      "url": "https://github.com/aliyun/alibabacloud-aiops-skills.git",
+      "path": "skills/storage/disk/alibabacloud-ebs-disk-events/SKILL.md",
+      "base_tree": "81036ca47a361f03df115506f899b37b01f47025"
+    },
+    {
+      "name": "alibabacloud-ebs-disk-metric-analyzer",
+      "source": "aliyun/alibabacloud-aiops-skills",
+      "url": "https://github.com/aliyun/alibabacloud-aiops-skills.git",
+      "path": "skills/storage/disk/alibabacloud-ebs-disk-metric-analyzer/SKILL.md",
+      "base_tree": "2c0d67e0efb15990185170e645ab31c54ba7dff1"
+    },
+    {
+      "name": "alibabacloud-ebs-disk-snapshot-management",
+      "source": "aliyun/alibabacloud-aiops-skills",
+      "url": "https://github.com/aliyun/alibabacloud-aiops-skills.git",
+      "path": "skills/storage/disk/alibabacloud-ebs-disk-snapshot-management/SKILL.md",
+      "base_tree": "471b9718a7a6784fa32a55fe919452c457bd74e3"
+    },
+    {
+      "name": "alibabacloud-ebs-usage-summary",
+      "source": "aliyun/alibabacloud-aiops-skills",
+      "url": "https://github.com/aliyun/alibabacloud-aiops-skills.git",
+      "path": "skills/storage/disk/alibabacloud-ebs-usage-summary/SKILL.md",
+      "base_tree": "1aace981a923b299e7421b45b247ec91318db860"
+    },
+    {
+      "name": "alibabacloud-ecs-code-deploy",
+      "source": "aliyun/alibabacloud-aiops-skills",
+      "url": "https://github.com/aliyun/alibabacloud-aiops-skills.git",
+      "path": "skills/computing/computenest/alibabacloud-ecs-code-deploy/SKILL.md",
+      "base_tree": "e7117f03cd09d249c5dfa49e60285f80a069e07c"
+    },
+    {
+      "name": "alibabacloud-ecs-diagnose",
+      "source": "aliyun/alibabacloud-aiops-skills",
+      "url": "https://github.com/aliyun/alibabacloud-aiops-skills.git",
+      "path": "skills/computing/ecs/alibabacloud-ecs-diagnose/SKILL.md",
+      "base_tree": "da3ddb98ec9105398ca6221d26ee50ab59de4f98"
+    },
+    {
+      "name": "alibabacloud-ecs-disaster-recovery-image",
+      "source": "aliyun/alibabacloud-aiops-skills",
+      "url": "https://github.com/aliyun/alibabacloud-aiops-skills.git",
+      "path": "skills/computing/ecs/alibabacloud-ecs-disaster-recovery-image/SKILL.md",
+      "base_tree": "651f1d8bcf78ee3d2b235b70a1cfb4bdd9856c55"
+    },
+    {
+      "name": "alibabacloud-ecs-disaster-recovery-snapshot",
+      "source": "aliyun/alibabacloud-aiops-skills",
+      "url": "https://github.com/aliyun/alibabacloud-aiops-skills.git",
+      "path": "skills/computing/ecs/alibabacloud-ecs-disaster-recovery-snapshot/SKILL.md",
+      "base_tree": "adc6733384c7c5080b793d35f2a8ce845f1e32fa"
+    },
+    {
+      "name": "alibabacloud-ecs-gpu-diagnosis",
+      "source": "aliyun/alibabacloud-aiops-skills",
+      "url": "https://github.com/aliyun/alibabacloud-aiops-skills.git",
+      "path": "skills/others/devopsimpl/alibabacloud-ecs-gpu-diagnosis/SKILL.md",
+      "base_tree": "6cd726af06d47b64d1196d69c486cc8e7263eb8b"
+    },
+    {
+      "name": "alibabacloud-ecs-health-inspection",
+      "source": "aliyun/alibabacloud-aiops-skills",
+      "url": "https://github.com/aliyun/alibabacloud-aiops-skills.git",
+      "path": "skills/playbooks/trouboper/alibabacloud-ecs-health-inspection/SKILL.md",
+      "base_tree": "2316a669e2eb199737b5fe2ec6c887f1504b5705"
+    },
+    {
+      "name": "alibabacloud-ecs-install-extension",
+      "source": "aliyun/alibabacloud-aiops-skills",
+      "url": "https://github.com/aliyun/alibabacloud-aiops-skills.git",
+      "path": "skills/migrationom/oos/alibabacloud-ecs-install-extension/SKILL.md",
+      "base_tree": "53c5c2e643048930654f0bde54c03e32dc0660e2"
+    },
+    {
+      "name": "alibabacloud-ecs-linux-os-troubleshooting",
+      "source": "aliyun/alibabacloud-aiops-skills",
+      "url": "https://github.com/aliyun/alibabacloud-aiops-skills.git",
+      "path": "skills/computing/ecs/alibabacloud-ecs-linux-os-troubleshooting/SKILL.md",
+      "base_tree": "b6bb98bac72f8a40086ef2a1e41190c4feaaf1cb"
+    },
+    {
+      "name": "alibabacloud-ecs-patch-management",
+      "source": "aliyun/alibabacloud-aiops-skills",
+      "url": "https://github.com/aliyun/alibabacloud-aiops-skills.git",
+      "path": "skills/migrationom/oos/alibabacloud-ecs-patch-management/SKILL.md",
+      "base_tree": "94277a36972a27169b444dd37f5a8278932bbfbb"
+    },
+    {
+      "name": "alibabacloud-ecs-reboot-or-crash-diagnosis",
+      "source": "aliyun/alibabacloud-aiops-skills",
+      "url": "https://github.com/aliyun/alibabacloud-aiops-skills.git",
+      "path": "skills/others/devopsimpl/alibabacloud-ecs-reboot-or-crash-diagnosis/SKILL.md",
+      "base_tree": "63198fc4dc9b3fd0463190463d58f8205fb406d2"
+    },
+    {
+      "name": "alibabacloud-ecs-vpc-publicnetwork-troubleshoot",
+      "source": "aliyun/alibabacloud-aiops-skills",
+      "url": "https://github.com/aliyun/alibabacloud-aiops-skills.git",
+      "path": "skills/others/cseskillshub/alibabacloud-ecs-vpc-publicnetwork-troubleshoot/SKILL.md",
+      "base_tree": "aa207bde58320f8c0d68c376934c5cd800951aa5"
+    },
+    {
+      "name": "alibabacloud-ecs-windows-os-troubleshooting",
+      "source": "aliyun/alibabacloud-aiops-skills",
+      "url": "https://github.com/aliyun/alibabacloud-aiops-skills.git",
+      "path": "skills/computing/ecs/alibabacloud-ecs-windows-os-troubleshooting/SKILL.md",
+      "base_tree": "741ca5b33f3ef7e7c829df5fda361a45da56d390"
+    },
+    {
+      "name": "alibabacloud-ehpc-instant-job-skill",
+      "source": "aliyun/alibabacloud-aiops-skills",
+      "url": "https://github.com/aliyun/alibabacloud-aiops-skills.git",
+      "path": "skills/computing/ehpc/alibabacloud-ehpc-instant-job-skill/SKILL.md",
+      "base_tree": "1c35da13cc4e0ffb96a172a7cc412bb4fe88a084"
+    },
+    {
+      "name": "alibabacloud-elasticsearch-instance-diagnose",
+      "source": "aliyun/alibabacloud-aiops-skills",
+      "url": "https://github.com/aliyun/alibabacloud-aiops-skills.git",
+      "path": "skills/analyticscomputing/elasticsearch/alibabacloud-elasticsearch-instance-diagnose/SKILL.md",
+      "base_tree": "fc8fcb9873b40deaefbfbca59fb4f98948951cbd"
+    },
+    {
+      "name": "alibabacloud-elasticsearch-instance-manage",
+      "source": "aliyun/alibabacloud-aiops-skills",
+      "url": "https://github.com/aliyun/alibabacloud-aiops-skills.git",
+      "path": "skills/analyticscomputing/elasticsearch/alibabacloud-elasticsearch-instance-manage/SKILL.md",
+      "base_tree": "1edea2153497f395891480cd5787cc3bb9ec3491"
+    },
+    {
+      "name": "alibabacloud-elasticsearch-log-config-generator",
+      "source": "aliyun/alibabacloud-aiops-skills",
+      "url": "https://github.com/aliyun/alibabacloud-aiops-skills.git",
+      "path": "skills/analyticscomputing/elasticsearch/alibabacloud-elasticsearch-log-config-generator/SKILL.md",
+      "base_tree": "1c49fa8d77e54f105650765410297e0281e72a55"
+    },
+    {
+      "name": "alibabacloud-elasticsearch-network-manage",
+      "source": "aliyun/alibabacloud-aiops-skills",
+      "url": "https://github.com/aliyun/alibabacloud-aiops-skills.git",
+      "path": "skills/analyticscomputing/elasticsearch/alibabacloud-elasticsearch-network-manage/SKILL.md",
+      "base_tree": "ff3704e1cec7ff1e2e9b55773ade14568cd7d68f"
+    },
+    {
+      "name": "alibabacloud-emas-apm-query",
+      "source": "aliyun/alibabacloud-aiops-skills",
+      "url": "https://github.com/aliyun/alibabacloud-aiops-skills.git",
+      "path": "skills/entcmc/emas/alibabacloud-emas-apm-query/SKILL.md",
+      "base_tree": "2f1d989b1025b4699937e763c11b123dfd75a5b3"
+    },
+    {
+      "name": "alibabacloud-emas-apm-remotelog",
+      "source": "aliyun/alibabacloud-aiops-skills",
+      "url": "https://github.com/aliyun/alibabacloud-aiops-skills.git",
+      "path": "skills/entcmc/emas/alibabacloud-emas-apm-remotelog/SKILL.md",
+      "base_tree": "555cc10434b9d6db0c5feb72dce483652e412147"
+    },
+    {
+      "name": "alibabacloud-emr-cluster-manage",
+      "source": "aliyun/alibabacloud-aiops-skills",
+      "url": "https://github.com/aliyun/alibabacloud-aiops-skills.git",
+      "path": "skills/analyticscomputing/emapreduce/alibabacloud-emr-cluster-manage/SKILL.md",
+      "base_tree": "2165c3d3c91bd8600c94fd4c8704e95b7b786c0f"
+    },
+    {
+      "name": "alibabacloud-emr-spark-manage",
+      "source": "aliyun/alibabacloud-aiops-skills",
+      "url": "https://github.com/aliyun/alibabacloud-aiops-skills.git",
+      "path": "skills/analyticscomputing/emapreduce/alibabacloud-emr-spark-manage/SKILL.md",
+      "base_tree": "b9b606cdf35026f5abec58db0a4558d3d19c08cd"
+    },
+    {
+      "name": "alibabacloud-emr-starrocks-assistant",
+      "source": "aliyun/alibabacloud-aiops-skills",
+      "url": "https://github.com/aliyun/alibabacloud-aiops-skills.git",
+      "path": "skills/analyticscomputing/emapreduce/alibabacloud-emr-starrocks-assistant/SKILL.md",
+      "base_tree": "9c7a37cbc283edac0afa913d806c30265c76e244"
+    },
+    {
+      "name": "alibabacloud-emr-starrocks-manage",
+      "source": "aliyun/alibabacloud-aiops-skills",
+      "url": "https://github.com/aliyun/alibabacloud-aiops-skills.git",
+      "path": "skills/analyticscomputing/emapreduce/alibabacloud-emr-starrocks-manage/SKILL.md",
+      "base_tree": "865feed8076fc446d6b54d0bf6267298f561a7c0"
+    },
+    {
+      "name": "alibabacloud-error-troubleshoot",
+      "source": "aliyun/alibabacloud-aiops-skills",
+      "url": "https://github.com/aliyun/alibabacloud-aiops-skills.git",
+      "path": "skills/developertools/openapiexplorer/alibabacloud-error-troubleshoot/SKILL.md",
+      "base_tree": "c724698118410f4726880fb4b1961c9f586bba1c"
+    },
+    {
+      "name": "alibabacloud-esa-pages-deploy",
+      "source": "aliyun/alibabacloud-aiops-skills",
+      "url": "https://github.com/aliyun/alibabacloud-aiops-skills.git",
+      "path": "skills/netcdn/dcdn/alibabacloud-esa-pages-deploy/SKILL.md",
+      "base_tree": "66df1b646967cdfd3c8c4f07a91e11868d445bf0"
+    },
+    {
+      "name": "alibabacloud-find-skills",
+      "source": "aliyun/alibabacloud-aiops-skills",
+      "url": "https://github.com/aliyun/alibabacloud-aiops-skills.git",
+      "path": "skills/developertools/solutions/alibabacloud-find-skills/SKILL.md",
+      "base_tree": "6d9481dcee43dea7fc3a9a703f199faf1469b2b5"
+    },
+    {
+      "name": "alibabacloud-finops-inspect",
+      "source": "aliyun/alibabacloud-aiops-skills",
+      "url": "https://github.com/aliyun/alibabacloud-aiops-skills.git",
+      "path": "skills/others/accs/alibabacloud-finops-inspect/SKILL.md",
+      "base_tree": "2901b63e53b0ba5156662954dfe2408114806dbb"
+    },
+    {
+      "name": "alibabacloud-flink-instance-manage",
+      "source": "aliyun/alibabacloud-aiops-skills",
+      "url": "https://github.com/aliyun/alibabacloud-aiops-skills.git",
+      "path": "skills/analyticscomputing/sc/alibabacloud-flink-instance-manage/SKILL.md",
+      "base_tree": "6c718264acc2c9865c0c398b01e0d5e5e30f3f57"
+    },
+    {
+      "name": "alibabacloud-flink-knowledge",
+      "source": "aliyun/alibabacloud-aiops-skills",
+      "url": "https://github.com/aliyun/alibabacloud-aiops-skills.git",
+      "path": "skills/analyticscomputing/sc/alibabacloud-flink-knowledge/SKILL.md",
+      "base_tree": "a861e0aba53b8bb7e64ef740c1fc32419bdf2d35"
+    },
+    {
+      "name": "alibabacloud-flink-python-coding",
+      "source": "aliyun/alibabacloud-aiops-skills",
+      "url": "https://github.com/aliyun/alibabacloud-aiops-skills.git",
+      "path": "skills/analyticscomputing/sc/alibabacloud-flink-python-coding/SKILL.md",
+      "base_tree": "d81ed7d23cdf45c9aa00419cca90e35a4a6ecf91"
+    },
+    {
+      "name": "alibabacloud-flink-workspace-ops",
+      "source": "aliyun/alibabacloud-aiops-skills",
+      "url": "https://github.com/aliyun/alibabacloud-aiops-skills.git",
+      "path": "skills/analyticscomputing/sc/alibabacloud-flink-workspace-ops/SKILL.md",
+      "base_tree": "50aa56be83127f50f6d32a8fc4b78deec1ca73ca"
+    },
+    {
+      "name": "alibabacloud-governance-evaluation-report",
+      "source": "aliyun/alibabacloud-aiops-skills",
+      "url": "https://github.com/aliyun/alibabacloud-aiops-skills.git",
+      "path": "skills/migrationom/governance/alibabacloud-governance-evaluation-report/SKILL.md",
+      "base_tree": "cba46fb337244720526339af9a8d722eead31f47"
+    },
+    {
+      "name": "alibabacloud-help-doc-search",
+      "source": "aliyun/alibabacloud-aiops-skills",
+      "url": "https://github.com/aliyun/alibabacloud-aiops-skills.git",
+      "path": "skills/others/cseskillshub/alibabacloud-help-doc-search/SKILL.md",
+      "base_tree": "6ccbee089de29d8f2ec665b242873a590efadaac"
+    },
+    {
+      "name": "alibabacloud-history-lock-diagnose",
+      "source": "aliyun/alibabacloud-aiops-skills",
+      "url": "https://github.com/aliyun/alibabacloud-aiops-skills.git",
+      "path": "skills/playbooks/trouboper/alibabacloud-history-lock-diagnose/SKILL.md",
+      "base_tree": "744c29f42fb59f9785ff641ef14a286055f57b91"
+    },
+    {
+      "name": "alibabacloud-hologres-instance-manage",
+      "source": "aliyun/alibabacloud-aiops-skills",
+      "url": "https://github.com/aliyun/alibabacloud-aiops-skills.git",
+      "path": "skills/analyticscomputing/hologram/alibabacloud-hologres-instance-manage/SKILL.md",
+      "base_tree": "c125f53be54c96a2854c851720cc960d5044f4a9"
+    },
+    {
+      "name": "alibabacloud-iac-code",
+      "source": "aliyun/alibabacloud-aiops-skills",
+      "url": "https://github.com/aliyun/alibabacloud-aiops-skills.git",
+      "path": "skills/developertools/ros/alibabacloud-iac-code/SKILL.md",
+      "base_tree": "b527588391fabaa37f097ab7dbd1d25d8e98d7ac"
+    },
+    {
+      "name": "alibabacloud-icpba-sucessdata-query",
+      "source": "aliyun/alibabacloud-aiops-skills",
+      "url": "https://github.com/aliyun/alibabacloud-aiops-skills.git",
+      "path": "skills/doweb/companyreg/alibabacloud-icpba-sucessdata-query/SKILL.md",
+      "base_tree": "e22b0975751fd7ce84b2abe44d83267841e8abce"
+    },
+    {
+      "name": "alibabacloud-iqs-search",
+      "source": "aliyun/alibabacloud-aiops-skills",
+      "url": "https://github.com/aliyun/alibabacloud-aiops-skills.git",
+      "path": "skills/entcmc/alibababcp/alibabacloud-iqs-search/SKILL.md",
+      "base_tree": "7b55ff741ce22b8c30224e66c63ac3fa57195b32"
+    },
+    {
+      "name": "alibabacloud-iqs-weather-query",
+      "source": "aliyun/alibabacloud-aiops-skills",
+      "url": "https://github.com/aliyun/alibabacloud-aiops-skills.git",
+      "path": "skills/others/solutions/alibabacloud-iqs-weather-query/SKILL.md",
+      "base_tree": "fbcf504d2097bbe39f38ef9056a602c1bf0c6e0a"
+    },
+    {
+      "name": "alibabacloud-kafka-capacity-assessment",
+      "source": "aliyun/alibabacloud-aiops-skills",
+      "url": "https://github.com/aliyun/alibabacloud-aiops-skills.git",
+      "path": "skills/others/devopsimpl/alibabacloud-kafka-capacity-assessment/SKILL.md",
+      "base_tree": "622752b7351ae11e02b2ac0ef0cfa040c7c76f20"
+    },
+    {
+      "name": "alibabacloud-kms-secret-manage",
+      "source": "aliyun/alibabacloud-aiops-skills",
+      "url": "https://github.com/aliyun/alibabacloud-aiops-skills.git",
+      "path": "skills/security/kms/alibabacloud-kms-secret-manage/SKILL.md",
+      "base_tree": "f40fbb46604db617fecf3d56999afa6f8cfd7c7f"
+    },
+    {
+      "name": "alibabacloud-kvstore-health-inspection",
+      "source": "aliyun/alibabacloud-aiops-skills",
+      "url": "https://github.com/aliyun/alibabacloud-aiops-skills.git",
+      "path": "skills/playbooks/trouboper/alibabacloud-kvstore-health-inspection/SKILL.md",
+      "base_tree": "7363b3d43017d04fa4155f5ba5897ae1d775b072"
+    },
+    {
+      "name": "alibabacloud-lb-healthcheck",
+      "source": "aliyun/alibabacloud-aiops-skills",
+      "url": "https://github.com/aliyun/alibabacloud-aiops-skills.git",
+      "path": "skills/others/cseskillshub/alibabacloud-lb-healthcheck/SKILL.md",
+      "base_tree": "c1da5f62dd8191c4e7119801c7e8ef73dffe7140"
+    },
+    {
+      "name": "alibabacloud-lindorm-agent-skill",
+      "source": "aliyun/alibabacloud-aiops-skills",
+      "url": "https://github.com/aliyun/alibabacloud-aiops-skills.git",
+      "path": "skills/database/hitsdb/alibabacloud-lindorm-agent-skill/SKILL.md",
+      "base_tree": "e5508912756babf944f8b06f41ffdbac23df4470"
+    },
+    {
+      "name": "alibabacloud-livedebug",
+      "source": "aliyun/alibabacloud-aiops-skills",
+      "url": "https://github.com/aliyun/alibabacloud-aiops-skills.git",
+      "path": "skills/middleware/arms/alibabacloud-livedebug/SKILL.md",
+      "base_tree": "e334c09cdacdb77fdf9df3f971809156d165888f"
+    },
+    {
+      "name": "alibabacloud-liverecord-diagnosis",
+      "source": "aliyun/alibabacloud-aiops-skills",
+      "url": "https://github.com/aliyun/alibabacloud-aiops-skills.git",
+      "path": "skills/mediaservices/live/alibabacloud-liverecord-diagnosis/SKILL.md",
+      "base_tree": "4a115aa02d8837e8b6951e514de2cb3542ab7e60"
+    },
+    {
+      "name": "alibabacloud-loongcollector-ops",
+      "source": "aliyun/alibabacloud-aiops-skills",
+      "url": "https://github.com/aliyun/alibabacloud-aiops-skills.git",
+      "path": "skills/storage/sls/alibabacloud-loongcollector-ops/SKILL.md",
+      "base_tree": "69b7c68818236c9aac53a7fc2a69aa0d1b944c23"
+    },
+    {
+      "name": "alibabacloud-maxcompute-migration-service",
+      "source": "aliyun/alibabacloud-aiops-skills",
+      "url": "https://github.com/aliyun/alibabacloud-aiops-skills.git",
+      "path": "skills/analyticscomputing/odps/alibabacloud-maxcompute-migration-service/SKILL.md",
+      "base_tree": "baef6e55e90ccfb773fdea5d050c2dd356fd2cfc"
+    },
+    {
+      "name": "alibabacloud-maxframe-video-frame-pipeline",
+      "source": "aliyun/alibabacloud-aiops-skills",
+      "url": "https://github.com/aliyun/alibabacloud-aiops-skills.git",
+      "path": "skills/analyticscomputing/odps/alibabacloud-maxframe-video-frame-pipeline/SKILL.md",
+      "base_tree": "9f98e6d80184d0a424115583c35acb475ae3d8fe"
+    },
+    {
+      "name": "alibabacloud-mcp-core-script-generate",
+      "source": "aliyun/alibabacloud-aiops-skills",
+      "url": "https://github.com/aliyun/alibabacloud-aiops-skills.git",
+      "path": "skills/developertools/solutions/alibabacloud-mcp-core-script-generate/SKILL.md",
+      "base_tree": "1034d6eccf046978b3ece30b99ccd296fc735f8d"
+    },
+    {
+      "name": "alibabacloud-media-diagnostics",
+      "source": "aliyun/alibabacloud-aiops-skills",
+      "url": "https://github.com/aliyun/alibabacloud-aiops-skills.git",
+      "path": "skills/others/cseskillshub/alibabacloud-media-diagnostics/SKILL.md",
+      "base_tree": "cb72793f4f9ff1bba9a505b0189aef2c25804fc5"
+    },
+    {
+      "name": "alibabacloud-migration-db-evaluation-collector",
+      "source": "aliyun/alibabacloud-aiops-skills",
+      "url": "https://github.com/aliyun/alibabacloud-aiops-skills.git",
+      "path": "skills/playbooks/wadaps/alibabacloud-migration-db-evaluation-collector/SKILL.md",
+      "base_tree": "779ca84e448254a3ce5fc66d103aa38fc5d453b2"
+    },
+    {
+      "name": "alibabacloud-migration-dbm-oracle-traffic-capture",
+      "source": "aliyun/alibabacloud-aiops-skills",
+      "url": "https://github.com/aliyun/alibabacloud-aiops-skills.git",
+      "path": "skills/playbooks/wadaps/alibabacloud-migration-dbm-oracle-traffic-capture/SKILL.md",
+      "base_tree": "3432a2aaf4b1e5352b9250fd47f1b9556df97986"
+    },
+    {
+      "name": "alibabacloud-migration-dbm-redis-shake-migration",
+      "source": "aliyun/alibabacloud-aiops-skills",
+      "url": "https://github.com/aliyun/alibabacloud-aiops-skills.git",
+      "path": "skills/playbooks/wadaps/alibabacloud-migration-dbm-redis-shake-migration/SKILL.md",
+      "base_tree": "008e6d05186466fe0b065ac8c39203f790132d3e"
+    },
+    {
+      "name": "alibabacloud-migration-lhm-inspect-hive-metastore",
+      "source": "aliyun/alibabacloud-aiops-skills",
+      "url": "https://github.com/aliyun/alibabacloud-aiops-skills.git",
+      "path": "skills/playbooks/wadaps/alibabacloud-migration-lhm-inspect-hive-metastore/SKILL.md",
+      "base_tree": "18859752fc616beb3901ae57a35368f87fce1b11"
+    },
+    {
+      "name": "alibabacloud-migration-lhm-migrate-hive-to-paimon",
+      "source": "aliyun/alibabacloud-aiops-skills",
+      "url": "https://github.com/aliyun/alibabacloud-aiops-skills.git",
+      "path": "skills/playbooks/wadaps/alibabacloud-migration-lhm-migrate-hive-to-paimon/SKILL.md",
+      "base_tree": "a47dbcc5318d9d225af733da93d2cbcf474c01e5"
+    },
+    {
+      "name": "alibabacloud-migration-mas-cloud-migration-survey",
+      "source": "aliyun/alibabacloud-aiops-skills",
+      "url": "https://github.com/aliyun/alibabacloud-aiops-skills.git",
+      "path": "skills/playbooks/wadaps/alibabacloud-migration-mas-cloud-migration-survey/SKILL.md",
+      "base_tree": "0ea52fbc783effd36512bc20f98aa55225fd2768"
+    },
+    {
+      "name": "alibabacloud-migration-mas-product-mapping",
+      "source": "aliyun/alibabacloud-aiops-skills",
+      "url": "https://github.com/aliyun/alibabacloud-aiops-skills.git",
+      "path": "skills/playbooks/wadaps/alibabacloud-migration-mas-product-mapping/SKILL.md",
+      "base_tree": "ba67cc9062288742abfb012bd53ef668488acd52"
+    },
+    {
+      "name": "alibabacloud-migration-mas-solution",
+      "source": "aliyun/alibabacloud-aiops-skills",
+      "url": "https://github.com/aliyun/alibabacloud-aiops-skills.git",
+      "path": "skills/playbooks/wadaps/alibabacloud-migration-mas-solution/SKILL.md",
+      "base_tree": "56ee36727dcdf68231b9f347f43d18e4f25cfcf3"
+    },
+    {
+      "name": "alibabacloud-migration-sdm-sql-trans",
+      "source": "aliyun/alibabacloud-aiops-skills",
+      "url": "https://github.com/aliyun/alibabacloud-aiops-skills.git",
+      "path": "skills/playbooks/wadaps/alibabacloud-migration-sdm-sql-trans/SKILL.md",
+      "base_tree": "a17984281c9d41bd4cc62353c5f2b994aa9ebb2b"
+    },
+    {
+      "name": "alibabacloud-milvus-manage",
+      "source": "aliyun/alibabacloud-aiops-skills",
+      "url": "https://github.com/aliyun/alibabacloud-aiops-skills.git",
+      "path": "skills/analyticscomputing/milvus/alibabacloud-milvus-manage/SKILL.md",
+      "base_tree": "9b0741a1ab8e7f790ea530dea9edbcb443074fc1"
+    },
+    {
+      "name": "alibabacloud-mining-attack-diagnosis",
+      "source": "aliyun/alibabacloud-aiops-skills",
+      "url": "https://github.com/aliyun/alibabacloud-aiops-skills.git",
+      "path": "skills/others/cseskillshub/alibabacloud-mining-attack-diagnosis/SKILL.md",
+      "base_tree": "b4ea5d236657d890a087ef18b7aab0e9d4ffb473"
+    },
+    {
+      "name": "alibabacloud-mongodb-instances-manage",
+      "source": "aliyun/alibabacloud-aiops-skills",
+      "url": "https://github.com/aliyun/alibabacloud-aiops-skills.git",
+      "path": "skills/database/mongodb/alibabacloud-mongodb-instances-manage/SKILL.md",
+      "base_tree": "526bbee0c1b2d09292af2775ddda5287942c63d4"
+    },
+    {
+      "name": "alibabacloud-mse-nacos-inspection",
+      "source": "aliyun/alibabacloud-aiops-skills",
+      "url": "https://github.com/aliyun/alibabacloud-aiops-skills.git",
+      "path": "skills/playbooks/trouboper/alibabacloud-mse-nacos-inspection/SKILL.md",
+      "base_tree": "d9b4216526bdde47f67ae36602fb6bfbfd796f89"
+    },
+    {
+      "name": "alibabacloud-mtr-network-diagnosis-customer",
+      "source": "aliyun/alibabacloud-aiops-skills",
+      "url": "https://github.com/aliyun/alibabacloud-aiops-skills.git",
+      "path": "skills/others/devopsimpl/alibabacloud-mtr-network-diagnosis-customer/SKILL.md",
+      "base_tree": "7e4de46e66f6c7e43dc75cd74882ff3b3c09ff8d"
+    },
+    {
+      "name": "alibabacloud-nas-mount-diagnosis",
+      "source": "aliyun/alibabacloud-aiops-skills",
+      "url": "https://github.com/aliyun/alibabacloud-aiops-skills.git",
+      "path": "skills/playbooks/trouboper/alibabacloud-nas-mount-diagnosis/SKILL.md",
+      "base_tree": "34bf156f3f21fe243b01927c76a5c1f851d09d2e"
+    },
+    {
+      "name": "alibabacloud-network-diagnose",
+      "source": "aliyun/alibabacloud-aiops-skills",
+      "url": "https://github.com/aliyun/alibabacloud-aiops-skills.git",
+      "path": "skills/others/devopsimpl/alibabacloud-network-diagnose/SKILL.md",
+      "base_tree": "10ed2ca8efad234e25ccc6ef896acd4882be1da5"
+    },
+    {
+      "name": "alibabacloud-network-health-inspection",
+      "source": "aliyun/alibabacloud-aiops-skills",
+      "url": "https://github.com/aliyun/alibabacloud-aiops-skills.git",
+      "path": "skills/playbooks/trouboper/alibabacloud-network-health-inspection/SKILL.md",
+      "base_tree": "49b2287c78ba6f12c19f33fefb6b90aa9fa7cc86"
+    },
+    {
+      "name": "alibabacloud-network-reachability-analysis",
+      "source": "aliyun/alibabacloud-aiops-skills",
+      "url": "https://github.com/aliyun/alibabacloud-aiops-skills.git",
+      "path": "skills/netcdn/netana/alibabacloud-network-reachability-analysis/SKILL.md",
+      "base_tree": "66f79dfb165b1a9970887c2357c6fc171f279b23"
+    },
+    {
+      "name": "alibabacloud-nginx-ingress-to-api-gateway",
+      "source": "aliyun/alibabacloud-aiops-skills",
+      "url": "https://github.com/aliyun/alibabacloud-aiops-skills.git",
+      "path": "skills/middleware/apigateway/alibabacloud-nginx-ingress-to-api-gateway/SKILL.md",
+      "base_tree": "25e8431d45f7a4de45840da45e48818cf8c535c7"
+    },
+    {
+      "name": "alibabacloud-odps-cost-analysis",
+      "source": "aliyun/alibabacloud-aiops-skills",
+      "url": "https://github.com/aliyun/alibabacloud-aiops-skills.git",
+      "path": "skills/analyticscomputing/odps/alibabacloud-odps-cost-analysis/SKILL.md",
+      "base_tree": "a5adbefd63eea43b43bd2b5898ef75c7b0b05bea"
+    },
+    {
+      "name": "alibabacloud-odps-information-schema",
+      "source": "aliyun/alibabacloud-aiops-skills",
+      "url": "https://github.com/aliyun/alibabacloud-aiops-skills.git",
+      "path": "skills/analyticscomputing/odps/alibabacloud-odps-information-schema/SKILL.md",
+      "base_tree": "084aa81a6eeab4112ef66481cb7026b99bfd2a60"
+    },
+    {
+      "name": "alibabacloud-odps-maxframe-coding",
+      "source": "aliyun/alibabacloud-aiops-skills",
+      "url": "https://github.com/aliyun/alibabacloud-aiops-skills.git",
+      "path": "skills/analyticscomputing/odps/alibabacloud-odps-maxframe-coding/SKILL.md",
+      "base_tree": "627669cf4078b217cc1b5f310cf866c10a9e791f"
+    },
+    {
+      "name": "alibabacloud-odps-project-manage",
+      "source": "aliyun/alibabacloud-aiops-skills",
+      "url": "https://github.com/aliyun/alibabacloud-aiops-skills.git",
+      "path": "skills/analyticscomputing/odps/alibabacloud-odps-project-manage/SKILL.md",
+      "base_tree": "82fe2e9c81da16753ade55c526ffb718ec98dc05"
+    },
+    {
+      "name": "alibabacloud-odps-quota-manage",
+      "source": "aliyun/alibabacloud-aiops-skills",
+      "url": "https://github.com/aliyun/alibabacloud-aiops-skills.git",
+      "path": "skills/analyticscomputing/odps/alibabacloud-odps-quota-manage/SKILL.md",
+      "base_tree": "f33473bb6f0ac16d50da973c67dd72f6e0b9e8d5"
+    },
+    {
+      "name": "alibabacloud-odps-sql-generation",
+      "source": "aliyun/alibabacloud-aiops-skills",
+      "url": "https://github.com/aliyun/alibabacloud-aiops-skills.git",
+      "path": "skills/analyticscomputing/odps/alibabacloud-odps-sql-generation/SKILL.md",
+      "base_tree": "77fc4e61933344f8ab2b5e356dd96f6165c5bfa1"
+    },
+    {
+      "name": "alibabacloud-oos-chatops-agent",
+      "source": "aliyun/alibabacloud-aiops-skills",
+      "url": "https://github.com/aliyun/alibabacloud-aiops-skills.git",
+      "path": "skills/migrationom/oos/alibabacloud-oos-chatops-agent/SKILL.md",
+      "base_tree": "034f89f79ae5afb3c0b13407c978e36412817d53"
+    },
+    {
+      "name": "alibabacloud-oos-template-generation",
+      "source": "aliyun/alibabacloud-aiops-skills",
+      "url": "https://github.com/aliyun/alibabacloud-aiops-skills.git",
+      "path": "skills/migrationom/oos/alibabacloud-oos-template-generation/SKILL.md",
+      "base_tree": "b7fd3e6f773bbf7d1322e2e96abde099ce2ac9bd"
+    },
+    {
+      "name": "alibabacloud-opc-advisor",
+      "source": "aliyun/alibabacloud-aiops-skills",
+      "url": "https://github.com/aliyun/alibabacloud-aiops-skills.git",
+      "path": "skills/computing/ecs/alibabacloud-opc-advisor/SKILL.md",
+      "base_tree": "0dc7f105c2b7ec5639106c60df24693f6ad9bcbd"
+    },
+    {
+      "name": "alibabacloud-opc-deploy",
+      "source": "aliyun/alibabacloud-aiops-skills",
+      "url": "https://github.com/aliyun/alibabacloud-aiops-skills.git",
+      "path": "skills/computing/ecs/alibabacloud-opc-deploy/SKILL.md",
+      "base_tree": "c7e3e3b744e14257b0b7244b0289c544a0728e05"
+    },
+    {
+      "name": "alibabacloud-openclaw-ecs-dingtalk",
+      "source": "aliyun/alibabacloud-aiops-skills",
+      "url": "https://github.com/aliyun/alibabacloud-aiops-skills.git",
+      "path": "skills/developertools/solutions/alibabacloud-openclaw-ecs-dingtalk/SKILL.md",
+      "base_tree": "19faf2d6f401c67b019b413e941e1c583214aad4"
+    },
+    {
+      "name": "alibabacloud-openclaw-skill-security-scan",
+      "source": "aliyun/alibabacloud-aiops-skills",
+      "url": "https://github.com/aliyun/alibabacloud-aiops-skills.git",
+      "path": "skills/security/riskmanagement/alibabacloud-openclaw-skill-security-scan/SKILL.md",
+      "base_tree": "3f097e3281d89bb59ce9a638e846070d47bcbcdc"
+    },
+    {
+      "name": "alibabacloud-opensearch-app-manage",
+      "source": "aliyun/alibabacloud-aiops-skills",
+      "url": "https://github.com/aliyun/alibabacloud-aiops-skills.git",
+      "path": "skills/aiml/opensearch/alibabacloud-opensearch-app-manage/SKILL.md",
+      "base_tree": "3d9f0ef7a40734c29d9226e72584e4e1ae9e403e"
+    },
+    {
+      "name": "alibabacloud-oss-manage-cron-upload",
+      "source": "aliyun/alibabacloud-aiops-skills",
+      "url": "https://github.com/aliyun/alibabacloud-aiops-skills.git",
+      "path": "skills/storage/oss/alibabacloud-oss-manage-cron-upload/SKILL.md",
+      "base_tree": "4cc360d739d730b399a75bdd91816c8d2b66c6da"
+    },
+    {
+      "name": "alibabacloud-oss-manage-metaquery",
+      "source": "aliyun/alibabacloud-aiops-skills",
+      "url": "https://github.com/aliyun/alibabacloud-aiops-skills.git",
+      "path": "skills/storage/oss/alibabacloud-oss-manage-metaquery/SKILL.md",
+      "base_tree": "f1153a5757f0e5fcbf5bc7117601fb17d308c108"
+    },
+    {
+      "name": "alibabacloud-oss-manage-network-probe",
+      "source": "aliyun/alibabacloud-aiops-skills",
+      "url": "https://github.com/aliyun/alibabacloud-aiops-skills.git",
+      "path": "skills/storage/oss/alibabacloud-oss-manage-network-probe/SKILL.md",
+      "base_tree": "41d650da6e3eef65ecf02ecdd05e654199d2221d"
+    },
+    {
+      "name": "alibabacloud-oss-media-process",
+      "source": "aliyun/alibabacloud-aiops-skills",
+      "url": "https://github.com/aliyun/alibabacloud-aiops-skills.git",
+      "path": "skills/storage/oss/alibabacloud-oss-media-process/SKILL.md",
+      "base_tree": "c887edfe4baaf29fee2d8afe2e7b52dbadbcd9ef"
+    },
+    {
+      "name": "alibabacloud-pai-dlc-job",
+      "source": "aliyun/alibabacloud-aiops-skills",
+      "url": "https://github.com/aliyun/alibabacloud-aiops-skills.git",
+      "path": "skills/aiml/learn/alibabacloud-pai-dlc-job/SKILL.md",
+      "base_tree": "79d13340dfdab26071690dd99338f05e38e31730"
+    },
+    {
+      "name": "alibabacloud-pai-dlc-job-diagnostics",
+      "source": "aliyun/alibabacloud-aiops-skills",
+      "url": "https://github.com/aliyun/alibabacloud-aiops-skills.git",
+      "path": "skills/aiml/learn/alibabacloud-pai-dlc-job-diagnostics/SKILL.md",
+      "base_tree": "18d8e11ceea4e740d41f6e4a7c4af29e63632667"
+    },
+    {
+      "name": "alibabacloud-pai-dsw-manage",
+      "source": "aliyun/alibabacloud-aiops-skills",
+      "url": "https://github.com/aliyun/alibabacloud-aiops-skills.git",
+      "path": "skills/aiml/learn/alibabacloud-pai-dsw-manage/SKILL.md",
+      "base_tree": "b6c1f04930b7e36ccca8377030eb16273df8c931"
+    },
+    {
+      "name": "alibabacloud-pai-eas-service-deploy",
+      "source": "aliyun/alibabacloud-aiops-skills",
+      "url": "https://github.com/aliyun/alibabacloud-aiops-skills.git",
+      "path": "skills/aiml/learn/alibabacloud-pai-eas-service-deploy/SKILL.md",
+      "base_tree": "6d11ecb5a81c7e2150c02da46faf7bf632da9e6d"
+    },
+    {
+      "name": "alibabacloud-pai-eas-service-diagnose",
+      "source": "aliyun/alibabacloud-aiops-skills",
+      "url": "https://github.com/aliyun/alibabacloud-aiops-skills.git",
+      "path": "skills/aiml/learn/alibabacloud-pai-eas-service-diagnose/SKILL.md",
+      "base_tree": "965f422c4b0befbddf299476f95f82003fef7712"
+    },
+    {
+      "name": "alibabacloud-pai-feature-store-featuredb-usage-query",
+      "source": "aliyun/alibabacloud-aiops-skills",
+      "url": "https://github.com/aliyun/alibabacloud-aiops-skills.git",
+      "path": "skills/aiml/learn/alibabacloud-pai-feature-store-featuredb-usage-query/SKILL.md",
+      "base_tree": "e5bc340214de7e6e0c15d8890e53f4459f7e1801"
+    },
+    {
+      "name": "alibabacloud-pai-node-management",
+      "source": "aliyun/alibabacloud-aiops-skills",
+      "url": "https://github.com/aliyun/alibabacloud-aiops-skills.git",
+      "path": "skills/aiml/learn/alibabacloud-pai-node-management/SKILL.md",
+      "base_tree": "601f94cdbc97076b8794e26ca24781c51ab7070e"
+    },
+    {
+      "name": "alibabacloud-pai-quota-management",
+      "source": "aliyun/alibabacloud-aiops-skills",
+      "url": "https://github.com/aliyun/alibabacloud-aiops-skills.git",
+      "path": "skills/aiml/learn/alibabacloud-pai-quota-management/SKILL.md",
+      "base_tree": "fdca5c7df9ca31b4b75db572d6e00ff44bbe8b43"
+    },
+    {
+      "name": "alibabacloud-pai-rec-diagnosis",
+      "source": "aliyun/alibabacloud-aiops-skills",
+      "url": "https://github.com/aliyun/alibabacloud-aiops-skills.git",
+      "path": "skills/aiml/learn/alibabacloud-pai-rec-diagnosis/SKILL.md",
+      "base_tree": "fce2dd8ad9028c17e83515d7cf341b9219222f5c"
+    },
+    {
+      "name": "alibabacloud-pai-resource-group-management",
+      "source": "aliyun/alibabacloud-aiops-skills",
+      "url": "https://github.com/aliyun/alibabacloud-aiops-skills.git",
+      "path": "skills/aiml/learn/alibabacloud-pai-resource-group-management/SKILL.md",
+      "base_tree": "ab9e3541b8231ee823aa3e15871f25cb05fde0c3"
+    },
+    {
+      "name": "alibabacloud-pai-workspace-manage",
+      "source": "aliyun/alibabacloud-aiops-skills",
+      "url": "https://github.com/aliyun/alibabacloud-aiops-skills.git",
+      "path": "skills/aiml/learn/alibabacloud-pai-workspace-manage/SKILL.md",
+      "base_tree": "213f1866cd29a530d990e2cdfb35da48139989af"
+    },
+    {
+      "name": "alibabacloud-pcap-analyzer",
+      "source": "aliyun/alibabacloud-aiops-skills",
+      "url": "https://github.com/aliyun/alibabacloud-aiops-skills.git",
+      "path": "skills/others/cseskillshub/alibabacloud-pcap-analyzer/SKILL.md",
+      "base_tree": "2c07fa018539430e676be5c4b60da1da1ea3f03a"
+    },
+    {
+      "name": "alibabacloud-pds-intelligent-workspace",
+      "source": "aliyun/alibabacloud-aiops-skills",
+      "url": "https://github.com/aliyun/alibabacloud-aiops-skills.git",
+      "path": "skills/storage/pds/alibabacloud-pds-intelligent-workspace/SKILL.md",
+      "base_tree": "820fb9d4b719e85f28c3545315e98d8d7ab5be5b"
+    },
+    {
+      "name": "alibabacloud-pds-multimodal-search",
+      "source": "aliyun/alibabacloud-aiops-skills",
+      "url": "https://github.com/aliyun/alibabacloud-aiops-skills.git",
+      "path": "skills/storage/pds/alibabacloud-pds-multimodal-search/SKILL.md",
+      "base_tree": "ca22bacfd9480cf761133dce3277843bd1d734ba"
+    },
+    {
+      "name": "alibabacloud-polardb-ai-assistant",
+      "source": "aliyun/alibabacloud-aiops-skills",
+      "url": "https://github.com/aliyun/alibabacloud-aiops-skills.git",
+      "path": "skills/database/polardb/alibabacloud-polardb-ai-assistant/SKILL.md",
+      "base_tree": "c62289f8cb68221ef78e2556f3a214593efae4e8"
+    },
+    {
+      "name": "alibabacloud-polardb-mysql-inspection",
+      "source": "aliyun/alibabacloud-aiops-skills",
+      "url": "https://github.com/aliyun/alibabacloud-aiops-skills.git",
+      "path": "skills/playbooks/trouboper/alibabacloud-polardb-mysql-inspection/SKILL.md",
+      "base_tree": "92f684e0a6d95a824b73c94ff4a85e4f265ad94d"
+    },
+    {
+      "name": "alibabacloud-polardb-mysql-sql-lint",
+      "source": "aliyun/alibabacloud-aiops-skills",
+      "url": "https://github.com/aliyun/alibabacloud-aiops-skills.git",
+      "path": "skills/playbooks/trouboper/alibabacloud-polardb-mysql-sql-lint/SKILL.md",
+      "base_tree": "58598462acfe10566b75c2cfd6fb6d6f17f41189"
+    },
+    {
+      "name": "alibabacloud-polardbx-ai-assistant",
+      "source": "aliyun/alibabacloud-aiops-skills",
+      "url": "https://github.com/aliyun/alibabacloud-aiops-skills.git",
+      "path": "skills/database/drds/alibabacloud-polardbx-ai-assistant/SKILL.md",
+      "base_tree": "65d8a53ac9a13e29ee212a86a39397d6ed202009"
+    },
+    {
+      "name": "alibabacloud-polardbx-ops",
+      "source": "aliyun/alibabacloud-aiops-skills",
+      "url": "https://github.com/aliyun/alibabacloud-aiops-skills.git",
+      "path": "skills/database/drds/alibabacloud-polardbx-ops/SKILL.md",
+      "base_tree": "e97cfe4af6ab8b8040b93e92fc889f2332accc79"
+    },
+    {
+      "name": "alibabacloud-polardbx-sql",
+      "source": "aliyun/alibabacloud-aiops-skills",
+      "url": "https://github.com/aliyun/alibabacloud-aiops-skills.git",
+      "path": "skills/database/drds/alibabacloud-polardbx-sql/SKILL.md",
+      "base_tree": "7561006df14a6cb045b3b12b46c334a53e61e58a"
+    },
+    {
+      "name": "alibabacloud-pts-ops",
+      "source": "aliyun/alibabacloud-aiops-skills",
+      "url": "https://github.com/aliyun/alibabacloud-aiops-skills.git",
+      "path": "skills/middleware/pts/alibabacloud-pts-ops/SKILL.md",
+      "base_tree": "6d304f7fab5726897e3d99251284164c326f29a3"
+    },
+    {
+      "name": "alibabacloud-pts-pilot",
+      "source": "aliyun/alibabacloud-aiops-skills",
+      "url": "https://github.com/aliyun/alibabacloud-aiops-skills.git",
+      "path": "skills/playbooks/optdes/alibabacloud-pts-pilot/SKILL.md",
+      "base_tree": "ecfd985263eb4e5c7fb1bd859c99550d01ab75ab"
+    },
+    {
+      "name": "alibabacloud-pts-reporter",
+      "source": "aliyun/alibabacloud-aiops-skills",
+      "url": "https://github.com/aliyun/alibabacloud-aiops-skills.git",
+      "path": "skills/playbooks/optdes/alibabacloud-pts-reporter/SKILL.md",
+      "base_tree": "a89f645f75cd24ead5214519beac9673b6c1765a"
+    },
+    {
+      "name": "alibabacloud-pts-task",
+      "source": "aliyun/alibabacloud-aiops-skills",
+      "url": "https://github.com/aliyun/alibabacloud-aiops-skills.git",
+      "path": "skills/playbooks/optdes/alibabacloud-pts-task/SKILL.md",
+      "base_tree": "d79527b441149c463099acea290dccca50c94222"
+    },
+    {
+      "name": "alibabacloud-qianwenai-support",
+      "source": "aliyun/alibabacloud-aiops-skills",
+      "url": "https://github.com/aliyun/alibabacloud-aiops-skills.git",
+      "path": "skills/others/cseskillshub/alibabacloud-qianwenai-support/SKILL.md",
+      "base_tree": "26fc71941bb8cf89a56f073d373a6175d04a7867"
+    },
+    {
+      "name": "alibabacloud-quickbi-smartq",
+      "source": "aliyun/alibabacloud-aiops-skills",
+      "url": "https://github.com/aliyun/alibabacloud-aiops-skills.git",
+      "path": "skills/analyticscomputing/quickbi/alibabacloud-quickbi-smartq/SKILL.md",
+      "base_tree": "7b2627268837accc37fdba00cd25155f9b9b7ce3"
+    },
+    {
+      "name": "alibabacloud-ram-permission-diagnose",
+      "source": "aliyun/alibabacloud-aiops-skills",
+      "url": "https://github.com/aliyun/alibabacloud-aiops-skills.git",
+      "path": "skills/migrationom/ram/alibabacloud-ram-permission-diagnose/SKILL.md",
+      "base_tree": "5c764ea3c7eab3b4d91b29e734d41d936d005c66"
+    },
+    {
+      "name": "alibabacloud-rds-copilot",
+      "source": "aliyun/alibabacloud-aiops-skills",
+      "url": "https://github.com/aliyun/alibabacloud-aiops-skills.git",
+      "path": "skills/database/rds/alibabacloud-rds-copilot/SKILL.md",
+      "base_tree": "6d471ecb6237f1de11a4ba38a6cf595ad71df0c0"
+    },
+    {
+      "name": "alibabacloud-rds-instances-manage",
+      "source": "aliyun/alibabacloud-aiops-skills",
+      "url": "https://github.com/aliyun/alibabacloud-aiops-skills.git",
+      "path": "skills/database/rds/alibabacloud-rds-instances-manage/SKILL.md",
+      "base_tree": "931c37e0f6266556a2521fa6cc96b2de15098e52"
+    },
+    {
+      "name": "alibabacloud-rds-mysql-inspection",
+      "source": "aliyun/alibabacloud-aiops-skills",
+      "url": "https://github.com/aliyun/alibabacloud-aiops-skills.git",
+      "path": "skills/playbooks/trouboper/alibabacloud-rds-mysql-inspection/SKILL.md",
+      "base_tree": "f8443f932c51eb0381e0f3996e9063a42ed3e9c2"
+    },
+    {
+      "name": "alibabacloud-rds-postgresql-inspection",
+      "source": "aliyun/alibabacloud-aiops-skills",
+      "url": "https://github.com/aliyun/alibabacloud-aiops-skills.git",
+      "path": "skills/playbooks/trouboper/alibabacloud-rds-postgresql-inspection/SKILL.md",
+      "base_tree": "c776f6a4a6532dfa83e7a4c33fc637711695de5f"
+    },
+    {
+      "name": "alibabacloud-remote-skills-connector",
+      "source": "aliyun/alibabacloud-aiops-skills",
+      "url": "https://github.com/aliyun/alibabacloud-aiops-skills.git",
+      "path": "skills/developertools/skillsexplorer/alibabacloud-remote-skills-connector/SKILL.md",
+      "base_tree": "37dc1a8de17bdcff1df932a1e19a68cc17684493"
+    },
+    {
+      "name": "alibabacloud-resourcecenter-search",
+      "source": "aliyun/alibabacloud-aiops-skills",
+      "url": "https://github.com/aliyun/alibabacloud-aiops-skills.git",
+      "path": "skills/migrationom/entconsole/alibabacloud-resourcecenter-search/SKILL.md",
+      "base_tree": "aa1ffc6bf879686490646e607c4c59cd1d499b11"
+    },
+    {
+      "name": "alibabacloud-ros-agent",
+      "source": "aliyun/alibabacloud-aiops-skills",
+      "url": "https://github.com/aliyun/alibabacloud-aiops-skills.git",
+      "path": "skills/developertools/ros/alibabacloud-ros-agent/SKILL.md",
+      "base_tree": "3d2127a3ab7bb6ae34743dba717f2a36cec05fa7"
+    },
+    {
+      "name": "alibabacloud-safety-checker",
+      "source": "aliyun/alibabacloud-aiops-skills",
+      "url": "https://github.com/aliyun/alibabacloud-aiops-skills.git",
+      "path": "skills/security/lvwang/alibabacloud-safety-checker/SKILL.md",
+      "base_tree": "d88c2715aa90eb469f13ca132bf4ac18eedbfdfc"
+    },
+    {
+      "name": "alibabacloud-sas-alert-handler",
+      "source": "aliyun/alibabacloud-aiops-skills",
+      "url": "https://github.com/aliyun/alibabacloud-aiops-skills.git",
+      "path": "skills/security/sas/alibabacloud-sas-alert-handler/SKILL.md",
+      "base_tree": "dd5af870c41b477d6319ec04c1e6529c49c83eed"
+    },
+    {
+      "name": "alibabacloud-sas-incident-manage",
+      "source": "aliyun/alibabacloud-aiops-skills",
+      "url": "https://github.com/aliyun/alibabacloud-aiops-skills.git",
+      "path": "skills/security/sas/alibabacloud-sas-incident-manage/SKILL.md",
+      "base_tree": "8d92c928dc3e35141448f7b3c1f45903e75abf88"
+    },
+    {
+      "name": "alibabacloud-sas-install-agent",
+      "source": "aliyun/alibabacloud-aiops-skills",
+      "url": "https://github.com/aliyun/alibabacloud-aiops-skills.git",
+      "path": "skills/security/sas/alibabacloud-sas-install-agent/SKILL.md",
+      "base_tree": "73db031e18f5e83d05eb88400f613d92be0b3945"
+    },
+    {
+      "name": "alibabacloud-sas-log-to-oss",
+      "source": "aliyun/alibabacloud-aiops-skills",
+      "url": "https://github.com/aliyun/alibabacloud-aiops-skills.git",
+      "path": "skills/security/sas/alibabacloud-sas-log-to-oss/SKILL.md",
+      "base_tree": "0e6e62fc0ddd443a4a595650a1f1315491efc08b"
+    },
+    {
+      "name": "alibabacloud-sas-malware-detection",
+      "source": "aliyun/alibabacloud-aiops-skills",
+      "url": "https://github.com/aliyun/alibabacloud-aiops-skills.git",
+      "path": "skills/security/sas/alibabacloud-sas-malware-detection/SKILL.md",
+      "base_tree": "5b077b3fcd39989ae72678c53bd852dd750199b3"
+    },
+    {
+      "name": "alibabacloud-sas-multiaccount-manage",
+      "source": "aliyun/alibabacloud-aiops-skills",
+      "url": "https://github.com/aliyun/alibabacloud-aiops-skills.git",
+      "path": "skills/security/sas/alibabacloud-sas-multiaccount-manage/SKILL.md",
+      "base_tree": "66463fcc4f67a60f3a737d3e364c86edbb33a308"
+    },
+    {
+      "name": "alibabacloud-sas-openclaw-security",
+      "source": "aliyun/alibabacloud-aiops-skills",
+      "url": "https://github.com/aliyun/alibabacloud-aiops-skills.git",
+      "path": "skills/security/sas/alibabacloud-sas-openclaw-security/SKILL.md",
+      "base_tree": "15e3a4c82df4c9e3f764a75b53cdbbb72324979a"
+    },
+    {
+      "name": "alibabacloud-sas-overview",
+      "source": "aliyun/alibabacloud-aiops-skills",
+      "url": "https://github.com/aliyun/alibabacloud-aiops-skills.git",
+      "path": "skills/security/sas/alibabacloud-sas-overview/SKILL.md",
+      "base_tree": "ddd8f1b0b672ad4f944753af5abf3df47e477cd8"
+    },
+    {
+      "name": "alibabacloud-security-health-check",
+      "source": "aliyun/alibabacloud-aiops-skills",
+      "url": "https://github.com/aliyun/alibabacloud-aiops-skills.git",
+      "path": "skills/security/solutions/alibabacloud-security-health-check/SKILL.md",
+      "base_tree": "ec625c4e278a18478436a41badba5d1c505df189"
+    },
+    {
+      "name": "alibabacloud-security-vuln-coverage-check",
+      "source": "aliyun/alibabacloud-aiops-skills",
+      "url": "https://github.com/aliyun/alibabacloud-aiops-skills.git",
+      "path": "skills/security/sas/alibabacloud-security-vuln-coverage-check/SKILL.md",
+      "base_tree": "27d861929daa3788b4af54d60b1aa7e9eb75376f"
+    },
+    {
+      "name": "alibabacloud-sls-agent-workflow",
+      "source": "aliyun/alibabacloud-aiops-skills",
+      "url": "https://github.com/aliyun/alibabacloud-aiops-skills.git",
+      "path": "skills/storage/sls/alibabacloud-sls-agent-workflow/SKILL.md",
+      "base_tree": "ea82565bb3cf70ef9901ae8f32d23d6ec233f2e6"
+    },
+    {
+      "name": "alibabacloud-sls-data-agent",
+      "source": "aliyun/alibabacloud-aiops-skills",
+      "url": "https://github.com/aliyun/alibabacloud-aiops-skills.git",
+      "path": "skills/storage/sls/alibabacloud-sls-data-agent/SKILL.md",
+      "base_tree": "9efed97b80223141bc1d7da86650dbe2b6736212"
+    },
+    {
+      "name": "alibabacloud-sls-index-config-management",
+      "source": "aliyun/alibabacloud-aiops-skills",
+      "url": "https://github.com/aliyun/alibabacloud-aiops-skills.git",
+      "path": "skills/storage/sls/alibabacloud-sls-index-config-management/SKILL.md",
+      "base_tree": "41650556daffe792b1998959aa92cb3852caeebe"
+    },
+    {
+      "name": "alibabacloud-sls-query",
+      "source": "aliyun/alibabacloud-aiops-skills",
+      "url": "https://github.com/aliyun/alibabacloud-aiops-skills.git",
+      "path": "skills/storage/sls/alibabacloud-sls-query/SKILL.md",
+      "base_tree": "1e2b19c7339195b4ed18c5ac8b86cb717f137d1b"
+    },
+    {
+      "name": "alibabacloud-sls-sdk-guidance",
+      "source": "aliyun/alibabacloud-aiops-skills",
+      "url": "https://github.com/aliyun/alibabacloud-aiops-skills.git",
+      "path": "skills/storage/sls/alibabacloud-sls-sdk-guidance/SKILL.md",
+      "base_tree": "ac0b2a55e55b90619ae3cdf43e2351ec675154c6"
+    },
+    {
+      "name": "alibabacloud-smartag-pilot",
+      "source": "aliyun/alibabacloud-aiops-skills",
+      "url": "https://github.com/aliyun/alibabacloud-aiops-skills.git",
+      "path": "skills/netcdn/smartag/alibabacloud-smartag-pilot/SKILL.md",
+      "base_tree": "1e1d30fca941b6c9c9795381cbd0f771cb92a60b"
+    },
+    {
+      "name": "alibabacloud-sms-send-short-message",
+      "source": "aliyun/alibabacloud-aiops-skills",
+      "url": "https://github.com/aliyun/alibabacloud-aiops-skills.git",
+      "path": "skills/entcmc/dysms/alibabacloud-sms-send-short-message/SKILL.md",
+      "base_tree": "ec5dea38eb54525e287c804b3e97fa9f4aebf95d"
+    },
+    {
+      "name": "alibabacloud-solution-deploy",
+      "source": "aliyun/alibabacloud-aiops-skills",
+      "url": "https://github.com/aliyun/alibabacloud-aiops-skills.git",
+      "path": "skills/developertools/solutions/alibabacloud-solution-deploy/SKILL.md",
+      "base_tree": "c4893256aafe6121739ecfc5015fe2dca56276a4"
+    },
+    {
+      "name": "alibabacloud-sre-toolkit",
+      "source": "aliyun/alibabacloud-aiops-skills",
+      "url": "https://github.com/aliyun/alibabacloud-aiops-skills.git",
+      "path": "skills/playbooks/trouboper/alibabacloud-sre-toolkit/SKILL.md",
+      "base_tree": "fcdb625b5adba43c282affa21ddaa6252034ead9"
+    },
+    {
+      "name": "alibabacloud-starops-chat",
+      "source": "aliyun/alibabacloud-aiops-skills",
+      "url": "https://github.com/aliyun/alibabacloud-aiops-skills.git",
+      "path": "skills/middleware/starops/alibabacloud-starops-chat/SKILL.md",
+      "base_tree": "ff5e7e7d3eebc0da45a7cda3acb0ec84ae460720"
+    },
+    {
+      "name": "alibabacloud-sysom-diagnosis",
+      "source": "aliyun/alibabacloud-aiops-skills",
+      "url": "https://github.com/aliyun/alibabacloud-aiops-skills.git",
+      "path": "skills/computing/alinux/alibabacloud-sysom-diagnosis/SKILL.md",
+      "base_tree": "27bd7272eb5655b9cd1d539bfb7e1acdc926d04f"
+    },
+    {
+      "name": "alibabacloud-tablestore-agent-storage",
+      "source": "aliyun/alibabacloud-aiops-skills",
+      "url": "https://github.com/aliyun/alibabacloud-aiops-skills.git",
+      "path": "skills/storage/ots/alibabacloud-tablestore-agent-storage/SKILL.md",
+      "base_tree": "314f405221eda67802f64beafbfad11afb095b89"
+    },
+    {
+      "name": "alibabacloud-tablestore-openclaw-memory",
+      "source": "aliyun/alibabacloud-aiops-skills",
+      "url": "https://github.com/aliyun/alibabacloud-aiops-skills.git",
+      "path": "skills/storage/ots/alibabacloud-tablestore-openclaw-memory/SKILL.md",
+      "base_tree": "499bf8aa7deb95f832981cc3ee644e33a334a6ef"
+    },
+    {
+      "name": "alibabacloud-tablestore-ops",
+      "source": "aliyun/alibabacloud-aiops-skills",
+      "url": "https://github.com/aliyun/alibabacloud-aiops-skills.git",
+      "path": "skills/storage/ots/alibabacloud-tablestore-ops/SKILL.md",
+      "base_tree": "3d00cf8e4e65bda0ad97f142dc46a505119bb6f1"
+    },
+    {
+      "name": "alibabacloud-tair-ai-assistant",
+      "source": "aliyun/alibabacloud-aiops-skills",
+      "url": "https://github.com/aliyun/alibabacloud-aiops-skills.git",
+      "path": "skills/database/kvstore/alibabacloud-tair-ai-assistant/SKILL.md",
+      "base_tree": "832baa699fd7a025142609d6b12fff7692cb490f"
+    },
+    {
+      "name": "alibabacloud-tair-devtoolset",
+      "source": "aliyun/alibabacloud-aiops-skills",
+      "url": "https://github.com/aliyun/alibabacloud-aiops-skills.git",
+      "path": "skills/database/kvstore/alibabacloud-tair-devtoolset/SKILL.md",
+      "base_tree": "5cd0f13e8c39e18f95688cf89676b3ef00f5f6ef"
+    },
+    {
+      "name": "alibabacloud-terraform-code-generation",
+      "source": "aliyun/alibabacloud-aiops-skills",
+      "url": "https://github.com/aliyun/alibabacloud-aiops-skills.git",
+      "path": "skills/developertools/solutions/alibabacloud-terraform-code-generation/SKILL.md",
+      "base_tree": "92529805329965fb281ac8ef51b097111ccb6912"
+    },
+    {
+      "name": "alibabacloud-terraform-import",
+      "source": "aliyun/alibabacloud-aiops-skills",
+      "url": "https://github.com/aliyun/alibabacloud-aiops-skills.git",
+      "path": "skills/migrationom/solutions/alibabacloud-terraform-import/SKILL.md",
+      "base_tree": "87cb4669f379e7b5fb269d3dc4f1913e8f5ee923"
+    },
+    {
+      "name": "alibabacloud-tls-cert-diagnosis",
+      "source": "aliyun/alibabacloud-aiops-skills",
+      "url": "https://github.com/aliyun/alibabacloud-aiops-skills.git",
+      "path": "skills/others/cseskillshub/alibabacloud-tls-cert-diagnosis/SKILL.md",
+      "base_tree": "67b3d1edd20c9dfd7aad885940b0558d8de5951e"
+    },
+    {
+      "name": "alibabacloud-video-editor",
+      "source": "aliyun/alibabacloud-aiops-skills",
+      "url": "https://github.com/aliyun/alibabacloud-aiops-skills.git",
+      "path": "skills/mediaservices/ice/alibabacloud-video-editor/SKILL.md",
+      "base_tree": "138eb819ac76ab3a88390604f5092530e2611d03"
+    },
+    {
+      "name": "alibabacloud-video-forge",
+      "source": "aliyun/alibabacloud-aiops-skills",
+      "url": "https://github.com/aliyun/alibabacloud-aiops-skills.git",
+      "path": "skills/mediaservices/mts/alibabacloud-video-forge/SKILL.md",
+      "base_tree": "9975a9c09214c9bbd153df37bcd4a47500b3a671"
+    },
+    {
+      "name": "alibabacloud-video-prompt-architect",
+      "source": "aliyun/alibabacloud-aiops-skills",
+      "url": "https://github.com/aliyun/alibabacloud-aiops-skills.git",
+      "path": "skills/mediaservices/solutions/alibabacloud-video-prompt-architect/SKILL.md",
+      "base_tree": "be4b6ecb6ad93cfe1a51baa8d2deda8d5d9c9274"
+    },
+    {
+      "name": "alibabacloud-video-translation",
+      "source": "aliyun/alibabacloud-aiops-skills",
+      "url": "https://github.com/aliyun/alibabacloud-aiops-skills.git",
+      "path": "skills/mediaservices/ice/alibabacloud-video-translation/SKILL.md",
+      "base_tree": "06e95f54e0daa1693e4f7d23d72b903fae312849"
+    },
+    {
+      "name": "alibabacloud-vms-smart-call-by-tts",
+      "source": "aliyun/alibabacloud-aiops-skills",
+      "url": "https://github.com/aliyun/alibabacloud-aiops-skills.git",
+      "path": "skills/entcmc/dyvms/alibabacloud-vms-smart-call-by-tts/SKILL.md",
+      "base_tree": "c9a8bd5e79fd2117ec24ac4eb74bd5b6013133bb"
+    },
+    {
+      "name": "alibabacloud-waf-billing-backup",
+      "source": "aliyun/alibabacloud-aiops-skills",
+      "url": "https://github.com/aliyun/alibabacloud-aiops-skills.git",
+      "path": "skills/others/devopsimpl/alibabacloud-waf-billing-backup/SKILL.md",
+      "base_tree": "919d8e1c292db2a15bb6afb5195f6771e69d7635"
+    },
+    {
+      "name": "alibabacloud-waf-bot-management",
+      "source": "aliyun/alibabacloud-aiops-skills",
+      "url": "https://github.com/aliyun/alibabacloud-aiops-skills.git",
+      "path": "skills/security/waf/alibabacloud-waf-bot-management/SKILL.md",
+      "base_tree": "f8536d236e7ff89e809c7780e0dbf2fac64ea819"
+    },
+    {
+      "name": "alibabacloud-waf-checkresponse-intercept-query",
+      "source": "aliyun/alibabacloud-aiops-skills",
+      "url": "https://github.com/aliyun/alibabacloud-aiops-skills.git",
+      "path": "skills/security/waf/alibabacloud-waf-checkresponse-intercept-query/SKILL.md",
+      "base_tree": "b3db832b3b867c0e92b4a4f1e3f94668cec26c70"
+    },
+    {
+      "name": "alibabacloud-waf-cname-config-export",
+      "source": "aliyun/alibabacloud-aiops-skills",
+      "url": "https://github.com/aliyun/alibabacloud-aiops-skills.git",
+      "path": "skills/security/waf/alibabacloud-waf-cname-config-export/SKILL.md",
+      "base_tree": "9ed06f4c935d2107b62b8773c54bfc1d8f17518e"
+    },
+    {
+      "name": "alibabacloud-waf-config-backup",
+      "source": "aliyun/alibabacloud-aiops-skills",
+      "url": "https://github.com/aliyun/alibabacloud-aiops-skills.git",
+      "path": "skills/security/waf/alibabacloud-waf-config-backup/SKILL.md",
+      "base_tree": "3a6dc31b6cd21a3eb993a1282c13e113103ef556"
+    },
+    {
+      "name": "alibabacloud-waf-lua-extension-dev",
+      "source": "aliyun/alibabacloud-aiops-skills",
+      "url": "https://github.com/aliyun/alibabacloud-aiops-skills.git",
+      "path": "skills/security/waf/alibabacloud-waf-lua-extension-dev/SKILL.md",
+      "base_tree": "c496ad3e8027105d3cb3644509f17c88ce24d24d"
+    },
+    {
+      "name": "alibabacloud-waf-protectionconfig-backup",
+      "source": "aliyun/alibabacloud-aiops-skills",
+      "url": "https://github.com/aliyun/alibabacloud-aiops-skills.git",
+      "path": "skills/security/waf/alibabacloud-waf-protectionconfig-backup/SKILL.md",
+      "base_tree": "89b9f44aaa1aa98db2bbe17b04c1afa14cf2fc6f"
+    },
+    {
+      "name": "alibabacloud-waf-quick-showcase",
+      "source": "aliyun/alibabacloud-aiops-skills",
+      "url": "https://github.com/aliyun/alibabacloud-aiops-skills.git",
+      "path": "skills/security/waf/alibabacloud-waf-quick-showcase/SKILL.md",
+      "base_tree": "e198690c8fef6d599f8670a6ce396b43c246b305"
+    },
+    {
+      "name": "alibabacloud-waf-report",
+      "source": "aliyun/alibabacloud-aiops-skills",
+      "url": "https://github.com/aliyun/alibabacloud-aiops-skills.git",
+      "path": "skills/security/waf/alibabacloud-waf-report/SKILL.md",
+      "base_tree": "c2abacea034a53e9eb34db59ba9333240290f524"
+    },
+    {
+      "name": "alibabacloud-waf-rule-effectiveness-check",
+      "source": "aliyun/alibabacloud-aiops-skills",
+      "url": "https://github.com/aliyun/alibabacloud-aiops-skills.git",
+      "path": "skills/security/waf/alibabacloud-waf-rule-effectiveness-check/SKILL.md",
+      "base_tree": "57e0bd6dd70396c10c04058c8e673df1c8ae6806"
+    },
+    {
+      "name": "alibabacloud-waf-rule-management",
+      "source": "aliyun/alibabacloud-aiops-skills",
+      "url": "https://github.com/aliyun/alibabacloud-aiops-skills.git",
+      "path": "skills/others/devopsimpl/alibabacloud-waf-rule-management/SKILL.md",
+      "base_tree": "a2d9446c55488e4ae4655cbe7234a250bdb7a146"
+    },
+    {
+      "name": "alibabacloud-waf-security-monitor",
+      "source": "aliyun/alibabacloud-aiops-skills",
+      "url": "https://github.com/aliyun/alibabacloud-aiops-skills.git",
+      "path": "skills/security/waf/alibabacloud-waf-security-monitor/SKILL.md",
+      "base_tree": "95a299533820d6ea87f52e7458bd399501a6686c"
+    },
+    {
+      "name": "alibabacloud-web-application-attacks-analysis",
+      "source": "aliyun/alibabacloud-aiops-skills",
+      "url": "https://github.com/aliyun/alibabacloud-aiops-skills.git",
+      "path": "skills/others/cseskillshub/alibabacloud-web-application-attacks-analysis/SKILL.md",
+      "base_tree": "83fa2ff86dc1d11320867e8ac2b3c5301e5032f9"
+    },
+    {
+      "name": "alibabacloud-website-malware-check",
+      "source": "aliyun/alibabacloud-aiops-skills",
+      "url": "https://github.com/aliyun/alibabacloud-aiops-skills.git",
+      "path": "skills/others/cseskillshub/alibabacloud-website-malware-check/SKILL.md",
+      "base_tree": "ac35438b1032bd6ef0fc572d6ac9a1e89110cfe1"
+    },
+    {
+      "name": "alibabacloud-website-probe",
+      "source": "aliyun/alibabacloud-aiops-skills",
+      "url": "https://github.com/aliyun/alibabacloud-aiops-skills.git",
+      "path": "skills/others/cseskillshub/alibabacloud-website-probe/SKILL.md",
+      "base_tree": "1e0c18c73eaa69073e955fc403d3cc5061929efa"
+    },
+    {
+      "name": "alibabacloud-workbench-cli",
+      "source": "aliyun/alibabacloud-aiops-skills",
+      "url": "https://github.com/aliyun/alibabacloud-aiops-skills.git",
+      "path": "skills/developertools/solutions/alibabacloud-workbench-cli/SKILL.md",
+      "base_tree": "b184b7c0fe5706a92631a73c2019033ea0c7e26c"
+    },
+    {
+      "name": "alibabacloud-wxz-website-builder",
+      "source": "aliyun/alibabacloud-aiops-skills",
+      "url": "https://github.com/aliyun/alibabacloud-aiops-skills.git",
+      "path": "skills/doweb/website/alibabacloud-wxz-website-builder/SKILL.md",
+      "base_tree": "4d43f411d8ca65209ec675305050a5f85434101f"
+    },
+    {
+      "name": "alibabacloud-yike-cli",
+      "source": "aliyun/alibabacloud-aiops-skills",
+      "url": "https://github.com/aliyun/alibabacloud-aiops-skills.git",
+      "path": "skills/mediaservices/yike/alibabacloud-yike-cli/SKILL.md",
+      "base_tree": "3b5aef24fae9c2629205b46d217c8de4a3e05352"
+    },
+    {
+      "name": "alibabacloud-yike-storyboard",
+      "source": "aliyun/alibabacloud-aiops-skills",
+      "url": "https://github.com/aliyun/alibabacloud-aiops-skills.git",
+      "path": "skills/mediaservices/yike/alibabacloud-yike-storyboard/SKILL.md",
+      "base_tree": "dc7c0aa2f874d7d3c416377a3e0c5e26e0bd23e1"
+    },
+    {
+      "name": "alibabacloud-yunxiao-flow-analysis",
+      "source": "aliyun/alibabacloud-aiops-skills",
+      "url": "https://github.com/aliyun/alibabacloud-aiops-skills.git",
+      "path": "skills/developertools/rdc/alibabacloud-yunxiao-flow-analysis/SKILL.md",
+      "base_tree": "99cd3733f974f69a3b55925dce470a79c1ed78dd"
+    },
+    {
       "name": "codebase-design",
       "source": "mattpocock/skills",
       "url": "https://github.com/mattpocock/skills.git",
@@ -55,6 +1882,41 @@
       "base_tree": "3d35cd438f4067b03c8b3792e038960e4ac11526"
     },
     {
+      "name": "lark-approval",
+      "source": "larksuite/cli",
+      "url": "https://github.com/larksuite/cli.git",
+      "path": "skills/lark-approval/SKILL.md",
+      "base_tree": "7c5c8295e44c49a71a407ec2a91705551b636336"
+    },
+    {
+      "name": "lark-attendance",
+      "source": "larksuite/cli",
+      "url": "https://github.com/larksuite/cli.git",
+      "path": "skills/lark-attendance/SKILL.md",
+      "base_tree": "4702032975fb1a4c50aa16a82cbb6db1e14c371c"
+    },
+    {
+      "name": "lark-base",
+      "source": "larksuite/cli",
+      "url": "https://github.com/larksuite/cli.git",
+      "path": "skills/lark-base/SKILL.md",
+      "base_tree": "07f648528dfaf712bd5c3c9b6851f7794f865d04"
+    },
+    {
+      "name": "lark-calendar",
+      "source": "larksuite/cli",
+      "url": "https://github.com/larksuite/cli.git",
+      "path": "skills/lark-calendar/SKILL.md",
+      "base_tree": "75d8416cf391220827977dd67d549f3302197740"
+    },
+    {
+      "name": "lark-contact",
+      "source": "larksuite/cli",
+      "url": "https://github.com/larksuite/cli.git",
+      "path": "skills/lark-contact/SKILL.md",
+      "base_tree": "3727ca0662a891b8deb872d97ea4b8846a27df59"
+    },
+    {
       "name": "lark-doc",
       "source": "larksuite/cli",
       "url": "https://github.com/larksuite/cli.git",
@@ -62,11 +1924,130 @@
       "base_tree": "423eafd31ccead70054cb24189491e93cb20af54"
     },
     {
+      "name": "lark-drive",
+      "source": "larksuite/cli",
+      "url": "https://github.com/larksuite/cli.git",
+      "path": "skills/lark-drive/SKILL.md",
+      "base_tree": "e4ecc0e4d75787af26d883cabf96218dc844b77a"
+    },
+    {
+      "name": "lark-event",
+      "source": "larksuite/cli",
+      "url": "https://github.com/larksuite/cli.git",
+      "path": "skills/lark-event/SKILL.md",
+      "base_tree": "8ead748e9db45aea0dd5f15d5699ddd9e8bd7d4e"
+    },
+    {
+      "name": "lark-im",
+      "source": "larksuite/cli",
+      "url": "https://github.com/larksuite/cli.git",
+      "path": "skills/lark-im/SKILL.md",
+      "base_tree": "78c190ed28cdfffc6b903a3878fac04347bd87b5"
+    },
+    {
+      "name": "lark-mail",
+      "source": "larksuite/cli",
+      "url": "https://github.com/larksuite/cli.git",
+      "path": "skills/lark-mail/SKILL.md",
+      "base_tree": "ab92e604a7ec3153c0f4caf881fb36542175ab5d"
+    },
+    {
+      "name": "lark-markdown",
+      "source": "larksuite/cli",
+      "url": "https://github.com/larksuite/cli.git",
+      "path": "skills/lark-markdown/SKILL.md",
+      "base_tree": "9ba8f925999040675f3ed26673f3994567e079a2"
+    },
+    {
+      "name": "lark-minutes",
+      "source": "larksuite/cli",
+      "url": "https://github.com/larksuite/cli.git",
+      "path": "skills/lark-minutes/SKILL.md",
+      "base_tree": "15617b098c8edfcd5d0b94edfffacefb2c1f2ebc"
+    },
+    {
+      "name": "lark-okr",
+      "source": "larksuite/cli",
+      "url": "https://github.com/larksuite/cli.git",
+      "path": "skills/lark-okr/SKILL.md",
+      "base_tree": "e06c893b970f5cbbb9321c14abd965871bdeda4b"
+    },
+    {
+      "name": "lark-openapi-explorer",
+      "source": "larksuite/cli",
+      "url": "https://github.com/larksuite/cli.git",
+      "path": "skills/lark-openapi-explorer/SKILL.md",
+      "base_tree": "b403a77f10cf342a01792241a3e77231842c438c"
+    },
+    {
       "name": "lark-shared",
       "source": "larksuite/cli",
       "url": "https://github.com/larksuite/cli.git",
       "path": "skills/lark-shared/SKILL.md",
       "base_tree": "1ee7e9dce1377a7038ab798e1ac5813ed608f4e1"
+    },
+    {
+      "name": "lark-sheets",
+      "source": "larksuite/cli",
+      "url": "https://github.com/larksuite/cli.git",
+      "path": "skills/lark-sheets/SKILL.md",
+      "base_tree": "5fdf3cc13c5619da8dde02d9ab7b245f069aac49"
+    },
+    {
+      "name": "lark-skill-maker",
+      "source": "larksuite/cli",
+      "url": "https://github.com/larksuite/cli.git",
+      "path": "skills/lark-skill-maker/SKILL.md",
+      "base_tree": "f1f0673f26a0b5d2b6cf12454dd47253587f181e"
+    },
+    {
+      "name": "lark-slides",
+      "source": "larksuite/cli",
+      "url": "https://github.com/larksuite/cli.git",
+      "path": "skills/lark-slides/SKILL.md",
+      "base_tree": "43974da8297ce45bfc148951b43099326e7a24f3"
+    },
+    {
+      "name": "lark-task",
+      "source": "larksuite/cli",
+      "url": "https://github.com/larksuite/cli.git",
+      "path": "skills/lark-task/SKILL.md",
+      "base_tree": "5638265fe9e3e906522b6989bf24e370176b1ad7"
+    },
+    {
+      "name": "lark-vc",
+      "source": "larksuite/cli",
+      "url": "https://github.com/larksuite/cli.git",
+      "path": "skills/lark-vc/SKILL.md",
+      "base_tree": "a97354f997c3ac2cc4c01919ddfda9d9b1c372a4"
+    },
+    {
+      "name": "lark-whiteboard",
+      "source": "larksuite/cli",
+      "url": "https://github.com/larksuite/cli.git",
+      "path": "skills/lark-whiteboard/SKILL.md",
+      "base_tree": "d69c39835b77fde45d23fdf502154e770f74dce7"
+    },
+    {
+      "name": "lark-wiki",
+      "source": "larksuite/cli",
+      "url": "https://github.com/larksuite/cli.git",
+      "path": "skills/lark-wiki/SKILL.md",
+      "base_tree": "27c4c469f434440a516f68d6f41efd4bebbdabf9"
+    },
+    {
+      "name": "lark-workflow-meeting-summary",
+      "source": "larksuite/cli",
+      "url": "https://github.com/larksuite/cli.git",
+      "path": "skills/lark-workflow-meeting-summary/SKILL.md",
+      "base_tree": "6a72623946c7c0a21e3df361d905203b6e9e0d49"
+    },
+    {
+      "name": "lark-workflow-standup-report",
+      "source": "larksuite/cli",
+      "url": "https://github.com/larksuite/cli.git",
+      "path": "skills/lark-workflow-standup-report/SKILL.md",
+      "base_tree": "a61356a8c9077a5b5268647cc7834f4ecab1d233"
     },
     {
       "name": "opencli-adapter-author",
