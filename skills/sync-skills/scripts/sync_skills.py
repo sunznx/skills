@@ -233,6 +233,13 @@ def copy_contents(source: Path, destination: Path, keep: set[str] | None = None)
             shutil.copy2(child, target)
 
 
+def require_skill_snapshot(path: Path, name: str) -> None:
+    if not path.is_dir():
+        raise SyncError(f"仓库缺少 skill 目录: {name}")
+    if not (path / "SKILL.md").is_file():
+        raise SyncError(f"{name} 缺少 SKILL.md；上游可能已删除或移动该 skill")
+
+
 def mirror_for(url: str) -> Path:
     key = hashlib.sha256(url.encode()).hexdigest()[:16]
     return local_skills_dir().parent / "cache/sync-skills/repos" / f"{key}.git"
@@ -327,6 +334,24 @@ def extract_tree(mirror: Path, tree: str, destination: Path) -> None:
     archive = run("git", "archive", "--format=tar", tree, cwd=mirror, text=False).stdout
     with tarfile.open(fileobj=io.BytesIO(archive), mode="r:") as tar:
         tar.extractall(destination, filter="data")
+
+
+def ensure_base_tree(mirror: Path, tree: str) -> None:
+    exists = run("git", "cat-file", "-e", f"{tree}^{{tree}}", cwd=mirror, check=False)
+    if exists.returncode == 0:
+        return
+    shallow = run(
+        "git", "rev-parse", "--is-shallow-repository", cwd=mirror, check=False
+    )
+    if shallow.returncode == 0 and shallow.stdout.strip() == "true":
+        try:
+            run_network_git("fetch", "--unshallow", "origin", cwd=mirror)
+        except SyncError as error:
+            raise SyncError(f"无法补全三方合并所需的上游历史: {tree}\n{error}") from error
+        exists = run("git", "cat-file", "-e", f"{tree}^{{tree}}", cwd=mirror, check=False)
+        if exists.returncode == 0:
+            return
+    raise SyncError(f"上游镜像缺少三方合并所需的 base_tree: {tree}")
 
 
 def commit_snapshot(worktree: Path, message: str) -> str:
@@ -451,8 +476,7 @@ def write_repo_config(repo: Path) -> None:
 def deploy_skills(repo: Path, skills_dir: Path, manifest: dict, local_dir: Path) -> None:
     entries = [entry for entry in manifest["skills"] if entry.get("deploy") is not False]
     for entry in entries:
-        if not (skills_dir / entry["name"]).is_dir():
-            raise SyncError(f"仓库缺少 skill 目录: {entry['name']}")
+        require_skill_snapshot(skills_dir / entry["name"], entry["name"])
 
     local_dir.mkdir(parents=True, exist_ok=True)
     stage_root = Path(tempfile.mkdtemp(prefix=".sync-skills-", dir=local_dir))
@@ -530,11 +554,13 @@ def sync_upstream(only_name: str | None = None) -> int:
                 print("  无更新")
                 continue
 
+            ensure_base_tree(mirror, entry["base_tree"])
             staged_skill = staging_root / name
             copy_contents(skills_dir / name, staged_skill)
             conflicts = merge_skill(
                 name, staged_skill, mirror, entry["base_tree"], latest_tree
             )
+            require_skill_snapshot(staged_skill, name)
             entry["base_tree"] = latest_tree
             updated.append(name)
             all_conflicts.extend({"skill": name, **conflict} for conflict in conflicts)
@@ -596,8 +622,8 @@ def manifest_entry_for_add(local_dir: Path, name: str, source: Path) -> dict:
         }
         if tracked.get("ref"):
             entry["ref"] = tracked["ref"]
-        return entry
-    entry = {"name": name, "managed": False, "note": "本地维护，暂无外部 Git 来源"}
+    else:
+        entry = {"name": name, "managed": False, "note": "本地维护，暂无外部 Git 来源"}
     if source.is_symlink():
         target = source.resolve()
         try:
@@ -627,11 +653,12 @@ def add_skill(name: str) -> int:
         raise SyncError(f"仓库目录已存在但未登记: {destination}")
 
     copy_contents(source.resolve() if source.is_symlink() else source, destination)
-    manifest["skills"].append(manifest_entry_for_add(local_dir, name, source))
+    entry = manifest_entry_for_add(local_dir, name, source)
+    manifest["skills"].append(entry)
     write_manifest(manifest_path, manifest)
     update_readme(readme_path, manifest)
     commit_paths(repo, f"chore(skills): add {name}", [destination, manifest_path, readme_path])
-    deploy_skills(repo, skills_dir, manifest, local_dir)
+    deploy_skills(repo, skills_dir, {"skills": [entry]}, local_dir)
     push_repo(repo)
     print(f"已添加 {name}")
     return 0
@@ -653,7 +680,6 @@ def remove_skill(name: str) -> int:
     write_manifest(manifest_path, manifest)
     update_readme(readme_path, manifest)
     commit_paths(repo, f"chore(skills): remove {name}", [destination, manifest_path, readme_path])
-    deploy_skills(repo, skills_dir, manifest, local_dir)
     remove_path(local_dir / name)
     push_repo(repo)
     print(f"已删除 {name}")
