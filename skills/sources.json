@@ -41,13 +41,6 @@
       "base_tree": "d16165120b7658216c79601b0ee568f42e540961"
     },
     {
-      "name": "herdr",
-      "source": "herdrdev/herdr",
-      "url": "https://github.com/herdrdev/herdr.git",
-      "path": "skills/herdr/SKILL.md",
-      "base_tree": "f8bb649bb92ddc99e6af463ab9a635da98c7b129"
-    },
-    {
       "name": "human-context-rebuild",
       "source": "lycfyi/yskills",
       "url": "https://github.com/lycfyi/yskills.git",
