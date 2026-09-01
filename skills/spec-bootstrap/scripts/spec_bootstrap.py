@@ -235,15 +235,7 @@ def install(target: Path, mirror: Path) -> list[str]:
         remove_path(target / ".codex/skills/planning-with-files")
         remove_path(target / ".agents/skills/pwf")
 
-        target_hooks = target / ".codex/hooks"
-        target_hooks.mkdir(parents=True, exist_ok=True)
-        for source in (extracted / ".codex/hooks").iterdir():
-            destination = target_hooks / source.name
-            if source.is_dir():
-                copy_tree(source, destination)
-            else:
-                shutil.copy2(source, destination)
-        remove_path(target_hooks / "pwf_session_router.py")
+        copy_tree(extracted / ".codex/hooks", target / ".codex/hooks")
 
         hooks_path = target / ".codex/hooks.json"
         try:

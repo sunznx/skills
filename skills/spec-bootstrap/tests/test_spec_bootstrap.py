@@ -77,6 +77,7 @@ class InitWorkflowTest(unittest.TestCase):
             hooks = destination / ".codex/hooks"
             hooks.mkdir(parents=True)
             (hooks / "run_sh.py").write_text("# official hook\n", encoding="utf-8")
+            (hooks / "plugin_dispatch.py").write_text("# official dispatch\n", encoding="utf-8")
             (destination / ".codex/hooks.json").write_text(
                 '{"hooks":{"UserPromptSubmit":[{"hooks":[{"type":"command",'
                 '"command":"python3 .codex/hooks/run_sh.py user-prompt-submit.sh"}]}]}}\n',
@@ -103,6 +104,7 @@ class InitWorkflowTest(unittest.TestCase):
                 "official skill\n",
             )
             self.assertTrue((root / ".codex/hooks/run_sh.py").is_file())
+            self.assertTrue((root / ".codex/hooks/plugin_dispatch.py").is_file())
             self.assertIn(".codex/hooks/run_sh.py", (root / ".codex/hooks.json").read_text(encoding="utf-8"))
             self.assertFalse(router.exists())
             for path in old_paths:
