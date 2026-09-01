@@ -1,2 +1,0 @@
-# Optional: enables JSON Schema validation in validate.py
-jsonschema==4.23.0

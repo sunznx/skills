@@ -1,1 +1,0 @@
-print("this is assign python2 output value")

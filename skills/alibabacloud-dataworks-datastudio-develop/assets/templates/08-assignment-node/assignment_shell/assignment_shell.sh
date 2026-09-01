@@ -1,1 +1,0 @@
-echo "this is assign shell output value"

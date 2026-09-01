@@ -1,1 +1,0 @@
-select "this is assign odps output value"

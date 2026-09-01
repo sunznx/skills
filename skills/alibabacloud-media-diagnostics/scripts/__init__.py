@@ -1,1 +1,0 @@
-# alibabacloud-media-diagnostics scripts
