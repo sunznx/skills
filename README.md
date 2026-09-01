@@ -6,19 +6,29 @@
 
 ```bash
 ./sync-skills                    # 检查并更新全部外部 skills
-./sync-skills 更新 <skill-name>  # 只检查并更新指定 skill
+./sync-skills <skill-name>       # 只检查并同步指定 skill
 ./sync-skills 添加 <skill-name>  # 从 ~/.agents/skills 导入一个 skill
 ./sync-skills 删除 <skill-name>  # 从仓库和本机删除一个 skill
 ```
 
 - 无参数调用会直接对比全部上游；有更新时合并并 commit。
-- `更新` 只对比指定 skill 的上游；英文别名为 `update`。
+- 指定 skill 时，只对比该 skill 的上游，并只同步它的仓库快照到本机。
 - `添加` 从 `~/.agents/skills` 导入指定 skill，并更新来源目录。
 - `删除` 从仓库、来源目录和 `~/.agents/skills` 移除指定 skill。
 - 没有冲突时，仓库清单会同步到 `~/.agents/skills`。
 - 上游 Git 缓存保存在 `~/.agents/cache/sync-skills`。
+- 成功调用后会提交本次同步产生的改动并执行 `git push`；没有改动时不创建空 commit。
 
 出现合并冲突时，脚本会留下冲突标记并停止 commit 和本机同步。
+
+在 agent 对话中，`更新` 表示本地修改 skill，而不是 shell 子命令：
+
+```text
+$sync-skills
+$sync-skills agent-messaging
+$sync-skills 更新 agent-messaging 加入某个功能
+$sync-skills 更新 agent-messaging 删除某个功能
+```
 
 <!-- skill-catalog:start -->
 ## Skill 来源目录

@@ -418,6 +418,14 @@ def commit_paths(repo: Path, message: str, changed_paths: list[Path]) -> bool:
     return True
 
 
+def push_repo(repo: Path) -> None:
+    result = run("git", "push", cwd=repo, check=False)
+    if result.returncode != 0:
+        detail = result.stderr.strip() or result.stdout.strip()
+        raise SyncError(f"同步流程已完成，但 git push 失败:\n{detail}")
+    print("已 push 到远端")
+
+
 def write_repo_config(repo: Path) -> None:
     destination = config_path()
     destination.parent.mkdir(parents=True, exist_ok=True)
@@ -538,7 +546,8 @@ def sync_upstream(only_name: str | None = None) -> int:
             print("所有外部 skills 都没有更新；继续使用仓库版本。")
         else:
             print(f"{only_name} 没有外部更新；继续使用仓库版本。")
-    deploy_skills(repo, skills_dir, manifest, local_dir)
+    deploy_skills(repo, skills_dir, {"skills": entries}, local_dir)
+    push_repo(repo)
     return 0
 
 
@@ -607,6 +616,7 @@ def add_skill(name: str) -> int:
     update_readme(readme_path, manifest)
     commit_paths(repo, f"chore(skills): add {name}", [destination, manifest_path, readme_path])
     deploy_skills(repo, skills_dir, manifest, local_dir)
+    push_repo(repo)
     print(f"已添加 {name}")
     return 0
 
@@ -629,6 +639,7 @@ def remove_skill(name: str) -> int:
     commit_paths(repo, f"chore(skills): remove {name}", [destination, manifest_path, readme_path])
     deploy_skills(repo, skills_dir, manifest, local_dir)
     remove_path(local_dir / name)
+    push_repo(repo)
     print(f"已删除 {name}")
     return 0
 
@@ -636,19 +647,19 @@ def remove_skill(name: str) -> int:
 def parse_command(arguments: list[str]) -> tuple[str, str | None]:
     if not arguments:
         return "sync", None
+    if len(arguments) == 1:
+        return "sync", arguments[0]
     if len(arguments) != 2:
-        raise SyncError("用法: sync-skills [更新|添加|删除] <skill-name>")
+        raise SyncError("用法: sync-skills [<skill-name> | 添加|删除 <skill-name>]")
     command, name = arguments
     commands = {
-        "更新": "sync",
-        "update": "sync",
         "添加": "add",
         "add": "add",
         "删除": "remove",
         "remove": "remove",
     }
     if command not in commands:
-        raise SyncError("用法: sync-skills [更新|添加|删除] <skill-name>")
+        raise SyncError("用法: sync-skills [<skill-name> | 添加|删除 <skill-name>]")
     return commands[command], name
 
 
