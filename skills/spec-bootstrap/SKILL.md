@@ -1,16 +1,16 @@
 ---
-name: init-agent-workflow
-description: 初始化项目的 agent 编码工作流，安装 session 隔离的 Planning with Files、Serena、Semble 和项目规则。用户调用 $init-agent-workflow 或要求初始化该工作流时使用。
+name: spec-bootstrap
+description: 初始化项目的编码工作流，安装 session 隔离的 Planning with Files、Serena、Semble 和项目规则。用户调用 $spec-bootstrap 或要求初始化该工作流时使用。
 ---
 
-# init-agent-workflow
+# spec-bootstrap
 
 目标项目：`$ARGUMENTS`，未提供时使用当前目录。
 
 运行：
 
 ```bash
-python3 "$SKILL_ROOT/scripts/init_agent_workflow.py" "<目标路径>"
+python3 "$SKILL_ROOT/scripts/spec_bootstrap.py" "<目标路径>"
 ```
 
 没有目标路径时省略最后一个参数。

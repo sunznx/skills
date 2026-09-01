@@ -289,7 +289,7 @@ def main() -> int:
             print(line)
         print("next: start a new Codex session and review project hooks with /hooks")
     except InitError as exc:
-        print(f"init-agent-workflow: {exc}", file=sys.stderr)
+        print(f"spec-bootstrap: {exc}", file=sys.stderr)
         return 1
     return 0
 

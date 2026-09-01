@@ -45,7 +45,6 @@ $sync-skills 更新 agent-messaging 删除某个功能
 | `herdr` | [herdrdev/herdr](https://github.com/herdrdev/herdr) | `skills/herdr/SKILL.md` | 三方合并 |
 | `human-context-rebuild` | [lycfyi/yskills](https://github.com/lycfyi/yskills) | `skills/human-context-rebuild/SKILL.md` | 三方合并 |
 | `improve-codebase-architecture` | [mattpocock/skills](https://github.com/mattpocock/skills) | `skills/engineering/improve-codebase-architecture/SKILL.md` | 三方合并 |
-| `init-agent-workflow` | 本地维护，初始化项目级 PWF、Serena 与 Semble 工作流 | — | 本地维护 |
 | `karpathy-guidelines` | [CezarDrumea/andrej-karpathy-skills](https://github.com/CezarDrumea/andrej-karpathy-skills) | `skills/karpathy-guidelines/SKILL.md` | 三方合并 |
 | `lark-doc` | [larksuite/cli](https://github.com/larksuite/cli) | `skills/lark-doc/SKILL.md` | 三方合并 |
 | `lark-shared` | [larksuite/cli](https://github.com/larksuite/cli) | `skills/lark-shared/SKILL.md` | 三方合并 |
@@ -62,6 +61,7 @@ $sync-skills 更新 agent-messaging 删除某个功能
 | `resolve-merge-conflicts` | [warpdotdev/common-skills](https://github.com/warpdotdev/common-skills) | `.agents/skills/resolve-merge-conflicts/SKILL.md` | 三方合并 |
 | `skill-doctor` | [warpdotdev/common-skills](https://github.com/warpdotdev/common-skills) | `.agents/skills/skill-doctor/SKILL.md` | 三方合并 |
 | `smart-search` | [jackwener/opencli](https://github.com/jackwener/opencli) | `skills/smart-search/SKILL.md` | 三方合并 |
+| `spec-bootstrap` | 本地维护，初始化项目级 PWF、Serena 与 Semble 工作流 | — | 本地维护 |
 | `sync-skills` | 本仓库维护的同步 skill | — | 本地维护 |
 | `update-skill` | [warpdotdev/common-skills](https://github.com/warpdotdev/common-skills) | `.agents/skills/update-skill/SKILL.md` | 三方合并 |
 | `wait-what` | [mattpocock/skills](https://github.com/mattpocock/skills) | `skills/productivity/wait-what/SKILL.md` | 三方合并 |

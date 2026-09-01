@@ -69,11 +69,6 @@
       "base_tree": "3d35cd438f4067b03c8b3792e038960e4ac11526"
     },
     {
-      "name": "init-agent-workflow",
-      "managed": false,
-      "note": "本地维护，初始化项目级 PWF、Serena 与 Semble 工作流"
-    },
-    {
       "name": "karpathy-guidelines",
       "source": "CezarDrumea/andrej-karpathy-skills",
       "url": "https://github.com/CezarDrumea/andrej-karpathy-skills.git",
@@ -183,6 +178,11 @@
       "url": "https://github.com/jackwener/opencli.git",
       "path": "skills/smart-search/SKILL.md",
       "base_tree": "2d42a77425f4d8b740610e6d91c670ae76f5c47f"
+    },
+    {
+      "name": "spec-bootstrap",
+      "managed": false,
+      "note": "本地维护，初始化项目级 PWF、Serena 与 Semble 工作流"
     },
     {
       "name": "sync-skills",

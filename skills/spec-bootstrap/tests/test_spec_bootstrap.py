@@ -5,8 +5,8 @@ import unittest
 from pathlib import Path
 
 
-SCRIPT = Path(__file__).parents[1] / "scripts" / "init_agent_workflow.py"
-SPEC = importlib.util.spec_from_file_location("init_agent_workflow", SCRIPT)
+SCRIPT = Path(__file__).parents[1] / "scripts" / "spec_bootstrap.py"
+SPEC = importlib.util.spec_from_file_location("spec_bootstrap", SCRIPT)
 MODULE = importlib.util.module_from_spec(SPEC)
 assert SPEC and SPEC.loader
 SPEC.loader.exec_module(MODULE)

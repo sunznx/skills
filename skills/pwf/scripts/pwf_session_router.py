@@ -72,7 +72,7 @@ def mapped_plan(root: Path, key: str) -> tuple[str, Path] | None:
 def create_and_bind(root: Path, key: str, task: str) -> tuple[str, Path]:
     init_script = root / ".codex" / "skills" / "planning-with-files" / "scripts" / "init-session.sh"
     if not init_script.is_file():
-        raise RuntimeError("找不到项目内 Planning with Files，请先运行 $init-agent-workflow。")
+        raise RuntimeError("找不到项目内 Planning with Files，请先运行 $spec-bootstrap。")
 
     planning = root / ".planning"
     planning.mkdir(parents=True, exist_ok=True)
