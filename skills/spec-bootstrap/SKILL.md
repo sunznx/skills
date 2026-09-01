@@ -16,6 +16,7 @@ python3 "$SKILL_ROOT/scripts/spec_bootstrap.py"
 - 先通过 `uvx` 在本机预取 Semble 和 Serena；
 - 通过 Codex marketplace 全局安装 Ponytail plugin；
 - 通过 Codex marketplace 全局安装 Planning with Files plugin；
+- 安装 Planning with Files 时临时向 marketplace manifest 写入 `"commands": []`，清理旧 cache 后重新生成 plugin cache，完成后还原 manifest，避免生成重复的 `source-command-*` skills；
 - 将 Serena 和 Semble MCP 合并到 `~/.codex/config.toml`；
 - 将 Serena 的 activate、remind 和 cleanup hooks 合并到 `~/.codex/hooks.json`；
 - 保留其他全局配置和 hooks。

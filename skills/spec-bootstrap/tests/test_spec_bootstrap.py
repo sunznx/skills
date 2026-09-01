@@ -60,28 +60,46 @@ class SpecBootstrapTest(unittest.TestCase):
         self.assertIn("activate --client=codex", text)
         self.assertIn("cleanup --client=codex", text)
 
-    def test_plugins_are_installed_globally(self) -> None:
-        responses = [
-            {"marketplaces": [{"name": "ponytail"}]},
-            {},
-            {"installed": [{"pluginId": "ponytail@ponytail", "enabled": True}]},
-            {},
-        ]
-        with mock.patch.object(MODULE, "codex_json", side_effect=responses) as codex:
-            statuses = MODULE.ensure_plugins()
-        self.assertIn("preserved Codex marketplace ponytail", statuses)
-        self.assertIn("added Codex marketplace planning-with-files", statuses)
-        self.assertIn("preserved Codex plugin ponytail@ponytail", statuses)
-        self.assertIn("installed Codex plugin planning-with-files@planning-with-files", statuses)
-        self.assertEqual(
-            codex.call_args_list,
-            [
-                mock.call("plugin", "marketplace", "list"),
-                mock.call("plugin", "marketplace", "add", "OthmanAdi/planning-with-files"),
-                mock.call("plugin", "list"),
-                mock.call("plugin", "add", "planning-with-files@planning-with-files"),
-            ],
-        )
+    def test_plugins_install_without_migrated_commands(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            home = root / "codex-home"
+            marketplace = root / "planning-with-files"
+            manifest = marketplace / ".codex-plugin" / "plugin.json"
+            manifest.parent.mkdir(parents=True)
+            original_manifest = b'{"name":"planning-with-files"}\n'
+            manifest.write_bytes(original_manifest)
+            cache = home / "plugins" / "cache" / "planning-with-files"
+            (cache / "stale").mkdir(parents=True)
+            responses = [
+                {"marketplaces": [{"name": "ponytail"}]},
+                {},
+                {
+                    "marketplaces": [
+                        {"name": "planning-with-files", "root": str(marketplace)}
+                    ]
+                },
+                {
+                    "installed": [
+                        {"pluginId": "ponytail@ponytail", "enabled": True}
+                    ]
+                },
+                {},
+            ]
+            with (
+                mock.patch.dict(os.environ, {"CODEX_HOME": str(home)}),
+                mock.patch.object(MODULE, "codex_json", side_effect=responses),
+            ):
+                statuses = MODULE.ensure_plugins()
+
+            self.assertEqual(manifest.read_bytes(), original_manifest)
+            self.assertFalse(cache.exists())
+            self.assertIn("added Codex marketplace planning-with-files", statuses)
+            self.assertIn(
+                "installed Codex plugin planning-with-files@planning-with-files",
+                statuses,
+            )
+            self.assertTrue(any(status.startswith("restored ") for status in statuses))
 
     def test_install_writes_only_global_codex_files(self) -> None:
         with tempfile.TemporaryDirectory() as directory:

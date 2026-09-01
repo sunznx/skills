@@ -6,6 +6,7 @@ from __future__ import annotations
 import json
 import os
 import re
+import shutil
 import subprocess
 import sys
 from pathlib import Path
@@ -105,23 +106,65 @@ def ensure_plugins() -> list[str]:
     }
     for marketplace, source, _plugin in PLUGINS:
         if marketplace in configured:
-            statuses.append(f"preserved Codex marketplace {marketplace}")
+            if marketplace == "planning-with-files":
+                codex_json("plugin", "marketplace", "upgrade", marketplace)
+                statuses.append(f"updated Codex marketplace {marketplace}")
+            else:
+                statuses.append(f"preserved Codex marketplace {marketplace}")
         else:
             codex_json("plugin", "marketplace", "add", source)
             statuses.append(f"added Codex marketplace {marketplace}")
 
-    installed = codex_json("plugin", "list").get("installed", [])
-    enabled = {
-        item.get("pluginId")
-        for item in installed
-        if isinstance(item, dict) and item.get("enabled", True)
-    }
-    for _marketplace, _source, plugin in PLUGINS:
-        if plugin in enabled:
-            statuses.append(f"preserved Codex plugin {plugin}")
-        else:
-            codex_json("plugin", "add", plugin)
-            statuses.append(f"installed Codex plugin {plugin}")
+    marketplaces = codex_json("plugin", "marketplace", "list").get("marketplaces", [])
+    planning = next(
+        (
+            item
+            for item in marketplaces
+            if isinstance(item, dict) and item.get("name") == "planning-with-files"
+        ),
+        None,
+    )
+    root = planning.get("root") if planning else None
+    if not isinstance(root, str):
+        raise InitError("未找到 Planning with Files marketplace checkout。")
+
+    manifest_path = Path(root) / ".codex-plugin" / "plugin.json"
+    try:
+        original_manifest = manifest_path.read_bytes()
+        manifest = json.loads(original_manifest)
+    except FileNotFoundError as exc:
+        raise InitError(f"未找到 Planning with Files plugin manifest：{manifest_path}") from exc
+    except json.JSONDecodeError as exc:
+        raise InitError(f"Planning with Files plugin manifest JSON 格式错误：{exc}") from exc
+
+    manifest["commands"] = []
+    manifest_path.write_text(
+        json.dumps(manifest, ensure_ascii=False, indent=2) + "\n",
+        encoding="utf-8",
+    )
+    cache = codex_home() / "plugins" / "cache" / "planning-with-files"
+    if cache.exists():
+        shutil.rmtree(cache)
+        statuses.append(f"removed {cache}")
+    else:
+        statuses.append(f"preserved {cache}")
+
+    try:
+        installed = codex_json("plugin", "list").get("installed", [])
+        enabled = {
+            item.get("pluginId")
+            for item in installed
+            if isinstance(item, dict) and item.get("enabled", True)
+        }
+        for _marketplace, _source, plugin in PLUGINS:
+            if plugin in enabled:
+                statuses.append(f"preserved Codex plugin {plugin}")
+            else:
+                codex_json("plugin", "add", plugin)
+                statuses.append(f"installed Codex plugin {plugin}")
+    finally:
+        manifest_path.write_bytes(original_manifest)
+        statuses.append(f"restored {manifest_path}")
     return statuses
 
 
