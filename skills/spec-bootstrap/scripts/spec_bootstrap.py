@@ -329,6 +329,11 @@ def copy_tree(source: Path, destination: Path) -> None:
     shutil.copytree(source, destination)
 
 
+def merge_tree(source: Path, destination: Path) -> None:
+    destination.mkdir(parents=True, exist_ok=True)
+    shutil.copytree(source, destination, dirs_exist_ok=True)
+
+
 def remove_path(path: Path) -> None:
     if path.is_dir() and not path.is_symlink():
         shutil.rmtree(path)
@@ -385,7 +390,8 @@ def install(target: Path, pwf_mirror: Path, ponytail_mirror: Path) -> list[str]:
 
         remove_path(target / ".agents/skills/pwf")
 
-        copy_tree(pwf / ".codex/hooks", target / ".codex/hooks")
+        remove_path(target / ".codex/hooks/pwf_session_router.py")
+        merge_tree(pwf / ".codex/hooks", target / ".codex/hooks")
 
         vendor = target / PONYTAIL_ROOT
         old_skills = skill_names(vendor / "skills")

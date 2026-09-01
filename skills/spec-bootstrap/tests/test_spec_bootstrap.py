@@ -178,6 +178,16 @@ class InitWorkflowTest(unittest.TestCase):
             router = root / ".codex/hooks/pwf_session_router.py"
             router.parent.mkdir(parents=True)
             router.write_text("old router\n", encoding="utf-8")
+            trellis_hooks = {
+                name: root / ".codex/hooks" / name
+                for name in (
+                    "inject-subagent-context.py",
+                    "inject-workflow-state.py",
+                    "session-start.py",
+                )
+            }
+            for name, path in trellis_hooks.items():
+                path.write_text(f"# trellis {name}\n", encoding="utf-8")
             old_runtime = root / ".codex/skills/planning-with-files/old.txt"
             old_runtime.parent.mkdir(parents=True)
             old_runtime.write_text("old\n", encoding="utf-8")
@@ -201,6 +211,8 @@ class InitWorkflowTest(unittest.TestCase):
             )
             self.assertTrue((root / ".codex/hooks/run_sh.py").is_file())
             self.assertTrue((root / ".codex/hooks/plugin_dispatch.py").is_file())
+            for name, path in trellis_hooks.items():
+                self.assertEqual(path.read_text(encoding="utf-8"), f"# trellis {name}\n")
             for name in ("resolve-plan-dir.sh", "check-complete.sh", "session-catchup.py"):
                 self.assertTrue((root / ".codex/skills/planning-with-files/scripts" / name).is_file())
             hooks_text = (root / ".codex/hooks.json").read_text(encoding="utf-8")
