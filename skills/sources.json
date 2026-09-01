@@ -90,11 +90,6 @@
       "base_tree": "1ee7e9dce1377a7038ab798e1ac5813ed608f4e1"
     },
     {
-      "name": "manage-taskboard",
-      "managed": false,
-      "note": "本地维护，暂无外部 Git 来源"
-    },
-    {
       "name": "opencli-adapter-author",
       "source": "jackwener/opencli",
       "url": "https://github.com/jackwener/opencli.git",
