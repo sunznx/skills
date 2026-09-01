@@ -13,7 +13,7 @@ Topic: $ARGUMENTS
 
 Generating the HTML is required. Do not substitute Mermaid, Markdown, or an inline chat diagram.
 
-Create a fresh directory under the session-bound Planning with Files plan when the hook context provides an absolute `PWF_PLAN_DIR`. Otherwise use `${TMPDIR:-/tmp}`. Do not read `PLAN_ID` or `.active_plan`.
+Create `ARTIFACT_DIR` once per run. Ignore `PLAN_ID` and `.active_plan`.
 
 ```bash
 if [ -n "${PWF_PLAN_DIR:-}" ] && [ "${PWF_PLAN_DIR#/}" != "$PWF_PLAN_DIR" ]; then

@@ -50,7 +50,7 @@ Then ask **“Which skills should I evaluate?”** with:
 
 For an all-conversations run, “Project skills” means skills from local git repositories inferred from the conversations' working directories. After these answers, proceed immediately.
 
-Create one fresh, collision-free directory per run and use it as `REPORT_DIR` for every artifact. If the hook context provides an absolute `PWF_PLAN_DIR`, store the report under that plan. Otherwise use the system temporary directory. Do not read `PLAN_ID` or `.active_plan`.
+Create `REPORT_DIR` once per run and use it for every artifact. Ignore `PLAN_ID` and `.active_plan`.
 
 ```bash
 if [ -n "${PWF_PLAN_DIR:-}" ] && [ "${PWF_PLAN_DIR#/}" != "$PWF_PLAN_DIR" ]; then
