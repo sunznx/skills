@@ -17,9 +17,8 @@ from typing import Any
 
 
 PWF_URL = "https://github.com/OthmanAdi/planning-with-files.git"
-PONYTAIL_MARKETPLACE = "ponytail"
-PONYTAIL_SOURCE = "DietrichGebert/ponytail"
-PONYTAIL_PLUGIN = "ponytail@ponytail"
+PONYTAIL_URL = "https://github.com/DietrichGebert/ponytail.git"
+PONYTAIL_ROOT = ".codex/vendor/ponytail"
 SERENA_SOURCE = "git+https://github.com/oraios/serena"
 SERENA_HOOK = f"uvx -p 3.13 --from {SERENA_SOURCE} serena-hooks"
 BLOCK_START = "# AGENT-WORKFLOW:START"
@@ -30,6 +29,7 @@ PWF_HANDLER = re.compile(
     r"\.codex[/\\]hooks[/\\](?:pwf_session_router\.py|run_sh\.py|pre_tool_use\.py|post_tool_use\.py|permission_request\.py|stop\.py)"
 )
 SERENA_CLIENT = re.compile(r"--client(?:=|\s+)codex(?:\s|$)")
+PONYTAIL_HANDLER = re.compile(r"\.codex[/\\]vendor[/\\]ponytail[/\\]hooks[/\\]ponytail-")
 SERENA_HOOKS = {
     "PreToolUse": [
         {
@@ -68,56 +68,6 @@ SERENA_HOOKS = {
 
 class InitError(RuntimeError):
     pass
-
-
-def codex_json(*args: str) -> dict[str, Any]:
-    try:
-        result = subprocess.run(
-            ["codex", *args, "--json"],
-            text=True,
-            capture_output=True,
-            check=False,
-        )
-    except FileNotFoundError as exc:
-        raise InitError("未找到 codex CLI，无法安装 Ponytail。") from exc
-    if result.returncode:
-        detail = result.stderr.strip() or result.stdout.strip()
-        raise InitError(f"Codex plugin 命令失败：{detail}")
-    try:
-        payload = json.loads(result.stdout)
-    except json.JSONDecodeError as exc:
-        raise InitError(f"Codex plugin 返回了无效 JSON：{exc}") from exc
-    if not isinstance(payload, dict):
-        raise InitError("Codex plugin 返回格式不正确。")
-    return payload
-
-
-def ensure_ponytail() -> list[str]:
-    statuses: list[str] = []
-    marketplaces = codex_json("plugin", "marketplace", "list").get("marketplaces", [])
-    configured = any(
-        isinstance(item, dict) and item.get("name") == PONYTAIL_MARKETPLACE
-        for item in marketplaces
-    )
-    if configured:
-        statuses.append("preserved Codex marketplace ponytail")
-    else:
-        codex_json("plugin", "marketplace", "add", PONYTAIL_SOURCE)
-        statuses.append("added Codex marketplace ponytail")
-
-    installed = codex_json("plugin", "list").get("installed", [])
-    present = any(
-        isinstance(item, dict)
-        and item.get("pluginId") == PONYTAIL_PLUGIN
-        and item.get("enabled", True)
-        for item in installed
-    )
-    if present:
-        statuses.append("preserved Codex plugin ponytail@ponytail")
-    else:
-        codex_json("plugin", "add", PONYTAIL_PLUGIN)
-        statuses.append("installed Codex plugin ponytail@ponytail")
-    return statuses
 
 
 def replace_block(text: str, start: str, end: str, block: str) -> str:
@@ -187,11 +137,38 @@ def is_serena_hook(item: dict[str, Any]) -> bool:
     return isinstance(command, str) and "serena-hooks" in command and bool(SERENA_CLIENT.search(command))
 
 
+def is_ponytail_hook(item: dict[str, Any]) -> bool:
+    command = item.get("command", "")
+    return isinstance(command, str) and bool(PONYTAIL_HANDLER.search(command))
+
+
 def is_managed_hook(item: dict[str, Any]) -> bool:
-    return is_pwf_hook(item) or is_serena_hook(item)
+    return is_pwf_hook(item) or is_serena_hook(item) or is_ponytail_hook(item)
 
 
-def merge_hooks(existing: dict[str, Any], upstream: dict[str, Any]) -> dict[str, Any]:
+def project_ponytail_hooks(upstream: dict[str, Any]) -> dict[str, Any]:
+    rewritten = json.loads(json.dumps(upstream))
+    hooks = rewritten.get("hooks", {})
+    if not isinstance(hooks, dict):
+        raise InitError("Ponytail hooks JSON 格式不正确。")
+    for groups in hooks.values():
+        if not isinstance(groups, list):
+            continue
+        for group in groups:
+            commands = group.get("hooks", []) if isinstance(group, dict) else []
+            for item in commands if isinstance(commands, list) else []:
+                if isinstance(item, dict) and isinstance(item.get("command"), str):
+                    item["command"] = item["command"].replace(
+                        "${CLAUDE_PLUGIN_ROOT}", PONYTAIL_ROOT
+                    )
+    return rewritten
+
+
+def merge_hooks(
+    existing: dict[str, Any],
+    upstream: dict[str, Any],
+    ponytail: dict[str, Any],
+) -> dict[str, Any]:
     merged = dict(existing)
     hooks = dict(existing.get("hooks", {})) if isinstance(existing.get("hooks"), dict) else {}
     upstream_hooks = upstream.get("hooks", {})
@@ -227,12 +204,21 @@ def merge_hooks(existing: dict[str, Any], upstream: dict[str, Any]) -> dict[str,
         hooks.setdefault(event, [])
         hooks[event].extend(groups)
 
+    ponytail_hooks = ponytail.get("hooks", {})
+    if not isinstance(ponytail_hooks, dict):
+        raise InitError("Ponytail hooks JSON 格式不正确。")
+    for event, groups in ponytail_hooks.items():
+        if not isinstance(groups, list):
+            continue
+        hooks.setdefault(event, [])
+        hooks[event].extend(groups)
+
     merged["hooks"] = hooks
     return merged
 
 
-def mirror_path() -> Path:
-    digest = hashlib.sha256(PWF_URL.encode()).hexdigest()[:16]
+def mirror_path(url: str) -> Path:
+    digest = hashlib.sha256(url.encode()).hexdigest()[:16]
     return Path.home() / ".agents" / "cache" / "sync-skills" / "repos" / f"{digest}.git"
 
 
@@ -248,7 +234,7 @@ def sync_repo_path() -> Path:
     return repo
 
 
-def refresh_mirror(repo: Path) -> Path:
+def refresh_pwf_mirror(repo: Path) -> Path:
     result = subprocess.run(
         [str(repo / "sync-skills"), "planning-with-files"],
         cwd=repo,
@@ -259,7 +245,7 @@ def refresh_mirror(repo: Path) -> Path:
     if result.returncode:
         detail = result.stderr.strip() or result.stdout.strip()
         raise InitError(f"Planning with Files 同步失败：{detail}")
-    mirror = mirror_path()
+    mirror = mirror_path(PWF_URL)
     check = subprocess.run(
         ["git", f"--git-dir={mirror}", "rev-parse", "--verify", "HEAD"],
         capture_output=True,
@@ -270,20 +256,45 @@ def refresh_mirror(repo: Path) -> Path:
     return mirror
 
 
-def extract_upstream(mirror: Path, destination: Path) -> None:
-    paths = [
-        ".agents/skills/planning-with-files",
-        ".codex/skills/planning-with-files",
-        ".codex/hooks",
-        ".codex/hooks.json",
-    ]
+def refresh_ponytail_mirror() -> Path:
+    mirror = mirror_path(PONYTAIL_URL)
+    mirror.parent.mkdir(parents=True, exist_ok=True)
+    if mirror.exists():
+        result = subprocess.run(
+            ["git", f"--git-dir={mirror}", "fetch", "origin", "--prune"],
+            text=True,
+            capture_output=True,
+            check=False,
+        )
+    else:
+        result = subprocess.run(
+            ["git", "clone", "--mirror", PONYTAIL_URL, str(mirror)],
+            text=True,
+            capture_output=True,
+            check=False,
+        )
+    check = subprocess.run(
+        ["git", f"--git-dir={mirror}", "rev-parse", "--verify", "HEAD"],
+        capture_output=True,
+        check=False,
+    )
+    if result.returncode and check.returncode:
+        detail = result.stderr.strip() or result.stdout.strip()
+        raise InitError(f"Ponytail 同步失败：{detail}")
+    if result.returncode:
+        detail = result.stderr.strip() or result.stdout.strip()
+        print(f"Ponytail 更新失败，继续使用本地 mirror：{detail}", file=sys.stderr)
+    return mirror
+
+
+def extract_archive(mirror: Path, destination: Path, paths: list[str]) -> None:
     result = subprocess.run(
         ["git", f"--git-dir={mirror}", "archive", "HEAD", *paths],
         capture_output=True,
         check=False,
     )
     if result.returncode:
-        raise InitError(result.stderr.decode(errors="replace").strip() or "无法读取 Planning with Files mirror。")
+        raise InitError(result.stderr.decode(errors="replace").strip() or f"无法读取 mirror：{mirror}")
     with tarfile.open(fileobj=io.BytesIO(result.stdout), mode="r:") as archive:
         root = destination.resolve()
         for member in archive.getmembers():
@@ -293,6 +304,23 @@ def extract_upstream(mirror: Path, destination: Path) -> None:
             except ValueError as exc:
                 raise InitError(f"上游 archive 包含不安全路径：{member.name}") from exc
         archive.extractall(destination)
+
+
+def extract_pwf(mirror: Path, destination: Path) -> None:
+    extract_archive(
+        mirror,
+        destination,
+        [
+            ".agents/skills/planning-with-files",
+            ".codex/skills/planning-with-files",
+            ".codex/hooks",
+            ".codex/hooks.json",
+        ],
+    )
+
+
+def extract_ponytail(mirror: Path, destination: Path) -> None:
+    extract_archive(mirror, destination, [".codex-plugin", "hooks", "skills", "LICENSE"])
 
 
 def copy_tree(source: Path, destination: Path) -> None:
@@ -324,7 +352,17 @@ def ensure_empty_file(path: Path) -> str:
     return "created"
 
 
-def install(target: Path, mirror: Path) -> list[str]:
+def skill_names(root: Path) -> set[str]:
+    if not root.is_dir():
+        return set()
+    return {
+        path.name
+        for path in root.iterdir()
+        if path.is_dir() and (path / "SKILL.md").is_file()
+    }
+
+
+def install(target: Path, pwf_mirror: Path, ponytail_mirror: Path) -> list[str]:
     target = target.expanduser().resolve()
     if not target.is_dir():
         raise InitError(f"目标目录不存在：{target}")
@@ -332,27 +370,48 @@ def install(target: Path, mirror: Path) -> list[str]:
     statuses: list[str] = []
     with tempfile.TemporaryDirectory() as temp_name:
         extracted = Path(temp_name)
-        extract_upstream(mirror, extracted)
+        pwf = extracted / "pwf"
+        ponytail = extracted / "ponytail"
+        extract_pwf(pwf_mirror, pwf)
+        extract_ponytail(ponytail_mirror, ponytail)
         copy_tree(
-            extracted / ".agents/skills/planning-with-files",
+            pwf / ".agents/skills/planning-with-files",
             target / ".agents/skills/planning-with-files",
         )
         copy_tree(
-            extracted / ".codex/skills/planning-with-files",
+            pwf / ".codex/skills/planning-with-files",
             target / ".codex/skills/planning-with-files",
         )
 
         remove_path(target / ".agents/skills/pwf")
 
-        copy_tree(extracted / ".codex/hooks", target / ".codex/hooks")
+        copy_tree(pwf / ".codex/hooks", target / ".codex/hooks")
+
+        vendor = target / PONYTAIL_ROOT
+        old_skills = skill_names(vendor / "skills")
+        copy_tree(ponytail, vendor)
+        new_skills = skill_names(vendor / "skills")
+        for name in old_skills | new_skills:
+            destination = target / ".agents/skills" / name
+            if name in new_skills:
+                copy_tree(vendor / "skills" / name, destination)
+            else:
+                remove_path(destination)
 
         hooks_path = target / ".codex/hooks.json"
         try:
             existing_hooks = json.loads(hooks_path.read_text(encoding="utf-8")) if hooks_path.is_file() else {}
-            upstream_hooks = json.loads((extracted / ".codex/hooks.json").read_text(encoding="utf-8"))
+            upstream_hooks = json.loads((pwf / ".codex/hooks.json").read_text(encoding="utf-8"))
+            ponytail_hooks = project_ponytail_hooks(
+                json.loads((vendor / "hooks/claude-codex-hooks.json").read_text(encoding="utf-8"))
+            )
         except json.JSONDecodeError as exc:
             raise InitError(f"hooks JSON 格式错误：{exc}") from exc
-        hooks_text = json.dumps(merge_hooks(existing_hooks, upstream_hooks), ensure_ascii=False, indent=2) + "\n"
+        hooks_text = json.dumps(
+            merge_hooks(existing_hooks, upstream_hooks, ponytail_hooks),
+            ensure_ascii=False,
+            indent=2,
+        ) + "\n"
         statuses.append(f"{write_if_changed(hooks_path, hooks_text)} {hooks_path}")
 
     config = target / ".codex/config.toml"
@@ -373,7 +432,7 @@ def install(target: Path, mirror: Path) -> list[str]:
         sembleignore.write_text(".git/\nnode_modules/\n.planning/\n", encoding="utf-8")
         statuses.append(f"created {sembleignore}")
 
-    statuses.insert(0, f"installed project Planning with Files skill and official hooks in {target}")
+    statuses.insert(0, f"installed project Planning with Files and Ponytail skills and hooks in {target}")
     return statuses
 
 
@@ -381,10 +440,9 @@ def main() -> int:
     target = Path(sys.argv[1]) if len(sys.argv) > 1 and sys.argv[1] else Path.cwd()
     try:
         repo = sync_repo_path()
-        mirror = refresh_mirror(repo)
-        for line in ensure_ponytail():
-            print(line)
-        for line in install(target, mirror):
+        pwf_mirror = refresh_pwf_mirror(repo)
+        ponytail_mirror = refresh_ponytail_mirror()
+        for line in install(target, pwf_mirror, ponytail_mirror):
             print(line)
         print("next: start a new Codex session and review Ponytail and project hooks with /hooks")
     except InitError as exc:

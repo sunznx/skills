@@ -15,43 +15,19 @@ SPEC.loader.exec_module(MODULE)
 
 
 class InitWorkflowTest(unittest.TestCase):
-    def test_ponytail_is_installed_only_when_missing(self) -> None:
-        with mock.patch.object(MODULE, "codex_json") as command:
-            command.side_effect = [
-                {"marketplaces": []},
-                {"name": "ponytail"},
-                {"installed": []},
-                {"pluginId": MODULE.PONYTAIL_PLUGIN},
-            ]
-            self.assertEqual(
-                MODULE.ensure_ponytail(),
-                [
-                    "added Codex marketplace ponytail",
-                    "installed Codex plugin ponytail@ponytail",
-                ],
-            )
-            self.assertEqual(
-                command.call_args_list,
-                [
-                    mock.call("plugin", "marketplace", "list"),
-                    mock.call("plugin", "marketplace", "add", MODULE.PONYTAIL_SOURCE),
-                    mock.call("plugin", "list"),
-                    mock.call("plugin", "add", MODULE.PONYTAIL_PLUGIN),
-                ],
-            )
-
-        with mock.patch.object(MODULE, "codex_json") as command:
-            command.side_effect = [
-                {"marketplaces": [{"name": MODULE.PONYTAIL_MARKETPLACE}]},
-                {"installed": [{"pluginId": MODULE.PONYTAIL_PLUGIN, "enabled": True}]},
-            ]
-            self.assertEqual(
-                MODULE.ensure_ponytail(),
-                [
-                    "preserved Codex marketplace ponytail",
-                    "preserved Codex plugin ponytail@ponytail",
-                ],
-            )
+    def test_ponytail_update_uses_valid_cached_mirror_on_fetch_failure(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            mirror = Path(directory) / "ponytail.git"
+            mirror.mkdir()
+            failed = mock.Mock(returncode=1, stderr="offline", stdout="")
+            valid = mock.Mock(returncode=0)
+            with (
+                mock.patch.object(MODULE, "mirror_path", return_value=mirror),
+                mock.patch.object(MODULE.subprocess, "run", side_effect=[failed, valid]),
+                mock.patch("builtins.print") as output,
+            ):
+                self.assertEqual(MODULE.refresh_ponytail_mirror(), mirror)
+            output.assert_called_once()
 
     def test_agents_file_is_created_empty_or_preserved(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
@@ -104,12 +80,38 @@ class InitWorkflowTest(unittest.TestCase):
                 ]
             }
         }
-        once = MODULE.merge_hooks(existing, upstream)
-        twice = MODULE.merge_hooks(once, upstream)
+        ponytail = MODULE.project_ponytail_hooks(
+            {
+                "hooks": {
+                    "SessionStart": [
+                        {
+                            "hooks": [
+                                {
+                                    "type": "command",
+                                    "command": 'node "${CLAUDE_PLUGIN_ROOT}/hooks/ponytail-activate.js"',
+                                }
+                            ]
+                        }
+                    ],
+                    "UserPromptSubmit": [
+                        {
+                            "hooks": [
+                                {
+                                    "type": "command",
+                                    "command": 'node "${CLAUDE_PLUGIN_ROOT}/hooks/ponytail-mode-tracker.js"',
+                                }
+                            ]
+                        }
+                    ],
+                }
+            }
+        )
+        once = MODULE.merge_hooks(existing, upstream, ponytail)
+        twice = MODULE.merge_hooks(once, upstream, ponytail)
         text = str(twice)
         self.assertEqual(once, twice)
         self.assertIn("echo keep", text)
-        self.assertEqual(len(twice["hooks"]["UserPromptSubmit"]), 2)
+        self.assertEqual(len(twice["hooks"]["UserPromptSubmit"]), 3)
         self.assertNotIn("pwf_session_router.py", text)
         official = twice["hooks"]["UserPromptSubmit"][1]["hooks"][0]
         self.assertEqual(official, upstream["hooks"]["UserPromptSubmit"][0]["hooks"][0])
@@ -117,9 +119,11 @@ class InitWorkflowTest(unittest.TestCase):
         self.assertIn("remind --client=codex", text)
         self.assertIn("activate --client=codex", text)
         self.assertIn("cleanup --client=codex", text)
+        self.assertNotIn("${CLAUDE_PLUGIN_ROOT}", text)
+        self.assertIn(".codex/vendor/ponytail/hooks/ponytail-activate.js", text)
 
     def test_install_uses_project_skill_and_official_hooks(self) -> None:
-        def fake_extract(_mirror: Path, destination: Path) -> None:
+        def fake_extract_pwf(_mirror: Path, destination: Path) -> None:
             skill = destination / ".agents/skills/planning-with-files"
             skill.mkdir(parents=True)
             (skill / "SKILL.md").write_text("official skill\n", encoding="utf-8")
@@ -141,6 +145,29 @@ class InitWorkflowTest(unittest.TestCase):
                 encoding="utf-8",
             )
 
+        def fake_extract_ponytail(_mirror: Path, destination: Path) -> None:
+            hooks = destination / "hooks"
+            hooks.mkdir(parents=True)
+            (hooks / "ponytail-activate.js").write_text("// activate\n", encoding="utf-8")
+            (hooks / "ponytail-mode-tracker.js").write_text("// tracker\n", encoding="utf-8")
+            (hooks / "claude-codex-hooks.json").write_text(
+                '{"hooks":{"SessionStart":[{"hooks":[{"type":"command",'
+                '"command":"node \\\"${CLAUDE_PLUGIN_ROOT}/hooks/ponytail-activate.js\\\""}]}],'
+                '"UserPromptSubmit":[{"hooks":[{"type":"command",'
+                '"command":"node \\\"${CLAUDE_PLUGIN_ROOT}/hooks/ponytail-mode-tracker.js\\\""}]}]}}\n',
+                encoding="utf-8",
+            )
+            skill = destination / "skills/ponytail"
+            skill.mkdir(parents=True)
+            (skill / "SKILL.md").write_text("project ponytail\n", encoding="utf-8")
+            review = destination / "skills/ponytail-review"
+            review.mkdir(parents=True)
+            (review / "SKILL.md").write_text("project review\n", encoding="utf-8")
+            manifest = destination / ".codex-plugin"
+            manifest.mkdir(parents=True)
+            (manifest / "plugin.json").write_text('{"name":"ponytail"}\n', encoding="utf-8")
+            (destination / "LICENSE").write_text("MIT\n", encoding="utf-8")
+
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
             old_paths = [
@@ -155,8 +182,18 @@ class InitWorkflowTest(unittest.TestCase):
             old_runtime.parent.mkdir(parents=True)
             old_runtime.write_text("old\n", encoding="utf-8")
 
-            with mock.patch.object(MODULE, "extract_upstream", side_effect=fake_extract):
-                MODULE.install(root, Path("/unused-mirror"))
+            old_vendor_skill = root / ".codex/vendor/ponytail/skills/ponytail-old"
+            old_vendor_skill.mkdir(parents=True)
+            (old_vendor_skill / "SKILL.md").write_text("old\n", encoding="utf-8")
+            old_project_skill = root / ".agents/skills/ponytail-old"
+            old_project_skill.mkdir(parents=True)
+            (old_project_skill / "SKILL.md").write_text("old\n", encoding="utf-8")
+
+            with (
+                mock.patch.object(MODULE, "extract_pwf", side_effect=fake_extract_pwf),
+                mock.patch.object(MODULE, "extract_ponytail", side_effect=fake_extract_ponytail),
+            ):
+                MODULE.install(root, Path("/unused-pwf"), Path("/unused-ponytail"))
 
             self.assertEqual(
                 (root / ".agents/skills/planning-with-files/SKILL.md").read_text(encoding="utf-8"),
@@ -169,6 +206,15 @@ class InitWorkflowTest(unittest.TestCase):
             hooks_text = (root / ".codex/hooks.json").read_text(encoding="utf-8")
             self.assertIn(".codex/hooks/run_sh.py", hooks_text)
             self.assertEqual(hooks_text.count("serena-hooks"), 3)
+            self.assertIn(".codex/vendor/ponytail/hooks/ponytail-activate.js", hooks_text)
+            self.assertNotIn("${CLAUDE_PLUGIN_ROOT}", hooks_text)
+            self.assertEqual(
+                (root / ".agents/skills/ponytail/SKILL.md").read_text(encoding="utf-8"),
+                "project ponytail\n",
+            )
+            self.assertTrue((root / ".agents/skills/ponytail-review/SKILL.md").is_file())
+            self.assertTrue((root / ".codex/vendor/ponytail/.codex-plugin/plugin.json").is_file())
+            self.assertFalse(old_project_skill.exists())
             self.assertFalse(router.exists())
             self.assertFalse(old_runtime.exists())
             for path in old_paths:
