@@ -50,7 +50,15 @@ Then ask **“Which skills should I evaluate?”** with:
 
 For an all-conversations run, “Project skills” means skills from local git repositories inferred from the conversations' working directories. After these answers, proceed immediately.
 
-Never write artifacts into the user's repo. Create one fresh, collision-free scratch directory per run and use it as `REPORT_DIR` for every artifact:
+Create one fresh, collision-free directory per run and use it as `REPORT_DIR` for every artifact. First check the runtime context for a current Trellis task. If the context does not say, and the current git repository contains `.trellis/scripts/task.py`, use `python3 ./.trellis/scripts/task.py current --json` from the repository root. Resolve the task directory to an absolute path and assign it to `TASK_DIR`.
+
+When a current Trellis task exists:
+
+```bash
+REPORT_DIR="$(mktemp -d "$TASK_DIR/skill-doctor-XXXXXXXX")"
+```
+
+Otherwise, never write artifacts into the user's repo:
 
 ```bash
 REPORT_DIR="$(mktemp -d "${TMPDIR:-/tmp}/skill-doctor-XXXXXXXX")"
@@ -154,10 +162,12 @@ Write `$REPORT_DIR/report.json`. Store the curved `efficiency` and `code_quality
 ```
 
 ```bash
-python3 "$SKILL_ROOT/scripts/render_report.py" "$REPORT_DIR/report.json" --open
+python3 "$SKILL_ROOT/scripts/render_report.py" "$REPORT_DIR/report.json"
 ```
 
-This writes a single self-contained `$REPORT_DIR/report.html` and attempts to open it in the default browser. The scorecard, findings, and suggested skill edits appear on one page. Long diffs are collapsed behind a "show more" toggle, and a "share as png" button exports a 1200x675 share image locally. There is no separate card file to open or screenshot.
+This writes a single self-contained `$REPORT_DIR/report.html`. The scorecard, findings, and suggested skill edits appear on one page. Long diffs are collapsed behind a "show more" toggle, and a "share as png" button exports a 1200x675 share image locally. There is no separate card file to open or screenshot.
+
+After rendering, use `chrome:control-chrome`. Name the Chrome session `skill-doctor`, open the absolute `file://` URL for `$REPORT_DIR/report.html`, and verify that the page loaded in Chrome's `skill-doctor` group.
 
 ## Step 6: Output
 
