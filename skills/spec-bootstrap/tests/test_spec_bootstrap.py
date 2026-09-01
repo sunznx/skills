@@ -34,6 +34,9 @@ class InitWorkflowTest(unittest.TestCase):
         self.assertEqual(once.count(MODULE.AGENTS_BLOCK_START), 1)
         self.assertIn("$planning-with-files", once)
         self.assertNotIn("$pwf", once)
+        self.assertIn("使用 Serena 激活当前项目并读取初始指引", once)
+        self.assertIn("使用 Semble 做自然语言或概念搜索", once)
+        self.assertIn("仅在需要全仓精确字面量匹配时使用文本搜索", once)
 
     def test_config_preserves_existing_server_without_duplicate(self) -> None:
         original = '[mcp_servers.serena]\ncommand = "custom"\n'

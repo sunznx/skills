@@ -82,7 +82,9 @@ def managed_agents(existing: str) -> str:
 
 - 复杂任务使用 `$planning-with-files` 创建和维护项目计划。
 - 以 `task_plan.md` 为权威，并用 `update_plan` 完整镜像步骤和状态。
-- 阅读、搜索和定位代码时优先使用 Serena 与 Semble，再按需使用文本搜索。
+- 每个 session 开始时使用 Serena 激活当前项目并读取初始指引；若 hook 已完成则不要重复。
+- 使用 Serena 做符号级代码阅读、定位和修改；使用 Semble 做自然语言或概念搜索。
+- Semble 返回路径和行号后直接阅读目标代码，不要对同一内容重复搜索；仅在需要全仓精确字面量匹配时使用文本搜索。
 - 开始代码工作前先读取本文件，并继续遵循本区块之外的项目规则。
 {AGENTS_BLOCK_END}"""
     body = replace_block(remainder, AGENTS_BLOCK_START, AGENTS_BLOCK_END, block)
