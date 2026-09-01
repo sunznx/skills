@@ -1,6 +1,6 @@
 ---
 name: agent-messaging
-description: 向一个或多个 agent 发送任务，默认等待回复，并在原生投递明确失败时回退到 Herdr。用户要求联系、通知、委派任务给其他 agent 或等待其结果时使用。
+description: 向一个或多个 agent 发送任务，默认等待回复；支持当前协作树、Codex TUI session 和 Herdr。用户要求联系、通知、委派任务给其他 agent 或等待其结果时使用。
 ---
 
 # Agent Messaging
@@ -27,19 +27,35 @@ description: 向一个或多个 agent 发送任务，默认等待回复，并在
 
 原生消息依赖平台自带的 sender metadata 识别发送方，不要在正文中重复包装发送方信息。
 
+## Codex TUI session
+
+当 `followup_task` 明确返回目标不在当前协作树，且目标是 Codex session UUID 或准确名称时，`notify` 先尝试 Codex CLI 自带的消息队列，再考虑 Herdr：
+
+1. 运行 `codex queue --help`，确认当前 CLI 支持该命令。
+2. 在消息末尾追加：`这是 notify 模式；处理完成、失败或阻塞后，请通知发送方。`
+3. 异步投递，不启动或恢复另一个 TUI：
+
+```bash
+codex queue --thread "$target" --message "$message"
+```
+
+命令退出码为 0 且输出包含 `Queued message` 时记为 `queued`，立即结束该目标的发送，不调用 `wait_agent`，也不回退到 Herdr。非零退出属于明确失败，可以继续 Herdr 回退；超时或结果含糊时停止，避免重复投递。
+
+`codex queue` 没有等待指定 session 回复的接口，只用于 `notify`。`request` 仍使用可匹配回复的原生协作工具；原生投递明确失败后再尝试 Herdr。
+
 ## 多目标投递
 
 - 每个目标单独调用一次，不使用广播。
 - 先完成 fan-out，再在 `request` 模式下 fan-in；不要等待第一个目标结束后才给下一个目标发送。
 - 分别记录每个目标使用的通道和状态。单个目标失败不抹掉其他目标的成功结果。
-- 每个目标独立决定是否回退，因此同一批任务可以同时包含原生和 Herdr 通道。
+- 每个目标独立决定通道，因此同一批任务可以同时包含原生协作、Codex TUI queue 和 Herdr。
 
 ## 只在明确失败时回退
 
 按以下规则解释原生投递结果：
 
 - `delivered` 或 `queued`：投递成功。不要回退。
-- 工具不可用、目标不在当前协作树、目标属于其他运行环境：明确失败，可以尝试 Herdr。
+- 工具不可用、目标不在当前协作树、目标属于其他运行环境：明确失败；符合条件的 `notify` 先尝试 Codex TUI queue，其余情况尝试 Herdr。
 - 超时、中断或结果含糊：投递状态不确定。停止并报告，不要回退，避免同一任务被执行两次。
 
 ## Herdr 回退
