@@ -52,17 +52,14 @@ For an all-conversations run, “Project skills” means skills from local git r
 
 Create one fresh, collision-free directory per run and use it as `REPORT_DIR` for every artifact. If the hook context provides an absolute `PWF_PLAN_DIR`, store the report under that plan. Otherwise use the system temporary directory. Do not read `PLAN_ID` or `.active_plan`.
 
-When `PWF_PLAN_DIR` is available:
-
 ```bash
-mkdir -p "$PWF_PLAN_DIR/artifacts"
-REPORT_DIR="$(mktemp -d "$PWF_PLAN_DIR/artifacts/skill-doctor-XXXXXXXX")"
-```
-
-Otherwise:
-
-```bash
-REPORT_DIR="$(mktemp -d "${TMPDIR:-/tmp}/skill-doctor-XXXXXXXX")"
+if [ -n "${PWF_PLAN_DIR:-}" ] && [ "${PWF_PLAN_DIR#/}" != "$PWF_PLAN_DIR" ]; then
+  ARTIFACT_PARENT="$PWF_PLAN_DIR/artifacts"
+else
+  ARTIFACT_PARENT="${TMPDIR:-/tmp}"
+fi
+mkdir -p "$ARTIFACT_PARENT"
+REPORT_DIR="$(mktemp -d "$ARTIFACT_PARENT/skill-doctor-XXXXXXXX")"
 ```
 
 ## Step 1: Collect
