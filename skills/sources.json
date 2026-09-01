@@ -147,11 +147,6 @@
       "base_tree": "e41d92e171f074a2b6887d8f6faca4a15c83d1ca"
     },
     {
-      "name": "pwf",
-      "managed": false,
-      "note": "本地维护，提供 Codex session 与 Planning with Files 计划绑定"
-    },
-    {
       "name": "ra-人话",
       "source": "Pluviobyte/rnskill",
       "url": "https://github.com/Pluviobyte/rnskill.git",
