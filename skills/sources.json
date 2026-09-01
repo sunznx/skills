@@ -69,6 +69,11 @@
       "base_tree": "3d35cd438f4067b03c8b3792e038960e4ac11526"
     },
     {
+      "name": "init-agent-workflow",
+      "managed": false,
+      "note": "本地维护，初始化项目级 PWF、Serena 与 Semble 工作流"
+    },
+    {
       "name": "karpathy-guidelines",
       "source": "CezarDrumea/andrej-karpathy-skills",
       "url": "https://github.com/CezarDrumea/andrej-karpathy-skills.git",
@@ -132,11 +137,24 @@
       "base_tree": "c7cac9d1683cdd169233ace6b4cff62ec2a17fd2"
     },
     {
+      "name": "planning-with-files",
+      "source": "OthmanAdi/planning-with-files",
+      "url": "https://github.com/OthmanAdi/planning-with-files.git",
+      "path": ".agents/skills/planning-with-files/SKILL.md",
+      "base_tree": "3b5a9c69dad7c693761c2ea679575d6536a63dd2",
+      "deploy": false
+    },
+    {
       "name": "prototype",
       "source": "mattpocock/skills",
       "url": "https://github.com/mattpocock/skills.git",
       "path": "skills/engineering/prototype/SKILL.md",
       "base_tree": "e41d92e171f074a2b6887d8f6faca4a15c83d1ca"
+    },
+    {
+      "name": "pwf",
+      "managed": false,
+      "note": "本地维护，提供 Codex session 与 Planning with Files 计划绑定"
     },
     {
       "name": "ra-人话",

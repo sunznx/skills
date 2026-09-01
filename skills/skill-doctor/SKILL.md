@@ -50,15 +50,16 @@ Then ask **“Which skills should I evaluate?”** with:
 
 For an all-conversations run, “Project skills” means skills from local git repositories inferred from the conversations' working directories. After these answers, proceed immediately.
 
-Create one fresh, collision-free directory per run and use it as `REPORT_DIR` for every artifact. First check the runtime context for a current Trellis task. If the context does not say, and the current git repository contains `.trellis/scripts/task.py`, use `python3 ./.trellis/scripts/task.py current --json` from the repository root. Resolve the task directory to an absolute path and assign it to `TASK_DIR`.
+Create one fresh, collision-free directory per run and use it as `REPORT_DIR` for every artifact. If the hook context provides an absolute `PWF_PLAN_DIR`, store the report under that plan. Otherwise use the system temporary directory. Do not read `PLAN_ID` or `.active_plan`.
 
-When a current Trellis task exists:
+When `PWF_PLAN_DIR` is available:
 
 ```bash
-REPORT_DIR="$(mktemp -d "$TASK_DIR/skill-doctor-XXXXXXXX")"
+mkdir -p "$PWF_PLAN_DIR/artifacts"
+REPORT_DIR="$(mktemp -d "$PWF_PLAN_DIR/artifacts/skill-doctor-XXXXXXXX")"
 ```
 
-Otherwise, never write artifacts into the user's repo:
+Otherwise:
 
 ```bash
 REPORT_DIR="$(mktemp -d "${TMPDIR:-/tmp}/skill-doctor-XXXXXXXX")"

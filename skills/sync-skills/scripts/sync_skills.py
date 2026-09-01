@@ -167,8 +167,9 @@ def catalog_lines(manifest: dict) -> list[str]:
             lines.append(f"| {name} | {source} | — | {method} |")
         else:
             url = entry["url"].removesuffix(".git")
+            method = "三方合并（仅仓库）" if entry.get("deploy") is False else "三方合并"
             lines.append(
-                f"| {name} | [{entry['source']}]({url}) | `{entry['path']}` | 三方合并 |"
+                f"| {name} | [{entry['source']}]({url}) | `{entry['path']}` | {method} |"
             )
     lines.append(CATALOG_END)
     return lines

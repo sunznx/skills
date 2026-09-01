@@ -13,11 +13,11 @@ Topic: $ARGUMENTS
 
 Generating the HTML is required. Do not substitute Mermaid, Markdown, or an inline chat diagram.
 
-Create a fresh directory under the current Git project's `.planning` directory. Outside a Git project, use `${TMPDIR:-/tmp}`.
+Create a fresh directory under the session-bound Planning with Files plan when the hook context provides an absolute `PWF_PLAN_DIR`. Otherwise use `${TMPDIR:-/tmp}`. Do not read `PLAN_ID` or `.active_plan`.
 
 ```bash
-if PROJECT_ROOT="$(git rev-parse --show-toplevel 2>/dev/null)"; then
-  ARTIFACT_PARENT="$PROJECT_ROOT/.planning"
+if [ -n "${PWF_PLAN_DIR:-}" ] && [ "${PWF_PLAN_DIR#/}" != "$PWF_PLAN_DIR" ]; then
+  ARTIFACT_PARENT="$PWF_PLAN_DIR/artifacts"
 else
   ARTIFACT_PARENT="${TMPDIR:-/tmp}"
 fi
