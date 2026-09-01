@@ -59,7 +59,7 @@
       "source": "larksuite/cli",
       "url": "https://github.com/larksuite/cli.git",
       "path": "skills/lark-doc/SKILL.md",
-      "base_tree": "6d6f6ec71996a0e50be0a5d52cc7689eeae71b0c"
+      "base_tree": "423eafd31ccead70054cb24189491e93cb20af54"
     },
     {
       "name": "lark-shared",
