@@ -23,7 +23,6 @@
 
 | 本仓库 skill | 外部来源 | 外部 skill 路径 | 管理方式 |
 | --- | --- | --- | --- |
-| `agent-message-router` | 本地维护，暂无外部 Git 来源 | — | 本地维护 |
 | `agent-messaging` | 本地维护，暂无外部 Git 来源 | — | 本地维护 |
 | `code-simplification` | [addyosmani/agent-skills](https://github.com/addyosmani/agent-skills) | `skills/code-simplification/SKILL.md` | 三方合并 |
 | `codebase-design` | [mattpocock/skills](https://github.com/mattpocock/skills) | `skills/engineering/codebase-design/SKILL.md` | 三方合并 |

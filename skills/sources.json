@@ -2,11 +2,6 @@
   "version": 1,
   "skills": [
     {
-      "name": "agent-message-router",
-      "managed": false,
-      "note": "本地维护，暂无外部 Git 来源"
-    },
-    {
       "name": "agent-messaging",
       "managed": false,
       "note": "本地维护，暂无外部 Git 来源"
