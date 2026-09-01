@@ -1,6 +1,6 @@
 ---
 name: agent-messaging
-description: 向一个或多个 agent 发送任务，默认等待回复；支持当前协作树、Codex TUI session 和 Herdr。用户要求联系、通知、委派任务给其他 agent 或等待其结果时使用。
+description: 向一个或多个 agent 发送任务，默认异步通知；支持当前协作树、Codex TUI session 和 Herdr。用户要求联系、通知、委派任务给其他 agent 或等待其结果时使用。
 ---
 
 # Agent Messaging
@@ -9,9 +9,9 @@ description: 向一个或多个 agent 发送任务，默认等待回复；支持
 
 ## 选择模式
 
-- `notify`：异步投递。发送成功后立即继续，不在本次调用中等待；消息中必须要求接收方在任务 `completed`、`failed` 或 `blocked` 后通知发送方。
-- `request`：投递后等待接收方回复。用户明确说“等待”“等回复”“拿到结果”等，或没有指定模式时使用。
-- 只有用户明确说“异步”“不用等”“发送后继续”或指定 `notify` 时，才使用 `notify`。语义不明确时默认使用 `request`。
+- `notify`：默认模式。异步投递，发送成功后立即继续，不在本次调用中等待；消息中必须要求接收方在任务 `completed`、`failed` 或 `blocked` 后通知发送方。
+- `request`：投递后等待接收方回复。只有用户明确说“等待”“等回复”“拿到结果”或指定 `request` 时使用。
+- 用户没有指定模式或语义不明确时使用 `notify`。
 - 需要等待时按 agent 身份匹配回复。同一目标同时只保留一个未完成任务。
 
 ## 原生工具优先
