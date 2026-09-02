@@ -37,6 +37,7 @@ $sync-skills 更新 agent-messaging 删除某个功能
 | --- | --- | --- | --- |
 | `agent-messaging` | 本地维护，暂无外部 Git 来源 | — | 本地维护 |
 | `alibabacloud-cli-guidance` | [aliyun/alibabacloud-aiops-skills](https://github.com/aliyun/alibabacloud-aiops-skills) | `skills/developertools/solutions/alibabacloud-cli-guidance/SKILL.md` | 三方合并 |
+| `archify` | [tt-a1i/archify](https://github.com/tt-a1i/archify) | `archify/SKILL.md` | 三方合并 |
 | `codebase-design` | [mattpocock/skills](https://github.com/mattpocock/skills) | `skills/engineering/codebase-design/SKILL.md` | 三方合并 |
 | `cua-driver` | 本机链接 ~/.cua-driver/skills/cua-driver，仓库保留快照但不覆盖该链接 | — | 仅仓库维护 |
 | `diagram-design` | [cathrynlavery/diagram-design](https://github.com/cathrynlavery/diagram-design) | `skills/diagram-design/SKILL.md` | 三方合并 |
@@ -46,6 +47,19 @@ $sync-skills 更新 agent-messaging 删除某个功能
 | `improve-codebase-architecture` | [mattpocock/skills](https://github.com/mattpocock/skills) | `skills/engineering/improve-codebase-architecture/SKILL.md` | 三方合并 |
 | `lark-doc` | [larksuite/cli](https://github.com/larksuite/cli) | `skills/lark-doc/SKILL.md` | 三方合并 |
 | `lark-shared` | [larksuite/cli](https://github.com/larksuite/cli) | `skills/lark-shared/SKILL.md` | 三方合并 |
+| `longbridge` | [longbridge/skills](https://github.com/longbridge/skills) | `skills/longbridge/SKILL.md` | 三方合并 |
+| `longbridge-content` | [longbridge/skills](https://github.com/longbridge/skills) | `skills/longbridge-content/SKILL.md` | 三方合并 |
+| `longbridge-derivatives` | [longbridge/skills](https://github.com/longbridge/skills) | `skills/longbridge-derivatives/SKILL.md` | 三方合并 |
+| `longbridge-earnings` | [longbridge/skills](https://github.com/longbridge/skills) | `skills/longbridge-earnings/SKILL.md` | 三方合并 |
+| `longbridge-fundamentals` | [longbridge/skills](https://github.com/longbridge/skills) | `skills/longbridge-fundamentals/SKILL.md` | 三方合并 |
+| `longbridge-intel` | [longbridge/skills](https://github.com/longbridge/skills) | `skills/longbridge-intel/SKILL.md` | 三方合并 |
+| `longbridge-market-data` | [longbridge/skills](https://github.com/longbridge/skills) | `skills/longbridge-market-data/SKILL.md` | 三方合并 |
+| `longbridge-portfolio` | [longbridge/skills](https://github.com/longbridge/skills) | `skills/longbridge-portfolio/SKILL.md` | 三方合并 |
+| `longbridge-quant` | [longbridge/skills](https://github.com/longbridge/skills) | `skills/longbridge-quant/SKILL.md` | 三方合并 |
+| `longbridge-research` | [longbridge/skills](https://github.com/longbridge/skills) | `skills/longbridge-research/SKILL.md` | 三方合并 |
+| `longbridge-technical` | [longbridge/skills](https://github.com/longbridge/skills) | `skills/longbridge-technical/SKILL.md` | 三方合并 |
+| `longbridge-value-investing` | [longbridge/skills](https://github.com/longbridge/skills) | `skills/longbridge-value-investing/SKILL.md` | 三方合并 |
+| `longbridge-watchlist` | [longbridge/skills](https://github.com/longbridge/skills) | `skills/longbridge-watchlist/SKILL.md` | 三方合并 |
 | `opencli-adapter-author` | [jackwener/opencli](https://github.com/jackwener/opencli) | `skills/opencli-adapter-author/SKILL.md` | 三方合并 |
 | `opencli-autofix` | [jackwener/opencli](https://github.com/jackwener/opencli) | `skills/opencli-autofix/SKILL.md` | 三方合并 |
 | `opencli-browser` | [jackwener/opencli](https://github.com/jackwener/opencli) | `skills/opencli-browser/SKILL.md` | 三方合并 |

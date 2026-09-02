@@ -14,6 +14,13 @@
       "base_tree": "a4b2519484b1c115778affda36397ca2c394c052"
     },
     {
+      "name": "archify",
+      "source": "tt-a1i/archify",
+      "url": "https://github.com/tt-a1i/archify.git",
+      "path": "archify/SKILL.md",
+      "base_tree": "cff24583cbdc3b7c7313580f3fa0636ade2e5279"
+    },
+    {
       "name": "codebase-design",
       "source": "mattpocock/skills",
       "url": "https://github.com/mattpocock/skills.git",
@@ -74,6 +81,97 @@
       "url": "https://github.com/larksuite/cli.git",
       "path": "skills/lark-shared/SKILL.md",
       "base_tree": "1ee7e9dce1377a7038ab798e1ac5813ed608f4e1"
+    },
+    {
+      "name": "longbridge",
+      "source": "longbridge/skills",
+      "url": "https://github.com/longbridge/skills.git",
+      "path": "skills/longbridge/SKILL.md",
+      "base_tree": "82f3e74d63e682ef51b6a876474176066c90092a"
+    },
+    {
+      "name": "longbridge-content",
+      "source": "longbridge/skills",
+      "url": "https://github.com/longbridge/skills.git",
+      "path": "skills/longbridge-content/SKILL.md",
+      "base_tree": "69b877c5e15d4cfb66ebef10c8dd231e79d46507"
+    },
+    {
+      "name": "longbridge-derivatives",
+      "source": "longbridge/skills",
+      "url": "https://github.com/longbridge/skills.git",
+      "path": "skills/longbridge-derivatives/SKILL.md",
+      "base_tree": "61f15d6b51f81ede21ab8749620d97becfc32a6d"
+    },
+    {
+      "name": "longbridge-earnings",
+      "source": "longbridge/skills",
+      "url": "https://github.com/longbridge/skills.git",
+      "path": "skills/longbridge-earnings/SKILL.md",
+      "base_tree": "3ad49b254116a372aba930b72cadcd83491fba30"
+    },
+    {
+      "name": "longbridge-fundamentals",
+      "source": "longbridge/skills",
+      "url": "https://github.com/longbridge/skills.git",
+      "path": "skills/longbridge-fundamentals/SKILL.md",
+      "base_tree": "fde3b8a92c53efc7423f37216aee22b08cff58fc"
+    },
+    {
+      "name": "longbridge-intel",
+      "source": "longbridge/skills",
+      "url": "https://github.com/longbridge/skills.git",
+      "path": "skills/longbridge-intel/SKILL.md",
+      "base_tree": "e6ac1be44c4dfef1f1f0f915c8ff8e4ddbae5943"
+    },
+    {
+      "name": "longbridge-market-data",
+      "source": "longbridge/skills",
+      "url": "https://github.com/longbridge/skills.git",
+      "path": "skills/longbridge-market-data/SKILL.md",
+      "base_tree": "733706d1bfdbe20959daeee2d216466b0f5d1ae0"
+    },
+    {
+      "name": "longbridge-portfolio",
+      "source": "longbridge/skills",
+      "url": "https://github.com/longbridge/skills.git",
+      "path": "skills/longbridge-portfolio/SKILL.md",
+      "base_tree": "390331511ad10bb8d8cc0f61ae1bcffbdbd7ef2d"
+    },
+    {
+      "name": "longbridge-quant",
+      "source": "longbridge/skills",
+      "url": "https://github.com/longbridge/skills.git",
+      "path": "skills/longbridge-quant/SKILL.md",
+      "base_tree": "3a7d6ebdd773edadefeac063ee57035ac0f6b21f"
+    },
+    {
+      "name": "longbridge-research",
+      "source": "longbridge/skills",
+      "url": "https://github.com/longbridge/skills.git",
+      "path": "skills/longbridge-research/SKILL.md",
+      "base_tree": "a055b8f2cc75178980f19e635152ed372a09dc41"
+    },
+    {
+      "name": "longbridge-technical",
+      "source": "longbridge/skills",
+      "url": "https://github.com/longbridge/skills.git",
+      "path": "skills/longbridge-technical/SKILL.md",
+      "base_tree": "937f22e6040ace031dd6c49718198ec183dfcf3c"
+    },
+    {
+      "name": "longbridge-value-investing",
+      "source": "longbridge/skills",
+      "url": "https://github.com/longbridge/skills.git",
+      "path": "skills/longbridge-value-investing/SKILL.md",
+      "base_tree": "c7e46e6ee920aa9916e2b3b87332fc2a0223c6fe"
+    },
+    {
+      "name": "longbridge-watchlist",
+      "source": "longbridge/skills",
+      "url": "https://github.com/longbridge/skills.git",
+      "path": "skills/longbridge-watchlist/SKILL.md",
+      "base_tree": "d641aa1fb0c0c6321a1ee2358d4a95dbd2246818"
     },
     {
       "name": "opencli-adapter-author",
