@@ -21,6 +21,41 @@
       "base_tree": "cff24583cbdc3b7c7313580f3fa0636ade2e5279"
     },
     {
+      "name": "archimate",
+      "source": "markdown-viewer/skills",
+      "url": "https://github.com/markdown-viewer/skills.git",
+      "path": "archimate/SKILL.md",
+      "base_tree": "5eb891d34750ffa7ce4d1fda2b03a8f731445b73"
+    },
+    {
+      "name": "architecture",
+      "source": "markdown-viewer/skills",
+      "url": "https://github.com/markdown-viewer/skills.git",
+      "path": "architecture/SKILL.md",
+      "base_tree": "e608b17216e56a3264448331953b129fa40b13df"
+    },
+    {
+      "name": "bpmn",
+      "source": "markdown-viewer/skills",
+      "url": "https://github.com/markdown-viewer/skills.git",
+      "path": "bpmn/SKILL.md",
+      "base_tree": "0c56df229ab0a85b98cea2c5235d4fd2e88ace66"
+    },
+    {
+      "name": "canvas",
+      "source": "markdown-viewer/skills",
+      "url": "https://github.com/markdown-viewer/skills.git",
+      "path": "canvas/SKILL.md",
+      "base_tree": "f2c69fb78d28b81f5aae8861cbd6e72db475d570"
+    },
+    {
+      "name": "cloud",
+      "source": "markdown-viewer/skills",
+      "url": "https://github.com/markdown-viewer/skills.git",
+      "path": "cloud/SKILL.md",
+      "base_tree": "da156c00358f42372f8fde800d12896eaa69c954"
+    },
+    {
       "name": "codebase-design",
       "source": "mattpocock/skills",
       "url": "https://github.com/mattpocock/skills.git",
@@ -32,6 +67,13 @@
       "managed": false,
       "note": "本机链接 ~/.cua-driver/skills/cua-driver，仓库保留快照但不覆盖该链接",
       "deploy": false
+    },
+    {
+      "name": "data-analytics",
+      "source": "markdown-viewer/skills",
+      "url": "https://github.com/markdown-viewer/skills.git",
+      "path": "data-analytics/SKILL.md",
+      "base_tree": "731f5c338461c74b7a69b255ff2fbc53f3a31dfc"
     },
     {
       "name": "diagram-design",
@@ -55,6 +97,13 @@
       "base_tree": "d16165120b7658216c79601b0ee568f42e540961"
     },
     {
+      "name": "graphviz",
+      "source": "markdown-viewer/skills",
+      "url": "https://github.com/markdown-viewer/skills.git",
+      "path": "graphviz/SKILL.md",
+      "base_tree": "908e1749205ae785004a50400c1820b6ad3e3e22"
+    },
+    {
       "name": "human-context-rebuild",
       "source": "lycfyi/yskills",
       "url": "https://github.com/lycfyi/yskills.git",
@@ -67,6 +116,27 @@
       "url": "https://github.com/mattpocock/skills.git",
       "path": "skills/engineering/improve-codebase-architecture/SKILL.md",
       "base_tree": "3d35cd438f4067b03c8b3792e038960e4ac11526"
+    },
+    {
+      "name": "infocard",
+      "source": "markdown-viewer/skills",
+      "url": "https://github.com/markdown-viewer/skills.git",
+      "path": "infocard/SKILL.md",
+      "base_tree": "0b75b185464b1211af9905d0aa98325ecdd6dae1"
+    },
+    {
+      "name": "infographic",
+      "source": "markdown-viewer/skills",
+      "url": "https://github.com/markdown-viewer/skills.git",
+      "path": "infographic/SKILL.md",
+      "base_tree": "852b0db53761e709b76eff8d936c0a1470810adb"
+    },
+    {
+      "name": "iot",
+      "source": "markdown-viewer/skills",
+      "url": "https://github.com/markdown-viewer/skills.git",
+      "path": "iot/SKILL.md",
+      "base_tree": "f11cc66ed30b1b3a3b80dc7fcee01a09b3dba41b"
     },
     {
       "name": "lark-doc",
@@ -174,6 +244,20 @@
       "base_tree": "d641aa1fb0c0c6321a1ee2358d4a95dbd2246818"
     },
     {
+      "name": "mindmap",
+      "source": "markdown-viewer/skills",
+      "url": "https://github.com/markdown-viewer/skills.git",
+      "path": "mindmap/SKILL.md",
+      "base_tree": "6ba56eafddba5d30cb1a20c4c879b214dd2b31f9"
+    },
+    {
+      "name": "network",
+      "source": "markdown-viewer/skills",
+      "url": "https://github.com/markdown-viewer/skills.git",
+      "path": "network/SKILL.md",
+      "base_tree": "3651570943236b8e1ab10e6ebf738bfdf03c5d1f"
+    },
+    {
       "name": "opencli-adapter-author",
       "source": "jackwener/opencli",
       "url": "https://github.com/jackwener/opencli.git",
@@ -245,6 +329,13 @@
       "base_tree": "f62fff286d3ba22ae59e8c99c3ad0b5c96a5a8e8"
     },
     {
+      "name": "security",
+      "source": "markdown-viewer/skills",
+      "url": "https://github.com/markdown-viewer/skills.git",
+      "path": "security/SKILL.md",
+      "base_tree": "67e2cdb97a49d2343e056ddfb736c93d1211ff48"
+    },
+    {
       "name": "skill-doctor",
       "source": "warpdotdev/common-skills",
       "url": "https://github.com/warpdotdev/common-skills.git",
@@ -269,11 +360,25 @@
       "note": "本仓库维护的同步 skill"
     },
     {
+      "name": "uml",
+      "source": "markdown-viewer/skills",
+      "url": "https://github.com/markdown-viewer/skills.git",
+      "path": "uml/SKILL.md",
+      "base_tree": "7cb38073b0279ad8e3d5f3379caefd4ea1422a97"
+    },
+    {
       "name": "update-skill",
       "source": "warpdotdev/common-skills",
       "url": "https://github.com/warpdotdev/common-skills.git",
       "path": ".agents/skills/update-skill/SKILL.md",
       "base_tree": "84f703bb1c52d3fb9697f3a570c54b5103a3fbf0"
+    },
+    {
+      "name": "vega",
+      "source": "markdown-viewer/skills",
+      "url": "https://github.com/markdown-viewer/skills.git",
+      "path": "vega/SKILL.md",
+      "base_tree": "675044ee41f31b1defb791b01c8406161867fd6d"
     },
     {
       "name": "wait-what",
