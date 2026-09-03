@@ -29,7 +29,7 @@ Write the complete explainer to `$ARTIFACT_DIR/index.html`, then read the file b
 
 ## Open the artifact
 
-After the HTML is complete, open it with macOS's native file opener:
+After the HTML is complete:
 
 ```bash
 open "$ARTIFACT_DIR/index.html"

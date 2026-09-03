@@ -165,7 +165,7 @@ python3 "$SKILL_ROOT/scripts/render_report.py" "$REPORT_DIR/report.json"
 
 This writes a single self-contained `$REPORT_DIR/report.html`. The scorecard, findings, and suggested skill edits appear on one page. Long diffs are collapsed behind a "show more" toggle, and a "share as png" button exports a 1200x675 share image locally. There is no separate card file to open or screenshot.
 
-After rendering, open the report with macOS's native file opener:
+After rendering:
 
 ```bash
 open "$REPORT_DIR/report.html"
