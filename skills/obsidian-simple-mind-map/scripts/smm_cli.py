@@ -93,6 +93,9 @@ const walkNodes = data => {
       uid: node.data.uid || null,
       text: node.data.text || "",
       plainText: plainText(node.data.text),
+      hyperlink: node.data.hyperlink || "",
+      hyperlinkTitle: node.data.hyperlinkTitle || "",
+      richText: node.data.richText === true,
       parentUid,
       depth,
       childCount: (node.children || []).length,
@@ -306,6 +309,49 @@ return JSON.stringify({{scheduled: true}});
     )
 
 
+def set_link(
+    vault: str, root: Path, path: str, uid: str, url: str, title: str, preview: bool
+) -> str:
+    file_path = root / path
+    before_nodes = json.loads(read_map(vault, path))["nodes"]
+    before_by_uid = {node["uid"]: node for node in before_nodes}
+    target = before_by_uid.get(uid)
+    if not target:
+        raise SystemExit(f"Node UID not found: {uid}")
+    if target["free"]:
+        raise SystemExit("Free-node editing is not supported")
+    before_write = file_path.stat().st_mtime_ns
+    run_eval(
+        vault,
+        f"""
+const {{ view }} = await openSmm({js_value(path)});
+const uid = {js_value(uid)};
+const url = {js_value(url)};
+const title = {js_value(title)};
+setTimeout(() => view.mindMapAPP.$bus.$emit("execCommand", "GO_TARGET_NODE", uid, node => {{
+    const bus = view.mindMapAPP.$bus;
+    bus.$emit("execCommand", "SET_NODE_HYPERLINK", node, url, title);
+    bus.$emit("execCommand", "SET_NODE_DATA", node, {{richText: true}});
+    setTimeout(() => bus.$emit("saveToLocal", true, {js_value(preview)}), 500);
+  }}), 200);
+return JSON.stringify({{scheduled: true}});
+""",
+    )
+    wait_for_write(file_path, before_write)
+    after_nodes = json.loads(read_map(vault, path))["nodes"]
+    after = {node["uid"]: node for node in after_nodes}.get(uid)
+    if (
+        not after
+        or after.get("hyperlink") != url
+        or after.get("hyperlinkTitle") != title
+        or not after.get("richText")
+    ):
+        raise SystemExit("Hyperlink verification failed")
+    return json.dumps(
+        {"path": path, "action": "set-link", "uid": uid, "node": after}, ensure_ascii=False
+    )
+
+
 def save_map(vault: str, root: Path, path: str) -> str:
     file_path = root / path
     before_write = file_path.stat().st_mtime_ns
@@ -347,6 +393,12 @@ def build_parser() -> argparse.ArgumentParser:
         command.add_argument("uid")
         command.add_argument("text")
         command.add_argument("--no-preview", action="store_true")
+    command = sub.add_parser("set-link")
+    command.add_argument("path")
+    command.add_argument("uid")
+    command.add_argument("url")
+    command.add_argument("title")
+    command.add_argument("--no-preview", action="store_true")
     command = sub.add_parser("delete")
     command.add_argument("path")
     command.add_argument("uid")
@@ -371,15 +423,20 @@ def main() -> None:
     elif args.command == "save":
         output = save_map(args.vault, root, path)
     else:
-        output = edit_map(
-            args.vault,
-            root,
-            path,
-            args.command,
-            args.uid,
-            getattr(args, "text", None),
-            not args.no_preview,
-        )
+        if args.command == "set-link":
+            output = set_link(
+                args.vault, root, path, args.uid, args.url, args.title, not args.no_preview
+            )
+        else:
+            output = edit_map(
+                args.vault,
+                root,
+                path,
+                args.command,
+                args.uid,
+                getattr(args, "text", None),
+                not args.no_preview,
+            )
     print(output)
 
 

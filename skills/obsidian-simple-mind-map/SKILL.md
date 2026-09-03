@@ -47,7 +47,21 @@ python3 <skill-dir>/scripts/smm_cli.py read "notes/path/topic.smm.md"
 python3 <skill-dir>/scripts/smm_cli.py add-child FILE PARENT_UID "新节点"
 python3 <skill-dir>/scripts/smm_cli.py add-sibling FILE NODE_UID "同级节点"
 python3 <skill-dir>/scripts/smm_cli.py set-text FILE NODE_UID "新文字"
+python3 <skill-dir>/scripts/smm_cli.py set-link FILE NODE_UID URL "链接标题"
 python3 <skill-dir>/scripts/smm_cli.py delete FILE NODE_UID
+```
+
+`set-link` 使用插件原生的 `SET_NODE_HYPERLINK` 命令，将 URL 写入节点数据的 `hyperlink` 和 `hyperlinkTitle` 字段；它不是把 Markdown `[标题](URL)` 写进 `text`。可点击 URL 的节点数据形态是：
+
+```json
+{
+  "data": {
+    "text": "<p>打开 Grafana：。</p>",
+    "hyperlink": "http://127.0.0.1:3001",
+    "hyperlinkTitle": "http://127.0.0.1:3001",
+    "richText": true
+  }
+}
 ```
 
 这些操作调用插件原生命令，因此保留撤销历史并由插件生成新节点 UID。`delete` 拒绝删除根节点。修改默认更新预览图；仅在用户明确接受预览暂时过期时传 `--no-preview`。
@@ -64,5 +78,7 @@ python3 <skill-dir>/scripts/smm_cli.py save FILE
 
 - 文件路径可用 vault 相对路径；绝对路径必须位于 `--vault-root` 内。
 - `set-text` 写入普通文本。富文本、节点图片、自由节点、主题和布局暂不自动修改；需要这些操作时先检查插件接口再扩展脚本。
+- URL 必须使用 `set-link` 写入 `hyperlink` 元数据；不要把长 URL 或 Markdown 链接语法塞进 `text`。
+- `read` 会输出 `hyperlink`、`hyperlinkTitle`、`richText`，增量设置链接后必须重新 `read` 验证这三个字段。
 - mutation 失败时报告原始错误。脚本只通过插件保存，不自行序列化 `.smm.md`。
 - 本接入基于插件 `0.2.7` 已确认的事件：`execCommand`、`getMindMapCurrentData`、`saveToLocal`，并在每次操作前做能力探测。
