@@ -464,7 +464,7 @@
       "source": "warpdotdev/common-skills",
       "url": "https://github.com/warpdotdev/common-skills.git",
       "path": ".agents/skills/skill-doctor/SKILL.md",
-      "base_tree": "cb24c48dc82ced19c1061453decc4bc0e5328c15"
+      "base_tree": "badadf2917be1dc322df39aef20f4cef86e6af35"
     },
     {
       "name": "smart-search",
