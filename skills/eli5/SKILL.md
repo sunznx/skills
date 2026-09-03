@@ -31,9 +31,7 @@ Write the complete explainer to `$ARTIFACT_DIR/index.html`, then read the file b
 
 After the HTML is complete:
 
-1. Prefer `chrome:control-chrome`. Name the Chrome session `eli5` before creating the tab so the artifact opens in Chrome's `eli5` group.
-2. Open the absolute `file://` URL in a new agent-controlled tab and verify that the page loaded.
-3. If Chrome control is unavailable or rejects the local file, run `open "$ARTIFACT_DIR/index.html"` on macOS and check that the command succeeds. Tell the user that this fallback opened outside the named Chrome group.
+Read and follow the available `chrome:control-chrome` skill. Use `🧒eli5` as the Chrome session name, open the absolute `file://` URL for `$ARTIFACT_DIR/index.html`, and verify that the page loaded.
 
 If a higher-priority runtime rule or permission prevents file creation or GUI opening, report the blocking reason and stop. Never silently return a different artifact format.
 

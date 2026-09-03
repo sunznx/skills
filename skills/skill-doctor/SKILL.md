@@ -167,9 +167,7 @@ This writes a single self-contained `$REPORT_DIR/report.html`. The scorecard, fi
 
 After rendering:
 
-1. Prefer `chrome:control-chrome`. Name the Chrome session `skill-doctor` before creating the tab so the report opens in Chrome's `skill-doctor` group.
-2. Open the absolute `file://` URL for `$REPORT_DIR/report.html` in a new agent-controlled tab and verify that the page loaded.
-3. If Chrome control is unavailable or rejects the local file, run `open "$REPORT_DIR/report.html"` on macOS and check that the command succeeds. Tell the user that this fallback opened outside the named Chrome group.
+Read and follow the available `chrome:control-chrome` skill. Use `🩺skill-doctor` as the Chrome session name, open the absolute `file://` URL for `$REPORT_DIR/report.html`, and verify that the page loaded.
 
 ## Step 6: Output
 
