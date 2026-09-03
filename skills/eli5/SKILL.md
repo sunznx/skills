@@ -29,9 +29,13 @@ Write the complete explainer to `$ARTIFACT_DIR/index.html`, then read the file b
 
 ## Open the artifact
 
-After the HTML is complete:
+After the HTML is complete, open it with macOS's native file opener:
 
-Read and follow the available `chrome:control-chrome` skill. Use `🧒eli5` as the Chrome session name, open the absolute `file://` URL for `$ARTIFACT_DIR/index.html`, and verify that the page loaded.
+```bash
+open "$ARTIFACT_DIR/index.html"
+```
+
+When GUI observation is available, verify that the opened page is visible.
 
 If a higher-priority runtime rule or permission prevents file creation or GUI opening, report the blocking reason and stop. Never silently return a different artifact format.
 
