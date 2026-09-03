@@ -406,5 +406,29 @@
       "path": "skills/productivity/writing-for-agents/SKILL.md",
       "base_tree": "ad2925850efb8973a72d2e666f7a975f9a2d4a9b"
     }
+  ],
+  "plugins": [
+    {
+      "name": "planning-with-files",
+      "marketplace": "planning-with-files",
+      "source": "OthmanAdi/planning-with-files",
+      "url": "https://github.com/OthmanAdi/planning-with-files.git",
+      "ref": "main"
+    },
+    {
+      "name": "ponytail",
+      "marketplace": "ponytail",
+      "source": "DietrichGebert/ponytail",
+      "url": "https://github.com/DietrichGebert/ponytail.git",
+      "ref": "main"
+    },
+    {
+      "name": "sol-advisor",
+      "marketplace": "sol-advisor",
+      "source": "DannyMac180/sol-advisor",
+      "url": "https://github.com/DannyMac180/sol-advisor.git",
+      "ref": "main",
+      "post_install": "scripts/install-agents.sh"
+    }
   ]
 }

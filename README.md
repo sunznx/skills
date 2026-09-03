@@ -7,12 +7,17 @@
 ```bash
 ./sync-skills                    # 检查并更新全部外部 skills
 ./sync-skills <skill-name>       # 只检查并同步指定 skill
+./sync-skills plugins            # 更新清单中的全部 Git marketplace plugins
+./sync-skills plugin <name>      # 只更新指定 plugin
 ./sync-skills 添加 <skill-name>  # 从 ~/.agents/skills 导入一个 skill
 ./sync-skills 删除 <skill-name>  # 从仓库和本机删除一个 skill
 ```
 
 - 无参数调用会直接对比全部上游；有更新时合并并 commit。
 - 指定 skill 时，只对比该 skill 的上游，并只同步它的仓库快照到本机。
+- `plugins` 更新 `skills/sources.json` 中登记的 Git marketplace，并重新安装对应 plugin；无参数调用也会在 skills 同步后执行此步骤。
+- plugin 的 `post_install` 若存在，会在安装验证通过后从 plugin 根目录执行。
+- 清单只维护用户配置的 Git marketplace plugins；Codex 内置和 runtime plugins 仍由 Codex 管理。
 - `添加` 从 `~/.agents/skills` 导入指定 skill，并更新来源目录。
 - `删除` 从仓库、来源目录和 `~/.agents/skills` 移除指定 skill。
 - 没有冲突时，仓库清单会同步到 `~/.agents/skills`。
@@ -94,4 +99,12 @@ $sync-skills 更新 agent-messaging 删除某个功能
 | `wait-what` | [mattpocock/skills](https://github.com/mattpocock/skills) | `skills/productivity/wait-what/SKILL.md` | 三方合并 |
 | `whats-next` | [lycfyi/yskills](https://github.com/lycfyi/yskills) | `skills/whats-next/SKILL.md` | 三方合并 |
 | `writing-for-agents` | [mattpocock/skills](https://github.com/mattpocock/skills) | `skills/productivity/writing-for-agents/SKILL.md` | 三方合并 |
+
+## Plugin 来源目录
+
+| Plugin | Marketplace | 外部来源 | 安装后命令 |
+| --- | --- | --- | --- |
+| `planning-with-files` | `planning-with-files` | [OthmanAdi/planning-with-files](https://github.com/OthmanAdi/planning-with-files) | — |
+| `ponytail` | `ponytail` | [DietrichGebert/ponytail](https://github.com/DietrichGebert/ponytail) | — |
+| `sol-advisor` | `sol-advisor` | [DannyMac180/sol-advisor](https://github.com/DannyMac180/sol-advisor) | `scripts/install-agents.sh` |
 <!-- skill-catalog:end -->

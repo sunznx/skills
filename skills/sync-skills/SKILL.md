@@ -1,6 +1,6 @@
 ---
 name: sync-skills
-description: 同步本仓库与外部上游及 ~/.agents/skills。用户要求检查或更新 skills，以及添加、删除仓库中的 skill 时使用。
+description: 同步本仓库与外部 skill 上游、~/.agents/skills 和已登记的 Codex plugins。用户要求检查、安装或更新 skills/plugins，以及添加、删除仓库中的 skill 时使用。
 ---
 
 # Sync Skills
@@ -13,12 +13,16 @@ description: 同步本仓库与外部上游及 ~/.agents/skills。用户要求�
 repo="$(cat ~/.config/sync-skills/repo)"
 "$repo/sync-skills"
 "$repo/sync-skills" <skill-name>
+"$repo/sync-skills" plugins
+"$repo/sync-skills" plugin <plugin-name>
 "$repo/sync-skills" 添加 <skill-name>
 "$repo/sync-skills" 删除 <skill-name>
 ```
 
-- `$sync-skills`：运行无参数命令，对比全部上游，再把全部可部署快照同步到 `~/.agents/skills`。
+- `$sync-skills`：运行无参数命令，对比全部 skill 上游、部署快照，再同步 `skills/sources.json` 中登记的 plugins。
 - `$sync-skills <skill-name>`：只对比并只部署指定 skill。
+- `$sync-skills plugins`：更新全部登记的 Git marketplaces，重新安装对应 plugins，并执行声明的 `post_install`。
+- `$sync-skills plugin <plugin-name>`：只同步指定 plugin。
 - `添加` 从 `~/.agents/skills/<skill-name>` 导入。脚本会读取 `~/.agents/.skill-lock.json` 记录外部来源；没有来源记录时按本地 skill 管理。
 - `删除` 会删除仓库目录和来源目录，commit 成功后再删除 `~/.agents/skills/<skill-name>`。
 - 上游有更新时使用旧上游、本地版本和新上游做三方合并。合并成功后自动 commit，再同步本机目录。
@@ -26,6 +30,16 @@ repo="$(cat ~/.config/sync-skills/repo)"
 - 上游 Git 缓存统一写入 `~/.agents/cache/sync-skills`。
 - 拉取上游失败但本地镜像可用时，警告后继续使用缓存并部署；没有可用镜像时停止。
 - 每次成功调用最后都执行 `git push`。没有改动时不创建空 commit；push 失败时报告错误，但不要撤销已经完成的 commit 或本机同步。
+
+## 安装 plugin
+
+`$sync-skills 安装 <GitHub URL>` 表示安装并登记 Codex plugin，不是 shell 子命令。
+
+1. 读取上游 README 和 plugin manifest，确认 marketplace、plugin 名称及必要的安装后脚本。
+2. 使用 `codex plugin marketplace add` 和 `codex plugin add` 安装；执行上游明确要求的 companion installer。
+3. 将用户配置的 Git marketplace plugin 写入 `skills/sources.json` 的 `plugins`；Codex 内置和 runtime plugins 不登记。
+4. 运行 `update_readme` 更新来源目录，再用 `"$repo/sync-skills" plugin <plugin-name>` 验证。
+5. 只提交本次涉及的清单、文档或脚本，并 push。Plugin 保持由 Codex marketplace 管理，不复制进 `skills/`。
 
 ## 本地更新 skill
 

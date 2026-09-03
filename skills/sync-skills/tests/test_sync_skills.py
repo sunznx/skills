@@ -45,6 +45,59 @@ def init_repo(repo: Path, skills: dict[str, str]) -> None:
 
 
 class SyncSkillsTests(unittest.TestCase):
+    def test_parse_plugin_commands(self) -> None:
+        self.assertEqual(sync_skills.parse_command(["plugins"]), ("plugins", None))
+        self.assertEqual(
+            sync_skills.parse_command(["plugin", "sol-advisor"]),
+            ("plugins", "sol-advisor"),
+        )
+
+    def test_sync_plugin_updates_marketplace_and_runs_post_install(self) -> None:
+        with tempfile.TemporaryDirectory() as temp:
+            plugin_root = Path(temp) / "plugin"
+            script = plugin_root / "scripts/install-agents.sh"
+            script.parent.mkdir(parents=True)
+            script.write_text("#!/bin/sh\n")
+            manifest = {
+                "plugins": [{
+                    "name": "sol-advisor",
+                    "marketplace": "sol-advisor",
+                    "source": "DannyMac180/sol-advisor",
+                    "url": "https://github.com/DannyMac180/sol-advisor.git",
+                    "ref": "main",
+                    "post_install": "scripts/install-agents.sh",
+                }],
+            }
+            calls: list[tuple[str, ...]] = []
+
+            def fake_run(*args: str, **_kwargs: object) -> subprocess.CompletedProcess:
+                calls.append(args)
+                if args == ("codex", "plugin", "marketplace", "list"):
+                    stdout = "MARKETPLACE ROOT\nsol-advisor /tmp/sol-advisor\n"
+                elif args == ("codex", "plugin", "list", "--json"):
+                    stdout = json.dumps({"installed": [{
+                        "pluginId": "sol-advisor@sol-advisor",
+                        "installed": True,
+                        "enabled": True,
+                        "source": {"path": str(plugin_root)},
+                    }]})
+                else:
+                    stdout = "{}"
+                return subprocess.CompletedProcess(args, 0, stdout, "")
+
+            with patch.object(sync_skills, "run", side_effect=fake_run):
+                sync_skills.sync_plugins(manifest, push=False)
+
+            self.assertIn(
+                ("codex", "plugin", "marketplace", "upgrade", "sol-advisor", "--json"),
+                calls,
+            )
+            self.assertIn(
+                ("codex", "plugin", "add", "sol-advisor@sol-advisor", "--json"),
+                calls,
+            )
+            self.assertIn(("sh", str(script)), calls)
+
     def test_add_does_not_overwrite_another_local_skill(self) -> None:
         with tempfile.TemporaryDirectory() as temp:
             root = Path(temp)

@@ -143,6 +143,20 @@ def load_manifest(manifest_path: Path) -> dict:
     names = [entry.get("name") for entry in manifest["skills"]]
     if any(not isinstance(name, str) or not name for name in names) or len(names) != len(set(names)):
         raise SyncError("skills/sources.json 存在无效或重复的 skill 名称")
+    plugins = manifest.setdefault("plugins", [])
+    if not isinstance(plugins, list):
+        raise SyncError("skills/sources.json 的 plugins 必须是数组")
+    plugin_names = [entry.get("name") for entry in plugins]
+    if any(not isinstance(name, str) or not name for name in plugin_names) or len(plugin_names) != len(set(plugin_names)):
+        raise SyncError("skills/sources.json 存在无效或重复的 plugin 名称")
+    for entry in plugins:
+        if any(not entry.get(field) for field in ("marketplace", "source", "url")):
+            raise SyncError(f"plugin {entry.get('name')} 缺少来源字段")
+        post_install = entry.get("post_install")
+        if post_install:
+            path = PurePosixPath(post_install)
+            if path.is_absolute() or ".." in path.parts:
+                raise SyncError(f"plugin {entry['name']} 的 post_install 路径不安全")
     return manifest
 
 
@@ -170,6 +184,22 @@ def catalog_lines(manifest: dict) -> list[str]:
             method = "三方合并（仅仓库）" if entry.get("deploy") is False else "三方合并"
             lines.append(
                 f"| {name} | [{entry['source']}]({url}) | `{entry['path']}` | {method} |"
+            )
+    plugins = manifest.get("plugins", [])
+    if plugins:
+        lines.extend([
+            "",
+            "## Plugin 来源目录",
+            "",
+            "| Plugin | Marketplace | 外部来源 | 安装后命令 |",
+            "| --- | --- | --- | --- |",
+        ])
+        for entry in sorted(plugins, key=lambda item: item["name"]):
+            url = entry["url"].removesuffix(".git")
+            post_install = f"`{entry['post_install']}`" if entry.get("post_install") else "—"
+            lines.append(
+                f"| `{entry['name']}` | `{entry['marketplace']}` | "
+                f"[{entry['source']}]({url}) | {post_install} |"
             )
     lines.append(CATALOG_END)
     return lines
@@ -517,6 +547,61 @@ def deploy_skills(repo: Path, skills_dir: Path, manifest: dict, local_dir: Path)
     print(f"已同步到 {local_dir}")
 
 
+def sync_plugins(manifest: dict, only_name: str | None = None, *, push: bool = True) -> int:
+    entries = manifest.get("plugins", [])
+    if only_name is not None:
+        entries = [entry for entry in entries if entry["name"] == only_name]
+        if not entries:
+            raise SyncError(f"plugin 不在仓库清单中: {only_name}")
+    if not entries:
+        print("没有登记的 plugins。")
+        return 0
+
+    listed = run("codex", "plugin", "marketplace", "list").stdout.splitlines()
+    configured = {line.split(maxsplit=1)[0] for line in listed[1:] if line.strip()}
+    marketplaces: dict[str, dict] = {}
+    for entry in entries:
+        previous = marketplaces.setdefault(entry["marketplace"], entry)
+        if previous["url"] != entry["url"] or previous.get("ref") != entry.get("ref"):
+            raise SyncError(f"marketplace {entry['marketplace']} 的来源配置不一致")
+
+    for marketplace, entry in marketplaces.items():
+        if marketplace in configured:
+            run("codex", "plugin", "marketplace", "upgrade", marketplace, "--json")
+        else:
+            args = ["codex", "plugin", "marketplace", "add", entry["url"]]
+            if entry.get("ref"):
+                args.extend(["--ref", entry["ref"]])
+            run(*args)
+
+    for entry in entries:
+        selector = f"{entry['name']}@{entry['marketplace']}"
+        run("codex", "plugin", "add", selector, "--json")
+
+    try:
+        installed = json.loads(run("codex", "plugin", "list", "--json").stdout)["installed"]
+    except (json.JSONDecodeError, KeyError, TypeError) as error:
+        raise SyncError("无法读取 Codex plugin 清单") from error
+    by_id = {item.get("pluginId"): item for item in installed}
+    for entry in entries:
+        selector = f"{entry['name']}@{entry['marketplace']}"
+        item = by_id.get(selector)
+        if not item or not item.get("installed") or not item.get("enabled", True):
+            raise SyncError(f"plugin 安装验证失败: {selector}")
+        post_install = entry.get("post_install")
+        if post_install:
+            root = item.get("source", {}).get("path")
+            script = Path(root) / post_install if root else None
+            if script is None or not script.is_file():
+                raise SyncError(f"plugin 安装后脚本不存在: {selector}/{post_install}")
+            run("sh", str(script))
+        print(f"已同步 plugin: {selector}")
+
+    if push:
+        push_repo(paths()[0])
+    return 0
+
+
 def sync_upstream(only_name: str | None = None) -> int:
     repo, skills_dir, manifest_path, _, conflict_report = paths()
     local_dir = local_skills_dir()
@@ -690,18 +775,23 @@ def parse_command(arguments: list[str]) -> tuple[str, str | None]:
     if not arguments:
         return "sync", None
     if len(arguments) == 1:
+        if arguments[0] in ("plugins", "插件"):
+            return "plugins", None
         return "sync", arguments[0]
     if len(arguments) != 2:
-        raise SyncError("用法: sync-skills [<skill-name> | 添加|删除 <skill-name>]")
+        raise SyncError("用法: sync-skills [<skill-name> | plugins [<plugin-name>] | 添加|删除 <skill-name>]")
     command, name = arguments
     commands = {
         "添加": "add",
         "add": "add",
         "删除": "remove",
         "remove": "remove",
+        "plugins": "plugins",
+        "plugin": "plugins",
+        "插件": "plugins",
     }
     if command not in commands:
-        raise SyncError("用法: sync-skills [<skill-name> | 添加|删除 <skill-name>]")
+        raise SyncError("用法: sync-skills [<skill-name> | plugins [<plugin-name>] | 添加|删除 <skill-name>]")
     return commands[command], name
 
 
@@ -711,6 +801,13 @@ def main(arguments: list[str]) -> int:
         return add_skill(name or "")
     if command == "remove":
         return remove_skill(name or "")
+    if command == "plugins":
+        return sync_plugins(load_manifest(paths()[2]), name)
+    if name is None:
+        result = sync_upstream()
+        if result != 0:
+            return result
+        return sync_plugins(load_manifest(paths()[2]), push=False)
     return sync_upstream(name)
 
 
