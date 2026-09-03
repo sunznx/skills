@@ -1,0 +1,5 @@
+interface:
+  display_name: "What's Next"
+  short_description: "Re-orient the session and choose the next concrete step"
+policy:
+  allow_implicit_invocation: false
