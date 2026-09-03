@@ -1,0 +1,4 @@
+interface:
+  display_name: "Obsidian Simple Mind Map"
+  short_description: "在 Obsidian 中创建并按节点编辑 .smm.md 脑图"
+  default_prompt: "Use $obsidian-simple-mind-map to create or edit an Obsidian .smm.md mind map."

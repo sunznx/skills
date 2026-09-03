@@ -258,6 +258,11 @@
       "base_tree": "3651570943236b8e1ab10e6ebf738bfdf03c5d1f"
     },
     {
+      "name": "obsidian-simple-mind-map",
+      "managed": false,
+      "note": "本地维护，暂无外部 Git 来源"
+    },
+    {
       "name": "opencli-adapter-author",
       "source": "jackwener/opencli",
       "url": "https://github.com/jackwener/opencli.git",

@@ -72,6 +72,7 @@ $sync-skills 更新 agent-messaging 删除某个功能
 | `longbridge-watchlist` | [longbridge/skills](https://github.com/longbridge/skills) | `skills/longbridge-watchlist/SKILL.md` | 三方合并 |
 | `mindmap` | [markdown-viewer/skills](https://github.com/markdown-viewer/skills) | `mindmap/SKILL.md` | 三方合并 |
 | `network` | [markdown-viewer/skills](https://github.com/markdown-viewer/skills) | `network/SKILL.md` | 三方合并 |
+| `obsidian-simple-mind-map` | 本地维护，暂无外部 Git 来源 | — | 本地维护 |
 | `opencli-adapter-author` | [jackwener/opencli](https://github.com/jackwener/opencli) | `skills/opencli-adapter-author/SKILL.md` | 三方合并 |
 | `opencli-autofix` | [jackwener/opencli](https://github.com/jackwener/opencli) | `skills/opencli-autofix/SKILL.md` | 三方合并 |
 | `opencli-browser` | [jackwener/opencli](https://github.com/jackwener/opencli) | `skills/opencli-browser/SKILL.md` | 三方合并 |
