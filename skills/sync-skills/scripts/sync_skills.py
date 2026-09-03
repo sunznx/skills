@@ -152,6 +152,8 @@ def load_manifest(manifest_path: Path) -> dict:
     for entry in plugins:
         if any(not entry.get(field) for field in ("marketplace", "source", "url")):
             raise SyncError(f"plugin {entry.get('name')} 缺少来源字段")
+        if not isinstance(entry.get("suppress_commands", False), bool):
+            raise SyncError(f"plugin {entry['name']} 的 suppress_commands 必须是布尔值")
         post_install = entry.get("post_install")
         if post_install:
             path = PurePosixPath(post_install)
@@ -191,15 +193,16 @@ def catalog_lines(manifest: dict) -> list[str]:
             "",
             "## Plugin 来源目录",
             "",
-            "| Plugin | Marketplace | 外部来源 | 安装后命令 |",
-            "| --- | --- | --- | --- |",
+            "| Plugin | Marketplace | 外部来源 | Commands | 安装后命令 |",
+            "| --- | --- | --- | --- | --- |",
         ])
         for entry in sorted(plugins, key=lambda item: item["name"]):
             url = entry["url"].removesuffix(".git")
+            commands = "禁用迁移" if entry.get("suppress_commands") else "默认"
             post_install = f"`{entry['post_install']}`" if entry.get("post_install") else "—"
             lines.append(
                 f"| `{entry['name']}` | `{entry['marketplace']}` | "
-                f"[{entry['source']}]({url}) | {post_install} |"
+                f"[{entry['source']}]({url}) | {commands} | {post_install} |"
             )
     lines.append(CATALOG_END)
     return lines
@@ -557,45 +560,115 @@ def sync_plugins(manifest: dict, only_name: str | None = None, *, push: bool = T
         print("没有登记的 plugins。")
         return 0
 
-    listed = run("codex", "plugin", "marketplace", "list").stdout.splitlines()
-    configured = {line.split(maxsplit=1)[0] for line in listed[1:] if line.strip()}
-    marketplaces: dict[str, dict] = {}
-    for entry in entries:
-        previous = marketplaces.setdefault(entry["marketplace"], entry)
-        if previous["url"] != entry["url"] or previous.get("ref") != entry.get("ref"):
-            raise SyncError(f"marketplace {entry['marketplace']} 的来源配置不一致")
+    def installed_plugins() -> list[dict]:
+        try:
+            installed = json.loads(run("codex", "plugin", "list", "--json").stdout)["installed"]
+        except (json.JSONDecodeError, KeyError, TypeError) as error:
+            raise SyncError("无法读取 Codex plugin 清单") from error
+        if not isinstance(installed, list):
+            raise SyncError("无法读取 Codex plugin 清单")
+        return [item for item in installed if isinstance(item, dict)]
 
-    for marketplace, entry in marketplaces.items():
-        if marketplace in configured:
-            run("codex", "plugin", "marketplace", "upgrade", marketplace, "--json")
-        else:
-            args = ["codex", "plugin", "marketplace", "add", entry["url"]]
-            if entry.get("ref"):
-                args.extend(["--ref", entry["ref"]])
-            run(*args)
-
-    for entry in entries:
-        selector = f"{entry['name']}@{entry['marketplace']}"
-        run("codex", "plugin", "add", selector, "--json")
-
-    try:
-        installed = json.loads(run("codex", "plugin", "list", "--json").stdout)["installed"]
-    except (json.JSONDecodeError, KeyError, TypeError) as error:
-        raise SyncError("无法读取 Codex plugin 清单") from error
-    by_id = {item.get("pluginId"): item for item in installed}
-    for entry in entries:
-        selector = f"{entry['name']}@{entry['marketplace']}"
-        item = by_id.get(selector)
-        if not item or not item.get("installed") or not item.get("enabled", True):
-            raise SyncError(f"plugin 安装验证失败: {selector}")
-        post_install = entry.get("post_install")
-        if post_install:
+    selectors = {f"{entry['name']}@{entry['marketplace']}" for entry in entries}
+    installed_before = installed_plugins()
+    with tempfile.TemporaryDirectory(prefix="sync-plugin-cache-") as temp:
+        cache_backups: list[tuple[Path, Path]] = []
+        for item in installed_before:
+            if item.get("pluginId") not in selectors:
+                continue
             root = item.get("source", {}).get("path")
-            script = Path(root) / post_install if root else None
-            if script is None or not script.is_file():
-                raise SyncError(f"plugin 安装后脚本不存在: {selector}/{post_install}")
-            run("sh", str(script))
-        print(f"已同步 plugin: {selector}")
+            cache = Path(root) if isinstance(root, str) else None
+            if cache is None or not cache.is_dir():
+                continue
+            backup = Path(temp) / str(len(cache_backups))
+            shutil.copytree(cache, backup)
+            if any(
+                entry.get("suppress_commands")
+                and item.get("pluginId") == f"{entry['name']}@{entry['marketplace']}"
+                for entry in entries
+            ):
+                shutil.rmtree(backup / ".codex-plugin/migrated-command-skills", ignore_errors=True)
+            cache_backups.append((backup, cache))
+
+        manifest_backups: list[tuple[Path, bytes]] = []
+        try:
+            listed = run("codex", "plugin", "marketplace", "list").stdout.splitlines()
+            configured = {line.split(maxsplit=1)[0] for line in listed[1:] if line.strip()}
+            marketplaces: dict[str, dict] = {}
+            for entry in entries:
+                previous = marketplaces.setdefault(entry["marketplace"], entry)
+                if previous["url"] != entry["url"] or previous.get("ref") != entry.get("ref"):
+                    raise SyncError(f"marketplace {entry['marketplace']} 的来源配置不一致")
+
+            for marketplace, entry in marketplaces.items():
+                if marketplace in configured:
+                    run("codex", "plugin", "marketplace", "upgrade", marketplace, "--json")
+                else:
+                    args = ["codex", "plugin", "marketplace", "add", entry["url"]]
+                    if entry.get("ref"):
+                        args.extend(["--ref", entry["ref"]])
+                    run(*args)
+
+            suppressed = {entry["marketplace"] for entry in entries if entry.get("suppress_commands")}
+            if suppressed:
+                try:
+                    available = json.loads(
+                        run("codex", "plugin", "marketplace", "list", "--json").stdout
+                    )["marketplaces"]
+                except (json.JSONDecodeError, KeyError, TypeError) as error:
+                    raise SyncError("无法读取 Codex marketplace 清单") from error
+                roots = {
+                    item.get("name"): item.get("root")
+                    for item in available
+                    if isinstance(item, dict)
+                }
+                for marketplace in suppressed:
+                    root = roots.get(marketplace)
+                    manifest_path = Path(root) / ".codex-plugin/plugin.json" if root else None
+                    if manifest_path is None or not manifest_path.is_file():
+                        raise SyncError(f"未找到 {marketplace} plugin manifest")
+                    original = manifest_path.read_bytes()
+                    try:
+                        plugin_manifest = json.loads(original)
+                    except json.JSONDecodeError as error:
+                        raise SyncError(f"{marketplace} plugin manifest JSON 格式错误") from error
+                    manifest_backups.append((manifest_path, original))
+                    plugin_manifest["commands"] = []
+                    manifest_path.write_text(
+                        json.dumps(plugin_manifest, ensure_ascii=False, indent=2) + "\n"
+                    )
+
+            for entry in entries:
+                selector = f"{entry['name']}@{entry['marketplace']}"
+                run("codex", "plugin", "add", selector, "--json")
+
+            by_id = {item.get("pluginId"): item for item in installed_plugins()}
+            for entry in entries:
+                selector = f"{entry['name']}@{entry['marketplace']}"
+                item = by_id.get(selector)
+                if not item or not item.get("installed") or not item.get("enabled", True):
+                    raise SyncError(f"plugin 安装验证失败: {selector}")
+                root = item.get("source", {}).get("path")
+                if entry.get("suppress_commands") and root:
+                    shutil.rmtree(
+                        Path(root) / ".codex-plugin/migrated-command-skills",
+                        ignore_errors=True,
+                    )
+                post_install = entry.get("post_install")
+                if post_install:
+                    script = Path(root) / post_install if root else None
+                    if script is None or not script.is_file():
+                        raise SyncError(f"plugin 安装后脚本不存在: {selector}/{post_install}")
+                    run("sh", str(script))
+                print(f"已同步 plugin: {selector}")
+        finally:
+            for manifest_path, original in reversed(manifest_backups):
+                manifest_path.write_bytes(original)
+            # ponytail: 保留当前会话的旧 hook 路径，重启 Codex 后可由安装器清理。
+            for backup, cache in cache_backups:
+                if not cache.exists():
+                    cache.parent.mkdir(parents=True, exist_ok=True)
+                    shutil.copytree(backup, cache)
 
     if push:
         push_repo(paths()[0])

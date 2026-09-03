@@ -413,7 +413,8 @@
       "marketplace": "planning-with-files",
       "source": "OthmanAdi/planning-with-files",
       "url": "https://github.com/OthmanAdi/planning-with-files.git",
-      "ref": "main"
+      "ref": "main",
+      "suppress_commands": true
     },
     {
       "name": "ponytail",

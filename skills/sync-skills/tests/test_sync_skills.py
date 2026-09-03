@@ -1,6 +1,7 @@
 import importlib.util
 import json
 import os
+import shutil
 import subprocess
 import tempfile
 import unittest
@@ -97,6 +98,67 @@ class SyncSkillsTests(unittest.TestCase):
                 calls,
             )
             self.assertIn(("sh", str(script)), calls)
+
+    def test_sync_plugin_suppresses_commands_and_preserves_old_hooks(self) -> None:
+        with tempfile.TemporaryDirectory() as temp:
+            root = Path(temp)
+            marketplace = root / "marketplace"
+            manifest_path = marketplace / ".codex-plugin/plugin.json"
+            manifest_path.parent.mkdir(parents=True)
+            original_manifest = b'{"name":"planning-with-files","commands":"./commands"}\n'
+            manifest_path.write_bytes(original_manifest)
+            old_cache = root / "cache/3.15.0"
+            old_hook = old_cache / "hooks/pre_tool_use.py"
+            old_hook.parent.mkdir(parents=True)
+            old_hook.write_text("# hook\n")
+            migrated = old_cache / ".codex-plugin/migrated-command-skills/source-command-plan"
+            migrated.mkdir(parents=True)
+            new_cache = root / "cache/3.16.0"
+            plugin = {
+                "name": "planning-with-files",
+                "marketplace": "planning-with-files",
+                "source": "OthmanAdi/planning-with-files",
+                "url": "https://github.com/OthmanAdi/planning-with-files.git",
+                "suppress_commands": True,
+            }
+            list_calls = 0
+
+            def fake_run(*args: str, **_kwargs: object) -> subprocess.CompletedProcess:
+                nonlocal list_calls
+                if args == ("codex", "plugin", "marketplace", "list"):
+                    stdout = "MARKETPLACE ROOT\nplanning-with-files /tmp/pwf\n"
+                elif args == ("codex", "plugin", "marketplace", "list", "--json"):
+                    stdout = json.dumps({"marketplaces": [{
+                        "name": "planning-with-files",
+                        "root": str(marketplace),
+                    }]})
+                elif args == ("codex", "plugin", "list", "--json"):
+                    cache = old_cache if list_calls == 0 else new_cache
+                    list_calls += 1
+                    stdout = json.dumps({"installed": [{
+                        "pluginId": "planning-with-files@planning-with-files",
+                        "installed": True,
+                        "enabled": True,
+                        "source": {"path": str(cache)},
+                    }]})
+                elif args == (
+                    "codex", "plugin", "add",
+                    "planning-with-files@planning-with-files", "--json",
+                ):
+                    self.assertEqual(json.loads(manifest_path.read_text())["commands"], [])
+                    shutil.rmtree(old_cache)
+                    new_cache.mkdir(parents=True)
+                    stdout = "{}"
+                else:
+                    stdout = "{}"
+                return subprocess.CompletedProcess(args, 0, stdout, "")
+
+            with patch.object(sync_skills, "run", side_effect=fake_run):
+                sync_skills.sync_plugins({"plugins": [plugin]}, push=False)
+
+            self.assertEqual(manifest_path.read_bytes(), original_manifest)
+            self.assertTrue(old_hook.is_file())
+            self.assertFalse((old_cache / ".codex-plugin/migrated-command-skills").exists())
 
     def test_add_does_not_overwrite_another_local_skill(self) -> None:
         with tempfile.TemporaryDirectory() as temp:

@@ -102,9 +102,9 @@ $sync-skills 更新 agent-messaging 删除某个功能
 
 ## Plugin 来源目录
 
-| Plugin | Marketplace | 外部来源 | 安装后命令 |
-| --- | --- | --- | --- |
-| `planning-with-files` | `planning-with-files` | [OthmanAdi/planning-with-files](https://github.com/OthmanAdi/planning-with-files) | — |
-| `ponytail` | `ponytail` | [DietrichGebert/ponytail](https://github.com/DietrichGebert/ponytail) | — |
-| `sol-advisor` | `sol-advisor` | [DannyMac180/sol-advisor](https://github.com/DannyMac180/sol-advisor) | `scripts/install-agents.sh` |
+| Plugin | Marketplace | 外部来源 | Commands | 安装后命令 |
+| --- | --- | --- | --- | --- |
+| `planning-with-files` | `planning-with-files` | [OthmanAdi/planning-with-files](https://github.com/OthmanAdi/planning-with-files) | 禁用迁移 | — |
+| `ponytail` | `ponytail` | [DietrichGebert/ponytail](https://github.com/DietrichGebert/ponytail) | 默认 | — |
+| `sol-advisor` | `sol-advisor` | [DannyMac180/sol-advisor](https://github.com/DannyMac180/sol-advisor) | 默认 | `scripts/install-agents.sh` |
 <!-- skill-catalog:end -->
