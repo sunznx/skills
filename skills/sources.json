@@ -63,13 +63,6 @@
       "base_tree": "344e3efc88ee60663b2e989555c2efdb548fbd42"
     },
     {
-      "name": "company-valuation",
-      "source": "himself65/finance-skills",
-      "url": "https://github.com/himself65/finance-skills.git",
-      "path": "plugins/market-analysis/skills/company-valuation/SKILL.md",
-      "base_tree": "9b68a0eba983753a29ebc039b9df3853b63b786c"
-    },
-    {
       "name": "cua-driver",
       "managed": false,
       "note": "本机链接 ~/.cua-driver/skills/cua-driver，仓库保留快照但不覆盖该链接",
@@ -90,32 +83,11 @@
       "base_tree": "1bf319831137412e8ab71df321b510fa561fd262"
     },
     {
-      "name": "discord-reader",
-      "source": "himself65/finance-skills",
-      "url": "https://github.com/himself65/finance-skills.git",
-      "path": "plugins/social-readers/skills/discord-reader/SKILL.md",
-      "base_tree": "379e6a546142a6954c8a209b36249d1cfa77cc39"
-    },
-    {
       "name": "domain-modeling",
       "source": "mattpocock/skills",
       "url": "https://github.com/mattpocock/skills.git",
       "path": "skills/engineering/domain-modeling/SKILL.md",
       "base_tree": "388c9822641805ca2dcd5038e68a1d5282437ee5"
-    },
-    {
-      "name": "earnings-preview",
-      "source": "himself65/finance-skills",
-      "url": "https://github.com/himself65/finance-skills.git",
-      "path": "plugins/market-analysis/skills/earnings-preview/SKILL.md",
-      "base_tree": "173287ce6b3be3566a7e516119c334a46afc90fc"
-    },
-    {
-      "name": "earnings-recap",
-      "source": "himself65/finance-skills",
-      "url": "https://github.com/himself65/finance-skills.git",
-      "path": "plugins/market-analysis/skills/earnings-recap/SKILL.md",
-      "base_tree": "04df9f797e8bf363e4d1903af060547a43e5a955"
     },
     {
       "name": "ego-browser",
@@ -133,41 +105,6 @@
       "base_tree": "d16165120b7658216c79601b0ee568f42e540961"
     },
     {
-      "name": "estimate-analysis",
-      "source": "himself65/finance-skills",
-      "url": "https://github.com/himself65/finance-skills.git",
-      "path": "plugins/market-analysis/skills/estimate-analysis/SKILL.md",
-      "base_tree": "a0ccb721dec7717d3d95625382bdcbf179e50ab2"
-    },
-    {
-      "name": "etf-premium",
-      "source": "himself65/finance-skills",
-      "url": "https://github.com/himself65/finance-skills.git",
-      "path": "plugins/market-analysis/skills/etf-premium/SKILL.md",
-      "base_tree": "2a31219f4cfeaaf244a2727340b1f65fc4ddd173"
-    },
-    {
-      "name": "finance-sentiment",
-      "source": "himself65/finance-skills",
-      "url": "https://github.com/himself65/finance-skills.git",
-      "path": "plugins/data-providers/skills/finance-sentiment/SKILL.md",
-      "base_tree": "95c3ad6e2c35cad766a75cb807cbf7d70a072c87"
-    },
-    {
-      "name": "fintel-data",
-      "source": "himself65/finance-skills",
-      "url": "https://github.com/himself65/finance-skills.git",
-      "path": "plugins/data-providers/skills/fintel-data/SKILL.md",
-      "base_tree": "3cce623ded0cea45721523098c37c6c44363928f"
-    },
-    {
-      "name": "generative-ui",
-      "source": "himself65/finance-skills",
-      "url": "https://github.com/himself65/finance-skills.git",
-      "path": "plugins/ui-tools/skills/generative-ui/SKILL.md",
-      "base_tree": "4d2749d4440c57d897da6e2c6ca7690f5a77793b"
-    },
-    {
       "name": "graphviz",
       "source": "markdown-viewer/skills",
       "url": "https://github.com/markdown-viewer/skills.git",
@@ -175,25 +112,11 @@
       "base_tree": "908e1749205ae785004a50400c1820b6ad3e3e22"
     },
     {
-      "name": "hormuz-strait",
-      "source": "himself65/finance-skills",
-      "url": "https://github.com/himself65/finance-skills.git",
-      "path": "plugins/data-providers/skills/hormuz-strait/SKILL.md",
-      "base_tree": "dd7f3314202d9d3b9565bb577a10303255310c22"
-    },
-    {
       "name": "human-context-rebuild",
       "source": "lycfyi/yskills",
       "url": "https://github.com/lycfyi/yskills.git",
       "path": "skills/human-context-rebuild/SKILL.md",
       "base_tree": "424478b5dba49cbd4da9ebae2d3df74c124994c9"
-    },
-    {
-      "name": "hyperliquid-reader",
-      "source": "himself65/finance-skills",
-      "url": "https://github.com/himself65/finance-skills.git",
-      "path": "plugins/data-providers/skills/hyperliquid-reader/SKILL.md",
-      "base_tree": "52cead549d03f766192dca2229871a62e18c067e"
     },
     {
       "name": "improve-codebase-architecture",
@@ -236,104 +159,6 @@
       "url": "https://github.com/larksuite/cli.git",
       "path": "skills/lark-shared/SKILL.md",
       "base_tree": "1ee7e9dce1377a7038ab798e1ac5813ed608f4e1"
-    },
-    {
-      "name": "linkedin-reader",
-      "source": "himself65/finance-skills",
-      "url": "https://github.com/himself65/finance-skills.git",
-      "path": "plugins/social-readers/skills/linkedin-reader/SKILL.md",
-      "base_tree": "d1cf7a036299379580afd385f3d973025d30f7ca"
-    },
-    {
-      "name": "longbridge",
-      "source": "longbridge/skills",
-      "url": "https://github.com/longbridge/skills.git",
-      "path": "skills/longbridge/SKILL.md",
-      "base_tree": "82f3e74d63e682ef51b6a876474176066c90092a"
-    },
-    {
-      "name": "longbridge-content",
-      "source": "longbridge/skills",
-      "url": "https://github.com/longbridge/skills.git",
-      "path": "skills/longbridge-content/SKILL.md",
-      "base_tree": "69b877c5e15d4cfb66ebef10c8dd231e79d46507"
-    },
-    {
-      "name": "longbridge-derivatives",
-      "source": "longbridge/skills",
-      "url": "https://github.com/longbridge/skills.git",
-      "path": "skills/longbridge-derivatives/SKILL.md",
-      "base_tree": "61f15d6b51f81ede21ab8749620d97becfc32a6d"
-    },
-    {
-      "name": "longbridge-earnings",
-      "source": "longbridge/skills",
-      "url": "https://github.com/longbridge/skills.git",
-      "path": "skills/longbridge-earnings/SKILL.md",
-      "base_tree": "3ad49b254116a372aba930b72cadcd83491fba30"
-    },
-    {
-      "name": "longbridge-fundamentals",
-      "source": "longbridge/skills",
-      "url": "https://github.com/longbridge/skills.git",
-      "path": "skills/longbridge-fundamentals/SKILL.md",
-      "base_tree": "fde3b8a92c53efc7423f37216aee22b08cff58fc"
-    },
-    {
-      "name": "longbridge-intel",
-      "source": "longbridge/skills",
-      "url": "https://github.com/longbridge/skills.git",
-      "path": "skills/longbridge-intel/SKILL.md",
-      "base_tree": "e6ac1be44c4dfef1f1f0f915c8ff8e4ddbae5943"
-    },
-    {
-      "name": "longbridge-market-data",
-      "source": "longbridge/skills",
-      "url": "https://github.com/longbridge/skills.git",
-      "path": "skills/longbridge-market-data/SKILL.md",
-      "base_tree": "733706d1bfdbe20959daeee2d216466b0f5d1ae0"
-    },
-    {
-      "name": "longbridge-portfolio",
-      "source": "longbridge/skills",
-      "url": "https://github.com/longbridge/skills.git",
-      "path": "skills/longbridge-portfolio/SKILL.md",
-      "base_tree": "390331511ad10bb8d8cc0f61ae1bcffbdbd7ef2d"
-    },
-    {
-      "name": "longbridge-quant",
-      "source": "longbridge/skills",
-      "url": "https://github.com/longbridge/skills.git",
-      "path": "skills/longbridge-quant/SKILL.md",
-      "base_tree": "3a7d6ebdd773edadefeac063ee57035ac0f6b21f"
-    },
-    {
-      "name": "longbridge-research",
-      "source": "longbridge/skills",
-      "url": "https://github.com/longbridge/skills.git",
-      "path": "skills/longbridge-research/SKILL.md",
-      "base_tree": "a055b8f2cc75178980f19e635152ed372a09dc41"
-    },
-    {
-      "name": "longbridge-technical",
-      "source": "longbridge/skills",
-      "url": "https://github.com/longbridge/skills.git",
-      "path": "skills/longbridge-technical/SKILL.md",
-      "base_tree": "937f22e6040ace031dd6c49718198ec183dfcf3c"
-    },
-    {
-      "name": "longbridge-value-investing",
-      "source": "longbridge/skills",
-      "url": "https://github.com/longbridge/skills.git",
-      "path": "skills/longbridge-value-investing/SKILL.md",
-      "base_tree": "c7e46e6ee920aa9916e2b3b87332fc2a0223c6fe"
-    },
-    {
-      "name": "longbridge-watchlist",
-      "source": "longbridge/skills",
-      "url": "https://github.com/longbridge/skills.git",
-      "path": "skills/longbridge-watchlist/SKILL.md",
-      "base_tree": "d641aa1fb0c0c6321a1ee2358d4a95dbd2246818"
     },
     {
       "name": "mindmap",
@@ -383,13 +208,6 @@
       "base_tree": "499277a8824aa67010925f713896fbe821fcc1a4"
     },
     {
-      "name": "opencli-reader",
-      "source": "himself65/finance-skills",
-      "url": "https://github.com/himself65/finance-skills.git",
-      "path": "plugins/social-readers/skills/opencli-reader/SKILL.md",
-      "base_tree": "4e6d601bbffce0a5799b527b01c3df0d116315c2"
-    },
-    {
       "name": "opencli-sitemap-author",
       "source": "jackwener/opencli",
       "url": "https://github.com/jackwener/opencli.git",
@@ -402,13 +220,6 @@
       "url": "https://github.com/jackwener/opencli.git",
       "path": "skills/opencli-usage/SKILL.md",
       "base_tree": "c7cac9d1683cdd169233ace6b4cff62ec2a17fd2"
-    },
-    {
-      "name": "options-payoff",
-      "source": "himself65/finance-skills",
-      "url": "https://github.com/himself65/finance-skills.git",
-      "path": "plugins/market-analysis/skills/options-payoff/SKILL.md",
-      "base_tree": "860c146e0a479d1d8b96a5136a9813a1bd0eb14e"
     },
     {
       "name": "planning-with-files",
@@ -445,32 +256,11 @@
       "base_tree": "f62fff286d3ba22ae59e8c99c3ad0b5c96a5a8e8"
     },
     {
-      "name": "saas-valuation-compression",
-      "source": "himself65/finance-skills",
-      "url": "https://github.com/himself65/finance-skills.git",
-      "path": "plugins/market-analysis/skills/saas-valuation-compression/SKILL.md",
-      "base_tree": "988c4c0e83631bf964c5e8e752fa31a56de76659"
-    },
-    {
       "name": "security",
       "source": "markdown-viewer/skills",
       "url": "https://github.com/markdown-viewer/skills.git",
       "path": "security/SKILL.md",
       "base_tree": "67e2cdb97a49d2343e056ddfb736c93d1211ff48"
-    },
-    {
-      "name": "sepa-strategy",
-      "source": "himself65/finance-skills",
-      "url": "https://github.com/himself65/finance-skills.git",
-      "path": "plugins/market-analysis/skills/sepa-strategy/SKILL.md",
-      "base_tree": "1c7a293f7add0e07ca12febf590f9351aaf071f7"
-    },
-    {
-      "name": "skill-creator",
-      "source": "himself65/finance-skills",
-      "url": "https://github.com/himself65/finance-skills.git",
-      "path": "plugins/skill-creator/skills/skill-creator/SKILL.md",
-      "base_tree": "e2ae66970c94991eef2c8e48ccc57d7974a814f0"
     },
     {
       "name": "skill-doctor",
@@ -492,58 +282,9 @@
       "note": "本地维护，安装项目级 Ponytail、PWF skill 与官方 hooks，并配置 Serena、Semble"
     },
     {
-      "name": "startup-analysis",
-      "source": "himself65/finance-skills",
-      "url": "https://github.com/himself65/finance-skills.git",
-      "path": "plugins/startup-tools/skills/startup-analysis/SKILL.md",
-      "base_tree": "62fa4decd9293f73dad941fc476036c99946bc2c"
-    },
-    {
-      "name": "stock-correlation",
-      "source": "himself65/finance-skills",
-      "url": "https://github.com/himself65/finance-skills.git",
-      "path": "plugins/market-analysis/skills/stock-correlation/SKILL.md",
-      "base_tree": "2e116545b3964f18aed2d381461495401e18bbe6"
-    },
-    {
-      "name": "stock-liquidity",
-      "source": "himself65/finance-skills",
-      "url": "https://github.com/himself65/finance-skills.git",
-      "path": "plugins/market-analysis/skills/stock-liquidity/SKILL.md",
-      "base_tree": "6fefdc4bcd3c572a00ff7628ee3d1ffb400ff0e5"
-    },
-    {
       "name": "sync-skills",
       "managed": false,
       "note": "本仓库维护的同步 skill"
-    },
-    {
-      "name": "telegram-reader",
-      "source": "himself65/finance-skills",
-      "url": "https://github.com/himself65/finance-skills.git",
-      "path": "plugins/social-readers/skills/telegram-reader/SKILL.md",
-      "base_tree": "dfca2a4a6d6eed4284fcfd8dfa1076a128f6e28d"
-    },
-    {
-      "name": "tradingview-mcp",
-      "source": "himself65/finance-skills",
-      "url": "https://github.com/himself65/finance-skills.git",
-      "path": "plugins/data-providers/skills/tradingview-mcp/SKILL.md",
-      "base_tree": "dbefc8d02edc6f74a65c94c345d49567ae6a97d8"
-    },
-    {
-      "name": "tradingview-reader",
-      "source": "himself65/finance-skills",
-      "url": "https://github.com/himself65/finance-skills.git",
-      "path": "plugins/data-providers/skills/tradingview-reader/SKILL.md",
-      "base_tree": "7aa5ba10debccb23acf002b5803ca51d344c2bd2"
-    },
-    {
-      "name": "twitter-reader",
-      "source": "himself65/finance-skills",
-      "url": "https://github.com/himself65/finance-skills.git",
-      "path": "plugins/social-readers/skills/twitter-reader/SKILL.md",
-      "base_tree": "b17eda0c4954ca46e085e84112d019731d25deda"
     },
     {
       "name": "uml",
@@ -586,20 +327,6 @@
       "url": "https://github.com/mattpocock/skills.git",
       "path": "skills/productivity/writing-for-agents/SKILL.md",
       "base_tree": "ad2925850efb8973a72d2e666f7a975f9a2d4a9b"
-    },
-    {
-      "name": "yc-reader",
-      "source": "himself65/finance-skills",
-      "url": "https://github.com/himself65/finance-skills.git",
-      "path": "plugins/social-readers/skills/yc-reader/SKILL.md",
-      "base_tree": "7860e8d20ecbc64a3258ce92259f71dd547863ce"
-    },
-    {
-      "name": "yfinance-data",
-      "source": "himself65/finance-skills",
-      "url": "https://github.com/himself65/finance-skills.git",
-      "path": "plugins/market-analysis/skills/yfinance-data/SKILL.md",
-      "base_tree": "6aa637df9db121c05b636417c9e1177dc87e7586"
     }
   ],
   "plugins": [

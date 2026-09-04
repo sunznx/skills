@@ -49,45 +49,20 @@ $sync-skills 更新 agent-messaging 删除某个功能
 | `canvas` | [markdown-viewer/skills](https://github.com/markdown-viewer/skills) | `canvas/SKILL.md` | 三方合并 |
 | `cloud` | [markdown-viewer/skills](https://github.com/markdown-viewer/skills) | `cloud/SKILL.md` | 三方合并 |
 | `codebase-design` | [mattpocock/skills](https://github.com/mattpocock/skills) | `skills/engineering/codebase-design/SKILL.md` | 三方合并 |
-| `company-valuation` | [himself65/finance-skills](https://github.com/himself65/finance-skills) | `plugins/market-analysis/skills/company-valuation/SKILL.md` | 三方合并 |
 | `cua-driver` | 本机链接 ~/.cua-driver/skills/cua-driver，仓库保留快照但不覆盖该链接 | — | 仅仓库维护 |
 | `data-analytics` | [markdown-viewer/skills](https://github.com/markdown-viewer/skills) | `data-analytics/SKILL.md` | 三方合并 |
 | `diagram-design` | [cathrynlavery/diagram-design](https://github.com/cathrynlavery/diagram-design) | `skills/diagram-design/SKILL.md` | 三方合并 |
-| `discord-reader` | [himself65/finance-skills](https://github.com/himself65/finance-skills) | `plugins/social-readers/skills/discord-reader/SKILL.md` | 三方合并 |
 | `domain-modeling` | [mattpocock/skills](https://github.com/mattpocock/skills) | `skills/engineering/domain-modeling/SKILL.md` | 三方合并 |
-| `earnings-preview` | [himself65/finance-skills](https://github.com/himself65/finance-skills) | `plugins/market-analysis/skills/earnings-preview/SKILL.md` | 三方合并 |
-| `earnings-recap` | [himself65/finance-skills](https://github.com/himself65/finance-skills) | `plugins/market-analysis/skills/earnings-recap/SKILL.md` | 三方合并 |
 | `ego-browser` | [citrolabs/ego-lite](https://github.com/citrolabs/ego-lite) | `skills/ego-browser/SKILL.md` | 三方合并（仅仓库） |
 | `eli5` | [anthropics/claude-plugins-community](https://github.com/anthropics/claude-plugins-community) | `eli5/skills/eli5/SKILL.md` | 三方合并 |
-| `estimate-analysis` | [himself65/finance-skills](https://github.com/himself65/finance-skills) | `plugins/market-analysis/skills/estimate-analysis/SKILL.md` | 三方合并 |
-| `etf-premium` | [himself65/finance-skills](https://github.com/himself65/finance-skills) | `plugins/market-analysis/skills/etf-premium/SKILL.md` | 三方合并 |
-| `finance-sentiment` | [himself65/finance-skills](https://github.com/himself65/finance-skills) | `plugins/data-providers/skills/finance-sentiment/SKILL.md` | 三方合并 |
-| `fintel-data` | [himself65/finance-skills](https://github.com/himself65/finance-skills) | `plugins/data-providers/skills/fintel-data/SKILL.md` | 三方合并 |
-| `generative-ui` | [himself65/finance-skills](https://github.com/himself65/finance-skills) | `plugins/ui-tools/skills/generative-ui/SKILL.md` | 三方合并 |
 | `graphviz` | [markdown-viewer/skills](https://github.com/markdown-viewer/skills) | `graphviz/SKILL.md` | 三方合并 |
-| `hormuz-strait` | [himself65/finance-skills](https://github.com/himself65/finance-skills) | `plugins/data-providers/skills/hormuz-strait/SKILL.md` | 三方合并 |
 | `human-context-rebuild` | [lycfyi/yskills](https://github.com/lycfyi/yskills) | `skills/human-context-rebuild/SKILL.md` | 三方合并 |
-| `hyperliquid-reader` | [himself65/finance-skills](https://github.com/himself65/finance-skills) | `plugins/data-providers/skills/hyperliquid-reader/SKILL.md` | 三方合并 |
 | `improve-codebase-architecture` | [mattpocock/skills](https://github.com/mattpocock/skills) | `skills/engineering/improve-codebase-architecture/SKILL.md` | 三方合并 |
 | `infocard` | [markdown-viewer/skills](https://github.com/markdown-viewer/skills) | `infocard/SKILL.md` | 三方合并 |
 | `infographic` | [markdown-viewer/skills](https://github.com/markdown-viewer/skills) | `infographic/SKILL.md` | 三方合并 |
 | `iot` | [markdown-viewer/skills](https://github.com/markdown-viewer/skills) | `iot/SKILL.md` | 三方合并 |
 | `lark-doc` | [larksuite/cli](https://github.com/larksuite/cli) | `skills/lark-doc/SKILL.md` | 三方合并 |
 | `lark-shared` | [larksuite/cli](https://github.com/larksuite/cli) | `skills/lark-shared/SKILL.md` | 三方合并 |
-| `linkedin-reader` | [himself65/finance-skills](https://github.com/himself65/finance-skills) | `plugins/social-readers/skills/linkedin-reader/SKILL.md` | 三方合并 |
-| `longbridge` | [longbridge/skills](https://github.com/longbridge/skills) | `skills/longbridge/SKILL.md` | 三方合并 |
-| `longbridge-content` | [longbridge/skills](https://github.com/longbridge/skills) | `skills/longbridge-content/SKILL.md` | 三方合并 |
-| `longbridge-derivatives` | [longbridge/skills](https://github.com/longbridge/skills) | `skills/longbridge-derivatives/SKILL.md` | 三方合并 |
-| `longbridge-earnings` | [longbridge/skills](https://github.com/longbridge/skills) | `skills/longbridge-earnings/SKILL.md` | 三方合并 |
-| `longbridge-fundamentals` | [longbridge/skills](https://github.com/longbridge/skills) | `skills/longbridge-fundamentals/SKILL.md` | 三方合并 |
-| `longbridge-intel` | [longbridge/skills](https://github.com/longbridge/skills) | `skills/longbridge-intel/SKILL.md` | 三方合并 |
-| `longbridge-market-data` | [longbridge/skills](https://github.com/longbridge/skills) | `skills/longbridge-market-data/SKILL.md` | 三方合并 |
-| `longbridge-portfolio` | [longbridge/skills](https://github.com/longbridge/skills) | `skills/longbridge-portfolio/SKILL.md` | 三方合并 |
-| `longbridge-quant` | [longbridge/skills](https://github.com/longbridge/skills) | `skills/longbridge-quant/SKILL.md` | 三方合并 |
-| `longbridge-research` | [longbridge/skills](https://github.com/longbridge/skills) | `skills/longbridge-research/SKILL.md` | 三方合并 |
-| `longbridge-technical` | [longbridge/skills](https://github.com/longbridge/skills) | `skills/longbridge-technical/SKILL.md` | 三方合并 |
-| `longbridge-value-investing` | [longbridge/skills](https://github.com/longbridge/skills) | `skills/longbridge-value-investing/SKILL.md` | 三方合并 |
-| `longbridge-watchlist` | [longbridge/skills](https://github.com/longbridge/skills) | `skills/longbridge-watchlist/SKILL.md` | 三方合并 |
 | `mindmap` | [markdown-viewer/skills](https://github.com/markdown-viewer/skills) | `mindmap/SKILL.md` | 三方合并 |
 | `network` | [markdown-viewer/skills](https://github.com/markdown-viewer/skills) | `network/SKILL.md` | 三方合并 |
 | `obsidian-simple-mind-map` | 本地维护，暂无外部 Git 来源 | — | 本地维护 |
@@ -95,38 +70,24 @@ $sync-skills 更新 agent-messaging 删除某个功能
 | `opencli-autofix` | [jackwener/opencli](https://github.com/jackwener/opencli) | `skills/opencli-autofix/SKILL.md` | 三方合并 |
 | `opencli-browser` | [jackwener/opencli](https://github.com/jackwener/opencli) | `skills/opencli-browser/SKILL.md` | 三方合并 |
 | `opencli-browser-sitemap` | [jackwener/opencli](https://github.com/jackwener/opencli) | `skills/opencli-browser-sitemap/SKILL.md` | 三方合并 |
-| `opencli-reader` | [himself65/finance-skills](https://github.com/himself65/finance-skills) | `plugins/social-readers/skills/opencli-reader/SKILL.md` | 三方合并 |
 | `opencli-sitemap-author` | [jackwener/opencli](https://github.com/jackwener/opencli) | `skills/opencli-sitemap-author/SKILL.md` | 三方合并 |
 | `opencli-usage` | [jackwener/opencli](https://github.com/jackwener/opencli) | `skills/opencli-usage/SKILL.md` | 三方合并 |
-| `options-payoff` | [himself65/finance-skills](https://github.com/himself65/finance-skills) | `plugins/market-analysis/skills/options-payoff/SKILL.md` | 三方合并 |
 | `planning-with-files` | [OthmanAdi/planning-with-files](https://github.com/OthmanAdi/planning-with-files) | `.agents/skills/planning-with-files/SKILL.md` | 三方合并（仅仓库） |
 | `pwf-eli5` | 本地维护，绑定 planning-with-files 任务生成 HTML | `skills/pwf-eli5/SKILL.md` | 本地维护 |
 | `prototype` | [mattpocock/skills](https://github.com/mattpocock/skills) | `skills/engineering/prototype/SKILL.md` | 三方合并 |
 | `ra-人话` | [Pluviobyte/rnskill](https://github.com/Pluviobyte/rnskill) | `skills/ra-人话/SKILL.md` | 三方合并 |
 | `resolve-merge-conflicts` | [warpdotdev/common-skills](https://github.com/warpdotdev/common-skills) | `.agents/skills/resolve-merge-conflicts/SKILL.md` | 三方合并 |
-| `saas-valuation-compression` | [himself65/finance-skills](https://github.com/himself65/finance-skills) | `plugins/market-analysis/skills/saas-valuation-compression/SKILL.md` | 三方合并 |
 | `security` | [markdown-viewer/skills](https://github.com/markdown-viewer/skills) | `security/SKILL.md` | 三方合并 |
-| `sepa-strategy` | [himself65/finance-skills](https://github.com/himself65/finance-skills) | `plugins/market-analysis/skills/sepa-strategy/SKILL.md` | 三方合并 |
-| `skill-creator` | [himself65/finance-skills](https://github.com/himself65/finance-skills) | `plugins/skill-creator/skills/skill-creator/SKILL.md` | 三方合并 |
 | `skill-doctor` | [warpdotdev/common-skills](https://github.com/warpdotdev/common-skills) | `.agents/skills/skill-doctor/SKILL.md` | 三方合并 |
 | `smart-search` | [jackwener/opencli](https://github.com/jackwener/opencli) | `skills/smart-search/SKILL.md` | 三方合并 |
 | `spec-bootstrap` | 本地维护，安装项目级 Ponytail、PWF skill 与官方 hooks，并配置 Serena、Semble | — | 本地维护 |
-| `startup-analysis` | [himself65/finance-skills](https://github.com/himself65/finance-skills) | `plugins/startup-tools/skills/startup-analysis/SKILL.md` | 三方合并 |
-| `stock-correlation` | [himself65/finance-skills](https://github.com/himself65/finance-skills) | `plugins/market-analysis/skills/stock-correlation/SKILL.md` | 三方合并 |
-| `stock-liquidity` | [himself65/finance-skills](https://github.com/himself65/finance-skills) | `plugins/market-analysis/skills/stock-liquidity/SKILL.md` | 三方合并 |
 | `sync-skills` | 本仓库维护的同步 skill | — | 本地维护 |
-| `telegram-reader` | [himself65/finance-skills](https://github.com/himself65/finance-skills) | `plugins/social-readers/skills/telegram-reader/SKILL.md` | 三方合并 |
-| `tradingview-mcp` | [himself65/finance-skills](https://github.com/himself65/finance-skills) | `plugins/data-providers/skills/tradingview-mcp/SKILL.md` | 三方合并 |
-| `tradingview-reader` | [himself65/finance-skills](https://github.com/himself65/finance-skills) | `plugins/data-providers/skills/tradingview-reader/SKILL.md` | 三方合并 |
-| `twitter-reader` | [himself65/finance-skills](https://github.com/himself65/finance-skills) | `plugins/social-readers/skills/twitter-reader/SKILL.md` | 三方合并 |
 | `uml` | [markdown-viewer/skills](https://github.com/markdown-viewer/skills) | `uml/SKILL.md` | 三方合并 |
 | `update-skill` | [warpdotdev/common-skills](https://github.com/warpdotdev/common-skills) | `.agents/skills/update-skill/SKILL.md` | 三方合并 |
 | `vega` | [markdown-viewer/skills](https://github.com/markdown-viewer/skills) | `vega/SKILL.md` | 三方合并 |
 | `wait-what` | [mattpocock/skills](https://github.com/mattpocock/skills) | `skills/productivity/wait-what/SKILL.md` | 三方合并 |
 | `whats-next` | [lycfyi/yskills](https://github.com/lycfyi/yskills) | `skills/whats-next/SKILL.md` | 三方合并 |
 | `writing-for-agents` | [mattpocock/skills](https://github.com/mattpocock/skills) | `skills/productivity/writing-for-agents/SKILL.md` | 三方合并 |
-| `yc-reader` | [himself65/finance-skills](https://github.com/himself65/finance-skills) | `plugins/social-readers/skills/yc-reader/SKILL.md` | 三方合并 |
-| `yfinance-data` | [himself65/finance-skills](https://github.com/himself65/finance-skills) | `plugins/market-analysis/skills/yfinance-data/SKILL.md` | 三方合并 |
 
 ## Plugin 来源目录
 
