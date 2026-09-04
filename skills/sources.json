@@ -235,6 +235,11 @@
       "note": "本地维护，绑定 planning-with-files 任务生成 HTML"
     },
     {
+      "name": "pwf-show-me",
+      "managed": false,
+      "note": "本地维护，绑定 planning-with-files 任务生成可视化 HTML"
+    },
+    {
       "name": "prototype",
       "source": "mattpocock/skills",
       "url": "https://github.com/mattpocock/skills.git",
@@ -261,6 +266,13 @@
       "url": "https://github.com/markdown-viewer/skills.git",
       "path": "security/SKILL.md",
       "base_tree": "67e2cdb97a49d2343e056ddfb736c93d1211ff48"
+    },
+    {
+      "name": "show-me",
+      "source": "humanlayer/skills",
+      "url": "https://github.com/humanlayer/skills.git",
+      "path": "plugins/show-me/skills/show-me/SKILL.md",
+      "base_tree": "0b983b356b2a1b115f03137660c4f823ddc8cce0"
     },
     {
       "name": "skill-doctor",
