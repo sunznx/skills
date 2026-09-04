@@ -230,6 +230,13 @@
       "deploy": false
     },
     {
+      "name": "prototype",
+      "source": "mattpocock/skills",
+      "url": "https://github.com/mattpocock/skills.git",
+      "path": "skills/engineering/prototype/SKILL.md",
+      "base_tree": "e41d92e171f074a2b6887d8f6faca4a15c83d1ca"
+    },
+    {
       "name": "pwf-eli5",
       "managed": false,
       "note": "本地维护，绑定 planning-with-files 任务生成 HTML"
@@ -238,13 +245,6 @@
       "name": "pwf-show-me",
       "managed": false,
       "note": "本地维护，绑定 planning-with-files 任务生成可视化 HTML"
-    },
-    {
-      "name": "prototype",
-      "source": "mattpocock/skills",
-      "url": "https://github.com/mattpocock/skills.git",
-      "path": "skills/engineering/prototype/SKILL.md",
-      "base_tree": "e41d92e171f074a2b6887d8f6faca4a15c83d1ca"
     },
     {
       "name": "ra-人话",
@@ -272,7 +272,7 @@
       "source": "humanlayer/skills",
       "url": "https://github.com/humanlayer/skills.git",
       "path": "plugins/show-me/skills/show-me/SKILL.md",
-      "base_tree": "0b983b356b2a1b115f03137660c4f823ddc8cce0"
+      "base_tree": "0bdb821a21e793a4f6f82a7078c052154447e5cc"
     },
     {
       "name": "skill-doctor",
