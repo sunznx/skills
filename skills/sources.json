@@ -419,6 +419,11 @@
       "deploy": false
     },
     {
+      "name": "pwf-eli5",
+      "managed": false,
+      "note": "本地维护，绑定 planning-with-files 任务生成 HTML"
+    },
+    {
       "name": "prototype",
       "source": "mattpocock/skills",
       "url": "https://github.com/mattpocock/skills.git",
