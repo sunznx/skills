@@ -118,6 +118,14 @@
       "base_tree": "04df9f797e8bf363e4d1903af060547a43e5a955"
     },
     {
+      "name": "ego-browser",
+      "source": "citrolabs/ego-lite",
+      "url": "https://github.com/citrolabs/ego-lite.git",
+      "path": "skills/ego-browser/SKILL.md",
+      "base_tree": "416d53f981ba706c2aff4ac1f203a6402ead4821",
+      "deploy": false
+    },
+    {
       "name": "eli5",
       "source": "anthropics/claude-plugins-community",
       "url": "https://github.com/anthropics/claude-plugins-community.git",

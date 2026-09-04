@@ -57,6 +57,7 @@ $sync-skills 更新 agent-messaging 删除某个功能
 | `domain-modeling` | [mattpocock/skills](https://github.com/mattpocock/skills) | `skills/engineering/domain-modeling/SKILL.md` | 三方合并 |
 | `earnings-preview` | [himself65/finance-skills](https://github.com/himself65/finance-skills) | `plugins/market-analysis/skills/earnings-preview/SKILL.md` | 三方合并 |
 | `earnings-recap` | [himself65/finance-skills](https://github.com/himself65/finance-skills) | `plugins/market-analysis/skills/earnings-recap/SKILL.md` | 三方合并 |
+| `ego-browser` | [citrolabs/ego-lite](https://github.com/citrolabs/ego-lite) | `skills/ego-browser/SKILL.md` | 三方合并（仅仓库） |
 | `eli5` | [anthropics/claude-plugins-community](https://github.com/anthropics/claude-plugins-community) | `eli5/skills/eli5/SKILL.md` | 三方合并 |
 | `estimate-analysis` | [himself65/finance-skills](https://github.com/himself65/finance-skills) | `plugins/market-analysis/skills/estimate-analysis/SKILL.md` | 三方合并 |
 | `etf-premium` | [himself65/finance-skills](https://github.com/himself65/finance-skills) | `plugins/market-analysis/skills/etf-premium/SKILL.md` | 三方合并 |
