@@ -184,13 +184,6 @@
       "base_tree": "f62fff286d3ba22ae59e8c99c3ad0b5c96a5a8e8"
     },
     {
-      "name": "security",
-      "source": "markdown-viewer/skills",
-      "url": "https://github.com/markdown-viewer/skills.git",
-      "path": "security/SKILL.md",
-      "base_tree": "67e2cdb97a49d2343e056ddfb736c93d1211ff48"
-    },
-    {
       "name": "show-me",
       "source": "humanlayer/skills",
       "url": "https://github.com/humanlayer/skills.git",

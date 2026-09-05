@@ -67,7 +67,6 @@ $sync-skills 更新 agent-messaging 删除某个功能
 | `pwf-show-me` | 本地维护，绑定 planning-with-files 任务生成可视化 HTML | — | 本地维护 |
 | `ra-人话` | [Pluviobyte/rnskill](https://github.com/Pluviobyte/rnskill) | `skills/ra-人话/SKILL.md` | 三方合并 |
 | `resolve-merge-conflicts` | [warpdotdev/common-skills](https://github.com/warpdotdev/common-skills) | `.agents/skills/resolve-merge-conflicts/SKILL.md` | 三方合并 |
-| `security` | [markdown-viewer/skills](https://github.com/markdown-viewer/skills) | `security/SKILL.md` | 三方合并 |
 | `show-me` | [humanlayer/skills](https://github.com/humanlayer/skills) | `plugins/show-me/skills/show-me/SKILL.md` | 三方合并 |
 | `skill-doctor` | [warpdotdev/common-skills](https://github.com/warpdotdev/common-skills) | `.agents/skills/skill-doctor/SKILL.md` | 三方合并 |
 | `smart-search` | [jackwener/opencli](https://github.com/jackwener/opencli) | `skills/smart-search/SKILL.md` | 三方合并 |
