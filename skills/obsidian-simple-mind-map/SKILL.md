@@ -19,7 +19,7 @@ description: 在 Obsidian 中创建、读取和增量编辑 Simple Mind Map 的 
 python3 <skill-dir>/scripts/smm_cli.py probe
 ```
 
-`probe` 只确认插件已加载及转换接口存在，不验证脑图视图的事件握手。若 CLI 无输出，串行重试一次并报告原始错误；不要据此断言 Obsidian 未运行。若 probe 报插件不可用，停止写入并报告插件版本。
+`probe` 同时确认插件、转换接口和实际 Vault 根目录；根目录与 `--vault-root` 不一致时停止。若 CLI 无输出，查询同一 operation ID 的状态；不要重放命令，也不要据此断言 Obsidian 未运行。
 
 ## 工作流
 
@@ -90,7 +90,7 @@ python3 <skill-dir>/scripts/smm_cli.py set-link \
 
 这些操作调用插件原生命令，因此保留撤销历史并由插件生成新节点 UID。`delete` 拒绝删除根节点。修改默认更新预览图；仅在用户明确接受预览暂时过期时传 `--no-preview`。
 
-所有打开脑图视图的 CLI 读写命令按 Vault 使用同一把进程文件锁串行执行；`probe` 和 `self-test` 不占锁。
+所有打开脑图视图的 CLI 读写命令按 Vault 使用同一把进程文件锁串行执行；`probe` 和 `self-test` 不占锁。每次操作使用独立 leaf，核对 leaf 文件路径，完成后关闭；写入目标已经在 Obsidian 中打开时停止并提示先关闭该视图。
 
 完成后再次 `read`，确认目标节点、父子关系和返回的新 UID。一次请求包含多个独立修改时，逐项执行并在最后验证；不要通过 Markdown 全量重建来代替局部编辑，以免丢失节点样式、链接和位置。
 
@@ -103,9 +103,11 @@ python3 <skill-dir>/scripts/smm_cli.py save FILE
 ## 边界
 
 - 文件路径可用 vault 相对路径；绝对路径必须位于 `--vault-root` 内。
+- 相对路径保留前导点并拒绝任何 `..` 段；脚本不会猜测或改写目标路径。
 - `set-text` 写入普通文本。`delete` 支持删除既有自由节点；富文本、节点图片、自由节点的创建/移动、主题和布局暂不自动修改，需要这些操作时先检查插件接口再扩展脚本。
 - 外部 URL 和 Vault 内部文件引用都使用 `set-link` 写入 `hyperlink` 元数据；不要把链接语法塞进 `text`。
 - `read` 会输出 `hyperlink`、`hyperlinkTitle`、`richText`，增量设置链接后必须重新 `read` 验证这三个字段。
 - mutation 失败时报告原始错误。脚本只通过插件保存，不自行序列化 `.smm.md`。
+- 命令通过 Obsidian 内的 operation ID 等待异步结果；写命令在插件保存落盘并重新读取验证前保持进程锁，不重放非幂等命令。
 - 临时 Markdown 使用 `convert-md --delete-source`，无论转换结果如何都清理；完成后确认只留下 `.smm.md`。
 - 本接入基于插件 `0.2.7` 已确认的事件：`execCommand`、`getMindMapCurrentData`、`saveToLocal`，并在每次操作前做能力探测。
