@@ -98,13 +98,6 @@
       "base_tree": "1ee7e9dce1377a7038ab798e1ac5813ed608f4e1"
     },
     {
-      "name": "mindmap",
-      "source": "markdown-viewer/skills",
-      "url": "https://github.com/markdown-viewer/skills.git",
-      "path": "mindmap/SKILL.md",
-      "base_tree": "6ba56eafddba5d30cb1a20c4c879b214dd2b31f9"
-    },
-    {
       "name": "network",
       "source": "markdown-viewer/skills",
       "url": "https://github.com/markdown-viewer/skills.git",
