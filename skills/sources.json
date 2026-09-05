@@ -21,13 +21,6 @@
       "base_tree": "f23d39ed3e7e2a0add67a055d352c0835d04f770"
     },
     {
-      "name": "bpmn",
-      "source": "markdown-viewer/skills",
-      "url": "https://github.com/markdown-viewer/skills.git",
-      "path": "bpmn/SKILL.md",
-      "base_tree": "0c56df229ab0a85b98cea2c5235d4fd2e88ace66"
-    },
-    {
       "name": "canvas",
       "source": "markdown-viewer/skills",
       "url": "https://github.com/markdown-viewer/skills.git",
