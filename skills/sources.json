@@ -21,13 +21,6 @@
       "base_tree": "f23d39ed3e7e2a0add67a055d352c0835d04f770"
     },
     {
-      "name": "archimate",
-      "source": "markdown-viewer/skills",
-      "url": "https://github.com/markdown-viewer/skills.git",
-      "path": "archimate/SKILL.md",
-      "base_tree": "5eb891d34750ffa7ce4d1fda2b03a8f731445b73"
-    },
-    {
       "name": "architecture",
       "source": "markdown-viewer/skills",
       "url": "https://github.com/markdown-viewer/skills.git",
