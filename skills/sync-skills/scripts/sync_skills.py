@@ -366,7 +366,10 @@ def extract_tree(mirror: Path, tree: str, destination: Path) -> None:
     destination.mkdir(parents=True, exist_ok=True)
     archive = run("git", "archive", "--format=tar", tree, cwd=mirror, text=False).stdout
     with tarfile.open(fileobj=io.BytesIO(archive), mode="r:") as tar:
-        tar.extractall(destination, filter="data")
+        if sys.version_info >= (3, 12):
+            tar.extractall(destination, filter="data")
+        else:
+            tar.extractall(destination)
 
 
 def ensure_base_tree(mirror: Path, tree: str) -> None:
