@@ -21,13 +21,6 @@
       "base_tree": "f23d39ed3e7e2a0add67a055d352c0835d04f770"
     },
     {
-      "name": "canvas",
-      "source": "markdown-viewer/skills",
-      "url": "https://github.com/markdown-viewer/skills.git",
-      "path": "canvas/SKILL.md",
-      "base_tree": "f2c69fb78d28b81f5aae8861cbd6e72db475d570"
-    },
-    {
       "name": "cloud",
       "source": "markdown-viewer/skills",
       "url": "https://github.com/markdown-viewer/skills.git",
