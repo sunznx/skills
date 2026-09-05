@@ -56,6 +56,7 @@ $sync-skills 更新 agent-messaging 删除某个功能
 | `ego-browser` | [citrolabs/ego-lite](https://github.com/citrolabs/ego-lite) | `skills/ego-browser/SKILL.md` | 三方合并（仅仓库） |
 | `eli5` | [anthropics/claude-plugins-community](https://github.com/anthropics/claude-plugins-community) | `eli5/skills/eli5/SKILL.md` | 三方合并 |
 | `graphviz` | [markdown-viewer/skills](https://github.com/markdown-viewer/skills) | `graphviz/SKILL.md` | 三方合并 |
+| `grill-with-docs` | [mattpocock/skills](https://github.com/mattpocock/skills) | `skills/engineering/grill-with-docs/SKILL.md` | 三方合并 |
 | `human-context-rebuild` | [lycfyi/yskills](https://github.com/lycfyi/yskills) | `skills/human-context-rebuild/SKILL.md` | 三方合并 |
 | `improve-codebase-architecture` | [mattpocock/skills](https://github.com/mattpocock/skills) | `skills/engineering/improve-codebase-architecture/SKILL.md` | 三方合并 |
 | `infocard` | [markdown-viewer/skills](https://github.com/markdown-viewer/skills) | `infocard/SKILL.md` | 三方合并 |

@@ -112,6 +112,13 @@
       "base_tree": "908e1749205ae785004a50400c1820b6ad3e3e22"
     },
     {
+      "name": "grill-with-docs",
+      "source": "mattpocock/skills",
+      "url": "https://github.com/mattpocock/skills.git",
+      "path": "skills/engineering/grill-with-docs/SKILL.md",
+      "base_tree": "eedaf2562c83155115e9c649fa3ecaac2e10e81d"
+    },
+    {
       "name": "human-context-rebuild",
       "source": "lycfyi/yskills",
       "url": "https://github.com/lycfyi/yskills.git",
