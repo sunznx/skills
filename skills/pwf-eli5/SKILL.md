@@ -19,12 +19,12 @@ disable-model-invocation: true
 
 ## 2. 确定产物路径
 
-从 `plan-id` 去掉开头的 `YYYY-MM-DD-` 得到 `task-name`；没有该前缀时使用完整 basename。创建目录 `<PLAN_DIR>/eli5/`，然后扫描其中已有的 `<task-name>-NN.html` 文件，使用最大编号加一；没有文件时从 `01` 开始。编号至少两位，不覆盖已有文件。
+从 `plan-id` 去掉开头的 `YYYY-MM-DD-` 得到 `task-name`；没有该前缀时使用完整 basename。创建目录 `<PLAN_DIR>/eli5/`，然后扫描其中已有的 `<NN>-<task-name>.html` 文件，使用最大编号加一；没有文件时从 `01` 开始。编号至少两位，不覆盖已有文件。
 
 最终路径格式：
 
 ```text
-<PLAN_DIR>/eli5/<task-name>-01.html
+<PLAN_DIR>/eli5/01-<task-name>.html
 ```
 
 ## 3. 生成说明

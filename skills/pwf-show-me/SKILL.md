@@ -19,12 +19,12 @@ disable-model-invocation: true
 
 ## 2. 确定产物路径
 
-从 `plan-id` 去掉开头的 `YYYY-MM-DD-` 得到 `task-name`；没有此前缀时使用完整 basename。创建 `<PLAN_DIR>/show-me/`，扫描已有的 `<task-name>-NN.html`，使用最大编号加一；没有文件时从 `01` 开始，至少使用两位编号，不覆盖已有产物。
+从 `plan-id` 去掉开头的 `YYYY-MM-DD-` 得到 `task-name`；没有此前缀时使用完整 basename。创建 `<PLAN_DIR>/show-me/`，扫描已有的 `<NN>-<task-name>.html`，使用最大编号加一；没有文件时从 `01` 开始，至少使用两位编号，不覆盖已有产物。
 
 最终路径格式：
 
 ```text
-<PLAN_DIR>/show-me/<task-name>-01.html
+<PLAN_DIR>/show-me/01-<task-name>.html
 ```
 
 ## 3. 生成视觉说明
