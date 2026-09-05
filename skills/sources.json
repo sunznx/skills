@@ -84,13 +84,6 @@
       "base_tree": "3d35cd438f4067b03c8b3792e038960e4ac11526"
     },
     {
-      "name": "iot",
-      "source": "markdown-viewer/skills",
-      "url": "https://github.com/markdown-viewer/skills.git",
-      "path": "iot/SKILL.md",
-      "base_tree": "f11cc66ed30b1b3a3b80dc7fcee01a09b3dba41b"
-    },
-    {
       "name": "lark-doc",
       "source": "larksuite/cli",
       "url": "https://github.com/larksuite/cli.git",

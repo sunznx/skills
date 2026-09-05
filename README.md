@@ -52,7 +52,6 @@ $sync-skills 更新 agent-messaging 删除某个功能
 | `grill-with-docs` | [mattpocock/skills](https://github.com/mattpocock/skills) | `skills/engineering/grill-with-docs/SKILL.md` | 三方合并 |
 | `human-context-rebuild` | [lycfyi/yskills](https://github.com/lycfyi/yskills) | `skills/human-context-rebuild/SKILL.md` | 三方合并 |
 | `improve-codebase-architecture` | [mattpocock/skills](https://github.com/mattpocock/skills) | `skills/engineering/improve-codebase-architecture/SKILL.md` | 三方合并 |
-| `iot` | [markdown-viewer/skills](https://github.com/markdown-viewer/skills) | `iot/SKILL.md` | 三方合并 |
 | `lark-doc` | [larksuite/cli](https://github.com/larksuite/cli) | `skills/lark-doc/SKILL.md` | 三方合并 |
 | `lark-shared` | [larksuite/cli](https://github.com/larksuite/cli) | `skills/lark-shared/SKILL.md` | 三方合并 |
 | `mindmap` | [markdown-viewer/skills](https://github.com/markdown-viewer/skills) | `mindmap/SKILL.md` | 三方合并 |
