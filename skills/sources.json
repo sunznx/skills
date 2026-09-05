@@ -34,13 +34,6 @@
       "deploy": false
     },
     {
-      "name": "data-analytics",
-      "source": "markdown-viewer/skills",
-      "url": "https://github.com/markdown-viewer/skills.git",
-      "path": "data-analytics/SKILL.md",
-      "base_tree": "731f5c338461c74b7a69b255ff2fbc53f3a31dfc"
-    },
-    {
       "name": "diagram-design",
       "source": "cathrynlavery/diagram-design",
       "url": "https://github.com/cathrynlavery/diagram-design.git",
