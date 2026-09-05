@@ -98,13 +98,6 @@
       "base_tree": "1ee7e9dce1377a7038ab798e1ac5813ed608f4e1"
     },
     {
-      "name": "network",
-      "source": "markdown-viewer/skills",
-      "url": "https://github.com/markdown-viewer/skills.git",
-      "path": "network/SKILL.md",
-      "base_tree": "3651570943236b8e1ab10e6ebf738bfdf03c5d1f"
-    },
-    {
       "name": "obsidian-simple-mind-map",
       "managed": false,
       "note": "本地维护，暂无外部 Git 来源"

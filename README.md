@@ -54,7 +54,6 @@ $sync-skills 更新 agent-messaging 删除某个功能
 | `improve-codebase-architecture` | [mattpocock/skills](https://github.com/mattpocock/skills) | `skills/engineering/improve-codebase-architecture/SKILL.md` | 三方合并 |
 | `lark-doc` | [larksuite/cli](https://github.com/larksuite/cli) | `skills/lark-doc/SKILL.md` | 三方合并 |
 | `lark-shared` | [larksuite/cli](https://github.com/larksuite/cli) | `skills/lark-shared/SKILL.md` | 三方合并 |
-| `network` | [markdown-viewer/skills](https://github.com/markdown-viewer/skills) | `network/SKILL.md` | 三方合并 |
 | `obsidian-simple-mind-map` | 本地维护，暂无外部 Git 来源 | — | 本地维护 |
 | `opencli-adapter-author` | [jackwener/opencli](https://github.com/jackwener/opencli) | `skills/opencli-adapter-author/SKILL.md` | 三方合并 |
 | `opencli-autofix` | [jackwener/opencli](https://github.com/jackwener/opencli) | `skills/opencli-autofix/SKILL.md` | 三方合并 |
