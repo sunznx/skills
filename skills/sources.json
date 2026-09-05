@@ -165,9 +165,24 @@
       "note": "本地维护，绑定 planning-with-files 任务生成 HTML"
     },
     {
+      "name": "pwf-grill-with-docs",
+      "managed": false,
+      "note": "本地维护，绑定 planning-with-files 任务进行访谈并沉淀 ADR/术语"
+    },
+    {
+      "name": "pwf-prototype",
+      "managed": false,
+      "note": "本地维护，绑定 planning-with-files 任务生成可交互原型 HTML"
+    },
+    {
       "name": "pwf-show-me",
       "managed": false,
       "note": "本地维护，绑定 planning-with-files 任务生成可视化 HTML"
+    },
+    {
+      "name": "pwf-wayfinder",
+      "managed": false,
+      "note": "本地维护，绑定 planning-with-files 任务维护决策地图与 tickets"
     },
     {
       "name": "ra-人话",

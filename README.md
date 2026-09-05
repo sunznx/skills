@@ -64,7 +64,10 @@ $sync-skills 更新 agent-messaging 删除某个功能
 | `planning-with-files` | [OthmanAdi/planning-with-files](https://github.com/OthmanAdi/planning-with-files) | `.agents/skills/planning-with-files/SKILL.md` | 三方合并（仅仓库） |
 | `prototype` | [mattpocock/skills](https://github.com/mattpocock/skills) | `skills/engineering/prototype/SKILL.md` | 三方合并 |
 | `pwf-eli5` | 本地维护，绑定 planning-with-files 任务生成 HTML | — | 本地维护 |
+| `pwf-grill-with-docs` | 本地维护，绑定 planning-with-files 任务进行访谈并沉淀 ADR/术语 | — | 本地维护 |
+| `pwf-prototype` | 本地维护，绑定 planning-with-files 任务生成可交互原型 HTML | — | 本地维护 |
 | `pwf-show-me` | 本地维护，绑定 planning-with-files 任务生成可视化 HTML | — | 本地维护 |
+| `pwf-wayfinder` | 本地维护，绑定 planning-with-files 任务维护决策地图与 tickets | — | 本地维护 |
 | `ra-人话` | [Pluviobyte/rnskill](https://github.com/Pluviobyte/rnskill) | `skills/ra-人话/SKILL.md` | 三方合并 |
 | `resolve-merge-conflicts` | [warpdotdev/common-skills](https://github.com/warpdotdev/common-skills) | `.agents/skills/resolve-merge-conflicts/SKILL.md` | 三方合并 |
 | `show-me` | [humanlayer/skills](https://github.com/humanlayer/skills) | `plugins/show-me/skills/show-me/SKILL.md` | 三方合并 |

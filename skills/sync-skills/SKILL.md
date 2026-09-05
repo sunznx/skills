@@ -31,6 +31,16 @@ repo="$(cat ~/.config/sync-skills/repo)"
 - 拉取上游失败但本地镜像可用时，警告后继续使用缓存并部署；没有可用镜像时停止。
 - 每次成功调用最后都执行 `git push`。没有改动时不创建空 commit；push 失败时报告错误，但不要撤销已经完成的 commit 或本机同步。
 
+## 实时镜像与同步边界
+
+本环境中，仓库 `skills/<skill-name>/` 与 `~/.agents/skills/<skill-name>/` 由 syncer 实时镜像；文件改动会自动出现在另一侧，不需要 commit、部署命令或手动复制来传播文件。
+
+- `添加 <skill-name>` 表示把已有本机 skill 纳入仓库管理，并补齐来源记录；不是“部署到本机”。
+- `$sync-skills <skill-name>` 负责检查/合并上游、更新仓库快照和来源状态；实时镜像会负责让文件出现在 `~/.agents/skills`。
+- 新增或修改 skill 后，仍要更新 `README.md`、`skills/sources.json`（名称或来源变化时）并运行校验；这些是仓库元数据，不由实时镜像替代。
+- 工作树不干净时，同步脚本可能拒绝执行上游合并、commit 或 push；这不表示文件没有实时镜像，只表示本次 Git 同步没有完成。
+- 不要把“实时镜像”与“上游同步”混为一谈：前者传播文件，后者维护来源、三方合并和 Git 历史。
+
 ## 安装 plugin
 
 `$sync-skills 安装 <GitHub URL>` 表示安装并登记 Codex plugin，不是 shell 子命令。
