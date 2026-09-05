@@ -21,13 +21,6 @@
       "base_tree": "f23d39ed3e7e2a0add67a055d352c0835d04f770"
     },
     {
-      "name": "cloud",
-      "source": "markdown-viewer/skills",
-      "url": "https://github.com/markdown-viewer/skills.git",
-      "path": "cloud/SKILL.md",
-      "base_tree": "da156c00358f42372f8fde800d12896eaa69c954"
-    },
-    {
       "name": "codebase-design",
       "source": "mattpocock/skills",
       "url": "https://github.com/mattpocock/skills.git",
