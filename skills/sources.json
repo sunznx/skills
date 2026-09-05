@@ -63,13 +63,6 @@
       "base_tree": "d16165120b7658216c79601b0ee568f42e540961"
     },
     {
-      "name": "graphviz",
-      "source": "markdown-viewer/skills",
-      "url": "https://github.com/markdown-viewer/skills.git",
-      "path": "graphviz/SKILL.md",
-      "base_tree": "908e1749205ae785004a50400c1820b6ad3e3e22"
-    },
-    {
       "name": "grill-with-docs",
       "source": "mattpocock/skills",
       "url": "https://github.com/mattpocock/skills.git",
