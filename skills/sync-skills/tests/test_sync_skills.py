@@ -107,13 +107,12 @@ class SyncSkillsTests(unittest.TestCase):
             manifest_path.parent.mkdir(parents=True)
             original_manifest = b'{"name":"planning-with-files","commands":"./commands"}\n'
             manifest_path.write_bytes(original_manifest)
-            old_cache = root / "cache/3.15.0"
-            old_hook = old_cache / "hooks/pre_tool_use.py"
+            actual_cache = root / "codex-cache/planning-with-files/planning-with-files/3.16.0"
+            old_hook = actual_cache / "hooks/pre_tool_use.py"
             old_hook.parent.mkdir(parents=True)
             old_hook.write_text("# hook\n")
-            migrated = old_cache / ".codex-plugin/migrated-command-skills/source-command-plan"
-            migrated.mkdir(parents=True)
-            new_cache = root / "cache/3.16.0"
+            actual_migrated = actual_cache / ".codex-plugin/migrated-command-skills/source-command-plan"
+            actual_migrated.mkdir(parents=True)
             plugin = {
                 "name": "planning-with-files",
                 "marketplace": "planning-with-files",
@@ -133,32 +132,36 @@ class SyncSkillsTests(unittest.TestCase):
                         "root": str(marketplace),
                     }]})
                 elif args == ("codex", "plugin", "list", "--json"):
-                    cache = old_cache if list_calls == 0 else new_cache
                     list_calls += 1
                     stdout = json.dumps({"installed": [{
                         "pluginId": "planning-with-files@planning-with-files",
                         "installed": True,
                         "enabled": True,
-                        "source": {"path": str(cache)},
+                        "source": {"path": str(marketplace)},
+                        "version": "3.16.0",
                     }]})
                 elif args == (
                     "codex", "plugin", "add",
                     "planning-with-files@planning-with-files", "--json",
                 ):
                     self.assertEqual(json.loads(manifest_path.read_text())["commands"], [])
-                    shutil.rmtree(old_cache)
-                    new_cache.mkdir(parents=True)
+                    shutil.rmtree(actual_cache)
+                    actual_cache.mkdir(parents=True)
+                    (actual_cache / "hooks").mkdir()
+                    (actual_cache / "hooks/pre_tool_use.py").write_text("# hook\n")
                     stdout = "{}"
                 else:
                     stdout = "{}"
                 return subprocess.CompletedProcess(args, 0, stdout, "")
 
-            with patch.object(sync_skills, "run", side_effect=fake_run):
+            with patch.object(sync_skills.Path, "home", return_value=root), patch.object(
+                sync_skills, "run", side_effect=fake_run
+            ):
                 sync_skills.sync_plugins({"plugins": [plugin]}, push=False)
 
             self.assertEqual(manifest_path.read_bytes(), original_manifest)
             self.assertTrue(old_hook.is_file())
-            self.assertFalse((old_cache / ".codex-plugin/migrated-command-skills").exists())
+            self.assertFalse(actual_migrated.exists())
 
     def test_add_does_not_overwrite_another_local_skill(self) -> None:
         with tempfile.TemporaryDirectory() as temp:

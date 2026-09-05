@@ -573,25 +573,48 @@ def sync_plugins(manifest: dict, only_name: str | None = None, *, push: bool = T
         return [item for item in installed if isinstance(item, dict)]
 
     selectors = {f"{entry['name']}@{entry['marketplace']}" for entry in entries}
+    suppressed_selectors = {
+        f"{entry['name']}@{entry['marketplace']}"
+        for entry in entries
+        if entry.get("suppress_commands")
+    }
     installed_before = installed_plugins()
+
+    def plugin_roots(item: dict) -> set[Path]:
+        plugin_id = item.get("pluginId")
+        name, separator, marketplace = (
+            plugin_id.partition("@") if isinstance(plugin_id, str) else ("", "", "")
+        )
+        if not separator:
+            return set()
+        roots: set[Path] = set()
+        source_path = item.get("source", {}).get("path")
+        if isinstance(source_path, str):
+            roots.add(Path(source_path))
+        version = item.get("version")
+        if isinstance(version, str):
+            roots.add(Path.home() / ".codex/plugins/cache" / marketplace / name / version)
+        return roots
+
+    def suppress_commands(item: dict) -> None:
+        roots = plugin_roots(item)
+        for root in roots:
+            shutil.rmtree(root / ".codex-plugin/migrated-command-skills", ignore_errors=True)
+
     with tempfile.TemporaryDirectory(prefix="sync-plugin-cache-") as temp:
         cache_backups: list[tuple[Path, Path]] = []
         for item in installed_before:
             if item.get("pluginId") not in selectors:
                 continue
-            root = item.get("source", {}).get("path")
-            cache = Path(root) if isinstance(root, str) else None
-            if cache is None or not cache.is_dir():
-                continue
-            backup = Path(temp) / str(len(cache_backups))
-            shutil.copytree(cache, backup)
-            if any(
-                entry.get("suppress_commands")
-                and item.get("pluginId") == f"{entry['name']}@{entry['marketplace']}"
-                for entry in entries
-            ):
-                shutil.rmtree(backup / ".codex-plugin/migrated-command-skills", ignore_errors=True)
-            cache_backups.append((backup, cache))
+            for cache in plugin_roots(item):
+                if not cache.is_dir():
+                    continue
+                backup = Path(temp) / str(len(cache_backups))
+                shutil.copytree(cache, backup)
+                if item.get("pluginId") in suppressed_selectors:
+                    shutil.rmtree(backup / ".codex-plugin/migrated-command-skills", ignore_errors=True)
+                    suppress_commands(item)
+                cache_backups.append((backup, cache))
 
         manifest_backups: list[tuple[Path, bytes]] = []
         try:
@@ -667,6 +690,15 @@ def sync_plugins(manifest: dict, only_name: str | None = None, *, push: bool = T
         finally:
             for manifest_path, original in reversed(manifest_backups):
                 manifest_path.write_bytes(original)
+            for item in installed_before:
+                if item.get("pluginId") in suppressed_selectors:
+                    suppress_commands(item)
+            try:
+                for item in installed_plugins():
+                    if item.get("pluginId") in suppressed_selectors:
+                        suppress_commands(item)
+            except SyncError:
+                pass
             # ponytail: 保留当前会话的旧 hook 路径，重启 Codex 后可由安装器清理。
             for backup, cache in cache_backups:
                 if not cache.exists():
