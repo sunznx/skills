@@ -73,7 +73,6 @@ $sync-skills 更新 agent-messaging 删除某个功能
 | `spec-bootstrap` | 本地维护，安装项目级 Ponytail、PWF skill 与官方 hooks，并配置 Serena、Semble | — | 本地维护 |
 | `sync-skills` | 本仓库维护的同步 skill | — | 本地维护 |
 | `update-skill` | [warpdotdev/common-skills](https://github.com/warpdotdev/common-skills) | `.agents/skills/update-skill/SKILL.md` | 三方合并 |
-| `vega` | [markdown-viewer/skills](https://github.com/markdown-viewer/skills) | `vega/SKILL.md` | 三方合并 |
 | `wait-what` | [mattpocock/skills](https://github.com/mattpocock/skills) | `skills/productivity/wait-what/SKILL.md` | 三方合并 |
 | `wayfinder` | [mattpocock/skills](https://github.com/mattpocock/skills) | `skills/engineering/wayfinder/SKILL.md` | 三方合并 |
 | `whats-next` | [lycfyi/yskills](https://github.com/lycfyi/yskills) | `skills/whats-next/SKILL.md` | 三方合并 |

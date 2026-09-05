@@ -222,13 +222,6 @@
       "base_tree": "84f703bb1c52d3fb9697f3a570c54b5103a3fbf0"
     },
     {
-      "name": "vega",
-      "source": "markdown-viewer/skills",
-      "url": "https://github.com/markdown-viewer/skills.git",
-      "path": "vega/SKILL.md",
-      "base_tree": "675044ee41f31b1defb791b01c8406161867fd6d"
-    },
-    {
       "name": "wait-what",
       "source": "mattpocock/skills",
       "url": "https://github.com/mattpocock/skills.git",
