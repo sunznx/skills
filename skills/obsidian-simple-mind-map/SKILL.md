@@ -19,19 +19,19 @@ description: 在 Obsidian 中创建、读取和增量编辑 Simple Mind Map 的 
 python3 <skill-dir>/scripts/smm_cli.py probe
 ```
 
-若 CLI 没有返回结果，提示用户启动 Obsidian 后重试。若 probe 报插件或事件总线不可用，停止写入并报告插件版本。
+`probe` 只确认插件已加载及转换接口存在，不验证脑图视图的事件握手。若 CLI 无输出，串行重试一次并报告原始错误；不要据此断言 Obsidian 未运行。若 probe 报插件不可用，停止写入并报告插件版本。
 
 ## 工作流
 
 ### Markdown 转 `.smm.md`
 
-源文件必须已在 vault 中。转换默认新建文件并保留源 Markdown：
+临时 Markdown 必须已在 vault 中；转换成功或失败后都删除它，最终只保留新建的 `.smm.md`：
 
 ```bash
-python3 <skill-dir>/scripts/smm_cli.py convert-md "notes/path/topic.md"
+python3 <skill-dir>/scripts/smm_cli.py convert-md "notes/path/topic.md" --delete-source
 ```
 
-不要自动选择插件的“覆盖转换”。返回值中的 `path` 是实际生成文件，文件重名时插件会自动改名。
+只在输入是临时产物时使用 `--delete-source`；转换已有 Markdown 文档时省略该参数。不要自动选择插件的“覆盖转换”。新图的全部节点使用 Obsidian `textFontFamily`；未配置自定义字体时使用当前主题的 `--font-text`。返回值中的 `path` 是实际生成文件，文件重名时插件会自动改名。
 
 ### 读取与定位节点
 
@@ -90,6 +90,8 @@ python3 <skill-dir>/scripts/smm_cli.py set-link \
 
 这些操作调用插件原生命令，因此保留撤销历史并由插件生成新节点 UID。`delete` 拒绝删除根节点。修改默认更新预览图；仅在用户明确接受预览暂时过期时传 `--no-preview`。
 
+所有打开脑图视图的 CLI 读写命令按 Vault 使用同一把进程文件锁串行执行；`probe` 和 `self-test` 不占锁。
+
 完成后再次 `read`，确认目标节点、父子关系和返回的新 UID。一次请求包含多个独立修改时，逐项执行并在最后验证；不要通过 Markdown 全量重建来代替局部编辑，以免丢失节点样式、链接和位置。
 
 ### 保存和刷新预览
@@ -105,4 +107,5 @@ python3 <skill-dir>/scripts/smm_cli.py save FILE
 - 外部 URL 和 Vault 内部文件引用都使用 `set-link` 写入 `hyperlink` 元数据；不要把链接语法塞进 `text`。
 - `read` 会输出 `hyperlink`、`hyperlinkTitle`、`richText`，增量设置链接后必须重新 `read` 验证这三个字段。
 - mutation 失败时报告原始错误。脚本只通过插件保存，不自行序列化 `.smm.md`。
+- 临时 Markdown 使用 `convert-md --delete-source`，无论转换结果如何都清理；完成后确认只留下 `.smm.md`。
 - 本接入基于插件 `0.2.7` 已确认的事件：`execCommand`、`getMindMapCurrentData`、`saveToLocal`，并在每次操作前做能力探测。

@@ -4,16 +4,29 @@
 from __future__ import annotations
 
 import argparse
+import fcntl
+import hashlib
 import json
 import shutil
 import subprocess
 import sys
+import tempfile
 import time
 from pathlib import Path
 
 
 DEFAULT_VAULT = "obsidian"
 DEFAULT_ROOT = Path("/Users/sunx/Dropbox/syncer/apps/obsidian")
+LOCKED_COMMANDS = {
+    "read",
+    "convert-md",
+    "save",
+    "add-child",
+    "add-sibling",
+    "set-text",
+    "set-link",
+    "delete",
+}
 
 
 COMMON_JS = r"""
@@ -96,6 +109,7 @@ const walkNodes = data => {
       hyperlink: node.data.hyperlink || "",
       hyperlinkTitle: node.data.hyperlinkTitle || "",
       richText: node.data.richText === true,
+      fontFamily: node.data.fontFamily || "",
       parentUid,
       depth,
       childCount: (node.children || []).length,
@@ -127,6 +141,11 @@ def normalize_path(raw: str, root: Path) -> str:
     return normalized
 
 
+def lock_path(root: Path) -> Path:
+    digest = hashlib.sha256(str(root.resolve()).encode()).hexdigest()[:16]
+    return Path(tempfile.gettempdir()) / f"obsidian-simple-mind-map-{digest}.lock"
+
+
 def clean_result_output(output: str) -> str:
     output = output.strip()
     return output[2:].lstrip() if output.startswith("=>") else output
@@ -150,8 +169,11 @@ def run_eval(vault: str, body: str) -> str:
         line for line in result.stderr.splitlines() if "Unable to find helper app" not in line
     ).strip()
     output = clean_result_output(result.stdout)
-    if result.returncode or not output:
-        detail = stderr or "Obsidian returned no result; make sure the app is running"
+    if result.returncode:
+        detail = stderr or f"Obsidian CLI exited with code {result.returncode}"
+        raise SystemExit(detail)
+    if not output:
+        detail = stderr or "Obsidian CLI returned no output"
         raise SystemExit(detail)
     try:
         payload = json.loads(output)
@@ -199,13 +221,55 @@ return JSON.stringify({{path: {js_value(path)}, layout: data.layout, theme: data
     )
 
 
-def convert_md(vault: str, root: Path, path: str) -> str:
+def apply_default_font(vault: str, root: Path, path: str) -> dict[str, object]:
+    file_path = root / path
+    before_write = file_path.stat().st_mtime_ns
+    try:
+        output = run_eval(
+            vault,
+            f"""
+const {{ view }} = await openSmm({js_value(path)});
+const configuredFont = app.vault.config?.textFontFamily?.trim();
+const fontFamily = configuredFont || getComputedStyle(document.body).getPropertyValue("--font-text").trim();
+if (!fontFamily) throw new Error("Obsidian default text font is unavailable");
+const nodes = walkNodes(await currentData(view));
+const bus = view.mindMapAPP.$bus;
+setTimeout(() => {{
+  nodes.forEach(item => bus.$emit("execCommand", "GO_TARGET_NODE", item.uid, node =>
+    bus.$emit("execCommand", "SET_NODE_STYLE", node, "fontFamily", fontFamily)
+  ));
+  setTimeout(() => bus.$emit("saveToLocal", true, true), 500);
+}}, 200);
+return JSON.stringify({{fontFamily, nodeCount: nodes.length}});
+""",
+        )
+    except SystemExit as error:
+        if "Obsidian CLI returned no output" not in str(error):
+            raise
+        output = ""
+    wait_for_write(file_path, before_write)
+    nodes = json.loads(read_map(vault, path))["nodes"]
+    if output:
+        result = json.loads(output)
+    else:
+        fonts = {node["fontFamily"] for node in nodes}
+        if len(fonts) != 1 or not next(iter(fonts), ""):
+            raise SystemExit("Default-font verification failed")
+        result = {"fontFamily": fonts.pop(), "nodeCount": len(nodes)}
+    if any(node["fontFamily"] != result["fontFamily"] for node in nodes):
+        raise SystemExit("Default-font verification failed")
+    return result
+
+
+def convert_md(vault: str, root: Path, path: str, delete_source: bool = False) -> str:
     source = root / path
-    pattern = f"{source.stem}*.smm.md"
-    before = set(source.parent.glob(pattern))
-    run_eval(
-        vault,
-        f"""
+    try:
+        pattern = f"{source.stem}*.smm.md"
+        before = set(source.parent.glob(pattern))
+        try:
+            run_eval(
+                vault,
+                f"""
 const plugin = getPlugin();
 const path = {js_value(path)};
 if (!path.endsWith(".md") || path.endsWith(".smm.md")) throw new Error("Expected a Markdown source path");
@@ -244,16 +308,34 @@ setTimeout(async () => {{
 }}, 200);
 return JSON.stringify({{scheduled: true}});
 """,
-    )
-    end = time.monotonic() + 20
-    while time.monotonic() < end:
-        created = [item for item in source.parent.glob(pattern) if item not in before and item.stat().st_size]
-        if len(created) == 1:
-            return json.dumps(
-                {"source": path, "path": created[0].relative_to(root).as_posix()}, ensure_ascii=False
             )
-        time.sleep(0.1)
-    raise SystemExit(f"Plugin did not create a converted .smm.md file within 20s: {source}")
+        except SystemExit as error:
+            if "Obsidian CLI returned no output" not in str(error):
+                raise
+        end = time.monotonic() + 20
+        while time.monotonic() < end:
+            created = [
+                item
+                for item in source.parent.glob(pattern)
+                if item not in before and item.stat().st_size
+            ]
+            if len(created) == 1:
+                converted_path = created[0].relative_to(root).as_posix()
+                font = apply_default_font(vault, root, converted_path)
+                return json.dumps(
+                    {
+                        "source": path,
+                        "sourceDeleted": delete_source,
+                        "path": converted_path,
+                        **font,
+                    },
+                    ensure_ascii=False,
+                )
+            time.sleep(0.1)
+        raise SystemExit(f"Plugin did not create a converted .smm.md file within 20s: {source}")
+    finally:
+        if delete_source:
+            source.unlink(missing_ok=True)
 
 
 def edit_map(
@@ -372,9 +454,28 @@ def self_test(root: Path) -> str:
     assert normalize_path(str(root / expected), root) == expected
     assert normalize_path(expected, root) == expected
     assert js_value("新节点") == '"新节点"'
+    assert lock_path(root) == lock_path(root)
+    assert lock_path(root) != lock_path(root / "other")
+    with lock_path(root).open("a") as first_lock, lock_path(root).open("a") as second_lock:
+        fcntl.flock(first_lock, fcntl.LOCK_EX | fcntl.LOCK_NB)
+        try:
+            fcntl.flock(second_lock, fcntl.LOCK_EX | fcntl.LOCK_NB)
+        except BlockingIOError:
+            pass
+        else:
+            raise AssertionError("Vault lock is not exclusive")
     assert "getMindMapCurrentData" in COMMON_JS
     assert clean_result_output('=> {"ok":true}') == '{"ok":true}'
-    return json.dumps({"ok": True, "tests": 5})
+    parser = build_parser()
+    for argv in (
+        ["--vault-root", str(root), "read", expected],
+        ["read", expected, "--vault-root", str(root)],
+    ):
+        parsed = parser.parse_args(argv)
+        assert parsed.vault_root == root
+    parsed = parser.parse_args(["convert-md", "temporary.md", "--delete-source"])
+    assert parsed.delete_source
+    return json.dumps({"ok": True, "tests": 11})
 
 
 def build_parser() -> argparse.ArgumentParser:
@@ -382,24 +483,43 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument("--vault", default=DEFAULT_VAULT)
     parser.add_argument("--vault-root", type=Path, default=DEFAULT_ROOT)
     sub = parser.add_subparsers(dest="command", required=True)
-    sub.add_parser("probe")
-    sub.add_parser("self-test")
-    for name in ("read", "convert-md", "save"):
+
+    def add_runtime_options(command: argparse.ArgumentParser) -> None:
+        # Keep the options on the root parser for the documented
+        # `--vault-root ... read FILE` form, and accept them after the
+        # subcommand too. SUPPRESS prevents a subparser default from
+        # overwriting a value parsed by the root parser.
+        command.add_argument("--vault", default=argparse.SUPPRESS)
+        command.add_argument("--vault-root", type=Path, default=argparse.SUPPRESS)
+
+    command = sub.add_parser("probe")
+    add_runtime_options(command)
+    command = sub.add_parser("self-test")
+    add_runtime_options(command)
+    for name in ("read", "save"):
         command = sub.add_parser(name)
+        add_runtime_options(command)
         command.add_argument("path")
+    command = sub.add_parser("convert-md")
+    add_runtime_options(command)
+    command.add_argument("path")
+    command.add_argument("--delete-source", action="store_true")
     for name in ("add-child", "add-sibling", "set-text"):
         command = sub.add_parser(name)
+        add_runtime_options(command)
         command.add_argument("path")
         command.add_argument("uid")
         command.add_argument("text")
         command.add_argument("--no-preview", action="store_true")
     command = sub.add_parser("set-link")
+    add_runtime_options(command)
     command.add_argument("path")
     command.add_argument("uid")
     command.add_argument("url")
     command.add_argument("title")
     command.add_argument("--no-preview", action="store_true")
     command = sub.add_parser("delete")
+    add_runtime_options(command)
     command.add_argument("path")
     command.add_argument("uid")
     command.add_argument("--no-preview", action="store_true")
@@ -415,11 +535,15 @@ def main() -> None:
     if args.command == "probe":
         print(probe(args.vault))
         return
+    lock_file = None
+    if args.command in LOCKED_COMMANDS:
+        lock_file = lock_path(root).open("a")
+        fcntl.flock(lock_file, fcntl.LOCK_EX)
     path = normalize_path(args.path, root)
     if args.command == "read":
         output = read_map(args.vault, path)
     elif args.command == "convert-md":
-        output = convert_md(args.vault, root, path)
+        output = convert_md(args.vault, root, path, args.delete_source)
     elif args.command == "save":
         output = save_map(args.vault, root, path)
     else:
