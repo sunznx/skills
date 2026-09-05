@@ -215,13 +215,6 @@
       "note": "本仓库维护的同步 skill"
     },
     {
-      "name": "uml",
-      "source": "markdown-viewer/skills",
-      "url": "https://github.com/markdown-viewer/skills.git",
-      "path": "uml/SKILL.md",
-      "base_tree": "7cb38073b0279ad8e3d5f3379caefd4ea1422a97"
-    },
-    {
       "name": "update-skill",
       "source": "warpdotdev/common-skills",
       "url": "https://github.com/warpdotdev/common-skills.git",
