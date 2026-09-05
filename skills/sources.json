@@ -327,6 +327,13 @@
       "base_tree": "c119d66111cc1bac94cbc51322cd34ed21aa0446"
     },
     {
+      "name": "wayfinder",
+      "source": "mattpocock/skills",
+      "url": "https://github.com/mattpocock/skills.git",
+      "path": "skills/engineering/wayfinder/SKILL.md",
+      "base_tree": "8ec0462658381bd1606d3f9db14ffc67df6a2a43"
+    },
+    {
       "name": "whats-next",
       "source": "lycfyi/yskills",
       "url": "https://github.com/lycfyi/yskills.git",

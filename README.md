@@ -73,9 +73,9 @@ $sync-skills 更新 agent-messaging 删除某个功能
 | `opencli-sitemap-author` | [jackwener/opencli](https://github.com/jackwener/opencli) | `skills/opencli-sitemap-author/SKILL.md` | 三方合并 |
 | `opencli-usage` | [jackwener/opencli](https://github.com/jackwener/opencli) | `skills/opencli-usage/SKILL.md` | 三方合并 |
 | `planning-with-files` | [OthmanAdi/planning-with-files](https://github.com/OthmanAdi/planning-with-files) | `.agents/skills/planning-with-files/SKILL.md` | 三方合并（仅仓库） |
-| `pwf-eli5` | 本地维护，绑定 planning-with-files 任务生成 HTML | `skills/pwf-eli5/SKILL.md` | 本地维护 |
-| `pwf-show-me` | 本地维护，绑定 planning-with-files 任务生成可视化 HTML | `skills/pwf-show-me/SKILL.md` | 本地维护 |
 | `prototype` | [mattpocock/skills](https://github.com/mattpocock/skills) | `skills/engineering/prototype/SKILL.md` | 三方合并 |
+| `pwf-eli5` | 本地维护，绑定 planning-with-files 任务生成 HTML | — | 本地维护 |
+| `pwf-show-me` | 本地维护，绑定 planning-with-files 任务生成可视化 HTML | — | 本地维护 |
 | `ra-人话` | [Pluviobyte/rnskill](https://github.com/Pluviobyte/rnskill) | `skills/ra-人话/SKILL.md` | 三方合并 |
 | `resolve-merge-conflicts` | [warpdotdev/common-skills](https://github.com/warpdotdev/common-skills) | `.agents/skills/resolve-merge-conflicts/SKILL.md` | 三方合并 |
 | `security` | [markdown-viewer/skills](https://github.com/markdown-viewer/skills) | `security/SKILL.md` | 三方合并 |
@@ -88,6 +88,7 @@ $sync-skills 更新 agent-messaging 删除某个功能
 | `update-skill` | [warpdotdev/common-skills](https://github.com/warpdotdev/common-skills) | `.agents/skills/update-skill/SKILL.md` | 三方合并 |
 | `vega` | [markdown-viewer/skills](https://github.com/markdown-viewer/skills) | `vega/SKILL.md` | 三方合并 |
 | `wait-what` | [mattpocock/skills](https://github.com/mattpocock/skills) | `skills/productivity/wait-what/SKILL.md` | 三方合并 |
+| `wayfinder` | [mattpocock/skills](https://github.com/mattpocock/skills) | `skills/engineering/wayfinder/SKILL.md` | 三方合并 |
 | `whats-next` | [lycfyi/yskills](https://github.com/lycfyi/yskills) | `skills/whats-next/SKILL.md` | 三方合并 |
 | `writing-for-agents` | [mattpocock/skills](https://github.com/mattpocock/skills) | `skills/productivity/writing-for-agents/SKILL.md` | 三方合并 |
 
