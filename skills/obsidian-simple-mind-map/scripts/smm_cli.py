@@ -265,9 +265,9 @@ def edit_map(
     target = before_by_uid.get(uid)
     if not target:
         raise SystemExit(f"Node UID not found: {uid}")
-    if target["free"]:
+    if target["free"] and action != "delete":
         raise SystemExit("Free-node editing is not supported")
-    if action == "delete" and target["parentUid"] is None:
+    if action == "delete" and target["parentUid"] is None and not target["free"]:
         raise SystemExit("Refusing to delete the root node")
     if action == "add-sibling" and target["parentUid"] is None:
         raise SystemExit("The root node cannot have a sibling")
