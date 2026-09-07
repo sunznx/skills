@@ -54,6 +54,19 @@ const getPlugin = () => {
   if (!plugin) throw new Error("simple-mind-map plugin is not enabled");
   return plugin;
 };
+const findMindMapComponent = view => {
+  let found;
+  const walk = component => {
+    if (!component || found) return;
+    if (component.mindMap && typeof component.jumpToNodeByUid === "function") {
+      found = component;
+      return;
+    }
+    (component.$children || []).forEach(walk);
+  };
+  walk(view.mindMapAPP);
+  return found;
+};
 const openSmm = async path => {
   getPlugin();
   if (!path.endsWith(".smm.md")) throw new Error("Expected a .smm.md path");
@@ -70,6 +83,11 @@ const openSmm = async path => {
   if (typeof view.save !== "function" || typeof view.forceSaveAndUpdateImage !== "function") {
     throw new Error("Simple Mind Map save interface is unavailable");
   }
+  await waitValue(
+    () => findMindMapComponent(view),
+    `initialized Simple Mind Map instance for ${path}`,
+    20000
+  );
   return { file, leaf, view };
 };
 const targetNode = async (view, uid) => new Promise((resolve, reject) => {
@@ -145,6 +163,21 @@ const walkNodes = data => {
   walk(data.root);
   (data.root?.data?.freeNodeTrees || []).forEach(node => walk(node, null, 0, true));
   return nodes;
+};
+const waitForMutation = async (view, action, uid, text) => {
+  const end = Date.now() + 10000;
+  while (Date.now() < end) {
+    try {
+      const nodes = walkNodes(await currentData(view));
+      if (action === "delete" && !nodes.some(node => node.uid === uid)) return;
+      if (action === "set-text" && nodes.some(node => node.uid === uid && node.plainText === text)) return;
+      if (action !== "delete" && action !== "set-text" && nodes.some(node => node.plainText === text)) return;
+    } catch {
+      // The plugin may still be serializing the command.
+    }
+    await sleep(100);
+  }
+  throw new Error(`Timed out waiting for mutation ${action} to settle`);
 };
 """
 
@@ -452,6 +485,7 @@ if (action === "set-text") bus.$emit("execCommand", "SET_NODE_TEXT", node, text,
 else if (action === "delete") bus.$emit("execCommand", "REMOVE_NODE", [node]);
 else if (action === "add-child") bus.$emit("execCommand", "INSERT_CHILD_NODE", false, [node], {{text}});
 else if (action === "add-sibling") bus.$emit("execCommand", "INSERT_NODE", false, [node], {{text}});
+await waitForMutation(view, action, uid, text);
 await saveView(view, file, {js_value(preview)});
 return JSON.stringify({{completed: true}});
 """,
