@@ -50,22 +50,11 @@ const getPlugin = () => {
   if (!plugin) throw new Error("simple-mind-map plugin is not enabled");
   return plugin;
 };
-const openMindMapLeaves = path => {
-  const leaves = [];
-  app.workspace.iterateAllLeaves(leaf => {
-    if (leaf.view?.file?.path === path && leaf.view?.mindMapAPP) leaves.push(leaf);
-  });
-  return leaves;
-};
-const openSmm = async (path, write = false) => {
+const openSmm = async path => {
   getPlugin();
   if (!path.endsWith(".smm.md")) throw new Error("Expected a .smm.md path");
   const file = app.vault.getFileByPath(path);
   if (!file) throw new Error(`File not found in vault: ${path}`);
-  const existing = openMindMapLeaves(path);
-  if (write && existing.length) {
-    throw new Error(`Close the ${existing.length} open Simple Mind Map view(s) before writing: ${path}`);
-  }
   const leaf = app.workspace.getLeaf("tab");
   openedLeaves.push(leaf);
   await waitPromise(leaf.openFile(file), `opening ${path}`);
@@ -208,7 +197,7 @@ def run_eval(vault: str, body: str) -> str:
     code = f"""
 (()=>{{
   const key = {key};
-  const operations = globalThis.__smmCliOperations ||= {{}};
+  const operations = app.__smmCliOperations ||= {{}};
   operations[key] = {{status: "running"}};
   (async()=>{{
     const openedLeaves = [];
@@ -231,7 +220,7 @@ def run_eval(vault: str, body: str) -> str:
     deadline = time.monotonic() + 120
     poll_code = f"""
 (()=>{{
-  const operations = globalThis.__smmCliOperations || {{}};
+  const operations = app.__smmCliOperations || {{}};
   const operation = operations[{key}];
   if (!operation) return JSON.stringify({{status: "missing"}});
   if (operation.status !== "running") delete operations[{key}];
@@ -304,7 +293,7 @@ def apply_default_font(vault: str, root: Path, path: str) -> dict[str, object]:
     output = run_eval(
         vault,
         f"""
-const {{ file, view }} = await openSmm({js_value(path)}, true);
+const {{ file, view }} = await openSmm({js_value(path)});
 const configuredFont = app.vault.config?.textFontFamily?.trim();
 const fontFamily = configuredFont || getComputedStyle(document.body).getPropertyValue("--font-text").trim();
 if (!fontFamily) throw new Error("Obsidian default text font is unavailable");
@@ -439,7 +428,7 @@ def edit_map(
     run_eval(
         vault,
         f"""
-const {{ file, view }} = await openSmm({js_value(path)}, true);
+const {{ file, view }} = await openSmm({js_value(path)});
 const action = {js_value(action)};
 const uid = {js_value(uid)};
 const text = {js_value(text)};
@@ -487,7 +476,7 @@ def set_link(
     run_eval(
         vault,
         f"""
-const {{ file, view }} = await openSmm({js_value(path)}, true);
+const {{ file, view }} = await openSmm({js_value(path)});
 const uid = {js_value(uid)};
 const url = {js_value(url)};
 const title = {js_value(title)};
@@ -520,7 +509,7 @@ def save_map(vault: str, root: Path, path: str) -> str:
     output = run_eval(
         vault,
         f"""
-const {{ file, view }} = await openSmm({js_value(path)}, true);
+const {{ file, view }} = await openSmm({js_value(path)});
 await saveView(view, file, true);
 return JSON.stringify({{path: {js_value(path)}, saved: true, previewUpdated: true}});
 """,
