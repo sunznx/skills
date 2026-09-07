@@ -36,6 +36,10 @@ const waitPromise = (promise, label, timeout = 20000) => Promise.race([
   promise,
   sleep(timeout).then(() => { throw new Error(`Timed out waiting for ${label}`); })
 ]);
+const activateLeaf = async leaf => {
+  app.workspace.setActiveLeaf(leaf, {focus: false});
+  await sleep(100);
+};
 const waitValue = async (fn, label, timeout = 10000) => {
   const end = Date.now() + timeout;
   while (Date.now() < end) {
@@ -58,6 +62,7 @@ const openSmm = async path => {
   const leaf = app.workspace.getLeaf("tab");
   openedLeaves.push(leaf);
   await waitPromise(leaf.openFile(file), `opening ${path}`);
+  await activateLeaf(leaf);
   const view = await waitValue(
     () => leaf.view?.file?.path === path && leaf.view?.mindMapAPP?.$bus && leaf.view,
     `fresh Simple Mind Map view for ${path}`
@@ -89,22 +94,26 @@ const saveView = async (view, file, preview = true) => {
 };
 const currentData = async view => {
   if (view.getMindMapCurrentDataResolve) throw new Error("Mind map is already saving");
-  await new Promise((resolve, reject) => {
-    let settled = false;
-    const done = () => {
-      if (settled) return;
-      settled = true;
-      resolve();
-    };
-    view.getMindMapCurrentDataResolve = done;
-    view.mindMapAPP.$bus.$emit("getMindMapCurrentData");
-    setTimeout(() => {
-      if (settled) return;
-      settled = true;
-      if (view.getMindMapCurrentDataResolve === done) view.getMindMapCurrentDataResolve = null;
-      reject(new Error("Plugin did not return current mind-map data"));
-    }, 2500);
-  });
+  try {
+    await new Promise((resolve, reject) => {
+      let settled = false;
+      const done = () => {
+        if (settled) return;
+        settled = true;
+        resolve();
+      };
+      view.getMindMapCurrentDataResolve = done;
+      view.mindMapAPP.$bus.$emit("getMindMapCurrentData");
+      setTimeout(() => {
+        if (settled) return;
+        settled = true;
+        if (view.getMindMapCurrentDataResolve === done) view.getMindMapCurrentDataResolve = null;
+        reject(new Error("Plugin did not return current mind-map data"));
+      }, 2500);
+    });
+  } catch (error) {
+    if (!view.parsedMindMapData?.metadata?.content) throw error;
+  }
   const content = view.parsedMindMapData?.metadata?.content;
   if (!content) throw new Error("Current mind-map metadata is empty");
   return JSON.parse(content);
@@ -201,11 +210,15 @@ def run_eval(vault: str, body: str) -> str:
   operations[key] = {{status: "running"}};
   (async()=>{{
     const openedLeaves = [];
+    const previousActiveLeaf = app.workspace.activeLeaf;
     try {{
       {COMMON_JS}
       {body}
     }} finally {{
       openedLeaves.forEach(leaf => {{ try {{ leaf.detach(); }} catch {{}} }});
+      if (previousActiveLeaf) {{
+        try {{ app.workspace.setActiveLeaf(previousActiveLeaf, {{focus: false}}); }} catch {{}}
+      }}
     }}
   }})().then(
     result => operations[key] = {{status: "done", result}},
@@ -333,6 +346,7 @@ app.workspace.iterateAllLeaves(leaf => leavesBefore.add(leaf));
 const leaf = app.workspace.getLeaf("tab");
 openedLeaves.push(leaf);
 await waitPromise(leaf.openFile(file), `opening ${{path}}`);
+await activateLeaf(leaf);
 const view = await waitValue(
   () => leaf.view?.file?.path === path && typeof leaf.view?.onPaneMenu === "function" && leaf.view,
   `fresh Markdown view for ${{path}}`
