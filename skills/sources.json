@@ -18,7 +18,7 @@
       "source": "tt-a1i/archify",
       "url": "https://github.com/tt-a1i/archify.git",
       "path": "archify/SKILL.md",
-      "base_tree": "a7b9e1634b66a8e13d531cca4d18e8123c21f06a"
+      "base_tree": "6e054b8bfc96784cd2e5a1cfc31dfa0e3b352bc1"
     },
     {
       "name": "codebase-design",
@@ -38,7 +38,7 @@
       "source": "cathrynlavery/diagram-design",
       "url": "https://github.com/cathrynlavery/diagram-design.git",
       "path": "skills/diagram-design/SKILL.md",
-      "base_tree": "5ee682d5c5d5c33c9d18f1ecfb4e576d6e2ac72e"
+      "base_tree": "67306ec56fbf3f58b179d96095ec1b9413cc2737"
     },
     {
       "name": "domain-modeling",
@@ -149,7 +149,7 @@
       "source": "OthmanAdi/planning-with-files",
       "url": "https://github.com/OthmanAdi/planning-with-files.git",
       "path": ".agents/skills/planning-with-files/SKILL.md",
-      "base_tree": "9738aee017411f123decd60ab60c1624d3689513",
+      "base_tree": "6ee7877e11b7604126879c0ad3fe4183757c6d61",
       "deploy": false
     },
     {
