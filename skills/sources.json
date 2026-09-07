@@ -21,6 +21,11 @@
       "base_tree": "6e054b8bfc96784cd2e5a1cfc31dfa0e3b352bc1"
     },
     {
+      "name": "background-agent-jobs",
+      "managed": false,
+      "note": "本地维护，暂无外部 Git 来源"
+    },
+    {
       "name": "codebase-design",
       "source": "mattpocock/skills",
       "url": "https://github.com/mattpocock/skills.git",
