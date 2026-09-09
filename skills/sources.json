@@ -299,6 +299,13 @@
       "url": "https://github.com/DannyMac180/sol-advisor.git",
       "ref": "main",
       "post_install": "scripts/install-agents.sh"
+    },
+    {
+      "name": "i-have-adhd",
+      "marketplace": "i-have-adhd",
+      "source": "ayghri/i-have-adhd",
+      "url": "https://github.com/ayghri/i-have-adhd.git",
+      "ref": "main"
     }
   ]
 }

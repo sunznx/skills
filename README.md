@@ -87,6 +87,7 @@ $sync-skills 更新 agent-messaging 删除某个功能
 
 | Plugin | Marketplace | 外部来源 | 安装后命令 |
 | --- | --- | --- | --- |
+| `i-have-adhd` | `i-have-adhd` | [ayghri/i-have-adhd](https://github.com/ayghri/i-have-adhd) | — |
 | `planning-with-files` | `planning-with-files` | [OthmanAdi/planning-with-files](https://github.com/OthmanAdi/planning-with-files) | — |
 | `ponytail` | `ponytail` | [DietrichGebert/ponytail](https://github.com/DietrichGebert/ponytail) | — |
 | `sol-advisor` | `sol-advisor` | [DannyMac180/sol-advisor](https://github.com/DannyMac180/sol-advisor) | `scripts/install-agents.sh` |
