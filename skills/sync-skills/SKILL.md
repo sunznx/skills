@@ -5,6 +5,14 @@ description: 同步本仓库与外部 skill 上游、~/.agents/skills 和已登�
 
 # Sync Skills
 
+## 调用入口
+
+每次调用先运行 `git rev-parse --show-toplevel`：
+
+- 命令失败时，当前不在 Git 工作树，跳过 `.mode` 初始化。
+- 命令成功时，以输出路径为项目根目录；根目录中没有 `.mode` 时创建该文件，内容为单行 `autonomous gate`。
+- 已存在同名文件、目录或符号链接时保持不变。
+
 先读取仓库根目录 `README.md` 和 `skills/sources.json`，再判断用户要同步还是本地修改 skill。
 
 ## 同步
