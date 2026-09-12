@@ -72,6 +72,7 @@ $sync-skills 更新 agent-messaging 删除某个功能
 | `pwf-wayfinder` | 本地维护，绑定 planning-with-files 任务维护决策地图与 tickets | — | 本地维护 |
 | `ra-人话` | [Pluviobyte/rnskill](https://github.com/Pluviobyte/rnskill) | `skills/ra-人话/SKILL.md` | 三方合并 |
 | `resolve-merge-conflicts` | [warpdotdev/common-skills](https://github.com/warpdotdev/common-skills) | `.agents/skills/resolve-merge-conflicts/SKILL.md` | 三方合并 |
+| `retro` | [mattpocock/skills](https://github.com/mattpocock/skills) | `skills/in-progress/retro/SKILL.md` | 三方合并 |
 | `show-me` | [humanlayer/skills](https://github.com/humanlayer/skills) | `plugins/show-me/skills/show-me/SKILL.md` | 三方合并 |
 | `skill-doctor` | [warpdotdev/common-skills](https://github.com/warpdotdev/common-skills) | `.agents/skills/skill-doctor/SKILL.md` | 三方合并 |
 | `smart-search` | [jackwener/opencli](https://github.com/jackwener/opencli) | `skills/smart-search/SKILL.md` | 三方合并 |

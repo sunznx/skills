@@ -211,6 +211,14 @@
       "base_tree": "f62fff286d3ba22ae59e8c99c3ad0b5c96a5a8e8"
     },
     {
+      "name": "retro",
+      "source": "mattpocock/skills",
+      "url": "https://github.com/mattpocock/skills.git",
+      "path": "skills/in-progress/retro/SKILL.md",
+      "ref": "refs/remotes/origin/main",
+      "base_tree": "5831252c5e3692fa01645b0279ea5c444facec9d"
+    },
+    {
       "name": "show-me",
       "source": "humanlayer/skills",
       "url": "https://github.com/humanlayer/skills.git",
