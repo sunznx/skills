@@ -330,6 +330,13 @@
       "source": "ayghri/i-have-adhd",
       "url": "https://github.com/ayghri/i-have-adhd.git",
       "ref": "main"
+    },
+    {
+      "name": "typesafe",
+      "marketplace": "typesafe-ai",
+      "source": "typesafe-ai/skills",
+      "url": "https://github.com/typesafe-ai/skills.git",
+      "ref": "main"
     }
   ]
 }

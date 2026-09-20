@@ -94,4 +94,5 @@ $sync-skills 更新 agent-messaging 删除某个功能
 | `planning-with-files` | `planning-with-files` | [OthmanAdi/planning-with-files](https://github.com/OthmanAdi/planning-with-files) | — |
 | `ponytail` | `ponytail` | [DietrichGebert/ponytail](https://github.com/DietrichGebert/ponytail) | — |
 | `sol-advisor` | `sol-advisor` | [DannyMac180/sol-advisor](https://github.com/DannyMac180/sol-advisor) | `scripts/install-agents.sh` |
+| `typesafe` | `typesafe-ai` | [typesafe-ai/skills](https://github.com/typesafe-ai/skills) | — |
 <!-- skill-catalog:end -->
