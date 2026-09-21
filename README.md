@@ -71,7 +71,7 @@ $sync-skills 更新 agent-messaging 删除某个功能
 | `pwf-prototype` | 本地维护，绑定 planning-with-files 任务生成可交互原型 HTML | — | 本地维护 |
 | `pwf-wayfinder` | 本地维护，绑定 planning-with-files 任务维护决策地图与 tickets | — | 本地维护 |
 | `ra-人话` | [Pluviobyte/rnskill](https://github.com/Pluviobyte/rnskill) | `skills/ra-人话/SKILL.md` | 三方合并 |
-| `resolve-merge-conflicts` | [warpdotdev/common-skills](https://github.com/warpdotdev/common-skills) | `.agents/skills/resolve-merge-conflicts/SKILL.md` | 三方合并 |
+| `resolving-merge-conflicts` | [mattpocock/skills](https://github.com/mattpocock/skills) | `skills/engineering/resolving-merge-conflicts/SKILL.md` | 三方合并 |
 | `retro` | [mattpocock/skills](https://github.com/mattpocock/skills) | `skills/in-progress/retro/SKILL.md` | 三方合并 |
 | `show-me` | [humanlayer/skills](https://github.com/humanlayer/skills) | `plugins/show-me/skills/show-me/SKILL.md` | 三方合并 |
 | `skill-doctor` | [warpdotdev/common-skills](https://github.com/warpdotdev/common-skills) | `.agents/skills/skill-doctor/SKILL.md` | 三方合并 |
@@ -87,12 +87,11 @@ $sync-skills 更新 agent-messaging 删除某个功能
 
 ## Plugin 来源目录
 
-| Plugin | Marketplace | 外部来源 | 安装后命令 |
-| --- | --- | --- | --- |
-| `i-have-adhd` | `i-have-adhd` | [ayghri/i-have-adhd](https://github.com/ayghri/i-have-adhd) | — |
-| `planning-with-files` | `planning-with-files` | [OthmanAdi/planning-with-files](https://github.com/OthmanAdi/planning-with-files) | — |
-| `ponytail` | `ponytail` | [DietrichGebert/ponytail](https://github.com/DietrichGebert/ponytail) | — |
-| `sol-advisor` | `sol-advisor` | [DannyMac180/sol-advisor](https://github.com/DannyMac180/sol-advisor) | `scripts/install-agents.sh` |
-| `typesafe` | `typesafe-ai` | [typesafe-ai/skills](https://github.com/typesafe-ai/skills) | — |
-| `fast-jev-compaction` | `fast-jev-compaction` | [tamaratran/fast-jev-compaction](https://github.com/tamaratran/fast-jev-compaction) | — |
+| Plugin | Marketplace | 外部来源 | Clients | 安装后命令 |
+| --- | --- | --- | --- | --- |
+| `i-have-adhd` | `i-have-adhd` | codex: [ayghri/i-have-adhd](https://github.com/ayghri/i-have-adhd)<br>claude: [ayghri/i-have-adhd](https://github.com/ayghri/i-have-adhd) | codex, claude | — |
+| `planning-with-files` | `planning-with-files` | codex: [OthmanAdi/planning-with-files](https://github.com/OthmanAdi/planning-with-files)<br>claude: [OthmanAdi/planning-with-files](https://github.com/OthmanAdi/planning-with-files) | codex, claude | — |
+| `ponytail` | `ponytail` | codex: [DietrichGebert/ponytail](https://github.com/DietrichGebert/ponytail)<br>claude: [DietrichGebert/ponytail](https://github.com/DietrichGebert/ponytail) | codex, claude | — |
+| `typesafe` | `typesafe-ai` | codex: [typesafe-ai/skills](https://github.com/typesafe-ai/skills)<br>claude: [typesafe-ai/skills](https://github.com/typesafe-ai/skills) | codex, claude | — |
+| `fast-jev-compaction` | `fast-jev-compaction` | codex: [leonaaardob/fast-dev-compaction](https://github.com/leonaaardob/fast-dev-compaction)<br>claude: [tamaratran/fast-jev-compaction](https://github.com/tamaratran/fast-jev-compaction) | codex, claude | — |
 <!-- skill-catalog:end -->

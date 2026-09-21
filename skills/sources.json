@@ -207,11 +207,11 @@
       "base_tree": "a2abef2930e8d3c5fad68604577f36bcf191c46f"
     },
     {
-      "name": "resolve-merge-conflicts",
-      "source": "warpdotdev/common-skills",
-      "url": "https://github.com/warpdotdev/common-skills.git",
-      "path": ".agents/skills/resolve-merge-conflicts/SKILL.md",
-      "base_tree": "f62fff286d3ba22ae59e8c99c3ad0b5c96a5a8e8"
+      "name": "resolving-merge-conflicts",
+      "source": "mattpocock/skills",
+      "url": "https://github.com/mattpocock/skills.git",
+      "path": "skills/engineering/resolving-merge-conflicts/SKILL.md",
+      "base_tree": "77f0d7de3143abbf03e55a63522d30bff31ae908"
     },
     {
       "name": "retro",
@@ -300,6 +300,7 @@
     {
       "name": "planning-with-files",
       "marketplace": "planning-with-files",
+      "clients": ["codex", "claude"],
       "source": "OthmanAdi/planning-with-files",
       "url": "https://github.com/OthmanAdi/planning-with-files.git",
       "ref": "main"
@@ -307,21 +308,15 @@
     {
       "name": "ponytail",
       "marketplace": "ponytail",
+      "clients": ["codex", "claude"],
       "source": "DietrichGebert/ponytail",
       "url": "https://github.com/DietrichGebert/ponytail.git",
       "ref": "main"
     },
     {
-      "name": "sol-advisor",
-      "marketplace": "sol-advisor",
-      "source": "DannyMac180/sol-advisor",
-      "url": "https://github.com/DannyMac180/sol-advisor.git",
-      "ref": "main",
-      "post_install": "scripts/install-agents.sh"
-    },
-    {
       "name": "i-have-adhd",
       "marketplace": "i-have-adhd",
+      "clients": ["codex", "claude"],
       "source": "ayghri/i-have-adhd",
       "url": "https://github.com/ayghri/i-have-adhd.git",
       "ref": "main"
@@ -329,6 +324,7 @@
     {
       "name": "typesafe",
       "marketplace": "typesafe-ai",
+      "clients": ["codex", "claude"],
       "source": "typesafe-ai/skills",
       "url": "https://github.com/typesafe-ai/skills.git",
       "ref": "main"
@@ -336,9 +332,24 @@
     {
       "name": "fast-jev-compaction",
       "marketplace": "fast-jev-compaction",
-      "source": "tamaratran/fast-jev-compaction",
-      "url": "https://github.com/tamaratran/fast-jev-compaction.git",
-      "ref": "main"
+      "clients": ["codex", "claude"],
+      "source": "leonaaardob/fast-dev-compaction",
+      "url": "https://github.com/leonaaardob/fast-dev-compaction.git",
+      "ref": "main",
+      "sources": {
+        "claude": {
+          "marketplace": "fast-jev-compaction",
+          "source": "tamaratran/fast-jev-compaction",
+          "url": "https://github.com/tamaratran/fast-jev-compaction.git",
+          "ref": "main"
+        },
+        "codex": {
+          "marketplace": "fast-jev-compaction",
+          "source": "leonaaardob/fast-dev-compaction",
+          "url": "https://github.com/leonaaardob/fast-dev-compaction.git",
+          "ref": "main"
+        }
+      }
     }
   ]
 }

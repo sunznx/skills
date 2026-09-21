@@ -152,6 +152,21 @@ def load_manifest(manifest_path: Path) -> dict:
     for entry in plugins:
         if any(not entry.get(field) for field in ("marketplace", "source", "url")):
             raise SyncError(f"plugin {entry.get('name')} 缺少来源字段")
+        clients = entry.setdefault("clients", ["codex"])
+        if (
+            not isinstance(clients, list)
+            or not clients
+            or any(client not in ("claude", "codex") for client in clients)
+            or len(clients) != len(set(clients))
+        ):
+            raise SyncError(f"plugin {entry.get('name')} 的 clients 必须是 claude/codex 列表")
+        sources = entry.get("sources", {})
+        if not isinstance(sources, dict):
+            raise SyncError(f"plugin {entry.get('name')} 的 sources 必须是对象")
+        for client in clients:
+            config = {**entry, **sources.get(client, {})}
+            if any(not config.get(field) for field in ("marketplace", "source", "url")):
+                raise SyncError(f"plugin {entry.get('name')} 缺少 {client} 来源字段")
         post_install = entry.get("post_install")
         if post_install:
             path = PurePosixPath(post_install)
@@ -191,15 +206,21 @@ def catalog_lines(manifest: dict) -> list[str]:
             "",
             "## Plugin 来源目录",
             "",
-            "| Plugin | Marketplace | 外部来源 | 安装后命令 |",
-            "| --- | --- | --- | --- |",
+            "| Plugin | Marketplace | 外部来源 | Clients | 安装后命令 |",
+            "| --- | --- | --- | --- | --- |",
         ])
         for entry in sorted(plugins, key=lambda item: item["name"]):
-            url = entry["url"].removesuffix(".git")
+            sources = entry.get("sources", {})
+            source_links = []
+            for client in entry.get("clients", ["codex"]):
+                config = {**entry, **sources.get(client, {})}
+                url = config["url"].removesuffix(".git")
+                source_links.append(f"{client}: [{config['source']}]({url})")
             post_install = f"`{entry['post_install']}`" if entry.get("post_install") else "—"
             lines.append(
                 f"| `{entry['name']}` | `{entry['marketplace']}` | "
-                f"[{entry['source']}]({url}) | {post_install} |"
+                f"{'<br>'.join(source_links)} | {', '.join(entry.get('clients', ['codex']))} | "
+                f"{post_install} |"
             )
     lines.append(CATALOG_END)
     return lines
@@ -288,9 +309,30 @@ def remove_conflicted_git_refs(mirror: Path) -> None:
                 remove_path(path)
 
 
-def fetch_mirror(mirror: Path) -> None:
+def refspec_for(ref: str | None) -> str | None:
+    if not ref:
+        return "+HEAD:refs/remotes/origin/HEAD"
+    if ref.startswith("refs/tags/"):
+        return f"+{ref}:{ref}"
+    branch = ref.removeprefix("refs/heads/")
+    return f"+refs/heads/{branch}:refs/remotes/origin/{branch}"
+
+
+def tracking_ref_for(ref: str | None) -> str:
+    if not ref:
+        return "refs/remotes/origin/HEAD"
+    if ref.startswith("refs/tags/"):
+        return ref
+    return f"refs/remotes/origin/{ref.removeprefix('refs/heads/')}"
+
+
+def fetch_mirror(mirror: Path, ref: str | None) -> None:
     try:
-        run_network_git("fetch", "origin", "--prune", cwd=mirror)
+        args = ["fetch", "origin", "--prune", "--filter=blob:none", "--no-tags"]
+        refspec = refspec_for(ref)
+        if refspec:
+            args.append(refspec)
+        run_network_git(*args, cwd=mirror)
     except SyncError as error:
         head = run(
             "git", "rev-parse", "--verify", "HEAD^{commit}", cwd=mirror, check=False
@@ -300,23 +342,24 @@ def fetch_mirror(mirror: Path) -> None:
         print(f"  无法更新上游镜像，继续使用本地缓存：{error}", file=sys.stderr)
 
 
-def update_mirror(repo: Path, url: str) -> Path:
+def update_mirror(repo: Path, url: str, ref: str | None) -> Path:
     mirror = mirror_for(url)
     mirror.parent.mkdir(parents=True, exist_ok=True)
     if mirror.exists():
         valid = run("git", "rev-parse", "--is-bare-repository", cwd=mirror, check=False)
-        head = run("git", "rev-parse", "--verify", "HEAD^{commit}", cwd=mirror, check=False)
-        partial = run("git", "config", "--get", "remote.origin.promisor", cwd=mirror, check=False)
+        head = run(
+            "git", "rev-parse", "--verify", f"{tracking_ref_for(ref)}^{{commit}}",
+            cwd=mirror, check=False,
+        )
         if (
             valid.returncode != 0
             or valid.stdout.strip() != "true"
             or head.returncode != 0
-            or partial.stdout.strip() == "true"
         ):
             shutil.rmtree(mirror)
     if mirror.exists():
         remove_conflicted_git_refs(mirror)
-        fetch_mirror(mirror)
+        fetch_mirror(mirror, ref)
     else:
         try:
             seed = cached_checkout(url)
@@ -325,9 +368,11 @@ def update_mirror(repo: Path, url: str) -> Path:
                 remove_conflicted_git_refs(mirror)
                 run("git", "config", "core.bare", "true", cwd=mirror)
                 run("git", "remote", "set-url", "origin", url, cwd=mirror)
-                fetch_mirror(mirror)
+                fetch_mirror(mirror, ref)
             else:
-                run_network_git("clone", "--mirror", url, str(mirror), cwd=repo)
+                run_network_git("init", "--bare", str(mirror), cwd=repo)
+                run("git", "remote", "add", "origin", url, cwd=mirror)
+                fetch_mirror(mirror, ref)
         except SyncError:
             if mirror.exists():
                 shutil.rmtree(mirror)
@@ -551,7 +596,11 @@ def deploy_skills(repo: Path, skills_dir: Path, manifest: dict, local_dir: Path)
 
 
 def sync_plugins(manifest: dict, only_name: str | None = None, *, push: bool = True) -> int:
-    entries = manifest.get("plugins", [])
+    entries = [
+        {**entry, **entry.get("sources", {}).get("codex", {})}
+        for entry in manifest.get("plugins", [])
+        if "codex" in entry.get("clients", ["codex"])
+    ]
     if only_name is not None:
         entries = [entry for entry in entries if entry["name"] == only_name]
         if not entries:
@@ -677,7 +726,7 @@ def sync_upstream(only_name: str | None = None) -> int:
             print(f"检查 {name} ...")
             mirror = mirrors.get(entry["url"])
             if mirror is None:
-                mirror = update_mirror(repo, entry["url"])
+                mirror = update_mirror(repo, entry["url"], entry.get("ref"))
                 mirrors[entry["url"]] = mirror
             revision = resolve_revision(mirror, entry.get("ref"))
             latest_tree = skill_tree(mirror, revision, entry["path"])

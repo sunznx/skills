@@ -46,6 +46,28 @@ def init_repo(repo: Path, skills: dict[str, str]) -> None:
 
 
 class SyncSkillsTests(unittest.TestCase):
+    def test_refspec_for_fetches_only_manifest_ref(self) -> None:
+        self.assertEqual(
+            sync_skills.refspec_for("main"),
+            "+refs/heads/main:refs/remotes/origin/main",
+        )
+        self.assertEqual(
+            sync_skills.refspec_for("refs/tags/v1.0.0"),
+            "+refs/tags/v1.0.0:refs/tags/v1.0.0",
+        )
+        self.assertEqual(
+            sync_skills.refspec_for(None),
+            "+HEAD:refs/remotes/origin/HEAD",
+        )
+        self.assertEqual(
+            sync_skills.tracking_ref_for("main"),
+            "refs/remotes/origin/main",
+        )
+        self.assertEqual(
+            sync_skills.tracking_ref_for(None),
+            "refs/remotes/origin/HEAD",
+        )
+
     def test_parse_plugin_commands(self) -> None:
         self.assertEqual(sync_skills.parse_command(["plugins"]), ("plugins", None))
         self.assertEqual(
