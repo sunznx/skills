@@ -13,12 +13,13 @@ python3 "$SKILL_ROOT/scripts/spec_bootstrap.py"
 
 脚本会：
 
-- 先通过 `uvx` 在本机预取 Semble 和 Serena；
+- 用 `uv tool install --upgrade 'semble[mcp]==0.5.5'` 安装 Semble，并用 `uv tool install --upgrade -p 3.13 serena-agent` 安装 Serena；
+- 让 MCP 和 hooks 直接调用已安装的 `semble` / `serena` / `serena-hooks`，避免每次启动或结束会话时重新解析依赖或 Git 上游；
 - 通过 Codex marketplace 全局安装 Ponytail plugin；
 - 通过 Codex marketplace 全局安装 Planning with Files plugin；
 - 安装 Planning with Files 时临时向 marketplace manifest 写入 `"commands": []`，清理旧 cache 后重新生成 plugin cache，完成后还原 manifest，避免生成重复的 `source-command-*` skills；
 - 将 Serena 和 Semble MCP 合并到 `~/.codex/config.toml`；
-- 将 Serena 的 activate、remind 和 cleanup hooks 合并到 `~/.codex/hooks.json`；
+- 将 Serena 的 activate、remind、reset 和 cleanup hooks 合并到 `~/.codex/hooks.json`；
 - 保留其他全局配置和 hooks。
 
 Ponytail 与 Planning with Files 的 skills 和 lifecycle hooks 由各自的 plugin 提供。完成后报告脚本输出，并提醒用户在新的 Codex session 中通过 `/hooks` 检查和信任全局 hooks。如果失败，原样报告错误。

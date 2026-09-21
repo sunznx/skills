@@ -13,11 +13,10 @@ from pathlib import Path
 from typing import Any
 
 
-SERENA_SOURCE = "git+https://github.com/oraios/serena"
-SERENA_HOOK = f"uvx -p 3.13 --from {SERENA_SOURCE} serena-hooks"
+SERENA_HOOK = "serena-hooks"
 UVX_TOOLS = (
-    ("Semble", ["uvx", "--from", "semble[mcp]", "semble", "--help"]),
-    ("Serena", ["uvx", "-p", "3.13", "--from", SERENA_SOURCE, "serena", "--help"]),
+    ("Semble", ["uv", "tool", "install", "--upgrade", "semble[mcp]==0.5.5"]),
+    ("Serena", ["uv", "tool", "install", "--upgrade", "-p", "3.13", "serena-agent"]),
 )
 BLOCK_START = "# AGENT-WORKFLOW:START"
 BLOCK_END = "# AGENT-WORKFLOW:END"
@@ -49,6 +48,17 @@ SERENA_HOOKS = {
                 {
                     "type": "command",
                     "command": f"{SERENA_HOOK} activate --client=codex",
+                }
+            ],
+        }
+    ],
+    "PostToolUse": [
+        {
+            "matcher": "^mcp__serena__.*$",
+            "hooks": [
+                {
+                    "type": "command",
+                    "command": f"{SERENA_HOOK} reset --client=codex",
                 }
             ],
         }
@@ -174,10 +184,10 @@ def prepare_uvx_tools() -> list[str]:
         try:
             result = subprocess.run(command, text=True, capture_output=True, check=False)
         except FileNotFoundError as exc:
-            raise InitError("未找到 uvx，无法安装 Semble 和 Serena。") from exc
+            raise InitError("未找到 uv/uvx，无法安装 Semble 和 Serena。") from exc
         if result.returncode:
             detail = result.stderr.strip() or result.stdout.strip()
-            raise InitError(f"uvx 安装 {name} 失败：{detail}")
+            raise InitError(f"安装 {name} 失败：{detail}")
         statuses.append(f"prepared uvx tool {name}")
     return statuses
 
@@ -192,12 +202,10 @@ def managed_config(existing: str) -> str:
     sections: list[str] = []
     if not re.search(r"(?m)^\s*\[mcp_servers\.serena\]\s*$", stripped):
         sections.append(
-            f"""[mcp_servers.serena]
-command = "uvx"
+            """[mcp_servers.serena]
+command = "serena"
 args = [
-  "-p", "3.13",
-  "--from", "{SERENA_SOURCE}",
-  "serena", "start-mcp-server",
+  "start-mcp-server",
   "--project-from-cwd",
   "--context=codex",
   "--language-backend", "LSP",
@@ -207,8 +215,8 @@ startup_timeout_sec = 120"""
     if not re.search(r"(?m)^\s*\[mcp_servers\.semble\]\s*$", stripped):
         sections.append(
             """[mcp_servers.semble]
-command = "uvx"
-args = ["--from", "semble[mcp]", "semble"]
+command = "semble"
+args = []
 startup_timeout_sec = 120"""
         )
     if not sections:
