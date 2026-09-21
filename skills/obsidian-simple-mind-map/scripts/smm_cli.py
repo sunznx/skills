@@ -28,6 +28,9 @@ LOCKED_COMMANDS = {
     "set-link",
     "delete",
 }
+# Every CLI call starts an Electron process, so poll at a modest rate.
+POLL_INTERVAL = 0.25
+POLL_FAILURE_LIMIT = 20
 
 
 COMMON_JS = r"""
@@ -67,7 +70,7 @@ const findMindMapComponent = view => {
   walk(view.mindMapAPP);
   return found;
 };
-const openSmm = async path => {
+const openSmm = async (path, initialize = true) => {
   getPlugin();
   if (!path.endsWith(".smm.md")) throw new Error("Expected a .smm.md path");
   const file = app.vault.getFileByPath(path);
@@ -77,14 +80,30 @@ const openSmm = async path => {
   await waitPromise(leaf.openFile(file), `opening ${path}`);
   await activateLeaf(leaf);
   const view = await waitValue(
-    () => leaf.view?.file?.path === path && leaf.view?.mindMapAPP?.$bus && leaf.view,
+    () => leaf.view?.getViewType?.() === "smm" && leaf.view?.file?.path === path && leaf.view,
     `fresh Simple Mind Map view for ${path}`
   );
+  if (!initialize) {
+    await waitValue(() => view.parsedMindMapData?.metadata?.content, `mind-map data for ${path}`);
+    return { file, leaf, view };
+  }
   if (typeof view.save !== "function" || typeof view.forceSaveAndUpdateImage !== "function") {
     throw new Error("Simple Mind Map save interface is unavailable");
   }
+  if (!view.mindMapAPP) {
+    const editor = await waitValue(() => {
+      if (view.mindMapAPP) return true;
+      const element = view.warpEl?.querySelector(".smmMindMapEdit");
+      const bounds = element?.getBoundingClientRect();
+      return bounds?.width > 10 && bounds?.height > 10 && element;
+    }, `sized Simple Mind Map editor for ${path}`);
+    if (!view.mindMapAPP && typeof view._initializeMindMap === "function") {
+      view._initializeMindMap(editor);
+      view._clearObserver?.();
+    }
+  }
   await waitValue(
-    () => findMindMapComponent(view),
+    () => view.mindMapAPP?.$bus && findMindMapComponent(view),
     `initialized Simple Mind Map instance for ${path}`,
     20000
   );
@@ -111,6 +130,11 @@ const saveView = async (view, file, preview = true) => {
   await waitValue(() => file.stat?.mtime > before, `save for ${file.path}`, 20000);
 };
 const currentData = async view => {
+  if (!view.mindMapAPP?.$bus) {
+    const content = view.parsedMindMapData?.metadata?.content;
+    if (!content) throw new Error("Current mind-map metadata is empty");
+    return JSON.parse(content);
+  }
   if (view.getMindMapCurrentDataResolve) throw new Error("Mind map is already saving");
   try {
     await new Promise((resolve, reject) => {
@@ -164,14 +188,18 @@ const walkNodes = data => {
   (data.root?.data?.freeNodeTrees || []).forEach(node => walk(node, null, 0, true));
   return nodes;
 };
-const waitForMutation = async (view, action, uid, text) => {
+// Node text may repeat, so an insert settles only when a node with a UID that
+// did not exist before the command appears under the expected parent.
+const waitForMutation = async (view, action, uid, text, uidsBefore, expectedParent) => {
   const end = Date.now() + 10000;
   while (Date.now() < end) {
     try {
       const nodes = walkNodes(await currentData(view));
       if (action === "delete" && !nodes.some(node => node.uid === uid)) return;
       if (action === "set-text" && nodes.some(node => node.uid === uid && node.plainText === text)) return;
-      if (action !== "delete" && action !== "set-text" && nodes.some(node => node.plainText === text)) return;
+      if (action !== "delete" && action !== "set-text" && nodes.some(node =>
+        !uidsBefore.has(node.uid) && node.parentUid === expectedParent && node.plainText === text
+      )) return;
     } catch {
       // The plugin may still be serializing the command.
     }
@@ -218,7 +246,7 @@ def run_eval(vault: str, body: str) -> str:
     if not executable:
         raise SystemExit("Obsidian CLI is not on PATH")
 
-    def invoke(code: str) -> tuple[str, str]:
+    def invoke(code: str) -> tuple[int, str, str]:
         result = subprocess.run(
             [executable, "eval", f"vault={vault}", f"code={code}"],
             text=True,
@@ -231,8 +259,8 @@ def run_eval(vault: str, body: str) -> str:
             if "Unable to find helper app" not in line
         ).strip()
         if result.returncode:
-            raise SystemExit(stderr or f"Obsidian CLI exited with code {result.returncode}")
-        return clean_result_output(result.stdout), stderr
+            return result.returncode, "", stderr or f"Obsidian CLI exited with code {result.returncode}"
+        return 0, clean_result_output(result.stdout), stderr
 
     operation_id = uuid.uuid4().hex
     key = js_value(operation_id)
@@ -241,6 +269,7 @@ def run_eval(vault: str, body: str) -> str:
   const key = {key};
   const operations = app.__smmCliOperations ||= {{}};
   operations[key] = {{status: "running"}};
+  setTimeout(() => delete operations[key], 180000);
   (async()=>{{
     const openedLeaves = [];
     const previousActiveLeaf = app.workspace.activeLeaf;
@@ -260,26 +289,48 @@ def run_eval(vault: str, body: str) -> str:
   return JSON.stringify({{status: "started"}});
 }})()
 """
-    output, stderr = invoke(code)
-    if output and json.loads(output).get("status") != "started":
-        raise SystemExit(f"Unexpected Obsidian launch response: {output}")
-    deadline = time.monotonic() + 120
     poll_code = f"""
 (()=>{{
   const operations = app.__smmCliOperations || {{}};
   const operation = operations[{key}];
   if (!operation) return JSON.stringify({{status: "missing"}});
-  if (operation.status !== "running") delete operations[{key}];
   return JSON.stringify(operation);
 }})()
 """
+
+    def poll_status() -> tuple[dict | None, str]:
+        # Polling is read-only, so a crashed CLI process is retried.
+        last_error = ""
+        for _ in range(POLL_FAILURE_LIMIT):
+            returncode, polled, poll_stderr = invoke(poll_code)
+            if not returncode:
+                return (json.loads(polled) if polled else None), poll_stderr
+            last_error = poll_stderr
+            time.sleep(POLL_INTERVAL)
+        raise SystemExit(last_error)
+
+    # The launch is not idempotent: a failed CLI process may still have queued
+    # the operation. Relaunch only after polling proves the key is missing.
+    stderr = ""
+    for _ in range(3):
+        returncode, output, stderr = invoke(code)
+        if not returncode:
+            if output and json.loads(output).get("status") != "started":
+                raise SystemExit(f"Unexpected Obsidian launch response: {output}")
+            break
+        payload, _ = poll_status()
+        if payload and payload["status"] != "missing":
+            break
+        time.sleep(POLL_INTERVAL)
+    else:
+        raise SystemExit(stderr)
+    deadline = time.monotonic() + 120
     while time.monotonic() < deadline:
-        time.sleep(0.1)
-        polled, poll_stderr = invoke(poll_code)
+        time.sleep(POLL_INTERVAL)
+        payload, poll_stderr = poll_status()
         stderr = poll_stderr or stderr
-        if not polled:
+        if payload is None:
             continue
-        payload = json.loads(polled)
         if payload["status"] == "running":
             continue
         if payload["status"] == "error":
@@ -326,7 +377,7 @@ def read_map(vault: str, path: str) -> str:
     return run_eval(
         vault,
         f"""
-const {{ view }} = await openSmm({js_value(path)});
+const {{ view }} = await openSmm({js_value(path)}, false);
 const data = await currentData(view);
 return JSON.stringify({{path: {js_value(path)}, layout: data.layout, theme: data.theme, nodes: walkNodes(data)}});
 """,
@@ -481,11 +532,14 @@ const uid = {js_value(uid)};
 const text = {js_value(text)};
 const node = await targetNode(view, uid);
 const bus = view.mindMapAPP.$bus;
+const nodesBefore = walkNodes(await currentData(view));
+const uidsBefore = new Set(nodesBefore.map(item => item.uid));
+const expectedParent = action === "add-child" ? uid : nodesBefore.find(item => item.uid === uid)?.parentUid;
 if (action === "set-text") bus.$emit("execCommand", "SET_NODE_TEXT", node, text, false);
 else if (action === "delete") bus.$emit("execCommand", "REMOVE_NODE", [node]);
 else if (action === "add-child") bus.$emit("execCommand", "INSERT_CHILD_NODE", false, [node], {{text}});
 else if (action === "add-sibling") bus.$emit("execCommand", "INSERT_NODE", false, [node], {{text}});
-await waitForMutation(view, action, uid, text);
+await waitForMutation(view, action, uid, text, uidsBefore, expectedParent);
 await saveView(view, file, {js_value(preview)});
 return JSON.stringify({{completed: true}});
 """,
