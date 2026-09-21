@@ -102,8 +102,18 @@ const openSmm = async (path, initialize = true) => {
       view._clearObserver?.();
     }
   }
+  // The plugin's initMindMap() returns without retrying when its container has
+  // no size yet, so re-run it once the container is laid out.
+  const kickInit = component => {
+    if (!component) return;
+    const box = component.$refs?.smmContainerRef?.getBoundingClientRect?.();
+    if (!component.mindMap && typeof component.initMindMap === "function" && box?.width > 0 && box?.height > 0) {
+      component.initMindMap();
+    }
+    (component.$children || []).forEach(kickInit);
+  };
   await waitValue(
-    () => view.mindMapAPP?.$bus && findMindMapComponent(view),
+    () => view.mindMapAPP?.$bus && (findMindMapComponent(view) || (kickInit(view.mindMapAPP), findMindMapComponent(view))),
     `initialized Simple Mind Map instance for ${path}`,
     20000
   );
