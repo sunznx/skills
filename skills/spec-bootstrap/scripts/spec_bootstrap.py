@@ -52,17 +52,6 @@ SERENA_HOOKS = {
             ],
         }
     ],
-    "PostToolUse": [
-        {
-            "matcher": "^mcp__serena__.*$",
-            "hooks": [
-                {
-                    "type": "command",
-                    "command": f"{SERENA_HOOK} reset --client=codex",
-                }
-            ],
-        }
-    ],
     "SessionEnd": [
         {
             "hooks": [

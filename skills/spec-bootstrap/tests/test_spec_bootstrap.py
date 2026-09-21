@@ -55,11 +55,10 @@ class SpecBootstrapTest(unittest.TestCase):
         text = json.dumps(twice)
         self.assertEqual(once, twice)
         self.assertIn("echo keep", text)
-        self.assertEqual(text.count("serena-hooks"), 4)
+        self.assertEqual(text.count("serena-hooks"), 3)
         self.assertIn("remind --client=codex", text)
         self.assertIn("activate --client=codex", text)
         self.assertIn("cleanup --client=codex", text)
-        self.assertIn("reset --client=codex", text)
 
     def test_plugins_install_without_migrated_commands(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
@@ -123,7 +122,7 @@ class SpecBootstrapTest(unittest.TestCase):
             self.assertIn("[mcp_servers.semble]", config)
             hooks = (home / "hooks.json").read_text(encoding="utf-8")
             self.assertIn("echo keep", hooks)
-            self.assertEqual(hooks.count("serena-hooks"), 4)
+            self.assertEqual(hooks.count("serena-hooks"), 3)
             self.assertEqual(sorted(path.name for path in home.iterdir()), ["config.toml", "hooks.json"])
 
 
