@@ -332,6 +332,13 @@
       "source": "typesafe-ai/skills",
       "url": "https://github.com/typesafe-ai/skills.git",
       "ref": "main"
+    },
+    {
+      "name": "fast-jev-compaction",
+      "marketplace": "fast-jev-compaction",
+      "source": "tamaratran/fast-jev-compaction",
+      "url": "https://github.com/tamaratran/fast-jev-compaction.git",
+      "ref": "main"
     }
   ]
 }

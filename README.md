@@ -94,4 +94,5 @@ $sync-skills 更新 agent-messaging 删除某个功能
 | `ponytail` | `ponytail` | [DietrichGebert/ponytail](https://github.com/DietrichGebert/ponytail) | — |
 | `sol-advisor` | `sol-advisor` | [DannyMac180/sol-advisor](https://github.com/DannyMac180/sol-advisor) | `scripts/install-agents.sh` |
 | `typesafe` | `typesafe-ai` | [typesafe-ai/skills](https://github.com/typesafe-ai/skills) | — |
+| `fast-jev-compaction` | `fast-jev-compaction` | [tamaratran/fast-jev-compaction](https://github.com/tamaratran/fast-jev-compaction) | — |
 <!-- skill-catalog:end -->
