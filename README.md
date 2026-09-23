@@ -80,6 +80,7 @@ $sync-skills 更新 agent-messaging 删除某个功能
 | `sync-skills` | 本仓库维护的同步 skill | — | 本地维护 |
 | `uml` | [markdown-viewer/skills](https://github.com/markdown-viewer/skills) | `uml/SKILL.md` | 三方合并 |
 | `update-skill` | [warpdotdev/common-skills](https://github.com/warpdotdev/common-skills) | `.agents/skills/update-skill/SKILL.md` | 三方合并 |
+| `visual-pr` | [humanlayer/skills](https://github.com/humanlayer/skills) | `plugins/visual-pr/skills/visual-pr/SKILL.md` | 三方合并 |
 | `wait-what` | [mattpocock/skills](https://github.com/mattpocock/skills) | `skills/productivity/wait-what/SKILL.md` | 三方合并 |
 | `wayfinder` | [mattpocock/skills](https://github.com/mattpocock/skills) | `skills/engineering/wayfinder/SKILL.md` | 三方合并 |
 | `whats-next` | [lycfyi/yskills](https://github.com/lycfyi/yskills) | `skills/whats-next/SKILL.md` | 三方合并 |

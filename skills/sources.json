@@ -268,6 +268,13 @@
       "base_tree": "84f703bb1c52d3fb9697f3a570c54b5103a3fbf0"
     },
     {
+      "name": "visual-pr",
+      "source": "humanlayer/skills",
+      "url": "https://github.com/humanlayer/skills.git",
+      "path": "plugins/visual-pr/skills/visual-pr/SKILL.md",
+      "base_tree": "2104d685d33ba9594a4dfe13241f0f7f02190401"
+    },
+    {
       "name": "wait-what",
       "source": "mattpocock/skills",
       "url": "https://github.com/mattpocock/skills.git",
