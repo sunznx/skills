@@ -1,6 +1,6 @@
 ---
 name: obsidian-simple-mind-map
-description: 在 Obsidian 中创建、读取和增量编辑 Simple Mind Map 的 `.smm.md` 文件。用于 Markdown 转脑图、查询节点 UID、增加/改名/删除节点、设置外部链接或 Vault 内部文件引用，以及刷新预览图；不用于普通脑图图片或 XMind 文件。
+description: 在 Obsidian 中创建、读取和增量编辑 Simple Mind Map 的 `.smm.md` 文件。用于 Markdown 转脑图、按 UID 批量插入子树或增删改节点、设置链接及刷新预览；不用于普通脑图图片或 XMind 文件。
 ---
 
 # Obsidian Simple Mind Map
@@ -45,11 +45,14 @@ python3 <skill-dir>/scripts/smm_cli.py read "notes/path/topic.smm.md"
 
 ```bash
 python3 <skill-dir>/scripts/smm_cli.py add-child FILE PARENT_UID "新节点"
+python3 <skill-dir>/scripts/smm_cli.py add-subtree FILE PARENT_UID '{"text":"新分支","children":[{"text":"子节点"}]}'
 python3 <skill-dir>/scripts/smm_cli.py add-sibling FILE NODE_UID "同级节点"
 python3 <skill-dir>/scripts/smm_cli.py set-text FILE NODE_UID "新文字"
 python3 <skill-dir>/scripts/smm_cli.py set-link FILE NODE_UID URL "链接标题"
 python3 <skill-dir>/scripts/smm_cli.py delete FILE NODE_UID
 ```
+
+向已有脑图插入多个父子节点时优先用 `add-subtree`：JSON 顶层是一棵树，`children` 可嵌套；命令调用插件原生插入命令一次，再保存、刷新预览和验证。单个节点仍用 `add-child`。批量命令失败时先 `read` 检查是否已有部分节点，不要直接重放。
 
 `set-link` 使用插件原生的 `SET_NODE_HYPERLINK` 命令，将目标写入节点数据的 `hyperlink` 和 `hyperlinkTitle` 字段；它不是把 Markdown 链接写进 `text`。
 
@@ -92,7 +95,7 @@ python3 <skill-dir>/scripts/smm_cli.py set-link \
 
 所有打开脑图视图的 CLI 读写命令按 Vault 使用同一把进程文件锁串行执行；`probe` 和 `self-test` 不占锁。每次 CLI 操作使用独立 leaf，核对文件路径，完成后关闭；Obsidian 中已有只读视图不影响 CLI，agent 之间仍必须通过这把锁串行写入。
 
-CLI 会临时激活自己的 leaf，完成后恢复原活动 leaf。`read` 使用该 fresh leaf 已解析的数据，不依赖渲染；编辑和保存需要插件内部 `mindMap` 实例，后台窗口未触发 `ResizeObserver` 时由 CLI 在编辑区有尺寸后初始化；插件组件的 `initMindMap()` 遇到容器尺寸为 0 会直接放弃，CLI 在等待期间对有尺寸的未初始化组件补调一次，再等待组件就绪。每次增量修改都等待插件当前数据反映预期变化后再保存；完成后再次 `read`，确认目标节点、父子关系和返回的新 UID。一次请求包含多个独立修改时，逐项执行并在最后验证；不要通过 Markdown 全量重建来代替局部编辑，以免丢失节点样式、链接和位置。
+CLI 会临时激活自己的 leaf，完成后恢复原活动 leaf。`read` 使用该 fresh leaf 已解析的数据，不依赖渲染；编辑和保存需要插件内部 `mindMap` 实例，后台窗口未触发 `ResizeObserver` 时由 CLI 在编辑区有尺寸后初始化；插件组件的 `initMindMap()` 遇到容器尺寸为 0 会直接放弃，CLI 在等待期间对有尺寸的未初始化组件补调一次，再等待组件就绪。每次增量修改都等待插件当前数据反映预期变化后再保存；完成后再次 `read`，确认目标节点、父子关系和返回的新 UID。独立修改逐项执行，成组父子节点用 `add-subtree`；不要通过 Markdown 全量重建来代替局部编辑，以免丢失节点样式、链接和位置。
 
 ### 保存和刷新预览
 

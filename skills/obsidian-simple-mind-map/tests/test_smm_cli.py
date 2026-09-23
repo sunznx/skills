@@ -74,6 +74,16 @@ class RunEvalTests(unittest.TestCase):
             self.run_eval(fake)
         self.assertEqual(fake.launches, 3)
 
+    def test_subtree_input(self) -> None:
+        tree, count = smm_cli.parse_subtree(
+            '{"text":"A","children":[{"text":"same"},{"text":"same"}]}'
+        )
+        self.assertEqual(count, 3)
+        self.assertEqual(tree["children"][1]["text"], "same")
+        for invalid in ('{"text":" "}', '{"text":"A","children":{}}', '{"text":"A","uid":"x"}'):
+            with self.assertRaises(SystemExit):
+                smm_cli.parse_subtree(invalid)
+
 
 if __name__ == "__main__":
     unittest.main()

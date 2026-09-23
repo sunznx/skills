@@ -23,6 +23,7 @@ LOCKED_COMMANDS = {
     "convert-md",
     "save",
     "add-child",
+    "add-subtree",
     "add-sibling",
     "set-text",
     "set-link",
@@ -207,9 +208,10 @@ const waitForMutation = async (view, action, uid, text, uidsBefore, expectedPare
       const nodes = walkNodes(await currentData(view));
       if (action === "delete" && !nodes.some(node => node.uid === uid)) return;
       if (action === "set-text" && nodes.some(node => node.uid === uid && node.plainText === text)) return;
-      if (action !== "delete" && action !== "set-text" && nodes.some(node =>
+      const inserted = nodes.find(node =>
         !uidsBefore.has(node.uid) && node.parentUid === expectedParent && node.plainText === text
-      )) return;
+      );
+      if (action !== "delete" && action !== "set-text" && inserted) return inserted;
     } catch {
       // The plugin may still be serializing the command.
     }
@@ -251,7 +253,7 @@ def clean_result_output(output: str) -> str:
     return output[2:].lstrip() if output.startswith("=>") else output
 
 
-def run_eval(vault: str, body: str) -> str:
+def run_eval(vault: str, body: str, timeout: float = 120) -> str:
     executable = shutil.which("obsidian")
     if not executable:
         raise SystemExit("Obsidian CLI is not on PATH")
@@ -279,7 +281,7 @@ def run_eval(vault: str, body: str) -> str:
   const key = {key};
   const operations = app.__smmCliOperations ||= {{}};
   operations[key] = {{status: "running"}};
-  setTimeout(() => delete operations[key], 180000);
+  setTimeout(() => delete operations[key], {int((timeout + 60) * 1000)});
   (async()=>{{
     const openedLeaves = [];
     const previousActiveLeaf = app.workspace.activeLeaf;
@@ -334,7 +336,7 @@ def run_eval(vault: str, body: str) -> str:
         time.sleep(POLL_INTERVAL)
     else:
         raise SystemExit(stderr)
-    deadline = time.monotonic() + 120
+    deadline = time.monotonic() + timeout
     while time.monotonic() < deadline:
         time.sleep(POLL_INTERVAL)
         payload, poll_stderr = poll_status()
@@ -573,6 +575,65 @@ return JSON.stringify({{completed: true}});
     )
 
 
+def parse_subtree(raw: str) -> tuple[dict, int]:
+    try:
+        tree = json.loads(raw)
+    except json.JSONDecodeError as error:
+        raise SystemExit(f"Invalid subtree JSON: {error}") from error
+
+    def validate(node: object) -> tuple[dict, int]:
+        if not isinstance(node, dict) or set(node) - {"text", "children"}:
+            raise SystemExit("Each subtree node must contain only text and optional children")
+        text = node.get("text")
+        children = node.get("children", [])
+        if not isinstance(text, str) or not text.strip() or not isinstance(children, list):
+            raise SystemExit("Subtree text must be nonempty and children must be a list")
+        validated = [validate(child) for child in children]
+        return {"text": text, "children": [item for item, _ in validated]}, 1 + sum(
+            count for _, count in validated
+        )
+
+    return validate(tree)
+
+
+def add_subtree(vault: str, root: Path, path: str, parent_uid: str, raw: str, preview: bool) -> str:
+    tree, count = parse_subtree(raw)
+    file_path = root / path
+    before_write = file_path.stat().st_mtime_ns
+    output = run_eval(
+        vault,
+        f"""
+const {{ file, view }} = await openSmm({js_value(path)});
+const parentUid = {js_value(parent_uid)};
+const parent = walkNodes(await currentData(view)).find(item => item.uid === parentUid);
+if (!parent || parent.free) throw new Error(`Editable parent UID not found: ${{parentUid}}`);
+const tree = {js_value(tree)};
+const bus = view.mindMapAPP.$bus;
+const node = await targetNode(view, parentUid);
+const before = new Set(walkNodes(await currentData(view)).map(entry => entry.uid));
+const asMindMapNode = item => ({{data: {{text: item.text}}, children: item.children.map(asMindMapNode)}});
+bus.$emit("execCommand", "INSERT_CHILD_NODE", false, [node], {{text: tree.text}}, tree.children.map(asMindMapNode));
+await waitForMutation(view, "add-child", parentUid, tree.text, before, parentUid);
+const created = walkNodes(await currentData(view))
+  .filter(entry => !before.has(entry.uid))
+  .map(entry => ({{uid: entry.uid, parentUid: entry.parentUid, text: entry.plainText}}));
+await saveView(view, file, {js_value(preview)});
+return JSON.stringify({{path: {js_value(path)}, nodes: created}});
+""",
+    )
+    wait_for_write(file_path, before_write)
+    result = json.loads(output)
+    nodes = result["nodes"]
+    persisted = {node["uid"]: node for node in json.loads(read_map(vault, path))["nodes"]}
+    if len(nodes) != count or any(
+        persisted.get(node["uid"], {}).get("parentUid") != node["parentUid"]
+        or persisted[node["uid"]]["plainText"] != node["text"]
+        for node in nodes
+    ):
+        raise SystemExit("Subtree verification failed; inspect the map before retrying")
+    return output
+
+
 def set_link(
     vault: str, root: Path, path: str, uid: str, url: str, title: str, preview: bool
 ) -> str:
@@ -701,6 +762,12 @@ def build_parser() -> argparse.ArgumentParser:
         command.add_argument("uid")
         command.add_argument("text")
         command.add_argument("--no-preview", action="store_true")
+    command = sub.add_parser("add-subtree")
+    add_runtime_options(command)
+    command.add_argument("path")
+    command.add_argument("uid", help="existing parent node UID")
+    command.add_argument("tree", help='JSON object with text and optional children')
+    command.add_argument("--no-preview", action="store_true")
     command = sub.add_parser("set-link")
     add_runtime_options(command)
     command.add_argument("path")
@@ -737,6 +804,8 @@ def main() -> None:
         output = convert_md(args.vault, root, path, args.delete_source)
     elif args.command == "save":
         output = save_map(args.vault, root, path)
+    elif args.command == "add-subtree":
+        output = add_subtree(args.vault, root, path, args.uid, args.tree, not args.no_preview)
     else:
         if args.command == "set-link":
             output = set_link(
