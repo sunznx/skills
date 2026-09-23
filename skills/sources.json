@@ -26,14 +26,6 @@
       "note": "本地维护，暂无外部 Git 来源"
     },
     {
-      "name": "canvas",
-      "source": "markdown-viewer/skills",
-      "url": "https://github.com/markdown-viewer/skills.git",
-      "path": "canvas/SKILL.md",
-      "ref": "refs/remotes/origin/main",
-      "base_tree": "f2c69fb78d28b81f5aae8861cbd6e72db475d570"
-    },
-    {
       "name": "codebase-design",
       "source": "mattpocock/skills",
       "url": "https://github.com/mattpocock/skills.git",
@@ -52,6 +44,13 @@
       "url": "https://github.com/cathrynlavery/diagram-design.git",
       "path": "skills/diagram-design/SKILL.md",
       "base_tree": "67306ec56fbf3f58b179d96095ec1b9413cc2737"
+    },
+    {
+      "name": "documd-visuals",
+      "source": "markdown-viewer/skills",
+      "url": "https://github.com/markdown-viewer/skills.git",
+      "path": "documd-visuals/SKILL.md",
+      "base_tree": "5fcf049fb196faf0624016081286be8d78603619"
     },
     {
       "name": "domain-modeling",
@@ -258,14 +257,6 @@
       "url": "https://github.com/mattpocock/skills.git",
       "path": "skills/engineering/tdd/SKILL.md",
       "base_tree": "79288be15c67b849f22b6572056601090fd20913"
-    },
-    {
-      "name": "uml",
-      "source": "markdown-viewer/skills",
-      "url": "https://github.com/markdown-viewer/skills.git",
-      "path": "uml/SKILL.md",
-      "ref": "refs/remotes/origin/main",
-      "base_tree": "7cb38073b0279ad8e3d5f3379caefd4ea1422a97"
     },
     {
       "name": "update-skill",

@@ -44,10 +44,10 @@ $sync-skills 更新 agent-messaging 删除某个功能
 | `alibabacloud-cli-guidance` | [aliyun/alibabacloud-aiops-skills](https://github.com/aliyun/alibabacloud-aiops-skills) | `skills/developertools/solutions/alibabacloud-cli-guidance/SKILL.md` | 三方合并 |
 | `archify` | [tt-a1i/archify](https://github.com/tt-a1i/archify) | `archify/SKILL.md` | 三方合并 |
 | `background-agent-jobs` | 本地维护，暂无外部 Git 来源 | — | 本地维护 |
-| `canvas` | [markdown-viewer/skills](https://github.com/markdown-viewer/skills) | `canvas/SKILL.md` | 三方合并 |
 | `codebase-design` | [mattpocock/skills](https://github.com/mattpocock/skills) | `skills/engineering/codebase-design/SKILL.md` | 三方合并 |
 | `cua-driver` | 本机链接 ~/.cua-driver/skills/cua-driver，仓库保留快照但不覆盖该链接 | — | 仅仓库维护 |
 | `diagram-design` | [cathrynlavery/diagram-design](https://github.com/cathrynlavery/diagram-design) | `skills/diagram-design/SKILL.md` | 三方合并 |
+| `documd-visuals` | [markdown-viewer/skills](https://github.com/markdown-viewer/skills) | `documd-visuals/SKILL.md` | 三方合并 |
 | `domain-modeling` | [mattpocock/skills](https://github.com/mattpocock/skills) | `skills/engineering/domain-modeling/SKILL.md` | 三方合并 |
 | `ego-browser` | [citrolabs/ego-lite](https://github.com/citrolabs/ego-lite) | `skills/ego-browser/SKILL.md` | 三方合并（仅仓库） |
 | `eli5` | [anthropics/claude-plugins-community](https://github.com/anthropics/claude-plugins-community) | `eli5/skills/eli5/SKILL.md` | 三方合并 |
@@ -79,7 +79,6 @@ $sync-skills 更新 agent-messaging 删除某个功能
 | `spec-bootstrap` | 本地维护，安装项目级 Ponytail、PWF skill 与官方 hooks，并配置 Serena、Semble | — | 本地维护 |
 | `sync-skills` | 本仓库维护的同步 skill | — | 本地维护 |
 | `tdd` | [mattpocock/skills](https://github.com/mattpocock/skills) | `skills/engineering/tdd/SKILL.md` | 三方合并 |
-| `uml` | [markdown-viewer/skills](https://github.com/markdown-viewer/skills) | `uml/SKILL.md` | 三方合并 |
 | `update-skill` | [warpdotdev/common-skills](https://github.com/warpdotdev/common-skills) | `.agents/skills/update-skill/SKILL.md` | 三方合并 |
 | `visual-pr` | [humanlayer/skills](https://github.com/humanlayer/skills) | `plugins/visual-pr/skills/visual-pr/SKILL.md` | 三方合并 |
 | `wait-what` | [mattpocock/skills](https://github.com/mattpocock/skills) | `skills/productivity/wait-what/SKILL.md` | 三方合并 |
