@@ -253,6 +253,13 @@
       "note": "本仓库维护的同步 skill"
     },
     {
+      "name": "tdd",
+      "source": "mattpocock/skills",
+      "url": "https://github.com/mattpocock/skills.git",
+      "path": "skills/engineering/tdd/SKILL.md",
+      "base_tree": "79288be15c67b849f22b6572056601090fd20913"
+    },
+    {
       "name": "uml",
       "source": "markdown-viewer/skills",
       "url": "https://github.com/markdown-viewer/skills.git",
