@@ -26,6 +26,13 @@
       "note": "本地维护，暂无外部 Git 来源"
     },
     {
+      "name": "birdview",
+      "source": "Qiuner/birdview",
+      "url": "https://github.com/Qiuner/birdview.git",
+      "path": "SKILL.md",
+      "base_tree": "db6ffeb443edb8ae3d543f51228cb04faec014d2"
+    },
+    {
       "name": "codebase-design",
       "source": "mattpocock/skills",
       "url": "https://github.com/mattpocock/skills.git",
