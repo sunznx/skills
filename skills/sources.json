@@ -33,6 +33,13 @@
       "base_tree": "db6ffeb443edb8ae3d543f51228cb04faec014d2"
     },
     {
+      "name": "code-review",
+      "source": "mattpocock/skills",
+      "url": "https://github.com/mattpocock/skills.git",
+      "path": "skills/engineering/code-review/SKILL.md",
+      "base_tree": "d8e341cee7980127dddda05159bedf25dc853615"
+    },
+    {
       "name": "codebase-design",
       "source": "mattpocock/skills",
       "url": "https://github.com/mattpocock/skills.git",
@@ -44,6 +51,13 @@
       "managed": false,
       "note": "本机链接 ~/.cua-driver/skills/cua-driver，仓库保留快照但不覆盖该链接",
       "deploy": false
+    },
+    {
+      "name": "diagnosing-bugs",
+      "source": "mattpocock/skills",
+      "url": "https://github.com/mattpocock/skills.git",
+      "path": "skills/engineering/diagnosing-bugs/SKILL.md",
+      "base_tree": "99bd56983e42bc752c52da67f1112e4121781cd1"
     },
     {
       "name": "diagram-design",
@@ -96,11 +110,25 @@
       "base_tree": "f0732035b8b1b60ae39454e4191caef32fa91903"
     },
     {
+      "name": "handoff",
+      "source": "mattpocock/skills",
+      "url": "https://github.com/mattpocock/skills.git",
+      "path": "skills/productivity/handoff/SKILL.md",
+      "base_tree": "2242e8f05424b8c2ae94194a90d97b88d16108ec"
+    },
+    {
       "name": "human-context-rebuild",
       "source": "lycfyi/yskills",
       "url": "https://github.com/lycfyi/yskills.git",
       "path": "skills/human-context-rebuild/SKILL.md",
       "base_tree": "424478b5dba49cbd4da9ebae2d3df74c124994c9"
+    },
+    {
+      "name": "implement",
+      "source": "mattpocock/skills",
+      "url": "https://github.com/mattpocock/skills.git",
+      "path": "skills/engineering/implement/SKILL.md",
+      "base_tree": "f07d230f645fc9ac390cf13a450bbff12ad791a3"
     },
     {
       "name": "improve-codebase-architecture",
@@ -213,6 +241,13 @@
       "base_tree": "a2abef2930e8d3c5fad68604577f36bcf191c46f"
     },
     {
+      "name": "research",
+      "source": "mattpocock/skills",
+      "url": "https://github.com/mattpocock/skills.git",
+      "path": "skills/engineering/research/SKILL.md",
+      "base_tree": "0a6796c5667e95ed2301ba7381c123b4acb2ae1a"
+    },
+    {
       "name": "resolving-merge-conflicts",
       "source": "mattpocock/skills",
       "url": "https://github.com/mattpocock/skills.git",
@@ -266,6 +301,27 @@
       "base_tree": "79288be15c67b849f22b6572056601090fd20913"
     },
     {
+      "name": "to-spec",
+      "source": "mattpocock/skills",
+      "url": "https://github.com/mattpocock/skills.git",
+      "path": "skills/engineering/to-spec/SKILL.md",
+      "base_tree": "136b9651747cfccbfbb7c50a6b0dfb757e7547d2"
+    },
+    {
+      "name": "to-tickets",
+      "source": "mattpocock/skills",
+      "url": "https://github.com/mattpocock/skills.git",
+      "path": "skills/engineering/to-tickets/SKILL.md",
+      "base_tree": "b32c94e5a51c24ee9c41fcb7fe9ea9fff9af6369"
+    },
+    {
+      "name": "triage",
+      "source": "mattpocock/skills",
+      "url": "https://github.com/mattpocock/skills.git",
+      "path": "skills/engineering/triage/SKILL.md",
+      "base_tree": "95fa21bf236993cd9af25bd3670476c17fdb95a4"
+    },
+    {
       "name": "update-skill",
       "source": "warpdotdev/common-skills",
       "url": "https://github.com/warpdotdev/common-skills.git",
@@ -301,6 +357,13 @@
       "base_tree": "1f41059c47549d6f80bf65ead98eb022e56ef642"
     },
     {
+      "name": "wizard",
+      "source": "mattpocock/skills",
+      "url": "https://github.com/mattpocock/skills.git",
+      "path": "skills/engineering/wizard/SKILL.md",
+      "base_tree": "0a163daf092c6f361158ca9627e81f2cb5230574"
+    },
+    {
       "name": "writing-for-agents",
       "source": "mattpocock/skills",
       "url": "https://github.com/mattpocock/skills.git",
@@ -312,7 +375,10 @@
     {
       "name": "planning-with-files",
       "marketplace": "planning-with-files",
-      "clients": ["codex", "claude"],
+      "clients": [
+        "codex",
+        "claude"
+      ],
       "source": "OthmanAdi/planning-with-files",
       "url": "https://github.com/OthmanAdi/planning-with-files.git",
       "ref": "main"
@@ -320,7 +386,10 @@
     {
       "name": "ponytail",
       "marketplace": "ponytail",
-      "clients": ["codex", "claude"],
+      "clients": [
+        "codex",
+        "claude"
+      ],
       "source": "DietrichGebert/ponytail",
       "url": "https://github.com/DietrichGebert/ponytail.git",
       "ref": "main"
@@ -328,7 +397,10 @@
     {
       "name": "i-have-adhd",
       "marketplace": "i-have-adhd",
-      "clients": ["codex", "claude"],
+      "clients": [
+        "codex",
+        "claude"
+      ],
       "source": "ayghri/i-have-adhd",
       "url": "https://github.com/ayghri/i-have-adhd.git",
       "ref": "main"
@@ -336,7 +408,10 @@
     {
       "name": "typesafe",
       "marketplace": "typesafe-ai",
-      "clients": ["codex", "claude"],
+      "clients": [
+        "codex",
+        "claude"
+      ],
       "source": "typesafe-ai/skills",
       "url": "https://github.com/typesafe-ai/skills.git",
       "ref": "main"
@@ -344,7 +419,10 @@
     {
       "name": "fast-jev-compaction",
       "marketplace": "fast-jev-compaction",
-      "clients": ["codex", "claude"],
+      "clients": [
+        "codex",
+        "claude"
+      ],
       "source": "leonaaardob/fast-dev-compaction",
       "url": "https://github.com/leonaaardob/fast-dev-compaction.git",
       "ref": "main",

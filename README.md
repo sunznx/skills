@@ -45,8 +45,10 @@ $sync-skills 更新 agent-messaging 删除某个功能
 | `archify` | [tt-a1i/archify](https://github.com/tt-a1i/archify) | `archify/SKILL.md` | 三方合并 |
 | `background-agent-jobs` | 本地维护，暂无外部 Git 来源 | — | 本地维护 |
 | `birdview` | [Qiuner/birdview](https://github.com/Qiuner/birdview) | `SKILL.md` | 三方合并 |
+| `code-review` | [mattpocock/skills](https://github.com/mattpocock/skills) | `skills/engineering/code-review/SKILL.md` | 三方合并 |
 | `codebase-design` | [mattpocock/skills](https://github.com/mattpocock/skills) | `skills/engineering/codebase-design/SKILL.md` | 三方合并 |
 | `cua-driver` | 本机链接 ~/.cua-driver/skills/cua-driver，仓库保留快照但不覆盖该链接 | — | 仅仓库维护 |
+| `diagnosing-bugs` | [mattpocock/skills](https://github.com/mattpocock/skills) | `skills/engineering/diagnosing-bugs/SKILL.md` | 三方合并 |
 | `diagram-design` | [cathrynlavery/diagram-design](https://github.com/cathrynlavery/diagram-design) | `skills/diagram-design/SKILL.md` | 三方合并 |
 | `documd-visuals` | [markdown-viewer/skills](https://github.com/markdown-viewer/skills) | `documd-visuals/SKILL.md` | 三方合并 |
 | `domain-modeling` | [mattpocock/skills](https://github.com/mattpocock/skills) | `skills/engineering/domain-modeling/SKILL.md` | 三方合并 |
@@ -54,7 +56,9 @@ $sync-skills 更新 agent-messaging 删除某个功能
 | `eli5` | [anthropics/claude-plugins-community](https://github.com/anthropics/claude-plugins-community) | `eli5/skills/eli5/SKILL.md` | 三方合并 |
 | `grill-with-docs` | [mattpocock/skills](https://github.com/mattpocock/skills) | `skills/engineering/grill-with-docs/SKILL.md` | 三方合并 |
 | `grilling` | [mattpocock/skills](https://github.com/mattpocock/skills) | `skills/productivity/grilling/SKILL.md` | 三方合并 |
+| `handoff` | [mattpocock/skills](https://github.com/mattpocock/skills) | `skills/productivity/handoff/SKILL.md` | 三方合并 |
 | `human-context-rebuild` | [lycfyi/yskills](https://github.com/lycfyi/yskills) | `skills/human-context-rebuild/SKILL.md` | 三方合并 |
+| `implement` | [mattpocock/skills](https://github.com/mattpocock/skills) | `skills/engineering/implement/SKILL.md` | 三方合并 |
 | `improve-codebase-architecture` | [mattpocock/skills](https://github.com/mattpocock/skills) | `skills/engineering/improve-codebase-architecture/SKILL.md` | 三方合并 |
 | `lark-doc` | [larksuite/cli](https://github.com/larksuite/cli) | `skills/lark-doc/SKILL.md` | 三方合并 |
 | `lark-shared` | [larksuite/cli](https://github.com/larksuite/cli) | `skills/lark-shared/SKILL.md` | 三方合并 |
@@ -72,6 +76,7 @@ $sync-skills 更新 agent-messaging 删除某个功能
 | `pwf-prototype` | 本地维护，绑定 planning-with-files 任务生成可交互原型 HTML | — | 本地维护 |
 | `pwf-wayfinder` | 本地维护，绑定 planning-with-files 任务维护决策地图与 tickets | — | 本地维护 |
 | `ra-人话` | [Pluviobyte/rnskill](https://github.com/Pluviobyte/rnskill) | `skills/ra-人话/SKILL.md` | 三方合并 |
+| `research` | [mattpocock/skills](https://github.com/mattpocock/skills) | `skills/engineering/research/SKILL.md` | 三方合并 |
 | `resolving-merge-conflicts` | [mattpocock/skills](https://github.com/mattpocock/skills) | `skills/engineering/resolving-merge-conflicts/SKILL.md` | 三方合并 |
 | `retro` | [mattpocock/skills](https://github.com/mattpocock/skills) | `skills/in-progress/retro/SKILL.md` | 三方合并 |
 | `show-me` | [humanlayer/skills](https://github.com/humanlayer/skills) | `plugins/show-me/skills/show-me/SKILL.md` | 三方合并 |
@@ -80,20 +85,24 @@ $sync-skills 更新 agent-messaging 删除某个功能
 | `spec-bootstrap` | 本地维护，安装项目级 Ponytail、PWF skill 与官方 hooks，并配置 Serena、Semble | — | 本地维护 |
 | `sync-skills` | 本仓库维护的同步 skill | — | 本地维护 |
 | `tdd` | [mattpocock/skills](https://github.com/mattpocock/skills) | `skills/engineering/tdd/SKILL.md` | 三方合并 |
+| `to-spec` | [mattpocock/skills](https://github.com/mattpocock/skills) | `skills/engineering/to-spec/SKILL.md` | 三方合并 |
+| `to-tickets` | [mattpocock/skills](https://github.com/mattpocock/skills) | `skills/engineering/to-tickets/SKILL.md` | 三方合并 |
+| `triage` | [mattpocock/skills](https://github.com/mattpocock/skills) | `skills/engineering/triage/SKILL.md` | 三方合并 |
 | `update-skill` | [warpdotdev/common-skills](https://github.com/warpdotdev/common-skills) | `.agents/skills/update-skill/SKILL.md` | 三方合并 |
 | `visual-pr` | [humanlayer/skills](https://github.com/humanlayer/skills) | `plugins/visual-pr/skills/visual-pr/SKILL.md` | 三方合并 |
 | `wait-what` | [mattpocock/skills](https://github.com/mattpocock/skills) | `skills/productivity/wait-what/SKILL.md` | 三方合并 |
 | `wayfinder` | [mattpocock/skills](https://github.com/mattpocock/skills) | `skills/engineering/wayfinder/SKILL.md` | 三方合并 |
 | `whats-next` | [lycfyi/yskills](https://github.com/lycfyi/yskills) | `skills/whats-next/SKILL.md` | 三方合并 |
+| `wizard` | [mattpocock/skills](https://github.com/mattpocock/skills) | `skills/engineering/wizard/SKILL.md` | 三方合并 |
 | `writing-for-agents` | [mattpocock/skills](https://github.com/mattpocock/skills) | `skills/productivity/writing-for-agents/SKILL.md` | 三方合并 |
 
 ## Plugin 来源目录
 
 | Plugin | Marketplace | 外部来源 | Clients | 安装后命令 |
 | --- | --- | --- | --- | --- |
+| `fast-jev-compaction` | `fast-jev-compaction` | codex: [leonaaardob/fast-dev-compaction](https://github.com/leonaaardob/fast-dev-compaction)<br>claude: [tamaratran/fast-jev-compaction](https://github.com/tamaratran/fast-jev-compaction) | codex, claude | — |
 | `i-have-adhd` | `i-have-adhd` | codex: [ayghri/i-have-adhd](https://github.com/ayghri/i-have-adhd)<br>claude: [ayghri/i-have-adhd](https://github.com/ayghri/i-have-adhd) | codex, claude | — |
 | `planning-with-files` | `planning-with-files` | codex: [OthmanAdi/planning-with-files](https://github.com/OthmanAdi/planning-with-files)<br>claude: [OthmanAdi/planning-with-files](https://github.com/OthmanAdi/planning-with-files) | codex, claude | — |
 | `ponytail` | `ponytail` | codex: [DietrichGebert/ponytail](https://github.com/DietrichGebert/ponytail)<br>claude: [DietrichGebert/ponytail](https://github.com/DietrichGebert/ponytail) | codex, claude | — |
 | `typesafe` | `typesafe-ai` | codex: [typesafe-ai/skills](https://github.com/typesafe-ai/skills)<br>claude: [typesafe-ai/skills](https://github.com/typesafe-ai/skills) | codex, claude | — |
-| `fast-jev-compaction` | `fast-jev-compaction` | codex: [leonaaardob/fast-dev-compaction](https://github.com/leonaaardob/fast-dev-compaction)<br>claude: [tamaratran/fast-jev-compaction](https://github.com/tamaratran/fast-jev-compaction) | codex, claude | — |
 <!-- skill-catalog:end -->
