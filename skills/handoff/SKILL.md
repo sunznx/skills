@@ -5,7 +5,7 @@ argument-hint: "What will the next session be used for?"
 disable-model-invocation: true
 ---
 
-Write a handoff document summarising the current conversation so a fresh agent can continue the work. Save to the temporary directory of the user's OS - not the current workspace.
+Use `planning-with-files` to resolve the named, gated plan for this work. If multiple plans exist and `PLAN_ID` is not bound, stop rather than choosing one. Write the handoff document to `<PLAN_DIR>/handoff.md` so a fresh agent can continue the work from the same plan.
 
 Include a "suggested skills" section in the document, naming which skills the next agent should call the Skill tool for.
 

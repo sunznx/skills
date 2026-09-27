@@ -9,7 +9,7 @@ A **wizard** is a bash script that walks a human, step by step, through a manual
 
 The delightful UX is already solved by [template.sh](template.sh): stage-by-stage progress, confirmation gates, cross-platform URL opening (including WSL), hidden secret entry, idempotent `.env` upserts, `gh secret`/`gh variable` writes, and a closing summary. **Your job is only to scope the procedure and author its stages.** The library above the `STAGES` marker is identical in every wizard; that consistency is the point: never hand-edit it.
 
-A wizard is ephemeral by default: built for one run, saved to a scratch or `scripts/` path, deleted when the job's done. Commit it only when the user wants a repeatable setup path that should live in the repo.
+Use `planning-with-files` to resolve a named, gated plan before authoring the wizard. If multiple plans exist and `PLAN_ID` is not bound, stop rather than choosing one. A wizard is ephemeral by default: save a one-off script to `<PLAN_DIR>/wizard-<purpose>.sh` and delete it when the job's done. Commit it under `scripts/` only when the user wants a repeatable setup path that should live in the repo.
 
 ## Process
 

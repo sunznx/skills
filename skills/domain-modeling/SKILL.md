@@ -7,6 +7,8 @@ description: Build and sharpen a project's domain model. Use when discussing cod
 
 Actively build and sharpen the project's domain model as you design. This is the *active* discipline: challenging terms, inventing edge-case scenarios, and writing the glossary and decisions down the moment they crystallise. (Merely *reading* `CONTEXT.md` for vocabulary is not this skill: that's a one-line habit any skill can do. This skill is for when you're changing the model, not just consuming it.)
 
+Use `planning-with-files` to resolve a named, gated plan before writing domain documents. If multiple plans exist and `PLAN_ID` is not bound, stop rather than choosing one. Read `.planning/domain.md` when present. Unless it or the calling skill specifies another ADR directory, use `<PLAN_DIR>/adr/`; record each changed `CONTEXT.md` or ADR path in the selected plan.
+
 ## File structure
 
 Most repos have a single context:
@@ -14,7 +16,7 @@ Most repos have a single context:
 ```
 /
 ├── CONTEXT.md
-├── docs/
+├── .planning/<PLAN_ID>/
 │   └── adr/
 │       ├── 0001-event-sourced-orders.md
 │       └── 0002-postgres-for-write-model.md
@@ -26,18 +28,19 @@ If a `CONTEXT-MAP.md` exists at the root, the repo has multiple contexts. The ma
 ```
 /
 ├── CONTEXT-MAP.md
-├── docs/
-│   └── adr/                          ← system-wide decisions
-├── src/
-│   ├── ordering/
-│   │   ├── CONTEXT.md
-│   │   └── docs/adr/                 ← context-specific decisions
-│   └── billing/
-│       ├── CONTEXT.md
-│       └── docs/adr/
+├── .planning/<PLAN_ID>/
+│   └── adr/
+│       ├── 0001-system-decision.md  ← system-wide decisions
+│       ├── ordering/                ← context-specific decisions
+│       └── billing/
+└── src/
+    ├── ordering/
+    │   └── CONTEXT.md
+    └── billing/
+        └── CONTEXT.md
 ```
 
-Create files lazily: only when you have something to write. If no `CONTEXT.md` exists, create one when the first term is resolved. If no `docs/adr/` exists, create it when the first ADR is needed.
+Create files lazily: only when you have something to write. If no `CONTEXT.md` exists, create one when the first term is resolved. If no ADR directory exists, create it when the first ADR is needed.
 
 ## During the session
 
