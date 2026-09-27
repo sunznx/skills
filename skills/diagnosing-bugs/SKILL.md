@@ -5,6 +5,8 @@ description: Diagnosis loop for hard bugs and performance regressions. Use when 
 
 # Diagnosing Bugs
 
+Use `planning-with-files` to resolve the named, gated plan for this diagnosis. If multiple plans exist and `PLAN_ID` is not bound, stop rather than choosing one. Keep the red-capable reproduction command, hypotheses, and findings in `<PLAN_DIR>/findings.md`; record each run and its result in `<PLAN_DIR>/progress.md`. Redact secrets as required below.
+
 A discipline for hard bugs. Skip phases only when explicitly justified.
 
 When exploring the codebase, read `CONTEXT.md` (if it exists) to get a clear mental model of the relevant modules, and check ADRs in the area you're touching.
