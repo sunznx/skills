@@ -214,11 +214,6 @@
       "base_tree": "e41d92e171f074a2b6887d8f6faca4a15c83d1ca"
     },
     {
-      "name": "pwf-wayfinder",
-      "managed": false,
-      "note": "本地维护，绑定 planning-with-files 任务维护决策地图与 tickets"
-    },
-    {
       "name": "ra-人话",
       "source": "Pluviobyte/rnskill",
       "url": "https://github.com/Pluviobyte/rnskill.git",
