@@ -214,6 +214,11 @@
       "base_tree": "e41d92e171f074a2b6887d8f6faca4a15c83d1ca"
     },
     {
+      "name": "pwf-artifact",
+      "managed": false,
+      "note": "本地维护，显式保存 PWF 任务产物"
+    },
+    {
       "name": "ra-人话",
       "source": "Pluviobyte/rnskill",
       "url": "https://github.com/Pluviobyte/rnskill.git",
