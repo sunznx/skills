@@ -214,11 +214,6 @@
       "base_tree": "e41d92e171f074a2b6887d8f6faca4a15c83d1ca"
     },
     {
-      "name": "pwf-eli5",
-      "managed": false,
-      "note": "本地维护，绑定 planning-with-files 任务生成 HTML"
-    },
-    {
       "name": "pwf-prototype",
       "managed": false,
       "note": "本地维护，绑定 planning-with-files 任务生成可交互原型 HTML"
