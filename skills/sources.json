@@ -131,6 +131,13 @@
       "base_tree": "4804b466ab26c9b9d8d42917547db133d1f20a9f"
     },
     {
+      "name": "implement-spec",
+      "source": "mattpocock/skills",
+      "url": "https://github.com/mattpocock/skills.git",
+      "path": "skills/engineering/implement-spec/SKILL.md",
+      "base_tree": "0cfefc751d0cb64f0c948ffcb17e13b94e778f08"
+    },
+    {
       "name": "improve-codebase-architecture",
       "source": "mattpocock/skills",
       "url": "https://github.com/mattpocock/skills.git",
