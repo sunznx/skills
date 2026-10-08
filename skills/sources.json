@@ -185,20 +185,6 @@
       "base_tree": "f9da2cbbff309e423c74189aaf5411474c3201ae"
     },
     {
-      "name": "opencli-browser-sitemap",
-      "source": "jackwener/opencli",
-      "url": "https://github.com/jackwener/opencli.git",
-      "path": "skills/opencli-browser-sitemap/SKILL.md",
-      "base_tree": "499277a8824aa67010925f713896fbe821fcc1a4"
-    },
-    {
-      "name": "opencli-sitemap-author",
-      "source": "jackwener/opencli",
-      "url": "https://github.com/jackwener/opencli.git",
-      "path": "skills/opencli-sitemap-author/SKILL.md",
-      "base_tree": "890322538dec444f0d8c51a5c4ceff9a5570fcef"
-    },
-    {
       "name": "opencli-usage",
       "source": "jackwener/opencli",
       "url": "https://github.com/jackwener/opencli.git",

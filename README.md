@@ -67,8 +67,6 @@ $sync-skills 更新 agent-messaging 删除某个功能
 | `opencli-adapter-author` | [jackwener/opencli](https://github.com/jackwener/opencli) | `skills/opencli-adapter-author/SKILL.md` | 三方合并 |
 | `opencli-autofix` | [jackwener/opencli](https://github.com/jackwener/opencli) | `skills/opencli-autofix/SKILL.md` | 三方合并 |
 | `opencli-browser` | [jackwener/opencli](https://github.com/jackwener/opencli) | `skills/opencli-browser/SKILL.md` | 三方合并 |
-| `opencli-browser-sitemap` | [jackwener/opencli](https://github.com/jackwener/opencli) | `skills/opencli-browser-sitemap/SKILL.md` | 三方合并 |
-| `opencli-sitemap-author` | [jackwener/opencli](https://github.com/jackwener/opencli) | `skills/opencli-sitemap-author/SKILL.md` | 三方合并 |
 | `opencli-usage` | [jackwener/opencli](https://github.com/jackwener/opencli) | `skills/opencli-usage/SKILL.md` | 三方合并 |
 | `planning-with-files` | [OthmanAdi/planning-with-files](https://github.com/OthmanAdi/planning-with-files) | `.agents/skills/planning-with-files/SKILL.md` | 三方合并（仅仓库） |
 | `prototype` | [mattpocock/skills](https://github.com/mattpocock/skills) | `skills/engineering/prototype/SKILL.md` | 三方合并 |
