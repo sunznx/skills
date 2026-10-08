@@ -39,7 +39,7 @@
       ]
     }
   ],
-  "title": {"text": "Capability Comparison", "subtitle": "Current profile versus target profile", "anchor": "start", "color": "#eef2fb", "subtitleColor": "#2b66c4"},
+  "title": {"text": "Capability Comparison", "subtitle": "Current profile versus target profile", "anchor": "start", "color": "#1f2937", "subtitleColor": "#2b66c4"},
   "scales": [
     {"name": "angular", "type": "point", "range": {"signal": "[-PI, PI]"}, "padding": 0.5, "domain": ["Resilience", "Automation", "Security", "Operability", "Scalability"]},
     {"name": "radial", "type": "linear", "range": {"signal": "[0, radius]"}, "domain": [0, 100], "zero": true},
@@ -55,7 +55,7 @@
           "x": {"signal": "(radius + 18) * cos(scale('angular', datum.dim))"},
           "y": {"signal": "(radius + 18) * sin(scale('angular', datum.dim))"},
           "text": {"field": "dim"},
-          "fill": {"value": "#dfe5fb"},
+          "fill": {"value": "#676f7e"},
           "fontSize": {"value": 11},
           "align": {"value": "center"}
         }

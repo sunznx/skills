@@ -157,7 +157,7 @@ node scripts/render.mjs .birdview/architecture.json .birdview/activity.html .bir
 要加入已经收集并审查的约束清单：
 
 ```sh
-node scripts/render.mjs .birdview/architecture.json .birdview/project.html --constraints .birdview/constraints.reviewed.json
+node scripts/birdview.mjs deliver .birdview/architecture.json .birdview/project.html --constraints .birdview/constraints.reviewed.json
 ```
 
 CLI 生成集成页面及相邻的 `project.sources.html` 辅助导出。来源发现、规则审查和独立约束图生成见[约束流程](references/constraint-graph.zh.md)。
@@ -239,3 +239,20 @@ node scripts/check-docs.mjs
 第三方许可证声明保留在 [THIRD_PARTY_NOTICES](THIRD_PARTY_NOTICES) 中。
 
 发版准备见[发布检查清单](docs/releasing.zh.md)。
+
+### 技能兼容性体检
+
+当你要检查已安装技能能否一起触发时，在 Codex 使用 `$birdview-compatibility`，在 Claude Code 使用 `/birdview-compatibility`。体检会先盘点生效的技能根目录，再读取相关技能正文，对比触发范围、调用模式、写权限和确认门槛，最后输出重复安装、触发重叠及按场景成立的兼容性结论，并列出每条结论使用的证据。
+
+直接运行 CLI 时，同时写出机器可读和人类可读结果：
+
+```sh
+node <skill-root>/scripts/birdview.mjs skills audit \
+  --project <project-root> \
+  --language zh \
+  --assessment <project-root>/.birdview/compatibility-assessment.json \
+  --write <project-root>/.birdview/compatibility-audit.json \
+  --write-markdown <project-root>/.birdview/compatibility-audit.md
+```
+
+与 Agent 的对话使用英文时传 `--language en`。该命令对已安装技能保持只读，不会禁用、改写或重排其他技能，也不会生成架构图。修改技能配置前，先阅读 Markdown 报告。

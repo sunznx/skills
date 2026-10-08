@@ -14,7 +14,7 @@
     .card-roadmap-head { margin: 0 0 12px; font-size: 20px; font-weight: 700;  }
     .card-roadmap-list { list-style: none; margin: 0; padding: 0; }
     .card-roadmap-list li { position: relative; padding-left: 15px; margin-bottom: 8px; font-size: 13px; line-height: 1.55;  }
-    .card-roadmap-list li::before { content: ''; position: absolute; left: 0; top: 8px; width: 7px; height: 7px; border-radius: 50%; background: #1f2937; }
+    .card-roadmap-list li::before { content: '•'; position: absolute; left: 0; top: 0; color: #1f2937; }
   </style>
   <section class="card-roadmap">
     <h1 class="card-roadmap-title">Delivery Roadmap</h1>

@@ -157,7 +157,7 @@ node scripts/render.mjs .birdview/architecture.json .birdview/activity.html .bir
 To include an already collected and reviewed constraint catalog:
 
 ```sh
-node scripts/render.mjs .birdview/architecture.json .birdview/project.html --constraints .birdview/constraints.reviewed.json
+node scripts/birdview.mjs deliver .birdview/architecture.json .birdview/project.html --constraints .birdview/constraints.reviewed.json
 ```
 
 The CLI writes the integrated page and a companion `project.sources.html` export. For source discovery, rule review and standalone constraint rendering, see the [constraint workflow](references/constraint-graph.md).
@@ -239,3 +239,20 @@ Released under the [MIT License](LICENSE). Copyright (c) 2026 Qiuner.
 Third-party notices are preserved in [THIRD_PARTY_NOTICES](THIRD_PARTY_NOTICES).
 
 For release preparation, see the [release checklist](docs/releasing.md).
+
+### Skill compatibility audit
+
+Use `$birdview-compatibility` in Codex or `/birdview-compatibility` in Claude Code when you want to check whether installed skills can be activated together. The audit first inventories the effective skill roots, then reads the relevant skill bodies to compare trigger scope, invocation mode, write permissions and confirmation gates. It reports duplicate installs, trigger overlaps and scenario-specific compatibility conclusions with the evidence used for each conclusion.
+
+For a direct CLI run, write both machine-readable and human-readable results:
+
+```sh
+node <skill-root>/scripts/birdview.mjs skills audit \
+  --project <project-root> \
+  --language en \
+  --assessment <project-root>/.birdview/compatibility-assessment.json \
+  --write <project-root>/.birdview/compatibility-audit.json \
+  --write-markdown <project-root>/.birdview/compatibility-audit.md
+```
+
+Pass `--language zh` for a Chinese report. The command is read-only with respect to installed skills: it does not disable, rewrite or reorder another skill, and it does not generate an architecture diagram. Review the Markdown report before changing skill configuration.

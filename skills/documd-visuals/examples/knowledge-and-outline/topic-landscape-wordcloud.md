@@ -10,7 +10,7 @@
   "width": 480,
   "height": 280,
   "padding": 8,
-  "title": {"text": "Topic Landscape", "subtitle": "Terms extracted from platform review notes", "anchor": "start", "color": "#eef2fb", "subtitleColor": "#2b66c4"},
+  "title": {"text": "Topic Landscape", "subtitle": "Terms extracted from platform review notes", "anchor": "start", "color": "#1f2937", "subtitleColor": "#2b66c4"},
   "data": [
     {
       "name": "table",

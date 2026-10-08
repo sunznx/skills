@@ -68,7 +68,7 @@ Template-less structures: `hierarchy-tree` · `hierarchy-mindmap` · `relation-d
   checklists, comparisons, quadrant sorting, knowledge maps, metric callouts.
 - Choose `echarts` instead as soon as there are axes, several series, or statistical shapes — the `chart-*`
   templates are deliberately lightweight callouts, not analytical charts.
-- Choose `plantuml`/`dot` when the diagram is a system (UML, dependencies, topology) rather than a narrative.
+- Choose `plantuml` when the diagram is a system (UML, dependencies, topology) rather than a narrative.
 
 ## Constraints
 

@@ -1,6 +1,6 @@
 {
   "version": "1.0.0",
-  "frozen": "2026-09-22",
+  "frozen": "2026-09-25",
   "metaClusters": {
     "A": "data & metrics",
     "B": "process & systems",
@@ -848,6 +848,32 @@
       "tier": "T1"
     },
     {
+      "id": "dependencies-and-relations/dependency-graph",
+      "domain": "dependencies-and-relations",
+      "meta": "B",
+      "intent": "dependency graph",
+      "engines": [
+        "plantuml"
+      ],
+      "examples": [
+        {
+          "engine": "plantuml",
+          "file": "examples/dependencies-and-relations/dependency-graph.md"
+        },
+        {
+          "engine": "plantuml",
+          "file": "examples/dependencies-and-relations/clustered-architecture.md"
+        }
+      ],
+      "F": 3,
+      "R": 3,
+      "D": 5,
+      "C": 5,
+      "X": 4,
+      "W": 3.75,
+      "tier": "T1"
+    },
+    {
       "id": "engineering-operations/ops-rhythm",
       "domain": "engineering-operations",
       "meta": "B",
@@ -1659,6 +1685,72 @@
         {
           "engine": "infographic",
           "file": "examples/business-reporting/sustainability-goals-progress.md"
+        }
+      ],
+      "F": 2,
+      "R": 3,
+      "D": 5,
+      "C": 5,
+      "X": 4,
+      "W": 3.45,
+      "tier": "T1"
+    },
+    {
+      "id": "dependencies-and-relations/causal-tree",
+      "domain": "dependencies-and-relations",
+      "meta": "B",
+      "intent": "causal tree",
+      "engines": [
+        "plantuml"
+      ],
+      "examples": [
+        {
+          "engine": "plantuml",
+          "file": "examples/dependencies-and-relations/fishbone-causal-tree.md"
+        }
+      ],
+      "F": 2,
+      "R": 3,
+      "D": 5,
+      "C": 5,
+      "X": 4,
+      "W": 3.45,
+      "tier": "T1"
+    },
+    {
+      "id": "dependencies-and-relations/relationship-network",
+      "domain": "dependencies-and-relations",
+      "meta": "B",
+      "intent": "relationship network",
+      "engines": [
+        "plantuml"
+      ],
+      "examples": [
+        {
+          "engine": "plantuml",
+          "file": "examples/dependencies-and-relations/relationship-network-neato.md"
+        }
+      ],
+      "F": 2,
+      "R": 3,
+      "D": 5,
+      "C": 5,
+      "X": 4,
+      "W": 3.45,
+      "tier": "T1"
+    },
+    {
+      "id": "dependencies-and-relations/tabular-nodes",
+      "domain": "dependencies-and-relations",
+      "meta": "B",
+      "intent": "tabular nodes",
+      "engines": [
+        "plantuml"
+      ],
+      "examples": [
+        {
+          "engine": "plantuml",
+          "file": "examples/dependencies-and-relations/table-node-structures.md"
         }
       ],
       "F": 2,
@@ -2730,32 +2822,6 @@
       "tier": "T2"
     },
     {
-      "id": "dependencies-and-relations/dependency-graph",
-      "domain": "dependencies-and-relations",
-      "meta": "B",
-      "intent": "dependency graph",
-      "engines": [
-        "dot"
-      ],
-      "examples": [
-        {
-          "engine": "dot",
-          "file": "examples/dependencies-and-relations/dependency-graph.md"
-        },
-        {
-          "engine": "dot",
-          "file": "examples/dependencies-and-relations/clustered-architecture.md"
-        }
-      ],
-      "F": 3,
-      "R": 2,
-      "D": 3,
-      "C": 5,
-      "X": 4,
-      "W": 3.2,
-      "tier": "T2"
-    },
-    {
       "id": "catalogues-and-inventories/service-catalogue",
       "domain": "catalogues-and-inventories",
       "meta": "D",
@@ -3658,6 +3724,28 @@
       "tier": "T2"
     },
     {
+      "id": "network-topology/radial-network",
+      "domain": "network-topology",
+      "meta": "C",
+      "intent": "radial network",
+      "engines": [
+        "plantuml"
+      ],
+      "examples": [
+        {
+          "engine": "plantuml",
+          "file": "examples/network-topology/radial-hub-network.md"
+        }
+      ],
+      "F": 2,
+      "R": 3,
+      "D": 5,
+      "C": 3,
+      "X": 4,
+      "W": 3.15,
+      "tier": "T2"
+    },
+    {
       "id": "organization-and-roles/capability-coverage",
       "domain": "organization-and-roles",
       "meta": "C",
@@ -4186,113 +4274,25 @@
       "tier": "T2"
     },
     {
-      "id": "dependencies-and-relations/causal-tree",
-      "domain": "dependencies-and-relations",
-      "meta": "B",
-      "intent": "causal tree",
-      "engines": [
-        "dot"
-      ],
-      "examples": [
-        {
-          "engine": "dot",
-          "file": "examples/dependencies-and-relations/fishbone-causal-tree.md"
-        }
-      ],
-      "F": 2,
-      "R": 2,
-      "D": 3,
-      "C": 5,
-      "X": 4,
-      "W": 2.9,
-      "tier": "T2"
-    },
-    {
-      "id": "dependencies-and-relations/relationship-network",
-      "domain": "dependencies-and-relations",
-      "meta": "B",
-      "intent": "relationship network",
-      "engines": [
-        "dot"
-      ],
-      "examples": [
-        {
-          "engine": "dot",
-          "file": "examples/dependencies-and-relations/relationship-network-neato.md"
-        }
-      ],
-      "F": 2,
-      "R": 2,
-      "D": 3,
-      "C": 5,
-      "X": 4,
-      "W": 2.9,
-      "tier": "T2"
-    },
-    {
-      "id": "dependencies-and-relations/tabular-nodes",
-      "domain": "dependencies-and-relations",
-      "meta": "B",
-      "intent": "tabular nodes",
-      "engines": [
-        "dot"
-      ],
-      "examples": [
-        {
-          "engine": "dot",
-          "file": "examples/dependencies-and-relations/table-node-structures.md"
-        }
-      ],
-      "F": 2,
-      "R": 2,
-      "D": 3,
-      "C": 5,
-      "X": 4,
-      "W": 2.9,
-      "tier": "T2"
-    },
-    {
-      "id": "network-topology/radial-network",
-      "domain": "network-topology",
-      "meta": "C",
-      "intent": "radial network",
-      "engines": [
-        "dot"
-      ],
-      "examples": [
-        {
-          "engine": "dot",
-          "file": "examples/network-topology/radial-hub-network.md"
-        }
-      ],
-      "F": 2,
-      "R": 2,
-      "D": 3,
-      "C": 3,
-      "X": 4,
-      "W": 2.6,
-      "tier": "T2"
-    },
-    {
       "id": "theme-and-tone/print-handout-graph",
       "domain": "theme-and-tone",
       "meta": "D",
       "intent": "print handout graph",
       "engines": [
-        "dot"
+        "plantuml"
       ],
       "examples": [
         {
-          "engine": "dot",
+          "engine": "plantuml",
           "file": "examples/theme-and-tone/print-handout-graph.md"
         }
       ],
       "F": 2,
-      "R": 2,
-      "D": 3,
+      "R": 3,
+      "D": 5,
       "C": 3,
       "X": 4,
-      "W": 2.6,
+      "W": 3.15,
       "tier": "T2"
     }
   ]

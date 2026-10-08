@@ -68,17 +68,23 @@
   ],
   "marks": [
     {
-      "type": "area",
-      "from": {"data": "density"},
-      "encode": {
-        "update": {
-          "x": {"scale": "x", "field": "value"},
-          "yc": {"scale": "layout", "field": "service", "band": 0.5},
-          "height": {"scale": "hscale", "field": "density"},
-          "fill": {"value": "#2b66c4"},
-          "fillOpacity": {"value": 0.45}
+      "type": "group",
+      "from": {"facet": {"name": "serviceFacet", "data": "density", "groupby": "service"}},
+      "marks": [
+        {
+          "type": "area",
+          "from": {"data": "serviceFacet"},
+          "encode": {
+            "update": {
+              "x": {"scale": "x", "field": "value"},
+              "yc": {"scale": "layout", "field": "service", "band": 0.5},
+              "height": {"scale": "hscale", "field": "density"},
+              "fill": {"value": "#2b66c4"},
+              "fillOpacity": {"value": 0.45}
+            }
+          }
         }
-      }
+      ]
     },
     {
       "type": "rect",

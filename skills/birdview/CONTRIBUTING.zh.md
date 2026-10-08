@@ -8,12 +8,10 @@
 
 ```sh
 npm ci
-npm run typecheck
-npm run check:build
-npm test
-npm run validate:examples
-node scripts/check-docs.mjs
+npm run check:pr
 ```
+
+`check:pr` 是统一的 PR 提交前清单，会依次运行类型检查、生成产物检查、单元测试、浏览器测试、已跟踪演示重新生成与差异检查、示例校验和文档检查。编辑后、提交前运行它；修改查看器时不能省略浏览器或演示页检查。
 
 修改查看器或渲染器时运行 `npm run build:demo` 并审阅已跟踪演示文件的 diff。验证中英文、桌面和移动端及受影响的交互。运行 `npx playwright install chromium` 和 `npm run test:browser` 进行真实浏览器检查，详见[发布检查清单](docs/releasing.zh.md)。行为改动应补充回归覆盖，在 PR 模板中说明实际运行的检查和剩余限制。不要包含私有源码数据或凭据。
 
@@ -38,6 +36,8 @@ CI 在 Windows 和 Linux 上使用 Node.js 18、24 检查，校验文档和示�
 - 提交前检查 staged diff，排除无关文件、生成物、调试输出和未说明的格式化。
 
 ## 文档维护
+
+部分提交含有其他未完成工作的工作区时，应在干净检出中仅应用选定改动，并运行上方检查（包括 `check:build` 和文档校验）。原工作区检查通过不代表选定提交通过。提交后、推送前运行 `check:install`。新增生成模块必须登记到 `build-artifacts.json`；文档哈希必须基于同一份待提交内容生成，不得包含无关的未完成工作。
 
 - 同目录下英文 `name.md` 与中文 `name.zh.md` 配对，首个标题下互链。优先引用同语言文档，避免正文混用语言。
 - 两版含义一致，包含示例、约束和限制；标识、命令、数据路径和枚举不翻译。同步编辑、审阅，不用摘要替代译文。

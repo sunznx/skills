@@ -19,23 +19,28 @@ theme
     - #7c5a3d
 data
   title Service Dependencies — Core Platform
-  desc Icons mark the infrastructure layer
+  desc Badges number the dependency depth from the gateway
   nodes
     - id gateway
       label API Gateway
       icon mdi/door-open
+      value 1
     - id auth
       label Identity
       icon mdi/shield-account
+      value 2
     - id events
       label Event Bus
       icon mdi/source-branch
+      value 3
     - id warehouse
       label Warehouse
       icon mdi/database
+      value 4
     - id billing
       label Billing
       icon mdi/receipt-text
+      value 2
   relations
     - from gateway
       to auth
@@ -49,19 +54,23 @@ data
 
 ## Data Shape
 
-`nodes` with `id`, `label`, and an `icon`; `relations` as plain edges (this layout does not label edges well —
-put the protocol in the surrounding text).
+`nodes` with `id`, `label`, `icon` and a numeric `value`; `relations` as plain edges (this layout does not
+label edges well — put the protocol in the surrounding text). ⚠️ The badge is drawn for **every** node, so
+a node without a `value` shows a `0` — here the value is the hop count from the entry point, and the `desc`
+says so.
 
 ## Key Options
 
 | Option | Effect |
 |---|---|
-| `infographic relation-network-icon-badge` | Icon badges for each service |
-| `relation-network-simple-circle-node` | Plain circles; best when names are long |
+| `infographic relation-network-icon-badge` | Icon and count badge for each service |
+| `value 2` | The badge number — the item prints it unconditionally, so it must mean something |
+| `relation-network-simple-circle-node` | Plain circles with no badge; best when names are long (the names become tooltips, so keep the figure small) |
 | `relation-dagre-flow` design block | Use for directed flows with ranked ordering |
 
 ## Pitfalls
 
+- ❌ A node with no `value` → ✅ the badge prints `0`; give it the hop count or switch template
 - ❌ Every edge labelled → ✅ this layout crowds quickly; label only the critical path
 - ❌ Icons that repeat → ✅ distinct icons make the network scannable
 - ❌ Showing all services → ✅ pick the dependency chain being discussed

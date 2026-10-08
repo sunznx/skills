@@ -1,11 +1,11 @@
 # Relation Network — Service Dependencies (Infographic)
 
 **Best for**: a small labeled dependency or concept network where the audience benefits from a pre-styled relational map rather than a low-level graph grammar
-**Avoid when**: the network is large, weighted, or needs algorithmic layout control (use graph/dot)
+**Avoid when**: the network is large, weighted, or needs algorithmic layout control (use a rectangle graph)
 **Answers**: which services depend on which others, and where the central connectors sit
 
 ```infographic
-infographic relation-network-simple-circle-node
+infographic
 theme
   colorPrimary #2b66c4
   palette
@@ -17,28 +17,25 @@ theme
     - #0f9b9b
     - #c16f8a
     - #7c5a3d
+design
+  structure relation-dagre-flow
+  item rounded-rect-node
 data
   title Service Dependency Network
-  desc Core runtime dependencies around the order path
+  desc Core runtime dependencies around the order path, each arrow naming the call
   nodes
     - id gateway
       label Gateway
-      group edge
     - id auth
       label Identity
-      group core
     - id catalog
       label Catalog
-      group core
     - id orders
       label Orders
-      group core
     - id billing
       label Billing
-      group supporting
     - id warehouse
       label Warehouse
-      group supporting
   relations
     - from gateway
       to auth
@@ -65,13 +62,15 @@ Use `nodes` plus `relations`. Nodes should have stable `id` values; relations co
 
 | Option | Effect |
 |---|---|
-| `relation-network-simple-circle-node` | A compact network layout with simple node styling |
+| `design` → `structure relation-dagre-flow` | Ranked flow layout; **the only relation structure that draws the relation labels** |
+| `design` → `item rounded-rect-node` | Boxes with their labels inside. `simple-circle-node` draws a bare circle — its label is a tooltip, so it exports as an unnamed dot |
 | `nodes` | Declares the entities in the network |
-| `relations` | Declares the connections between nodes |
-| `group` | Lets the template visually distinguish node categories |
+| `relations` | Declares the connections, each with a `label` naming the call |
+| Inline `design` block | Needed because `relation-dagre-flow` has no built-in template name |
 
 ## Pitfalls
 
+- ❌ `relation-network-simple-circle-node` for a labelled map → ✅ it draws circles only: no node labels and no relation labels, so the figure is nameless. Use the inline `relation-dagre-flow` design
 - ❌ Treating this as a precise architecture topology → ✅ it is a high-level relation map, not a protocol diagram
 - ❌ Too many nodes → ✅ relation templates saturate quickly; keep them small and conceptual
 - ❌ Omitting stable IDs → ✅ relation edges should bind to node IDs, not only display labels
@@ -80,8 +79,8 @@ Use `nodes` plus `relations`. Nodes should have stable `id` values; relations co
 
 | Variant | Use instead |
 |---|---|
-| Rich dependency graph with layout control | `graph-platform-dependencies.md` or DOT |
+| Rich dependency graph with layout control | `dependencies-and-relations/dependency-graph.md` |
 | Ordered process flow | `product-roadmap-sequence.md` or PlantUML flow examples |
 | Layered system structure | PlantUML or HTML architecture overviews |
 
-<!-- source: AntV Infographic syntax docs (`nodes` + `relations`) + template list (`relation-network-simple-circle-node`) -->
+<!-- source: AntV Infographic syntax docs (`nodes` + `relations`, inline `design` block) — relation labels verified to render only under `relation-dagre-flow` -->

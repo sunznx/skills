@@ -1,9 +1,10 @@
 # Converting a document
 
-This skill draws figures. The **`documd` CLI** is the other half of the pipeline: it renders a whole
-Markdown document to a finished file, converts a diagram source to an image, and pulls a document's
-figures out as separate files. Nothing here is needed to *write* a figure — the host application renders
-those. Reach for the CLI when the output is a file, or when you need to **check** that a figure renders.
+This skill draws figures **as text in the Markdown**, rendered live by the viewer — editing the block is
+editing the figure, and nothing is pre-rendered. The **`documd` CLI** is optional and downstream: it
+renders a whole Markdown document to a finished file, converts a diagram source to an image, and pulls a
+document's figures out as separate files. Nothing here is needed to *write* or *edit* a figure — reach for
+the CLI only when the output is a file, or when a render check is explicitly wanted.
 
 ## Running it
 
@@ -39,13 +40,13 @@ The second positional argument is the output file; the format is inferred from i
 |---|---|---|
 | `.md` · `.markdown` · `.mdown` · `.mkd` · `.txt` | `html` · `epub` · `docx` · `pdf` | Renders the whole document, figures included |
 | `SUMMARY.md` with `--book` | `html` · `epub` · `docx` · `pdf` | Whole-book export, following the GitBook summary |
-| `.puml` · `.mmd` · `.dot` · `.gv` · `.vl` · `.vega` · `.json` … | `svg` · `png` · `drawio` | Renders one diagram source; `--diagram-type` overrides the inferred engine |
+| `.puml` · `.vl` · `.vega` · `.json` … | `svg` · `png` | Renders one diagram source; `--diagram-type` overrides the inferred engine |
 
 ## Flags worth knowing
 
 | Flag | Effect |
 |---|---|
-| `--format <f>` | `html` · `epub` · `docx` · `pdf` · `svg` · `png` · `drawio` — inferred from the output extension when omitted. With `--assets`: `png` or `svg`, the figure's format |
+| `--format <f>` | `html` · `epub` · `docx` · `pdf` · `svg` · `png` — inferred from the output extension when omitted. With `--assets`: `png` or `svg`, the figure's format |
 | `-b, --book` | Treat the input as a GitBook `SUMMARY.md` and export the whole book |
 | `--assets <dir>` | Export the document's figures and images into `<dir>` instead of a document — see [Exporting the figures](#exporting-the-figures) |
 | `--kind <k>` | With `--assets`: `all` (default) · `diagrams` · `images` |
@@ -76,7 +77,7 @@ survives as *content*:
 
 | Element | In `html` / `epub` | In `docx` / `pdf` |
 |---|---|---|
-| Diagram engines (`plantuml` · `dot` · `vega` · `echarts` · `infographic`) | an `<img>` with the rendered figure | a rasterised image |
+| Diagram engines (`plantuml` · `vega` · `echarts` · `infographic`) | an `<img>` with the rendered figure | a rasterised image |
 | Bare-HTML cards and architecture diagrams | live markup | **rasterised** — one image, class names and text gone |
 | Markdown tables | a table | a table, reflowed to the page |
 | Prose | reflowable text | reflowable text |
@@ -119,7 +120,7 @@ Markdown (not a diagram source), there is no output-file argument, `--book` is n
 `--format` picks the figure payload rather than the document format — `png` (the pixels the page shows,
 the default) or `svg`.
 
-> ⚠️ **`--format svg` is not vector for every engine.** `plantuml` · `dot` · `vega` · `echarts` ·
+> ⚠️ **`--format svg` is not vector for every engine.** `plantuml` · `vega` · `echarts` ·
 > `infographic` return a clean SVG with a correct `viewBox`. A **bare-HTML figure** returns the
 > rasteriser's internal vehicle instead — a fixed 14000×14000 canvas, the content at
 > `transform: scale(4)`, and the `outline: 1px solid #ff0000` that the PNG path uses as a crop marker —
@@ -152,15 +153,15 @@ conversions. It never silences the report — only the exit code changes.
 The split matters to a script: the artifact paths and the asset table go to **stdout**, warnings and the
 error report go to **stderr**.
 
-This is also the only way to *check* a figure. Rendering the document is the one step that proves a block
-is valid — a fence that parses but draws the wrong thing, or a bare-HTML block that silently ended early,
-is caught here and nowhere else.
+This is also the only way to *check* a figure — never a required step before delivering one. Rendering the
+document is the one step that proves a block is valid — a fence that parses but draws the wrong thing, or
+a bare-HTML block that silently ended early, is caught here and nowhere else.
 
 ## Which to use
 
 | The task | Use |
 |---|---|
-| A figure inside a document the host application already renders | This skill, and nothing else |
+| A figure inside a document the host application already renders | This skill, and nothing else — the text renders live |
 | A `.docx` / `.pdf` / `.epub` of the finished document | `documd`, from a terminal |
 | A `.png` or `.svg` of one diagram, for a slide or a ticket | `documd`, with the diagram source as input |
 | Every figure and image a document contains, as files | `documd --assets`, see [Exporting the figures](#exporting-the-figures) |

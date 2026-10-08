@@ -1,7 +1,7 @@
 # Package Layering — Enforcing the Dependency Direction (PlantUML)
 
 **Best for**: showing the intended layering of a codebase and which layers may depend on which
-**Avoid when**: the reader needs the actual current dependencies (use `dot` on the real import graph)
+**Avoid when**: the reader needs the actual current dependencies (use `dependency-graph.md` on the real import graph)
 **Answers**: what the layering is supposed to be, and where an illegal dependency would show up
 
 ```plantuml
@@ -107,7 +107,7 @@ asserted — this diagram is a *contract*, not a map of reality.
 
 | Variant | Use instead |
 |---|---|
-| The real dependency graph with cycles | `dependency-graph.md` (`dot`) |
+| The real dependency graph with cycles | `dependency-graph.md` |
 | Components and their interfaces | `component-decomposition.md` |
 | Runtime deployment units | `runtime-deployment-topology.md` |
 

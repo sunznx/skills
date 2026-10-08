@@ -83,6 +83,7 @@ light to be text or a line, on any ground. `sits on` is the fill a text token ma
 | `positive` | text · line · fill | – | gains, passes, healthy state |
 | `positive-ink` | text · line | page | positive text and deltas |
 | `negative` | text · line · fill | – | failures, regressions |
+| `negative-ink` | text · line | page | negative text and deltas |
 | `warning` | text · line · fill | – | warning fill / band |
 | `warning-ink` | text · line | page | warning text and threshold lines |
 | `target` | line | – | dashed reference lines / goal markers |
@@ -93,7 +94,9 @@ place different colours in those slots; nothing else about the diagram changes.
 `positive` / `negative` are conveniences for the two semantic families — a theme may point them at
 the category that already carries that meaning (`cat-2` and `cat-4` in most themes). `-ink` variants
 exist because a mid-lightness family can be a fine fill and a poor text colour; instead of darkening
-the family (which wrecks the fill), each semantic family gets one readable ink variant.
+the family (which wrecks the fill), each semantic family gets one readable ink variant —
+`positive-ink`, `negative-ink`, `warning-ink`. A status chip is the standard use: the family's tint
+as the fill, its shade as the border, its `-ink` as the words.
 
 ## Derived colours
 
@@ -121,7 +124,7 @@ Three things about this are deliberate:
 | mode | where | colour budget |
 |---|---|---|
 | **chart** | `echarts` · `vega` / `vega-lite` · `chart-*` infographics | the category ramp, up to 8 colours, in order; semantic colours only for thresholds and deltas |
-| **card** | `html-css` · `plantuml` · `dot` · `list-*` / `sequence-*` infographics | one accent (`cat-1`) + neutrals (`ink` / `muted` / `surface-*`) + at most one semantic colour |
+| **card** | `html-css` · `plantuml` · `list-*` / `sequence-*` infographics | one accent (`cat-1`) + neutrals (`ink` / `muted` / `surface-*`) + at most one semantic colour |
 
 Charts pass the ramp to the engine (the top-level `color` array, `config.range.category`, the
 infographic `theme.palette`, the ordinal scale's `range`) in token order — never a hand-written list.

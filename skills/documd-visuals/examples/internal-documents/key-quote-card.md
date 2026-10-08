@@ -12,7 +12,7 @@
     .card-quote-line { margin: 8px 0 0; font-size: 27px; line-height: 1.5;  max-width: 620px; }
     .card-quote-mark-inline { background: linear-gradient(to top, rgba(214,59,46,0.20) 42%, transparent 42%); padding: 0 2px; }
     .card-quote-attribution { display: flex; align-items: center; gap: 14px; margin-top: 30px; }
-    .card-quote-rule { width: 44px; height: 3px; background: #6d4f36; flex-shrink: 0; }
+    .card-quote-rule { width: 44px; border-top: 3px solid #6d4f36; flex-shrink: 0; }
     .card-quote-name { margin: 0; font-size: 14px; font-weight: 700;  }
     .card-quote-role { margin: 2px 0 0; font-size: 12px;  }
     .card-quote-footer { margin-top: 34px; padding-top: 12px; border-top: 1px solid rgba(0,0,0,0.10); font-size: 11px;  }

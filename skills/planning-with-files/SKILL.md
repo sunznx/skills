@@ -28,7 +28,7 @@ hooks:
         - type: command
           command: "SH=\"${CLAUDE_SKILL_DIR}/scripts/skill-hook.sh\"; [ -f \"$SH\" ] || SH=$(ls \"$HOME/.claude/skills/planning-with-files/scripts/skill-hook.sh\" \"$HOME/.claude/plugins/marketplaces/planning-with-files/scripts/skill-hook.sh\" 2>/dev/null | head -1); [ -n \"$SH\" ] && [ -f \"$SH\" ] && sh \"$SH\" --event=precompact; exit 0"
 metadata:
-  version: "3.16.1"
+  version: "3.23.0"
 ---
 
 # Planning with Files
@@ -40,7 +40,7 @@ Work like Manus: Use persistent markdown files as your "working memory on disk."
 **Before continuing**, resolve the plan this task owns:
 
 1. Use the installed `scripts/resolve-plan-dir.sh` (or `.ps1`) with the task's `PLAN_ID` and `PWF_PLAN_ROOT`. Read `task_plan.md`, `progress.md`, and `findings.md` from that one selected directory. A root `task_plan.md` must not override a selected `.planning/<id>/` plan.
-2. If an explicit selector is rejected, or session isolation is armed with multiple plans and no `PLAN_ID`, stop plan recovery and correct the pin. Do not fall back to another task. Use the legacy project-root files only when no selector or named plan applies.
+2. If an explicit selector is rejected, or multiple named plans exist without `PLAN_ID`, stop plan recovery and correct the pin. Do not fall back to another task. Use the legacy project-root files only when no selector or named plan applies.
 3. Run `git diff --stat` to see code changes that may not yet be recorded in the planning files.
 
 All planning filenames below refer to this selected directory, even when the shell runs elsewhere. For parallel tasks, pin each host before starting it or use separate worktrees. A worker joining an existing task uses its assigned plan; it must not create or overwrite a competing root plan.
@@ -221,11 +221,17 @@ Helper scripts for automation:
 
 - `scripts/init-session.sh` — Initialize planning files. With a name arg, creates an isolated plan under `.planning/YYYY-MM-DD-<slug>/` for parallel task workflows. Without args, writes `task_plan.md` at project root (legacy mode, backward-compatible).
 - `scripts/set-active-plan.sh` — Switch the active plan pointer (`.planning/.active_plan`). Run with a plan ID to switch; run without args to show which plan is current.
-- `scripts/resolve-plan-dir.sh` — Resolve the active plan directory. A set `$PLAN_ID` is a binding: it resolves or resolution stops, never another plan (issue #237). With no `$PLAN_ID`, checks `.planning/.active_plan`, then newest plan dir by mtime, then falls back to project root (legacy). Used internally by hooks.
+- `scripts/resolve-plan-dir.sh` — Resolve the active plan directory. A set `$PLAN_ID` is a binding: it resolves or resolution stops, never another plan (issue #237). With no `$PLAN_ID`, multiple named plans refuse selection. A single named plan may use `.planning/.active_plan` or discovery by mtime; otherwise resolution falls back to the project root (legacy). Used internally by hooks.
 - `scripts/check-complete.sh` — Verify all phases in the active plan are complete.
 - `scripts/session-catchup.py`: Explicit same-project session-record aggregation or bounded replay (`--metadata` / `--replay`); bare invocation does not access host history.
 - `scripts/attest-plan.sh` (and `.ps1`) — Lock the current `task_plan.md` content with a SHA-256 attestation (v2.37.0). Hooks then refuse to inject plan content if the file diverges from the attested hash. Use `--show` to print the stored hash, `--clear` to remove the attestation. See `/plan-attest` command.
 - `scripts/plan-doctor.sh` — One-pass self-check for the mechanisms that fail silently (v3.6.0): plan resolution, hook injection, canonicalizer path shape, attestation state, install surfaces, per-fire hook latency. Run it whenever hooks seem quiet or after installing on a new machine. See `/plan-doctor` command.
+
+### List saved plans
+
+To find a task before resuming it, run `sh "<skill-dir>/scripts/set-active-plan.sh" --list` or, in Windows PowerShell, `& "<skill-dir>/scripts/set-active-plan.ps1" -List`. Replace `<skill-dir>` with this installed skill directory and keep your current directory at the project root.
+
+This read-only command lists named plans and phase progress under the current directory's `.planning/`. `[active]` marks the shared default pointer; it does not bind a session. Concurrent tasks still require each host's `PLAN_ID` or separate worktrees.
 
 ### Parallel task workflow
 
@@ -316,9 +322,11 @@ For a "babysit until done" workflow, combine `/plan-loop` (cadence) with `/plan-
 
 For skill-only installs (no `commands/` folder) or sessions where the slash command refuses to fire, the model can produce the same effect by executing the wrapper steps inline.
 
+For parallel tasks, pin each host with its task's `PLAN_ID` before starting it, or use separate worktrees. Set `PWF_PLAN_ROOT` when the project root differs from the host's working directory. `.planning/.active_plan` is a shared default; switching it does not bind parallel sessions to their tasks.
+
 **Manual `/plan-goal` procedure:**
 
-1. Resolve the active plan: prefer `${PLAN_ID}` env var, then `.planning/.active_plan`, then newest `.planning/<dir>/`, then legacy `./task_plan.md`.
+1. If set, validate `PWF_PLAN_ROOT` as an absolute, existing project root. When `PLAN_ID` is set, use the installed `scripts/resolve-plan-dir.sh` (or `.ps1`) and stop if it returns no directory; the explicit pin was rejected. With `PLAN_ID` unset, first run the resolver with `--check-ambiguity` (`-CheckAmbiguity` in PowerShell); if it returns `PWF_PLAN_AMBIGUOUS_V1`, stop and set a task-specific `PLAN_ID`. Then run the resolver normally and read the selected directory. If it returns no directory and the project root has `task_plan.md`, use the legacy root files; otherwise stop recovery.
 2. Read the resolved `task_plan.md`.
 3. Compose a goal condition. Default: `"all phases in task_plan.md report Status: complete and check-complete.sh reports ALL PHASES COMPLETE"`. If the user passed additional clauses, append them.
 4. Issue Claude Code's native `/goal <condition>` (CC primitive, always available).
@@ -359,7 +367,7 @@ The mode is set by writing a `.mode` file next to the plan (`.planning/<id>/.mod
 
 ### The legacy invariant (promise)
 
-With no `.mode` file and no other v3 marker, the hooks produce byte-identical output to v2.43, including the raw `progress.md` tail and the `===BEGIN PLAN DATA===` / `===END PLAN DATA===` delimiters. Every v3 behavior is additive and opt-in. No existing workflow changes.
+With no `.mode` file and no other v3 marker, plan injection preserves the v2.43 output, including the raw `progress.md` tail and the `===BEGIN PLAN DATA===` / `===END PLAN DATA===` delimiters. Autonomous and gated behavior remains opt-in. Since v3.18.3, completed plans are silent through the shared Stop gate and Codex Stop hook. Explicit `check-complete.sh` or `check-complete.ps1` calls without the gate flag still report completion; incomplete-plan notices and gate decisions are unchanged.
 
 ### What each mode does
 

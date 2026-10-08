@@ -1,7 +1,7 @@
 # Graph — Platform Dependency Map (ECharts)
 
 **Best for**: small relationship networks where the reader needs to see central nodes and direct dependencies without a strict hierarchy
-**Avoid when**: the flow direction or layer order matters more than adjacency (use dot or sankey)
+**Avoid when**: the flow direction or layer order matters more than adjacency (use a rectangle graph or sankey)
 **Answers**: which services sit at the centre, which nodes are peripheral, and where the densest coupling appears
 
 ```echarts
@@ -64,7 +64,7 @@ Two arrays: `data[{ name, x, y }]` for nodes and `links[{ source, target }]` for
 
 - ❌ Force layout with animation disabled → ✅ static exports can freeze before the graph tells a clean story; use fixed coordinates
 - ❌ Too many nodes in one frame → ✅ beyond a small network, labels and edges turn into a hairball
-- ❌ Using graph when layers matter → ✅ for explicit architectural layers, use DOT or PlantUML deployment/component views
+- ❌ Using graph when layers matter → ✅ for explicit architectural layers, use a PlantUML deployment/component view
 - ❌ Undirected edges when dependency direction matters → ✅ add arrows if the relation is not symmetric
 
 ## Alternatives

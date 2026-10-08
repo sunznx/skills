@@ -146,6 +146,6 @@ interface). Every mechanism edge should end at a concrete target resource, other
 |---|---|
 | Migration plan with dates and owners | `release-gantt-plan.md` or a programme WBS |
 | Target-state architecture | Cloud architecture examples (`awslib` or `mxgraph.aws4`) |
-| Application-level dependency analysis | A dependency graph in `dot` |
+| Application-level dependency analysis | A dependency graph (`dependencies-and-relations/dependency-graph.md`) |
 
 <!-- source: draw-uml-dev fixtures/plantuml/stdlib/aws/028 (MigrationTransfer) + 034/035 (Storage) + 012 (Database) macro lists -->

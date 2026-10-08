@@ -22,19 +22,18 @@
 **Pipeline** (why this engine is the only icon-capable one):
 
 ```
-PlantUML text ──draw-uml──► drawio XML ──drawio2svg──► SVG
+PlantUML text ──draw-uml──► layout + icons ──drawio2svg──► SVG
 ```
 
-The `drawio` fence is that intermediate format — it is **not** a writing target. `documd --format drawio`
-can export the XML when you need to hand it to another tool.
+That intermediate step is **not** a writing target — it is the pipeline, not a format to author in.
 
 ## Fit
 
 - Choose PlantUML **whenever a brand/device icon is needed** — no other recommended engine has an icon library.
 - Primary engine for process/BPMN, integration/EIP, software design, interfaces/sequence, cloud, network,
   security and enterprise architecture (ArchiMate).
-- Prefer `dot` when the layout is a plain graph (dependency / causality / hierarchy) and icons are irrelevant:
-  Graphviz has better rank/edge-routing control.
+- Also the engine for plain relationship graphs — dependency, causality, hierarchy, state machine: a
+  `rectangle` per node and one arrow per relation, with the layout computed from the edges.
 
 ## Support levels (read this before writing)
 
@@ -47,7 +46,8 @@ Not every diagram type behaves the same. Three levels, verified from the parser 
 | **L3 unsupported** | No parser rule | JSON · YAML · EBNF · Regex · nwdiag · SDL · Ditaa · Chronology · Math · Chart · Files tree |
 
 ⚠️ `@startwbs` is the dangerous one: it parses and exits 0, but the SVG comes out as an empty 342-byte file.
-Use a mind map (`@startmindmap`) or a `dot` tree instead, and say so instead of "fixing" the WBS block.
+Use a mind map (`@startmindmap`) or a boxed rectangle tree instead, and say so instead of
+"fixing" the WBS block.
 
 ### Single-line nesting blocks
 
@@ -128,7 +128,7 @@ adjustment — so a diagram that must sit on an arbitrary page needs its own fil
 | ❌ Don't | ✅ Do |
 |---|---|
 | One-line nesting in a diagram that may be pasted into stock PlantUML | Open the brace on its own line — this engine accepts both, official PlantUML only the multi-line form |
-| `@startwbs` for a work breakdown | `@startmindmap`, or a `dot` tree — WBS renders empty |
+| `@startwbs` for a work breakdown | `@startmindmap`, or a boxed rectangle tree — WBS renders empty |
 | `@starttiming` / `@startsalt` | A `sequence` diagram for timing; HTML/CSS for wireframes/mockups |
 | Free-hand hex colours on every element | `skinparam` once at the top, or stencil families that share a palette |
 | A 60-stencil tour in one diagram | One icon family per diagram; the family *is* the visual language |

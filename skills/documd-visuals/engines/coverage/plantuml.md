@@ -1,7 +1,7 @@
 # plantuml coverage ledger
 
 > Generated from `catalog/scenarios.json` plus the curated unit table for this engine.
-> Runtime: `@markdown-viewer/draw-uml` 1.5.2 → `@markdown-viewer/drawio2svg` 1.5.5. Last generated: 2026-09-22.
+> Runtime: `@markdown-viewer/draw-uml` 1.5.2 → `@markdown-viewer/drawio2svg` 1.5.5. Last generated: 2026-09-25.
 
 **Units** record what this engine does with each unit of its official documentation — kept, or
 excluded with the reason. **Examples by goal** is collected from the catalog, so every link below is
@@ -30,9 +30,9 @@ resolvable from this file.
 | Gantt | L1 | kept | 111 fixtures (largest corpus) · `planning-and-roadmap/release-gantt-plan.md` |
 | packetdiag | L1 | kept | 16 fixtures · `network-topology/packet-layout-tcp-header.md` |
 | ER / IE (crow's foot) | L1 | kept | 6 fixtures · `data-platform/entity-relationships-crows-foot.md` |
-| **WBS** | **L2** | excluded | `@startwbs` parses, exits 0, emits a 342-byte empty SVG (official baseline 4,535 B). Use `@startmindmap` or a `dot` tree |
+| **WBS** | **L2** | excluded | `@startwbs` parses, exits 0, emits a 342-byte empty SVG (official baseline 4,535 B). Use `@startmindmap` or a boxed rectangle tree |
 | **Salt** | **L2** | excluded | Whole block passed through as text. Use an HTML/CSS mockup card |
-| ditaa · JSON · YAML · EBNF · Regex · nwdiag · SDL · Chronology · Math · Chart diagram · Files tree | L3 | excluded | No parser rule; the block falls through to `verbatim`. Use `dot` for graphs, a code fence for the raw notation |
+| ditaa · JSON · YAML · EBNF · Regex · nwdiag · SDL · Chronology · Math · Chart diagram · Files tree | L3 | excluded | No parser rule; the block falls through to `verbatim`. Use a rectangle graph, or a code fence for the raw notation |
 
 ## Features (4 official + 5 implementation)
 
@@ -59,7 +59,7 @@ and intentionally have no example — domain-specific (PID, Rack, Veeam, …) or
 
 ## Examples by goal
 
-34 examples across 12 goal domains.
+41 examples across 13 goal domains.
 
 ### [software-design](../../goals/software-design.md)
 
@@ -82,6 +82,15 @@ and intentionally have no example — domain-specific (PID, Rack, Veeam, …) or
 | eip message flow | T1 | [eip-message-flow.md](../../examples/software-behaviour/eip-message-flow.md) |
 | event driven flow | T1 | [serverless-event-driven.md](../../examples/software-behaviour/serverless-event-driven.md) |
 | state machine | T1 | [order-state-machine.md](../../examples/software-behaviour/order-state-machine.md) |
+
+### [dependencies-and-relations](../../goals/dependencies-and-relations.md)
+
+| Scenario | Tier | Example |
+|---|---|---|
+| dependency graph | T1 | [dependency-graph.md](../../examples/dependencies-and-relations/dependency-graph.md)<br>[clustered-architecture.md](../../examples/dependencies-and-relations/clustered-architecture.md) |
+| causal tree | T1 | [fishbone-causal-tree.md](../../examples/dependencies-and-relations/fishbone-causal-tree.md) |
+| relationship network | T1 | [relationship-network-neato.md](../../examples/dependencies-and-relations/relationship-network-neato.md) |
+| tabular nodes | T1 | [table-node-structures.md](../../examples/dependencies-and-relations/table-node-structures.md) |
 
 ### [cloud-architecture](../../goals/cloud-architecture.md)
 
@@ -108,6 +117,14 @@ and intentionally have no example — domain-specific (PID, Rack, Veeam, …) or
 | lakehouse architecture | T2 | [data-platform-lakehouse.md](../../examples/data-platform/data-platform-lakehouse.md) |
 | ml pipeline | T2 | [machine-learning-pipeline.md](../../examples/data-platform/machine-learning-pipeline.md) |
 
+### [network-topology](../../goals/network-topology.md)
+
+| Scenario | Tier | Example |
+|---|---|---|
+| packet layout | T2 | [packet-layout-tcp-header.md](../../examples/network-topology/packet-layout-tcp-header.md) |
+| enterprise network | T2 | [network-topology-enterprise.md](../../examples/network-topology/network-topology-enterprise.md) |
+| radial network | T2 | [radial-hub-network.md](../../examples/network-topology/radial-hub-network.md) |
+
 ### [security-and-compliance](../../goals/security-and-compliance.md)
 
 | Scenario | Tier | Example |
@@ -123,19 +140,19 @@ and intentionally have no example — domain-specific (PID, Rack, Veeam, …) or
 | migration programme | T2 | [cloud-migration-programme.md](../../examples/migration-and-rollout/cloud-migration-programme.md) |
 | work breakdown | T2 | [work-breakdown-structure.md](../../examples/migration-and-rollout/work-breakdown-structure.md) |
 
-### [network-topology](../../goals/network-topology.md)
-
-| Scenario | Tier | Example |
-|---|---|---|
-| packet layout | T2 | [packet-layout-tcp-header.md](../../examples/network-topology/packet-layout-tcp-header.md) |
-| enterprise network | T2 | [network-topology-enterprise.md](../../examples/network-topology/network-topology-enterprise.md) |
-
 ### [enterprise-architecture](../../goals/enterprise-architecture.md)
 
 | Scenario | Tier | Example |
 |---|---|---|
 | archimate layered model | T2 | [archimate-layered-model.md](../../examples/enterprise-architecture/archimate-layered-model.md) |
 | capability map | T2 | [capability-map.md](../../examples/enterprise-architecture/capability-map.md) |
+
+### [theme-and-tone](../../goals/theme-and-tone.md)
+
+| Scenario | Tier | Example |
+|---|---|---|
+| editorial policy flow | T2 | [editorial-policy-flow.md](../../examples/theme-and-tone/editorial-policy-flow.md) |
+| print handout graph | T2 | [print-handout-graph.md](../../examples/theme-and-tone/print-handout-graph.md) |
 
 ### [knowledge-and-outline](../../goals/knowledge-and-outline.md)
 
@@ -149,19 +166,13 @@ and intentionally have no example — domain-specific (PID, Rack, Veeam, …) or
 |---|---|---|
 | release gantt | T2 | [release-gantt-plan.md](../../examples/planning-and-roadmap/release-gantt-plan.md) |
 
-### [theme-and-tone](../../goals/theme-and-tone.md)
-
-| Scenario | Tier | Example |
-|---|---|---|
-| editorial policy flow | T2 | [editorial-policy-flow.md](../../examples/theme-and-tone/editorial-policy-flow.md) |
-
 ## Counts
 
 | | |
 |---|---|
-| Examples using this engine | 34 |
-| Goal domains reached | 12 |
-| Scenarios | 34 |
+| Examples using this engine | 41 |
+| Goal domains reached | 13 |
+| Scenarios | 40 |
 | T0 scenarios | 0 |
 
 ## Sources

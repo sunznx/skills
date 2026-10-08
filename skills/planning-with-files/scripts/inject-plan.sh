@@ -51,7 +51,7 @@ select_python_candidates() {
         is_windowsapps_path "$_sp_candidate" && continue
         [ -f "$_sp_candidate" ] || continue
         [ -x "$_sp_candidate" ] || continue
-        if "$_sp_candidate" -c 'import sys; raise SystemExit(0 if sys.version_info >= (3, 8) else 1)' >/dev/null 2>&1; then
+        if "$_sp_candidate" -I -c 'import sys; raise SystemExit(0 if sys.version_info >= (3, 8) else 1)' >/dev/null 2>&1; then
             printf '%s\n' "$_sp_candidate"
             return 0
         fi
@@ -201,7 +201,7 @@ canonicalize() {
             printf "%s\n" "${out}"; return 0; }
     fi
     if [ -n "${PWF_PYTHON:-}" ]; then
-        out="$("${PWF_PYTHON}" -c "import os,sys;print(os.path.realpath(sys.argv[1]))" "${target}" 2>/dev/null)" \
+        out="$("${PWF_PYTHON}" -I -c "import os,sys;print(os.path.realpath(sys.argv[1]))" "${target}" 2>/dev/null)" \
             && [ -n "${out}" ] && { printf "%s\n" "${out}"; return 0; }
     fi
     return 1
@@ -254,6 +254,30 @@ is_within_root() {
 # The .active_plan pointer, the newest-by-mtime fallback, and the legacy root
 # task_plan.md are cwd GUESSES — only guesses are subject to the nested-root
 # conflict check below.
+# Shared .active_plan and directory mtime cannot identify this session's plan.
+# Check before selection or preflight, even when isolation was never armed.
+PLAN_AMBIGUOUS=0
+if [ -z "${PLAN_ID:-}" ]; then
+    PLAN_COUNT=0
+    if [ -d "${PLAN_PREFIX}.planning/sessions" ] && [ -f "${PLAN_PREFIX}task_plan.md" ]; then
+        PLAN_COUNT=1
+    fi
+    for plan_candidate in "${PLAN_PREFIX}".planning/*/task_plan.md; do
+        plan_candidate_dir="${plan_candidate%/task_plan.md}"
+        [ -L "$plan_candidate_dir" ] && continue
+        [ -f "$plan_candidate" ] || continue
+        slug_is_valid "${plan_candidate_dir##*/}" || continue
+        PLAN_COUNT=$((PLAN_COUNT + 1))
+        if [ "$PLAN_COUNT" -gt 1 ]; then PLAN_AMBIGUOUS=1; break; fi
+    done
+fi
+if [ "$PLAN_AMBIGUOUS" = "1" ] && { [ "$CONTEXT" = "preflight" ] || [ ! -d "${PLAN_PREFIX}.planning/sessions" ]; }; then
+    if [ "$CONTEXT" = "userprompt" ]; then
+        echo "[planning-with-files] Multiple plans are available. Set PLAN_ID=<slug> for this session; nothing injected."
+    fi
+    exit 0
+fi
+
 RESOLVED=""
 SCOPE=""
 EXPLICIT=0
@@ -272,7 +296,9 @@ if [ -n "${PLAN_ID:-}" ]; then
     # printing on those would spam the transcript with the same line. The
     # userprompt fire is also the one plan-doctor.sh drives, so /plan-doctor
     # still sees and reports the state.
-    if slug_is_valid "$PLAN_ID" && [ -d "${PLAN_PREFIX}.planning/${PLAN_ID}" ]; then
+    # A linked plan directory is never selectable (#270): same `-L` rule as
+    # the counter above and as resolve-plan-dir.sh, on every branch below.
+    if slug_is_valid "$PLAN_ID" && [ -d "${PLAN_PREFIX}.planning/${PLAN_ID}" ] && [ ! -L "${PLAN_PREFIX}.planning/${PLAN_ID}" ]; then
         RESOLVED="${PLAN_PREFIX}.planning/${PLAN_ID}"; SCOPE="scoped"; EXPLICIT=1
     else
         if [ "$CONTEXT" = "userprompt" ]; then
@@ -282,7 +308,7 @@ if [ -n "${PLAN_ID:-}" ]; then
     fi
 elif [ -f "${PLAN_PREFIX}.planning/.active_plan" ]; then
     AP=$(tr -d '\r\n[:space:]' < "${PLAN_PREFIX}.planning/.active_plan" 2>/dev/null)
-    if [ -n "$AP" ] && slug_is_valid "$AP" && [ -d "${PLAN_PREFIX}.planning/${AP}" ]; then
+    if [ -n "$AP" ] && slug_is_valid "$AP" && [ -d "${PLAN_PREFIX}.planning/${AP}" ] && [ ! -L "${PLAN_PREFIX}.planning/${AP}" ]; then
         RESOLVED="${PLAN_PREFIX}.planning/${AP}"; SCOPE="scoped"
     fi
 fi
@@ -291,6 +317,7 @@ if [ -z "$RESOLVED" ] && [ -d "${PLAN_PREFIX}.planning" ]; then
     for d in "${PLAN_PREFIX}".planning/*/; do
         d="${d%/}"; n="${d##*/}"
         case "$n" in .*) continue;; esac
+        [ -L "$d" ] && continue
         slug_is_valid "$n" || continue
         [ -f "$d/task_plan.md" ] || continue
         m=$(stat -c '%Y' "$d" 2>/dev/null || stat -f '%m' "$d" 2>/dev/null || date -r "$d" +%s 2>/dev/null || echo 0)
@@ -334,7 +361,7 @@ if [ -d "${PLAN_PREFIX}.planning/sessions" ]; then
         # A current session ID always determines its own portable digest.
         # Ambient PWF_SESSION_KEY may belong to a previous session and is
         # intentionally ignored. Safe legacy raw sentinels remain compatible.
-        SESSION_ATTACHED=$("$PWF_PYTHON" - "${PWF_PLAN_ROOT:-.}" "$SESSIONS_DIR" "$SESSION_ID" <<'PY' 2>/dev/null
+        SESSION_ATTACHED=$("$PWF_PYTHON" -I - "${PWF_PLAN_ROOT:-.}" "$SESSIONS_DIR" "$SESSION_ID" <<'PY' 2>/dev/null
 import ctypes
 import hashlib
 import os
@@ -442,27 +469,13 @@ PY
         exit 0
     fi
 
-    # An attachment admits a session but does not select one of several plans.
-    # When isolation is armed, require PLAN_ID if more than one live same-root
-    # candidate exists. PWF_PLAN_ROOT selects the project root, not a plan
-    # within that root.
-    if [ -z "${PLAN_ID:-}" ]; then
-        SESSION_PLAN_N=0
-        [ -f "${PLAN_PREFIX}task_plan.md" ] && SESSION_PLAN_N=1
-        for candidate in "${PLAN_PREFIX}".planning/*/task_plan.md; do
-            [ -f "$candidate" ] || continue
-            candidate_dir="${candidate%/task_plan.md}"
-            candidate_slug="${candidate_dir##*/}"
-            slug_is_valid "$candidate_slug" || continue
-            SESSION_PLAN_N=$((SESSION_PLAN_N + 1))
-            [ "$SESSION_PLAN_N" -gt 1 ] && break
-        done
-        if [ "$SESSION_PLAN_N" -gt 1 ]; then
-            if [ "$CONTEXT" = "userprompt" ]; then
-                echo "[planning-with-files] Multiple plans are available while session isolation is armed. Set PLAN_ID=<slug> for this session; nothing injected."
-            fi
-            exit 0
+    # Attachment admits a session but does not select its plan. Preserve the
+    # attachment-first notice above for sessions that never opted in.
+    if [ "$PLAN_AMBIGUOUS" = "1" ]; then
+        if [ "$CONTEXT" = "userprompt" ]; then
+            echo "[planning-with-files] Multiple plans are available while session isolation is armed. Set PLAN_ID=<slug> for this session; nothing injected."
         fi
+        exit 0
     fi
 fi
 
@@ -605,7 +618,7 @@ cleanup_snapshot() {
 # resolved path remains inside the canonical root.
 safe_snapshot() {
     [ -n "$PWF_PYTHON" ] || return 1
-    "$PWF_PYTHON" - "$1" "$2" "${PWF_PLAN_ROOT:-.}" "$3" <<'PY'
+    "$PWF_PYTHON" -I - "$1" "$2" "${PWF_PLAN_ROOT:-.}" "$3" <<'PY'
 import ctypes
 import os
 import stat
@@ -754,7 +767,7 @@ PY
 # content, or non-private cache directories are rejected.
 secure_progress_marker() {
     [ -n "$PWF_PYTHON" ] || return 1
-    "$PWF_PYTHON" - "$1" "$2" "$3" "$4" <<'PY'
+    "$PWF_PYTHON" -I - "$1" "$2" "$3" "$4" <<'PY'
 import os
 import secrets
 import stat

@@ -8,12 +8,10 @@ Use Node.js 18 or newer. Fork the repository on GitHub, work in a focused branch
 
 ```sh
 npm ci
-npm run typecheck
-npm run check:build
-npm test
-npm run validate:examples
-node scripts/check-docs.mjs
+npm run check:pr
 ```
+
+`check:pr` is the single pre-PR checklist. It runs type checking, generated-artifact checks, unit tests, browser tests, tracked-demo regeneration and diff verification, example validation, and documentation checks. Run it after editing and before committing; do not skip browser or generated-demo checks for viewer changes.
 
 For viewer or renderer changes, run `npm run build:demo` and review the tracked demo diff. Verify Chinese and English, desktop and mobile, and the affected interactions. Run `npx playwright install chromium` and `npm run test:browser` for real-browser checks; see the [release checklist](docs/releasing.md). Add regression coverage for behavior changes; describe checks actually run and any remaining limitations in the PR template. Never include private source data or credentials.
 
@@ -36,6 +34,7 @@ Browser implementation is maintained in `src/viewer/main.mts` with explicit impo
 - Each commit must contain one logically consistent set of changes. Stage and commit different kinds of changes separately.
 - Do not commit local state or temporary build artifacts; follow each directory's `.gitignore`. Distributed JavaScript generated from `src/` under `scripts/`, browser bundle `assets/viewer.js`, and generated exchange schemas under `schemas/` are intentional exceptions and must accompany changes to their TypeScript source. Do not commit `.test-build/`.
 - Before committing, inspect the staged diff and exclude unrelated files, generated artifacts, debug output and unexplained formatting.
+- When committing only part of a dirty workspace, validate the selected changes in a clean checkout without unrelated files. Run the checks above, including `check:build` and documentation validation, against that exact snapshot. A passing check in the original workspace does not validate the selected commit. After committing, run `check:install` before pushing. Register new generated modules in `build-artifacts.json`; generate documentation hashes from the same snapshot, never from unrelated unfinished work.
 
 ## Documentation maintenance
 

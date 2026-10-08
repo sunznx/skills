@@ -7,8 +7,8 @@
 | Tier | Count |
 |---|---|
 | T0 | 20 |
-| T1 | 81 |
-| T2 | 82 |
+| T1 | 85 |
+| T2 | 78 |
 | T3 | 0 |
 
 ## A — data & metrics
@@ -120,12 +120,12 @@
 | Scenario | Engines | Tier | W | Example |
 |---|---|---|---|---|
 | service dependencies | echarts, infographic, vega | T0 | 4.7 | `dependencies-and-relations/platform-dependency-graph.md`<br>`dependencies-and-relations/service-dependency-network.md`<br>`dependencies-and-relations/service-call-force-map.md`<br>`dependencies-and-relations/graph-platform-dependencies.md` |
+| dependency graph | plantuml | T1 | 3.75 | `dependencies-and-relations/dependency-graph.md`<br>`dependencies-and-relations/clustered-architecture.md` |
 | import coupling | vega | T1 | 3.65 | `dependencies-and-relations/module-import-arcs.md` |
 | ownership graph | echarts | T1 | 3.65 | `dependencies-and-relations/service-ownership-circle-graph.md` |
-| dependency graph | dot | T2 | 3.2 | `dependencies-and-relations/dependency-graph.md`<br>`dependencies-and-relations/clustered-architecture.md` |
-| causal tree | dot | T2 | 2.9 | `dependencies-and-relations/fishbone-causal-tree.md` |
-| relationship network | dot | T2 | 2.9 | `dependencies-and-relations/relationship-network-neato.md` |
-| tabular nodes | dot | T2 | 2.9 | `dependencies-and-relations/table-node-structures.md` |
+| causal tree | plantuml | T1 | 3.45 | `dependencies-and-relations/fishbone-causal-tree.md` |
+| relationship network | plantuml | T1 | 3.45 | `dependencies-and-relations/relationship-network-neato.md` |
+| tabular nodes | plantuml | T1 | 3.45 | `dependencies-and-relations/table-node-structures.md` |
 
 ### `incident-management`
 
@@ -227,7 +227,7 @@
 | route flows | echarts | T2 | 3.35 | `network-topology/lines-route-flows.md` |
 | packet layout | plantuml | T2 | 3.3 | `network-topology/packet-layout-tcp-header.md` |
 | enterprise network | plantuml | T2 | 3.15 | `network-topology/network-topology-enterprise.md` |
-| radial network | dot | T2 | 2.6 | `network-topology/radial-hub-network.md` |
+| radial network | plantuml | T2 | 3.15 | `network-topology/radial-hub-network.md` |
 
 ### `data-platform`
 
@@ -314,7 +314,7 @@
 | vivid launch share | echarts | T2 | 3.35 | `theme-and-tone/vivid-launch-share.md` |
 | accessible service mix | infographic | T2 | 3.15 | `theme-and-tone/accessible-service-mix.md` |
 | editorial policy flow | plantuml | T2 | 3.15 | `theme-and-tone/editorial-policy-flow.md` |
-| print handout graph | dot | T2 | 2.6 | `theme-and-tone/print-handout-graph.md` |
+| print handout graph | plantuml | T2 | 3.15 | `theme-and-tone/print-handout-graph.md` |
 
 ### `migration-and-rollout`
 

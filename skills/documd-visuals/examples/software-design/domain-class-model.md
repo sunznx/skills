@@ -145,7 +145,7 @@ Types + relationships. Keep attributes to the ones that carry domain meaning; a 
 | Variant | Use instead |
 |---|---|
 | Runtime object snapshot | An object diagram (`object "x" as id` syntax) |
-| Module dependency direction only | A dependency graph in `dot` (see `dependencies-and-relations`) |
+| Module dependency direction only | `dependencies-and-relations/dependency-graph.md` |
 | Data model for a database | Entity boxes + crow's foot via the IE syntax (`Entity01 }|..|| Entity02`) |
 
 <!-- source: draw-uml class parser (L1, 82 fixtures); syntax subset per draw-uml README -->

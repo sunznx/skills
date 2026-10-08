@@ -14,7 +14,7 @@ Three jobs, all done with the same tool. The first is the reason this engine exi
 | **Content artefact** — one page that explains one thing | a memo, policy note, incident review, brief or bulletin | [`examples/internal-documents/executive-brief-summary.md`](../examples/internal-documents/executive-brief-summary.md) · [`examples/incident-management/incident-review-card.md`](../examples/incident-management/incident-review-card.md) · [`examples/customer-and-partner-comms/customer-story-card.md`](../examples/customer-and-partner-comms/customer-story-card.md) |
 | **Page geometry** — the skeleton either of the above is built on | a grid that holds blocks | [`examples/goal-and-status-reporting/leadership-metric-board.md`](../examples/goal-and-status-reporting/leadership-metric-board.md) · [`examples/planning-and-roadmap/delivery-roadmap-board.md`](../examples/planning-and-roadmap/delivery-roadmap-board.md) · [`examples/comparison-and-selection/decision-comparison-card.md`](../examples/comparison-and-selection/decision-comparison-card.md) |
 
-When a diagram engine can draw the figure, prefer it: `plantuml` and `dot` compute a layout, and this
+When a diagram engine can draw the figure, prefer it: `plantuml` computes a layout, and this
 engine does not. Choose HTML when the figure is a **page** — when the arrangement itself is the design, or
 when the boxes need to hold prose.
 

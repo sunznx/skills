@@ -48,7 +48,7 @@ reachability by nesting, and arrows on top of it would be a second, contradictin
       <svg class="arch-overlay" viewBox="0 0 1000 436">
         <defs>
           <marker id="arch-arrow" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6" fill="none" stroke="#5b6b8c" stroke-width="1"/></marker>
-          <marker id="arch-arrow-open" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6" fill="none" stroke="#676f7e" stroke-width="1"/></marker>
+          <marker id="arch-arrow-open" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6" fill="none" stroke="#6b7280" stroke-width="1"/></marker>
         </defs>
         <path class="arch-link" d="M 160,84 L 160,200" marker-end="url(#arch-arrow)"/>
         <path class="arch-link" d="M 500,84 L 500,140 L 840,140 L 840,200" marker-end="url(#arch-arrow)"/>
@@ -108,6 +108,6 @@ to right angles, and a diagram of right angles reads as a system rather than a s
 |---|---|
 | Containment rather than calls | `nested-zones.md` |
 | Stage order rather than pairwise calls | `pipeline-stages.md` |
-| Dependencies a diagram engine can lay out for you | PlantUML or DOT examples in `dependencies-and-relations` |
+| Dependencies a diagram engine can lay out for you | PlantUML examples in `dependencies-and-relations` |
 
 <!-- source: recovered from the architecture skill's layouts/connectors.md — absolutely-positioned SVG overlay, orthogonal M/L paths, two arrow markers -->

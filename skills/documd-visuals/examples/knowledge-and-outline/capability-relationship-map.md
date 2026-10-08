@@ -19,26 +19,32 @@ theme
     - #7c5a3d
 data
   title Capability Relationship Map
-  desc One central capability and the surrounding support domains
+  desc Badges count the relations each node carries
   nodes
     - id core
       label Platform Core
       group central
+      value 5
     - id identity
       label Identity
       group support
+      value 1
     - id billing
       label Billing
       group support
+      value 1
     - id search
       label Search
       group support
+      value 1
     - id analytics
       label Analytics
       group support
+      value 1
     - id security
       label Security
       group support
+      value 1
   relations
     - from core
       to identity
@@ -54,22 +60,26 @@ data
 
 ## Data Shape
 
-Use `nodes` and `relations` when you have one center and a few simple surrounding connections.
+Use `nodes` and `relations` when you have one center and a few simple surrounding connections. ⚠️ The
+`icon-badge` item prints a number on every node: without a `value` it reads `0`, so give each node the count
+the figure is about (here, how many relations it carries — 5 for the hub, 1 per satellite).
 
 ## Key Options
 
 | Option | Effect |
 |---|---|
-| `relation-circle-icon-badge` | Hub-and-spoke relation treatment |
+| `relation-circle-icon-badge` | Hub-and-spoke relation treatment, with a count badge per node |
+| `value 5` | The badge number; the item prints it unconditionally |
 | `nodes` | Declares the entities shown in the map |
-| `relations` | Declares which entities connect |
+| `relations` | Declares which entities connect. **Relation labels are not drawn** by this structure — the `desc` has to carry that information |
 | `group` | Lets the template distinguish the central node from its satellites |
 
 ## Pitfalls
 
 - ❌ Large dependency webs → ✅ this family is best for a small conceptual relation map
-- ❌ Treating it like a precise architecture graph → ✅ use graph/dot when layout control matters
+- ❌ Treating it like a precise architecture graph → ✅ use a rectangle graph when layout control matters
 - ❌ Omitting stable node IDs → ✅ relations should bind to IDs, not only labels
+- ❌ Relying on `relations[].label` → ✅ the circle and network structures draw no edge labels; if the words on the arrows are the point, use a `sequence-*` template
 
 ## Alternatives
 

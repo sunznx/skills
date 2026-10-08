@@ -17,7 +17,7 @@
     .arch-cat-card { padding: 11px 12px; border-radius: 5px; background: #ffffff; border: 1px solid #5b6b8c; border-left-width: 4px; }
     .arch-cat-card.t0 { border-left-color: #2b66c4; }
     .arch-cat-card.t1 { border-left-color: #0f9b9b; }
-    .arch-cat-card.t2 { border-left-color: #676f7e; }
+    .arch-cat-card.t2 { border-left-color: #6b7280; }
     .arch-cat-card.degraded { background: #fdeedc; }
     .arch-cat-card.retiring { background: #f8fafc; border-style: dashed; }
     .arch-cat-name { font-size: 13px; font-weight: 700; margin-bottom: 2px; }
@@ -28,7 +28,7 @@
     .arch-cat-fact.warn { background: #fdeedc; border-color: #8a5a00; color: #8a5a00; font-weight: 600; }
     .arch-cat-fact.out { background: #f7d8da; border-color: #b82029; color: #b82029; font-weight: 600; }
     .arch-cat-legend { display: flex; gap: 16px; justify-content: center; margin-top: 16px; font-size: 11px; color: #676f7e; }
-    .arch-cat-legend i { display: inline-block; width: 10px; height: 10px; border-radius: 2px; margin-right: 5px; vertical-align: -1px; }
+    .arch-cat-legend i { display: inline-block; width: 4px; height: 12px; border-left: 4px solid; border-radius: 1px; margin-right: 6px; vertical-align: -2px; }
   </style>
   <section class="arch-cat">
     <h1 class="arch-cat-title">Service Catalog</h1>
@@ -57,7 +57,7 @@
       <div class="arch-cat-card t2"><div class="arch-cat-name">Exports</div><div class="arch-cat-owner">Data</div><div class="arch-cat-facts"><span class="arch-cat-fact">tier 2</span><span class="arch-cat-fact ok">healthy</span></div></div>
       <div class="arch-cat-card t2 retiring"><div class="arch-cat-name">Legacy cart</div><div class="arch-cat-owner">Money</div><div class="arch-cat-facts"><span class="arch-cat-fact">tier 2</span><span class="arch-cat-fact out">retiring Q3</span></div></div>
     </div>
-    <div class="arch-cat-legend"><span><i style="background: #2b66c4;"></i>tier 0 — pages someone at night</span><span><i style="background: #0f9b9b;"></i>tier 1 — business hours</span><span><i style="background: #676f7e;"></i>tier 2 — best effort</span></div>
+    <div class="arch-cat-legend"><span><i style="border-left-color: #2b66c4;"></i>tier 0 — pages someone at night</span><span><i style="border-left-color: #0f9b9b;"></i>tier 1 — business hours</span><span><i style="border-left-color: #6b7280;"></i>tier 2 — best effort</span></div>
   </section>
 </div>
 

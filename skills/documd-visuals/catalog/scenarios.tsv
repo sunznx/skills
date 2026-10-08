@@ -133,11 +133,11 @@ software-design	c4-container	plantuml	c4-container-diagram
 software-behaviour	deployment-topology	plantuml	runtime-deployment-topology
 software-behaviour	state-machine	plantuml	order-state-machine
 software-behaviour	api-interaction-sequence	plantuml	api-interaction-sequence
-dependencies-and-relations	dependency-graph	dot	dependency-graph
-dependencies-and-relations	dependency-graph	dot	clustered-architecture
-dependencies-and-relations	causal-tree	dot	fishbone-causal-tree
-dependencies-and-relations	relationship-network	dot	relationship-network-neato
-dependencies-and-relations	tabular-nodes	dot	table-node-structures
+dependencies-and-relations	dependency-graph	plantuml	dependency-graph
+dependencies-and-relations	dependency-graph	plantuml	clustered-architecture
+dependencies-and-relations	causal-tree	plantuml	fishbone-causal-tree
+dependencies-and-relations	relationship-network	plantuml	relationship-network-neato
+dependencies-and-relations	tabular-nodes	plantuml	table-node-structures
 dependencies-and-relations	service-dependencies	infographic	platform-dependency-graph
 dependencies-and-relations	service-dependencies	infographic	service-dependency-network
 dependencies-and-relations	service-dependencies	vega	service-call-force-map
@@ -154,7 +154,7 @@ data-platform	ml-pipeline	plantuml	machine-learning-pipeline
 data-platform	entity-relationships	plantuml	entity-relationships-crows-foot
 network-topology	enterprise-network	plantuml	network-topology-enterprise
 network-topology	packet-layout	plantuml	packet-layout-tcp-header
-network-topology	radial-network	dot	radial-hub-network
+network-topology	radial-network	plantuml	radial-hub-network
 network-topology	route-flows	echarts	lines-route-flows
 security-and-compliance	security-baseline	plantuml	security-baseline-aws
 security-and-compliance	threat-model	plantuml	threat-model-trust-boundaries
@@ -240,6 +240,6 @@ software-design	use-case-model	plantuml	use-case-model
 software-design	sysml-block-definition	plantuml	sysml-block-definition
 process-and-workflow	basic-activity-flow	plantuml	basic-activity-flow
 theme-and-tone	accessible-service-mix	infographic	accessible-service-mix
-theme-and-tone	print-handout-graph	dot	print-handout-graph
+theme-and-tone	print-handout-graph	plantuml	print-handout-graph
 theme-and-tone	vivid-launch-share	echarts	vivid-launch-share
 theme-and-tone	editorial-policy-flow	plantuml	editorial-policy-flow

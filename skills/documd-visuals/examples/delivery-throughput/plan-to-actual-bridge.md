@@ -44,7 +44,7 @@
       }
     },
     {
-      "mark": {"type": "text", "dy": -8, "color": "#dfe5fb"},
+      "mark": {"type": "text", "dy": -8, "color": "#1f2937"},
       "encoding": {
         "x": {"field": "step", "type": "ordinal"},
         "y": {"field": "end", "type": "quantitative"},

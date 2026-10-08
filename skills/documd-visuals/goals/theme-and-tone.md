@@ -11,7 +11,7 @@
 | vivid launch share | T2 | echarts | [`vivid-launch-share.md`](../examples/theme-and-tone/vivid-launch-share.md) |
 | accessible service mix | T2 | infographic | [`accessible-service-mix.md`](../examples/theme-and-tone/accessible-service-mix.md) |
 | editorial policy flow | T2 | plantuml | [`editorial-policy-flow.md`](../examples/theme-and-tone/editorial-policy-flow.md) |
-| print handout graph | T2 | dot | [`print-handout-graph.md`](../examples/theme-and-tone/print-handout-graph.md) |
+| print handout graph | T2 | plantuml | [`print-handout-graph.md`](../examples/theme-and-tone/print-handout-graph.md) |
 
 ## Reading order
 
@@ -19,12 +19,11 @@ Pick the theme first, then the figure: the medium decides the colours, and the b
 
 ## Engines in this goal
 
-- `dot` — computed layouts for dependency, causality and hierarchy graphs
 - `echarts` — report-grade charts and dashboards
 - `infographic` — template-driven boards, sequences and comparisons
 - `plantuml` — diagrams with icon families and UML/ArchiMate/BPMN semantics
 
-Details, limits and anti-patterns: [`../engines/dot.md`](../engines/dot.md) · [`../engines/echarts.md`](../engines/echarts.md) · [`../engines/infographic.md`](../engines/infographic.md) · [`../engines/plantuml.md`](../engines/plantuml.md).
+Details, limits and anti-patterns: [`../engines/echarts.md`](../engines/echarts.md) · [`../engines/infographic.md`](../engines/infographic.md) · [`../engines/plantuml.md`](../engines/plantuml.md).
 
 ## Palette
 

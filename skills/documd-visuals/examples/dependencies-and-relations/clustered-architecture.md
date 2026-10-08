@@ -1,81 +1,125 @@
-# Clustered Architecture with Cluster-to-Cluster Edges (DOT)
+# Clustered Architecture with Cluster-to-Cluster Edges (PlantUML)
 
 **Best for**: architecture overviews where edges should connect *groups* rather than individual boxes
 **Avoid when**: the reader needs service icons (use a PlantUML cloud/network example)
 **Answers**: how bounded contexts or planes relate, without drawing every internal edge
 
-```dot
-digraph arch {
-  node [style=filled fillcolor="#eef2fb" color="#5b6b8c" fontcolor="#1f2937"]
-  edge [color="#5b6b8c" fontcolor="#676f7e"]
-  compound=true;              // required for lhead/ltail (cluster-to-cluster edges)
-  rankdir=TB;
-  graph [fontname="Helvetica", nodesep=0.5, ranksep=0.8];
-  node [shape=box, style="rounded,filled", fillcolor="#eef2fb", fontname="Helvetica"];
-  edge [arrowsize=0.7, fontname="Helvetica", fontsize=10];
+```plantuml
+@startuml
+skinparam RectangleBackgroundColor #eef2fb
+skinparam RectangleBorderColor #5b6b8c
+skinparam RectangleFontColor #1f2937
+skinparam ComponentBackgroundColor #eef2fb
+skinparam ComponentBorderColor #5b6b8c
+skinparam ComponentFontColor #1f2937
+skinparam ClassBackgroundColor #eef2fb
+skinparam ClassBorderColor #5b6b8c
+skinparam ClassFontColor #1f2937
+skinparam UsecaseBackgroundColor #eef2fb
+skinparam UsecaseBorderColor #5b6b8c
+skinparam UsecaseFontColor #1f2937
+skinparam DatabaseBackgroundColor #eef2fb
+skinparam DatabaseBorderColor #5b6b8c
+skinparam DatabaseFontColor #1f2937
+skinparam NodeBackgroundColor #eef2fb
+skinparam NodeBorderColor #5b6b8c
+skinparam NodeFontColor #1f2937
+skinparam ActorBackgroundColor #eef2fb
+skinparam ActorBorderColor #5b6b8c
+skinparam ActorFontColor #1f2937
+skinparam StateBackgroundColor #eef2fb
+skinparam StateBorderColor #5b6b8c
+skinparam StateFontColor #1f2937
+skinparam ArtifactBackgroundColor #eef2fb
+skinparam ArtifactBorderColor #5b6b8c
+skinparam ArtifactFontColor #1f2937
+skinparam CloudBackgroundColor #eef2fb
+skinparam CloudBorderColor #5b6b8c
+skinparam CloudFontColor #1f2937
+skinparam FolderBackgroundColor #eef2fb
+skinparam FolderBorderColor #5b6b8c
+skinparam FolderFontColor #1f2937
+skinparam PackageBackgroundColor #eef2fb
+skinparam PackageBorderColor #5b6b8c
+skinparam DefaultFontColor #1f2937
+skinparam ArrowColor #5b6b8c
+skinparam ArrowFontColor #1f2937
+skinparam NoteBackgroundColor #dfe5fb
+skinparam NoteBorderColor #5b6b8c
+skinparam NoteFontColor #1f2937
+skinparam stereotypeABackgroundColor #d9e3f4
+skinparam stereotypeABorderColor #5b6b8c
+skinparam stereotypeCBackgroundColor #d9e3f4
+skinparam stereotypeCBorderColor #5b6b8c
+skinparam stereotypeEBackgroundColor #d9e3f4
+skinparam stereotypeEBorderColor #5b6b8c
+skinparam stereotypeIBackgroundColor #d9e3f4
+skinparam stereotypeIBorderColor #5b6b8c
+left to right direction
 
-  subgraph cluster_edge {
-    label="Edge plane";
-    style="rounded,filled"; fillcolor="#dfe5fb";
-    "CDN"; "WAF"; "API Gateway";
-  }
-
-  subgraph cluster_core {
-    label="Core services";
-    style="rounded,filled"; fillcolor="#676f7e";
-    "Identity"; "Orders"; "Payments"; "Inventory";
-  }
-
-  subgraph cluster_data {
-    label="Data plane";
-    style="rounded,filled"; fillcolor="#6b7280";
-    "Orders DB"; "Event Stream"; "Search Index";
-  }
-
-  subgraph cluster_ops {
-    label="Ops";
-    style="rounded,filled"; fillcolor="#5b6b8c";
-    "Metrics"; "Logs"; "Secrets";
-  }
-
-  // internal edges (kept minimal on purpose)
-  "CDN" -> "WAF" -> "API Gateway";
-  "Identity" -> "Orders";
-  "Orders" -> "Payments";
-  "Payments" -> "Orders DB";
-  "Orders" -> "Event Stream";
-  "Inventory" -> "Search Index";
-  "Secrets" -> "Payments";
-
-  // plane-to-plane edges: clipped to the cluster boundary via ltail/lhead
-  "API Gateway" -> "Orders" [ltail=cluster_edge, lhead=cluster_core, label="authenticated traffic"];
-  "Orders"       -> "Event Stream" [ltail=cluster_core, lhead=cluster_data, label="domain events"];
-  "Payments"     -> "Metrics" [ltail=cluster_core, lhead=cluster_ops, style=dashed, label="telemetry"];
-  "Identity"     -> "Secrets" [ltail=cluster_core, lhead=cluster_ops, style=dashed, label="credentials"];
+package "Edge plane" as edge #dfe5fb {
+  rectangle "CDN" as cdn
+  rectangle "WAF" as waf
+  rectangle "API Gateway" as gw
 }
+
+package "Core services" as core {
+  rectangle "Identity" as identity
+  rectangle "Orders" as orders
+  rectangle "Payments" as payments
+  rectangle "Inventory" as inventory
+}
+
+package "Data plane" as data {
+  rectangle "Orders DB" as ordersdb
+  rectangle "Event Stream" as stream
+  rectangle "Search Index" as search
+}
+
+package "Ops" as ops #f8fafc {
+  rectangle "Metrics" as metrics
+  rectangle "Logs" as logs
+  rectangle "Secrets" as secrets
+}
+
+' internal edges (kept minimal on purpose)
+cdn --> waf
+waf --> gw
+identity --> orders
+orders --> payments
+payments --> ordersdb
+orders --> stream
+inventory --> search
+
+' plane-to-plane edges: the arrow is clipped to the package boundary
+edge --> core : authenticated traffic
+core --> data : domain events
+core -[#6b7280,dashed]-> ops : telemetry
+@enduml
 ```
 
 ## Key Options
 
 | Syntax | Effect |
 |---|---|
-| `compound=true` | **Required** before `lhead` / `ltail` have any effect |
-| `ltail=cluster_x` / `lhead=cluster_y` | Clips the edge to the cluster boundary — the edge then reads as "plane to plane" |
-| `subgraph cluster_* { style="rounded,filled"; fillcolor=… }` | Filled cluster boxes; colour by plane, not by node |
-| `nodesep` / `ranksep` | Spacing between nodes in a rank / between ranks — the two knobs that fix cramped layouts |
-| `graph [fontname=…]` plus per-object fonts | Keep fonts consistent across graph, nodes and edges |
+| `package "name" as alias { … }` | A plane. The alias is what a plane-to-plane edge references |
+| `package "Ops" as ops #f8fafc { … }` | Per-plane fill, so the planes are told apart by surface as well as by title |
+| `edge --> core : label` | **Plane-to-plane edge** — the arrow is clipped to the package boundary, so the edge speaks about the group, with no `compound=true` to remember |
+| `-[#6b7280,dashed]->` | Dashed cross-plane edge in a second colour |
+| `rectangle "label" as alias` | A node inside a plane; the alias keeps the internal edges short |
+| `left to right direction` | Planes side by side; drop the line to stack them |
 
 ## Data Shape
 
 Clusters = **planes or bounded contexts**; internal edges = the few relationships worth showing inside a plane;
-`lhead`/`ltail` edges = the cross-plane contract. Reader question: "what are the planes and how do they talk".
+plane-to-plane edges = the cross-plane contract. Reader question: "what are the planes and how do they talk".
 
 ## Pitfalls
 
-- ❌ Using `lhead`/`ltail` without `compound=true` → ✅ they are silently ignored; the edge will attach to the node
+- ❌ `compound=true` + `lhead` / `ltail` → ✅ there is nothing to enable: a PlantUML edge between two package aliases is clipped to the boundary on its own
 - ❌ Drawing every internal call → ✅ show the 1–3 edges per plane that define the plane's role
-- ❌ Cross-plane edges landed on a random node → ✅ use `ltail`/`lhead` so the edge speaks about the group
-- ❌ Different fill for every cluster with no meaning → ✅ three planes maximum in practice; colour *is* the grouping
+- ❌ Cross-plane edges landed on a random node → ✅ draw the edge between the package aliases, not between members
+- ❌ Different fill for every cluster with no meaning → ✅ three planes maximum in practice; the fill *is* the grouping
 
 ## Alternatives
 
@@ -85,4 +129,4 @@ Clusters = **planes or bounded contexts**; internal edges = the few relationship
 | Deployment/zone topology | `runtime-deployment-topology.md` |
 | Dependency direction analysis | `dependency-graph.md` |
 
-<!-- source: Graphviz `compound` + `lhead`/`ltail` attributes (dot only), verified with @viz-js/viz (Graphviz 15.1.1) -->
+<!-- source: draw-uml 1.5.2 — package-to-package edges (`package "x" as p { }` then `p --> q`), per-package fill, verified with documd -->

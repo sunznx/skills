@@ -21,7 +21,7 @@
     .arch-pipe-item:last-child { margin-bottom: 0; }
     .arch-pipe-item small { display: block; font-size: 10px; color: #676f7e; margin-top: 2px; }
     .arch-pipe-item.dead { border-style: dashed; color: #676f7e; }
-    .arch-pipe-arrow { display: flex; align-items: center; justify-content: center; width: 34px; flex-shrink: 0; font-size: 20px; color: #5b6b8c; }
+    .arch-pipe-arrow { display: flex; align-items: center; justify-content: center; width: 34px; flex-shrink: 0; font-size: 20px; color: #676f7e; }
     .arch-pipe-sla { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-top: 14px; }
     .arch-pipe-kpi { padding: 10px; text-align: center; background: #ffffff; border: 1px solid #5b6b8c; border-radius: 4px; }
     .arch-pipe-kpi b { display: block; font-size: 19px; font-weight: 700; }

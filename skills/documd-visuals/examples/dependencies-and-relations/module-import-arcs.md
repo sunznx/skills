@@ -59,6 +59,30 @@
         {"type": "lookup", "from": "targetDegree", "key": "target", "fields": ["name"], "as": ["targetDegree"], "default": {"count": 0}},
         {"type": "formula", "as": "degree", "expr": "datum.sourceDegree.count + datum.targetDegree.count"}
       ]
+    },
+    {
+      "name": "layout",
+      "source": "nodes",
+      "transform": [
+        {"type": "formula", "as": "x", "expr": "scale('position', datum.order) + bandwidth('position') / 2"},
+        {"type": "formula", "as": "size", "expr": "120 + 60 * datum.degree"}
+      ]
+    },
+    {
+      "name": "arcs",
+      "source": "edges",
+      "transform": [
+        {"type": "lookup", "from": "layout", "key": "index", "fields": ["source", "target"], "as": ["sourceNode", "targetNode"]},
+        {
+          "type": "linkpath",
+          "shape": "arc",
+          "orient": "horizontal",
+          "sourceX": {"expr": "min(datum.sourceNode.x, datum.targetNode.x)"},
+          "targetX": {"expr": "max(datum.sourceNode.x, datum.targetNode.x)"},
+          "sourceY": {"expr": "height - 34"},
+          "targetY": {"expr": "height - 34"}
+        }
+      ]
     }
   ],
   "scales": [
@@ -70,46 +94,16 @@
   ],
   "marks": [
     {
-      "type": "symbol",
-      "name": "layout",
-      "interactive": false,
-      "from": {"data": "nodes"},
-      "encode": {
-        "enter": {"opacity": {"value": 0}},
-        "update": {
-          "x": {"scale": "position", "field": "order"},
-          "y": {"value": 0},
-          "size": {"field": "degree", "mult": 60, "offset": 120}
-        }
-      }
-    },
-    {
       "type": "path",
-      "from": {"data": "edges"},
+      "from": {"data": "arcs"},
       "encode": {
         "update": {
-          "stroke": {"scale": "color", "field": "group"},
+          "path": {"field": "path"},
+          "stroke": {"scale": "color", "field": "sourceNode.group"},
           "strokeOpacity": {"value": 0.45},
           "strokeWidth": {"field": "weight", "mult": 0.8}
         }
-      },
-      "transform": [
-        {
-          "type": "lookup",
-          "from": "layout",
-          "key": "datum.index",
-          "fields": ["datum.source", "datum.target"],
-          "as": ["sourceNode", "targetNode"]
-        },
-        {
-          "type": "linkpath",
-          "shape": "arc",
-          "sourceX": {"expr": "min(datum.sourceNode.x, datum.targetNode.x)"},
-          "targetX": {"expr": "max(datum.sourceNode.x, datum.targetNode.x)"},
-          "sourceY": {"expr": "height - 34"},
-          "targetY": {"expr": "height - 34"}
-        }
-      ]
+      }
     },
     {
       "type": "symbol",

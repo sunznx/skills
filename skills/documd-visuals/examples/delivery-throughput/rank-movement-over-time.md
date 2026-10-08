@@ -19,12 +19,12 @@
       {"quarter": "Q2", "group": "Platform", "value": 39},
       {"quarter": "Q2", "group": "Security", "value": 25},
       {"quarter": "Q2", "group": "Data", "value": 16},
-      {"quarter": "Q3", "group": "Platform", "value": 36},
-      {"quarter": "Q3", "group": "Security", "value": 27},
+      {"quarter": "Q3", "group": "Platform", "value": 34},
+      {"quarter": "Q3", "group": "Security", "value": 36},
       {"quarter": "Q3", "group": "Data", "value": 21},
-      {"quarter": "Q4", "group": "Platform", "value": 33},
-      {"quarter": "Q4", "group": "Security", "value": 31},
-      {"quarter": "Q4", "group": "Data", "value": 24}
+      {"quarter": "Q4", "group": "Platform", "value": 31},
+      {"quarter": "Q4", "group": "Security", "value": 38},
+      {"quarter": "Q4", "group": "Data", "value": 33}
     ]
   },
   "transform": [
@@ -41,7 +41,7 @@
 
 ## Data Shape
 
-One row per period/category pair with a measure to rank. The transform computes rank within each period before drawing the lines.
+One row per period/category pair with a measure to rank. The transform computes rank within each period before drawing the lines. ⚠️ **Check that the order actually changes**: if one category leads in every period the ranks are constant, every line is flat, and the figure says nothing — it has become a value trend drawn the hard way.
 
 ## Key Options
 
@@ -54,6 +54,7 @@ One row per period/category pair with a measure to rank. The transform computes 
 
 ## Pitfalls
 
+- ❌ Flat lines → ✅ they mean the ranking never changed; either find the periods where it did, or use `trend-line-multi-series.md`
 - ❌ Reading bump charts as magnitude charts → ✅ they show position change, not raw value distance
 - ❌ Too many categories → ✅ crossed lines quickly become unreadable
 - ❌ Forgetting per-period group ranking → ✅ global rank is not the same as rank within each period |

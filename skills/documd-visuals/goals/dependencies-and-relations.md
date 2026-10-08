@@ -9,25 +9,25 @@
 | Scenario | Tier | Engines | Example files |
 |---|---|---|---|
 | service dependencies | T0 | echarts, infographic, vega | [`platform-dependency-graph.md`](../examples/dependencies-and-relations/platform-dependency-graph.md)<br>[`service-dependency-network.md`](../examples/dependencies-and-relations/service-dependency-network.md)<br>[`service-call-force-map.md`](../examples/dependencies-and-relations/service-call-force-map.md)<br>[`graph-platform-dependencies.md`](../examples/dependencies-and-relations/graph-platform-dependencies.md) |
+| dependency graph | T1 | plantuml | [`dependency-graph.md`](../examples/dependencies-and-relations/dependency-graph.md)<br>[`clustered-architecture.md`](../examples/dependencies-and-relations/clustered-architecture.md) |
 | import coupling | T1 | vega | [`module-import-arcs.md`](../examples/dependencies-and-relations/module-import-arcs.md) |
 | ownership graph | T1 | echarts | [`service-ownership-circle-graph.md`](../examples/dependencies-and-relations/service-ownership-circle-graph.md) |
-| dependency graph | T2 | dot | [`dependency-graph.md`](../examples/dependencies-and-relations/dependency-graph.md)<br>[`clustered-architecture.md`](../examples/dependencies-and-relations/clustered-architecture.md) |
-| causal tree | T2 | dot | [`fishbone-causal-tree.md`](../examples/dependencies-and-relations/fishbone-causal-tree.md) |
-| relationship network | T2 | dot | [`relationship-network-neato.md`](../examples/dependencies-and-relations/relationship-network-neato.md) |
-| tabular nodes | T2 | dot | [`table-node-structures.md`](../examples/dependencies-and-relations/table-node-structures.md) |
+| causal tree | T1 | plantuml | [`fishbone-causal-tree.md`](../examples/dependencies-and-relations/fishbone-causal-tree.md) |
+| relationship network | T1 | plantuml | [`relationship-network-neato.md`](../examples/dependencies-and-relations/relationship-network-neato.md) |
+| tabular nodes | T1 | plantuml | [`table-node-structures.md`](../examples/dependencies-and-relations/table-node-structures.md) |
 
 ## Reading order
 
-Graphviz for computed layouts and rank control, force/arc layouts for topology shape, matrices when the graph is dense.
+Rectangle graphs for computed layouts and rank control, force/arc layouts for topology shape, matrices when the graph is dense.
 
 ## Engines in this goal
 
-- `dot` — computed layouts for dependency, causality and hierarchy graphs
 - `echarts` — report-grade charts and dashboards
 - `infographic` — template-driven boards, sequences and comparisons
+- `plantuml` — diagrams with icon families and UML/ArchiMate/BPMN semantics
 - `vega` / `vega-lite` — statistical views where the data needs transforms
 
-Details, limits and anti-patterns: [`../engines/dot.md`](../engines/dot.md) · [`../engines/echarts.md`](../engines/echarts.md) · [`../engines/infographic.md`](../engines/infographic.md) · [`../engines/vega.md`](../engines/vega.md).
+Details, limits and anti-patterns: [`../engines/echarts.md`](../engines/echarts.md) · [`../engines/infographic.md`](../engines/infographic.md) · [`../engines/plantuml.md`](../engines/plantuml.md) · [`../engines/vega.md`](../engines/vega.md).
 
 ## Palette
 

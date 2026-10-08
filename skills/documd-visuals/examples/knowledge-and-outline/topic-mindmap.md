@@ -1,7 +1,7 @@
 # Topic Mind Map
 
 **Best for**: decomposing one topic into branches when there is no strict order or hierarchy layer
-**Avoid when**: the structure is a real org chart or a work breakdown with owners (use WBS) or the nodes need free positioning (use a canvas-style layout)
+**Avoid when**: the structure is a real org chart or a work breakdown with owners (use WBS) or the nodes need free positioning (use an HTML/CSS diagram)
 **Answers**: what the topic consists of, at a glance
 
 ```plantuml
@@ -70,7 +70,7 @@ split it into two maps (current state / target state).
 | Variant | Use instead |
 |---|---|
 | Work breakdown with owners and deliverables | `work-breakdown-structure.md` |
-| Concept relationships with cross-links | A `dot` graph (`dependencies-and-relations`) |
+| Concept relationships with cross-links | `dependencies-and-relations/relationship-network-neato.md` |
 | Ordered progression of stages | An infographic sequence template or `sequence-*` |
 
 <!-- source: draw-uml mindmap parser (L1, 27 fixtures) -->

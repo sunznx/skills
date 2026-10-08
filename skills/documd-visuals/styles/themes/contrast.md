@@ -100,6 +100,7 @@ theme narrows, it never widens.
 | `positive` | `#006b4f` | ✓ | ✓ | ✓ | `#ffffff` | – | gains, passes, healthy state |
 | `positive-ink` | `#006b4f` | ✓ | ✓ | – | – | `page` | positive text and deltas |
 | `negative` | `#8c0e18` | ✓ | ✓ | ✓ | `#ffffff` | – | failures, regressions |
+| `negative-ink` | `#7b0c15` | ✓ | ✓ | – | – | `page` | negative text and deltas — the family shade, granted the text role so a red chip can carry red words |
 | `warning` | `#7a3400` | – | – | ✓ | – | – | warning fill / band |
 | `warning-ink` | `#7a3400` | ✓ | ✓ | – | – | `page` | warning text and threshold lines |
 | `target` | `#424242` | – | ✓ | – | – | – | dashed reference lines / goal markers |
@@ -270,23 +271,6 @@ _ordinal colour scale (Vega)._ Rewrite the `range` of the ordinal colour scale t
 { "name": "color", "type": "ordinal", "domain": { "data": "<dataset>", "field": "<category field>" }, "range": ["#0b4fa8", "#7a3400", "#006b4f", "#8c0e18", "#5b2d9e", "#0a6a6e", "#a6105e", "#4a4a4a"] }
 ```
 
-### dot · attributes
-
-_attribute block._ Three lines at the top of the `digraph` body, before any node or edge. `style=filled` is not optional — Graphviz ignores `fillcolor` on an unfilled node. No background is set: the graph stays transparent over the document.
-
-```dot
-node [style=filled fillcolor="#ededed" color="#636363" fontcolor="#000000"]
-edge [color="#636363" fontcolor="#424242"]
-```
-
-### dot · override
-
-_per-node override._ Node attributes are defaults, so one extra statement on the node is enough. Use the derived pair — `tint-*` fill with `shade-*` border — except for the fill-only families, which take the neutral `line` border because their shade is too light to read.
-
-```dot
-B [fillcolor="#ead4d5" color="#7b0c15" fontcolor="#000000"]
-```
-
 ### html-css · card
 
 _card._ Bare HTML card, coloured from the theme. The values are literal on purpose: documd-visuals does not follow the host document, so a card looks the same wherever it is pasted.
@@ -318,4 +302,4 @@ Every block above is rendered by the theme gate, which requires the declared val
 and the engine defaults to be gone. The contrast gate recomputes every ratio in the token
 table against this theme's ground. Both run per theme; see
 [`../palette.md`](../palette.md) for the contract, and for the per-engine mechanism
-[`../../engines/plantuml.md`](../../engines/plantuml.md) · [`../../engines/dot.md`](../../engines/dot.md) · [`../../engines/echarts.md`](../../engines/echarts.md) · [`../../engines/vega.md`](../../engines/vega.md) · [`../../engines/infographic.md`](../../engines/infographic.md) · [`../../engines/html-css.md`](../../engines/html-css.md).
+[`../../engines/plantuml.md`](../../engines/plantuml.md) · [`../../engines/echarts.md`](../../engines/echarts.md) · [`../../engines/vega.md`](../../engines/vega.md) · [`../../engines/infographic.md`](../../engines/infographic.md) · [`../../engines/html-css.md`](../../engines/html-css.md).

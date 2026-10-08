@@ -60,6 +60,14 @@
           ]
         }
       ]
+    },
+    {
+      "name": "linkPath",
+      "source": "links",
+      "transform": [
+        {"type": "formula", "as": "ready", "expr": "data('nodePos') ? 1 : 0"},
+        {"type": "linkpath", "shape": "line"}
+      ]
     }
   ],
   "scales": [
@@ -71,21 +79,11 @@
   "marks": [
     {
       "type": "path",
-      "from": {"data": "links"},
+      "from": {"data": "linkPath"},
       "interactive": false,
-      "transform": [
-        {"type": "lookup", "from": "nodePos", "key": "id", "fields": ["source", "target"], "as": ["s", "t"]},
-        {
-          "type": "linkpath",
-          "shape": "line",
-          "sourceX": {"expr": "datum.s.x"},
-          "sourceY": {"expr": "datum.s.y"},
-          "targetX": {"expr": "datum.t.x"},
-          "targetY": {"expr": "datum.t.y"}
-        }
-      ],
       "encode": {
         "update": {
+          "path": {"field": "path"},
           "stroke": {"value": "#2b66c4"},
           "strokeWidth": {"value": 1.3},
           "strokeOpacity": {"value": 0.8}

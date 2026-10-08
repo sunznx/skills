@@ -11,7 +11,7 @@
 | route flows | T2 | echarts | [`lines-route-flows.md`](../examples/network-topology/lines-route-flows.md) |
 | packet layout | T2 | plantuml | [`packet-layout-tcp-header.md`](../examples/network-topology/packet-layout-tcp-header.md) |
 | enterprise network | T2 | plantuml | [`network-topology-enterprise.md`](../examples/network-topology/network-topology-enterprise.md) |
-| radial network | T2 | dot | [`radial-hub-network.md`](../examples/network-topology/radial-hub-network.md) |
+| radial network | T2 | plantuml | [`radial-hub-network.md`](../examples/network-topology/radial-hub-network.md) |
 
 ## Reading order
 
@@ -19,11 +19,10 @@ Physical or logical topology with vendor stencils, packet layouts for protocol d
 
 ## Engines in this goal
 
-- `dot` — computed layouts for dependency, causality and hierarchy graphs
 - `echarts` — report-grade charts and dashboards
 - `plantuml` — diagrams with icon families and UML/ArchiMate/BPMN semantics
 
-Details, limits and anti-patterns: [`../engines/dot.md`](../engines/dot.md) · [`../engines/echarts.md`](../engines/echarts.md) · [`../engines/plantuml.md`](../engines/plantuml.md).
+Details, limits and anti-patterns: [`../engines/echarts.md`](../engines/echarts.md) · [`../engines/plantuml.md`](../engines/plantuml.md).
 
 ## Palette
 
