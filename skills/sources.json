@@ -241,6 +241,14 @@
       "base_tree": "335c1862a43da9d629abafdb79ca0c0de118be08"
     },
     {
+      "name": "setup-matt-pocock-skills",
+      "source": "mattpocock/skills",
+      "url": "https://github.com/mattpocock/skills.git",
+      "path": "skills/engineering/setup-matt-pocock-skills/SKILL.md",
+      "ref": "main",
+      "base_tree": "aafaabf96fa3945d8a4069317a7a6d36b7169670"
+    },
+    {
       "name": "show-me",
       "source": "humanlayer/skills",
       "url": "https://github.com/humanlayer/skills.git",

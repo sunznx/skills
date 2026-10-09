@@ -8,7 +8,7 @@ disable-model-invocation: true
 
 Surface architectural friction and propose **deepening opportunities**: refactors that turn shallow modules into deep ones. The aim is testability and AI-navigability.
 
-Use `planning-with-files` to resolve a named, gated plan for this review. If multiple plans exist and `PLAN_ID` is not bound, stop rather than choosing one. Save the report and review findings under the selected `<PLAN_DIR>`.
+Use `planning-with-files` to resolve a named, gated plan for this review. If multiple plans exist and `PLAN_ID` is not bound, stop rather than choosing one. Save the report and review findings under the selected `<PLAN_DIR>`. Before reading Matt configuration, follow [shared configuration initialization](../setup-matt-pocock-skills/references/ensure-config.md).
 
 This command is _informed_ by the project's domain model and built on a shared design vocabulary:
 

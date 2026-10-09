@@ -6,7 +6,7 @@ disable-model-invocation: true
 
 A loose idea has arrived, too big for one agent session, and wrapped in fog: the way from here to the **destination** isn't visible yet. Wayfinding is about finding that way, not charging at the destination. This skill charts the way as a **shared map** on the repo's issue tracker, then works its **decision tickets** (questions whose resolution is a decision, not slices of a build to execute) one at a time until the route is clear.
 
-Use `planning-with-files` to resolve a named, gated plan for the map. If multiple plans exist and `PLAN_ID` is not bound, stop rather than choosing one. Keep the map URL or local map path and the current frontier in that plan.
+Use `planning-with-files` to resolve a named, gated plan for the map. If multiple plans exist and `PLAN_ID` is not bound, stop rather than choosing one. Keep the map URL or local map path and the current frontier in that plan. Before reading Matt configuration, follow [shared configuration initialization](../setup-matt-pocock-skills/references/ensure-config.md).
 
 The destination varies per effort, and naming it is the first act of charting: it shapes every ticket. It might be a spec to hand off and iterate on, a decision to lock before planning starts, or a change made in place like a data-structure migration. The map is domain-agnostic: engineering work, course content, whatever fits the shape.
 
@@ -24,7 +24,7 @@ The map is a single issue on this repo's issue tracker, labelled `wayfinder:map`
 
 The map is an **index**, not a store. It lists the decisions made and points at the tickets that hold their detail; a decision lives in exactly one place, its ticket, so the map never restates it, only gists it and links.
 
-**Where the map, its child tickets, blocking, and frontier queries physically live is tracker-specific.** Read `.planning/issue-tracker.md` and its "Wayfinding operations" section for how _this_ repo expresses them. If that file is absent, use the local-markdown tracker under `<PLAN_DIR>/wayfinder/`; do not create a tracker config implicitly.
+**Where the map, its child tickets, blocking, and frontier queries physically live is tracker-specific.** Read `.planning/issue-tracker.md` and its "Wayfinding operations" section for how _this_ repo expresses them. The shared initializer supplies the local-markdown tracker under `<PLAN_DIR>/wayfinder/` when no configuration exists.
 
 ### The map body
 

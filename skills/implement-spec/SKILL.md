@@ -6,7 +6,7 @@ disable-model-invocation: true
 
 You have been provided a spec. This spec should have tickets associated with it, describing how to implement the spec.
 
-Use `planning-with-files` to resolve the named, gated plan. If multiple plans exist and `PLAN_ID` is not bound, stop rather than choosing one. Read `<PLAN_DIR>/spec.md` and `<PLAN_DIR>/tickets/` first when present; fetch linked spec or tickets when those files are absent. Read `.planning/issue-tracker.md`; if it is missing, report the missing path and stop. Read `.planning/domain.md` when present.
+Use `planning-with-files` to resolve the named, gated plan. If multiple plans exist and `PLAN_ID` is not bound, stop rather than choosing one. Read `<PLAN_DIR>/spec.md` and `<PLAN_DIR>/tickets/` first when present; fetch linked spec or tickets when those files are absent. Before reading Matt configuration, follow [shared configuration initialization](../setup-matt-pocock-skills/references/ensure-config.md). Read `.planning/issue-tracker.md`. Read `.planning/domain.md` when present.
 
 The tracker configuration defines how work is resolved, including local ticket files. Record ticket state, integration commits, test commands and results, and the final commit or PR URL in `<PLAN_DIR>/progress.md`.
 

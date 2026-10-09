@@ -6,7 +6,7 @@ disable-model-invocation: true
 
 This skill takes the current conversation context and codebase understanding and produces a spec. Do NOT interview the user; just synthesize what you already know.
 
-Use `planning-with-files` to resolve a named, gated plan for this task. If multiple plans exist and `PLAN_ID` is not bound, stop rather than choosing one. Read `.planning/issue-tracker.md` and `.planning/triage-labels.md`; if either is missing, report the missing path and stop. Read `.planning/domain.md` when present.
+Use `planning-with-files` to resolve a named, gated plan for this task. If multiple plans exist and `PLAN_ID` is not bound, stop rather than choosing one. Before reading Matt configuration, follow [shared configuration initialization](../setup-matt-pocock-skills/references/ensure-config.md). Read `.planning/issue-tracker.md` and `.planning/triage-labels.md`. Read `.planning/domain.md` when present.
 
 ## Process
 

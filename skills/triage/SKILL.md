@@ -8,7 +8,7 @@ disable-model-invocation: true
 
 Move issues on the project issue tracker through a small state machine of triage roles.
 
-Use `planning-with-files` to resolve a named, gated plan for this triage work. If multiple plans exist and `PLAN_ID` is not bound, stop rather than choosing one. Read `.planning/issue-tracker.md` and `.planning/triage-labels.md`; if either is missing, report the missing path and stop. Read `.planning/domain.md` when present. Record the issue or PR URL and triage outcome in the selected plan.
+Use `planning-with-files` to resolve a named, gated plan for this triage work. If multiple plans exist and `PLAN_ID` is not bound, stop rather than choosing one. Before reading Matt configuration, follow [shared configuration initialization](../setup-matt-pocock-skills/references/ensure-config.md). Read `.planning/issue-tracker.md` and `.planning/triage-labels.md`. Read `.planning/domain.md` when present. Record the issue or PR URL and triage outcome in the selected plan.
 
 If this repo treats external pull requests as a request surface (see the issue-tracker config), triage covers them too: **a PR is an issue with attached code**, using the same roles, same states, and same machine, with a few deltas marked "for a PR" below. Resolve a bare `#42` to an issue or PR per the tracker config.
 
