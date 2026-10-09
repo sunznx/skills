@@ -14,7 +14,7 @@ Scaffold the per-repo configuration that the engineering skills assume:
 
 Manual setup is prompt-driven: explore, confirm the intended configuration, then write. Dependent skills use the deterministic [missing-only initializer](references/ensure-config.md) directly; that path fills defaults without running this interview or editing steering files.
 
-Use `planning-with-files` to resolve a named, gated plan for manual setup. Bind `PLAN_ID` when multiple plans exist. Project configuration lives in `.planning/issue-tracker.md`, `.planning/triage-labels.md`, and `.planning/domain.md` under the project owning the selected plan. Specs, tickets and new ADRs live under `<PLAN_DIR>`. Preserve existing configuration unless the user explicitly requests a change.
+Use `planning-with-files` to resolve a named, gated plan for manual setup. Bind `PLAN_ID` when multiple plans exist. Project configuration lives in `.planning/issue-tracker.md`, `.planning/triage-labels.md`, and `.planning/domain.md` under the project owning the selected plan. Specs and tickets live under `<PLAN_DIR>`; new ADRs default to the project's `.planning/adr/`, shared across tasks. Preserve existing configuration unless the user explicitly requests a change.
 
 ## Shared initialization
 
@@ -31,7 +31,7 @@ Look at the current repo to understand its starting state. Read whatever exists;
 - `git remote -v` and `.git/config`: is this a GitHub repo? Which one?
 - `AGENTS.md` and `CLAUDE.md` at the repo root: does either exist? Is there already an `## Agent skills` section in either?
 - `GLOSSARY.md` and `GLOSSARY-MAP.md` at the repo root
-- `docs/adr/` and any `src/*/docs/adr/` directories
+- `.planning/adr/`, `docs/adr/` and any `src/*/docs/adr/` directories
 - `.planning/` and legacy `docs/agents/`: does configuration already exist? Read it before proposing changes.
 - the selected `<PLAN_DIR>`: check existing `spec.md`, `tickets/`, and `wayfinder/` artifacts
 - Is the `triage` skill installed? (a `triage` skill folder alongside this one, or `triage` in your available skills.) This decides whether remote label creation is needed. The local label mapping is always available to `to-spec` and `to-tickets`.
@@ -64,7 +64,7 @@ If it is installed, ask exactly one question:
 
 The defaults are the five canonical roles, each label string equal to its name: `needs-triage`, `needs-info`, `ready-for-agent`, `ready-for-human`, `wontfix`. On **yes**, write them as-is. Only if the user says no, usually because their tracker already uses other names (e.g. `bug:triage` for `needs-triage`), collect the overrides so `triage` applies existing labels instead of creating duplicates.
 
-**Section C: Domain docs.** Default to **single-context** (`GLOSSARY.md` at the repo root + new ADRs in `<PLAN_DIR>/adr/`; read existing project ADRs too). This fits almost every repo; write it without asking.
+**Section C: Domain docs.** Default to **single-context** (`GLOSSARY.md` at the repo root + new ADRs in the project's `.planning/adr/`; read existing project ADRs too). This fits almost every repo; write it without asking.
 
 Offer **multi-context** (a root `GLOSSARY-MAP.md` pointing to per-context `GLOSSARY.md` files) only when exploration found monorepo signals. Then confirm which layout they want.
 

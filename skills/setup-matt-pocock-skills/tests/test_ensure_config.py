@@ -39,7 +39,8 @@ class EnsureConfigTests(unittest.TestCase):
         self.assertIn("<PLAN_DIR>/wayfinder/", tracker)
         self.assertNotIn(".scratch/", tracker)
         domain = (self.project / ".planning/domain.md").read_text()
-        self.assertIn("<PLAN_DIR>/adr/", domain)
+        self.assertIn(".planning/adr/", domain)
+        self.assertNotIn("<PLAN_DIR>/adr/", domain)
         self.assertEqual({p.name for p in self.project.iterdir()}, {".planning"})
         self.assertEqual({p.name for p in (self.project / ".planning").iterdir()}, set(CONFIGS))
 

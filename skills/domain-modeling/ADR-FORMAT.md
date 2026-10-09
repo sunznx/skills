@@ -1,6 +1,6 @@
 # ADR Format
 
-ADRs live in `<PLAN_DIR>/adr/` by default, or in the directory specified by `.planning/domain.md` or the calling skill, and use sequential numbering: `0001-slug.md`, `0002-slug.md`, etc.
+ADRs live in `.planning/adr/` at the project root by default, shared across tasks, or in the directory specified by `.planning/domain.md` or the calling skill. They use sequential numbering: `0001-slug.md`, `0002-slug.md`, etc.
 
 Create the selected ADR directory lazily: only when the first ADR is needed.
 
@@ -24,7 +24,7 @@ Only include these when they add genuine value. Most ADRs won't need them.
 
 ## Numbering
 
-Scan the selected ADR directory for the highest existing number and increment by one.
+Scan the selected ADR directory for the highest existing number and increment by one. Reuse that directory across tasks; starting a new PWF plan does not reset ADR numbering.
 
 ## When to offer an ADR
 

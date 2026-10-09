@@ -13,7 +13,7 @@ Use `planning-with-files` to resolve a named, gated plan for this review. If mul
 This command is _informed_ by the project's domain model and built on a shared design vocabulary:
 
 - Call the Skill tool with "codebase-design" for the architecture vocabulary (**module**, **interface**, **depth**, **seam**, **adapter**, **leverage**, **locality**) and its principles (the deletion test, "the interface is the test surface", "one adapter = hypothetical seam, two = real"). Use these terms exactly in every suggestion, and don't drift into "component," "service," "API," or "boundary."
-- The domain language in `GLOSSARY.md` gives names to good seams; read relevant ADRs from the current plan's `adr/` and any project location specified by `.planning/domain.md` before making suggestions.
+- The domain language in `GLOSSARY.md` gives names to good seams; read relevant ADRs from the project's `.planning/adr/`, or the location specified by `.planning/domain.md`, before making suggestions. Also read relevant existing ADRs in `docs/adr/` and `src/<context>/docs/adr/`.
 
 ## Process
 
