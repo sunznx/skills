@@ -212,13 +212,6 @@
       "note": "本地维护，显式保存 PWF 任务产物"
     },
     {
-      "name": "ra-人话",
-      "source": "Pluviobyte/rnskill",
-      "url": "https://github.com/Pluviobyte/rnskill.git",
-      "path": "skills/ra-人话/SKILL.md",
-      "base_tree": "a2abef2930e8d3c5fad68604577f36bcf191c46f"
-    },
-    {
       "name": "research",
       "source": "mattpocock/skills",
       "url": "https://github.com/mattpocock/skills.git",
