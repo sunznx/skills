@@ -47,6 +47,13 @@
       "base_tree": "07ba1cd60efc12d0d3a083005c1d9651cf15e39a"
     },
     {
+      "name": "correct",
+      "source": "cursor/plugins",
+      "url": "https://github.com/cursor/plugins.git",
+      "path": "pstack/skills/correct/SKILL.md",
+      "base_tree": "2396c1bb5426e7344846a524342d120b2f29f8da"
+    },
+    {
       "name": "cua-driver",
       "managed": false,
       "note": "本机链接 ~/.cua-driver/skills/cua-driver，仓库保留快照但不覆盖该链接",
@@ -96,6 +103,13 @@
       "base_tree": "d16165120b7658216c79601b0ee568f42e540961"
     },
     {
+      "name": "explain",
+      "source": "cursor/plugins",
+      "url": "https://github.com/cursor/plugins.git",
+      "path": "pstack/skills/teach/SKILL.md",
+      "base_tree": "3ee517292dae0476dc516f9f3805c08fb943c6ff"
+    },
+    {
       "name": "grill-with-docs",
       "source": "mattpocock/skills",
       "url": "https://github.com/mattpocock/skills.git",
@@ -115,6 +129,13 @@
       "url": "https://github.com/mattpocock/skills.git",
       "path": "skills/productivity/handoff/SKILL.md",
       "base_tree": "ce24892bd2d4b9e7fd5ac9b95c03175e18bef388"
+    },
+    {
+      "name": "how",
+      "source": "cursor/plugins",
+      "url": "https://github.com/cursor/plugins.git",
+      "path": "pstack/skills/how/SKILL.md",
+      "base_tree": "219319ad16b48d24c64c222a3a60e075c4399759"
     },
     {
       "name": "human-context-rebuild",
@@ -212,6 +233,13 @@
       "note": "本地维护，显式保存 PWF 任务产物"
     },
     {
+      "name": "reflect",
+      "source": "cursor/plugins",
+      "url": "https://github.com/cursor/plugins.git",
+      "path": "pstack/skills/reflect/SKILL.md",
+      "base_tree": "41bf0a3d0fa47428b893cc949ede5b6c2709d91e"
+    },
+    {
       "name": "research",
       "source": "mattpocock/skills",
       "url": "https://github.com/mattpocock/skills.git",
@@ -280,6 +308,27 @@
       "base_tree": "667dbdd00c09d0e2189e082986e6a4d61a67c2a6"
     },
     {
+      "name": "teach",
+      "source": "mattpocock/skills",
+      "url": "https://github.com/mattpocock/skills.git",
+      "path": "skills/productivity/teach/SKILL.md",
+      "base_tree": "3fd617b610e59acbb99644de1ef37e394ff53cd1"
+    },
+    {
+      "name": "technical-writing",
+      "source": "cursor/plugins",
+      "url": "https://github.com/cursor/plugins.git",
+      "path": "pstack/skills/technical-writing/SKILL.md",
+      "base_tree": "51c1a0ec9526c3976455f6e6ab00e0e0c5f3de5e"
+    },
+    {
+      "name": "thermo-nuclear-code-quality-review",
+      "source": "cursor/plugins",
+      "url": "https://github.com/cursor/plugins.git",
+      "path": "cursor-team-kit/skills/thermo-nuclear-code-quality-review/SKILL.md",
+      "base_tree": "d9c8935dd560b3b6f5941247d04a1843f8c7cc35"
+    },
+    {
       "name": "to-spec",
       "source": "mattpocock/skills",
       "url": "https://github.com/mattpocock/skills.git",
@@ -299,6 +348,13 @@
       "url": "https://github.com/mattpocock/skills.git",
       "path": "skills/engineering/triage/SKILL.md",
       "base_tree": "4cb951d62ecccaed601cdc5f9a1b7b3d8a799635"
+    },
+    {
+      "name": "unslop",
+      "source": "cursor/plugins",
+      "url": "https://github.com/cursor/plugins.git",
+      "path": "pstack/skills/unslop/SKILL.md",
+      "base_tree": "d5baa969e71c4ddb563412b0ec170fa3b05b6d6e"
     },
     {
       "name": "update-skill",
@@ -329,11 +385,25 @@
       "base_tree": "32b0ce970b1394ede47116e1d3e07f9ccc87591f"
     },
     {
+      "name": "what-did-i-get-done",
+      "source": "cursor/plugins",
+      "url": "https://github.com/cursor/plugins.git",
+      "path": "cursor-team-kit/skills/what-did-i-get-done/SKILL.md",
+      "base_tree": "953a0fb2b6d763e4149da38a543778aed3091368"
+    },
+    {
       "name": "whats-next",
       "source": "lycfyi/yskills",
       "url": "https://github.com/lycfyi/yskills.git",
       "path": "skills/whats-next/SKILL.md",
       "base_tree": "afe0aec64192342dfcf34d91b9068f995cba4d12"
+    },
+    {
+      "name": "why",
+      "source": "cursor/plugins",
+      "url": "https://github.com/cursor/plugins.git",
+      "path": "pstack/skills/why/SKILL.md",
+      "base_tree": "8a052a54c64c156db2fe4304394d8b57c8bfe607"
     },
     {
       "name": "wizard",

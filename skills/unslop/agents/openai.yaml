@@ -1,0 +1,5 @@
+interface:
+  display_name: "Unslop"
+  short_description: "Remove AI writing tells from text"
+policy:
+  allow_implicit_invocation: true

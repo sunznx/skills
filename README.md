@@ -47,6 +47,7 @@ $sync-skills 更新 agent-messaging 删除某个功能
 | `birdview` | [Qiuner/birdview](https://github.com/Qiuner/birdview) | `SKILL.md` | 三方合并 |
 | `code-review` | [mattpocock/skills](https://github.com/mattpocock/skills) | `skills/engineering/code-review/SKILL.md` | 三方合并 |
 | `codebase-design` | [mattpocock/skills](https://github.com/mattpocock/skills) | `skills/engineering/codebase-design/SKILL.md` | 三方合并 |
+| `correct` | [cursor/plugins](https://github.com/cursor/plugins) | `pstack/skills/correct/SKILL.md` | 三方合并 |
 | `cua-driver` | 本机链接 ~/.cua-driver/skills/cua-driver，仓库保留快照但不覆盖该链接 | — | 仅仓库维护 |
 | `diagnosing-bugs` | [mattpocock/skills](https://github.com/mattpocock/skills) | `skills/engineering/diagnosing-bugs/SKILL.md` | 三方合并 |
 | `diagram-design` | [cathrynlavery/diagram-design](https://github.com/cathrynlavery/diagram-design) | `skills/diagram-design/SKILL.md` | 三方合并 |
@@ -54,9 +55,11 @@ $sync-skills 更新 agent-messaging 删除某个功能
 | `domain-modeling` | [mattpocock/skills](https://github.com/mattpocock/skills) | `skills/engineering/domain-modeling/SKILL.md` | 三方合并 |
 | `ego-browser` | [citrolabs/ego-lite](https://github.com/citrolabs/ego-lite) | `skills/ego-browser/SKILL.md` | 三方合并（仅仓库） |
 | `eli5` | [anthropics/claude-plugins-community](https://github.com/anthropics/claude-plugins-community) | `eli5/skills/eli5/SKILL.md` | 三方合并 |
+| `explain` | [cursor/plugins](https://github.com/cursor/plugins) | `pstack/skills/teach/SKILL.md` | 三方合并 |
 | `grill-with-docs` | [mattpocock/skills](https://github.com/mattpocock/skills) | `skills/engineering/grill-with-docs/SKILL.md` | 三方合并 |
 | `grilling` | [mattpocock/skills](https://github.com/mattpocock/skills) | `skills/productivity/grilling/SKILL.md` | 三方合并 |
 | `handoff` | [mattpocock/skills](https://github.com/mattpocock/skills) | `skills/productivity/handoff/SKILL.md` | 三方合并 |
+| `how` | [cursor/plugins](https://github.com/cursor/plugins) | `pstack/skills/how/SKILL.md` | 三方合并 |
 | `human-context-rebuild` | [lycfyi/yskills](https://github.com/lycfyi/yskills) | `skills/human-context-rebuild/SKILL.md` | 三方合并 |
 | `implement` | [mattpocock/skills](https://github.com/mattpocock/skills) | `skills/engineering/implement/SKILL.md` | 三方合并 |
 | `implement-spec` | [mattpocock/skills](https://github.com/mattpocock/skills) | `skills/engineering/implement-spec/SKILL.md` | 三方合并 |
@@ -71,6 +74,7 @@ $sync-skills 更新 agent-messaging 删除某个功能
 | `planning-with-files` | [OthmanAdi/planning-with-files](https://github.com/OthmanAdi/planning-with-files) | `.agents/skills/planning-with-files/SKILL.md` | 三方合并（仅仓库） |
 | `prototype` | [mattpocock/skills](https://github.com/mattpocock/skills) | `skills/engineering/prototype/SKILL.md` | 三方合并 |
 | `pwf-artifact` | 本地维护，显式保存 PWF 任务产物 | — | 本地维护 |
+| `reflect` | [cursor/plugins](https://github.com/cursor/plugins) | `pstack/skills/reflect/SKILL.md` | 三方合并 |
 | `research` | [mattpocock/skills](https://github.com/mattpocock/skills) | `skills/engineering/research/SKILL.md` | 三方合并 |
 | `resolving-merge-conflicts` | [mattpocock/skills](https://github.com/mattpocock/skills) | `skills/engineering/resolving-merge-conflicts/SKILL.md` | 三方合并 |
 | `retro` | [mattpocock/skills](https://github.com/mattpocock/skills) | `skills/engineering/retro/SKILL.md` | 三方合并 |
@@ -81,14 +85,20 @@ $sync-skills 更新 agent-messaging 删除某个功能
 | `spec-bootstrap` | 本地维护，安装项目级 PWF skill 与官方 hooks，并配置 Serena、Semble | — | 本地维护 |
 | `sync-skills` | 本仓库维护的同步 skill | — | 本地维护 |
 | `tdd` | [mattpocock/skills](https://github.com/mattpocock/skills) | `skills/engineering/tdd/SKILL.md` | 三方合并 |
+| `teach` | [mattpocock/skills](https://github.com/mattpocock/skills) | `skills/productivity/teach/SKILL.md` | 三方合并 |
+| `technical-writing` | [cursor/plugins](https://github.com/cursor/plugins) | `pstack/skills/technical-writing/SKILL.md` | 三方合并 |
+| `thermo-nuclear-code-quality-review` | [cursor/plugins](https://github.com/cursor/plugins) | `cursor-team-kit/skills/thermo-nuclear-code-quality-review/SKILL.md` | 三方合并 |
 | `to-spec` | [mattpocock/skills](https://github.com/mattpocock/skills) | `skills/engineering/to-spec/SKILL.md` | 三方合并 |
 | `to-tickets` | [mattpocock/skills](https://github.com/mattpocock/skills) | `skills/engineering/to-tickets/SKILL.md` | 三方合并 |
 | `triage` | [mattpocock/skills](https://github.com/mattpocock/skills) | `skills/engineering/triage/SKILL.md` | 三方合并 |
+| `unslop` | [cursor/plugins](https://github.com/cursor/plugins) | `pstack/skills/unslop/SKILL.md` | 三方合并 |
 | `update-skill` | [warpdotdev/common-skills](https://github.com/warpdotdev/common-skills) | `.agents/skills/update-skill/SKILL.md` | 三方合并 |
 | `visual-pr` | [humanlayer/skills](https://github.com/humanlayer/skills) | `plugins/visual-pr/skills/visual-pr/SKILL.md` | 三方合并 |
 | `wait-what` | [mattpocock/skills](https://github.com/mattpocock/skills) | `skills/productivity/wait-what/SKILL.md` | 三方合并 |
 | `wayfinder` | [mattpocock/skills](https://github.com/mattpocock/skills) | `skills/engineering/wayfinder/SKILL.md` | 三方合并 |
+| `what-did-i-get-done` | [cursor/plugins](https://github.com/cursor/plugins) | `cursor-team-kit/skills/what-did-i-get-done/SKILL.md` | 三方合并 |
 | `whats-next` | [lycfyi/yskills](https://github.com/lycfyi/yskills) | `skills/whats-next/SKILL.md` | 三方合并 |
+| `why` | [cursor/plugins](https://github.com/cursor/plugins) | `pstack/skills/why/SKILL.md` | 三方合并 |
 | `wizard` | [mattpocock/skills](https://github.com/mattpocock/skills) | `skills/engineering/wizard/SKILL.md` | 三方合并 |
 | `writing-for-agents` | [mattpocock/skills](https://github.com/mattpocock/skills) | `skills/productivity/writing-for-agents/SKILL.md` | 三方合并 |
 

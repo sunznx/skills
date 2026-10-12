@@ -1,0 +1,5 @@
+interface:
+  display_name: "Why"
+  short_description: "Trace why code is shaped the way it is, with citations"
+policy:
+  allow_implicit_invocation: true
