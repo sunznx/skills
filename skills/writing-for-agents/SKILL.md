@@ -51,6 +51,13 @@ Every step ends on a **completion criterion**, the condition that tells the agen
 
 The strongest criteria are both checkable and exhaustive.
 
+## Grounding and proof
+
+Write for the **cold** reader: an agent mid-task that holds only this document, none of what you saw while writing it.
+
+- **Grounding**: every step names the real command, path, flag, or symbol the agent will meet, found by reading the environment while you write. Ask the human only for what the environment cannot show: intent, the reason behind a convention, an unwritten rule. A placeholder or sample value left in place is a step the cold reader cannot take.
+- **Proof**: run the document once, end to end and as written, by an agent holding only the document (a fresh subagent, or you following it literally). Fix each step that fails, then run again. A document never run is a _draft_.
+
 ## When to split
 
 Splitting one document into two spends one of the two loads, so split only when the cut earns it:
@@ -78,4 +85,4 @@ You win twice: fewer tokens, and a sharper hook for the agent to hang its thinki
 - Keep each meaning in a **single source of truth**: one authoritative place, so changing the behaviour is a one-place edit. **Duplication** (the same meaning in more than one place) costs maintenance and tokens, and inflates a meaning's prominence on the ladder past its real rank. (The accidental inverse of a leading word, which repeats a token on purpose, never the meaning.)
 - The **environment** is a source of truth too (`package.json` scripts, config files, the directory layout, `--help` output), and a document that restates it is a **cache**: a copy of a lookup, earning its load only when the lookup is expensive. Cache what the agent cannot find by looking: the unwritten convention, the reason behind a choice, the gotcha no config confesses. Leave the one-file, one-command lookups to the environment, where they cannot go stale.
 - Check every line for **relevance**: does it still bear on what the document does? A line loses relevance by never bearing on the task (mere exposition, or a branch that should be disclosed) or by going stale as the behaviour or world it describes changes. Shorter documents are easier to keep relevant. Without a pruning discipline the default fate is **sediment**: stale layers that settle because adding feels safe and removing feels risky, until you must core down through them to find what is still live.
-- Hunt **no-ops** sentence by sentence: an instruction the model already obeys by default pays load to say nothing. The test (does it change behaviour versus the default?) is model-relative, not reader-relative: two people disagreeing about a no-op disagree about the default, and settle it by running the document, not by debate. When a sentence fails, delete the whole sentence rather than trim words from it. The test also grades leading words: a word too weak to beat the default (_be thorough_ when the agent is already thorough-ish) is a no-op, and the fix is a stronger word (_relentless_), not a different technique.
+- Hunt **no-ops** sentence by sentence: an instruction the model already obeys by default pays load to say nothing. The test (does it change behaviour versus the default?) is model-relative, not reader-relative: two people disagreeing about a no-op disagree about the default, and settle it by **proof**, not by debate. When a sentence fails, delete the whole sentence rather than trim words from it. The test also grades leading words: a word too weak to beat the default (_be thorough_ when the agent is already thorough-ish) is a no-op, and the fix is a stronger word (_relentless_), not a different technique.
