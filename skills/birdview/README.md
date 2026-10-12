@@ -143,21 +143,22 @@ Setup defaults new projects to `on-demand` and preserves existing `auto`, `on-de
 The agent normally handles these steps. If you already have an architecture file in the expected format, you can validate it and generate the HTML yourself:
 
 ```sh
-node scripts/validate.mjs .birdview/architecture.json
-node scripts/render.mjs .birdview/architecture.json .birdview/architecture.html
+PLAN_DIR=".planning/<PLAN_ID>" # Replace with the selected PWF task directory.
+node scripts/validate.mjs "$PLAN_DIR/birdview/architecture.json"
+node scripts/render.mjs "$PLAN_DIR/birdview/architecture.json" "$PLAN_DIR/birdview/architecture.html"
 ```
 
 To also show the task activity declared by the agent, add an activity history:
 
 ```sh
-node scripts/validate.mjs .birdview/architecture.json .birdview/activity.jsonl
-node scripts/render.mjs .birdview/architecture.json .birdview/activity.html .birdview/activity.jsonl
+node scripts/validate.mjs "$PLAN_DIR/birdview/architecture.json" "$PLAN_DIR/birdview/activity.jsonl"
+node scripts/render.mjs "$PLAN_DIR/birdview/architecture.json" "$PLAN_DIR/birdview/activity.html" "$PLAN_DIR/birdview/activity.jsonl"
 ```
 
 To include an already collected and reviewed constraint catalog:
 
 ```sh
-node scripts/birdview.mjs deliver .birdview/architecture.json .birdview/project.html --constraints .birdview/constraints.reviewed.json
+node scripts/birdview.mjs deliver "$PLAN_DIR/birdview/architecture.json" "$PLAN_DIR/birdview/project.html" --constraints "$PLAN_DIR/birdview/constraints.reviewed.json"
 ```
 
 The CLI writes the integrated page and a companion `project.sources.html` export. For source discovery, rule review and standalone constraint rendering, see the [constraint workflow](references/constraint-graph.md).

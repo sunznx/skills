@@ -1,5 +1,9 @@
 # Delivery contract
 
+For plan selection, artifact paths, reuse, and archived handoff records, follow
+[PWF integration](planning-with-files.md) before authoring. Keep the following
+acceptance checks and receipt semantics when working in a selected plan.
+
 ## Failed finalize and candidate repair
 
 `finalize` stops at the first non-passing gate. Use compact stdout or `evidence.summaryReceipt`; read its full sidecar only when the summary lacks evidence needed for a coherent repair. A receipt with four artifact checks is basic validation, not showcase acceptance: require all nine checks, zero composition errors, and zero warnings. Fix `meta.quality_profile` and schema errors before geometry.

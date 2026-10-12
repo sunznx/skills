@@ -143,21 +143,22 @@ node <skill-root>/scripts/birdview.mjs mode --project <project-root>
 通常由 Agent 完成下面的步骤。如果你已经有符合格式的架构文件，也可以手动校验并生成 HTML：
 
 ```sh
-node scripts/validate.mjs .birdview/architecture.json
-node scripts/render.mjs .birdview/architecture.json .birdview/architecture.html
+PLAN_DIR=".planning/<PLAN_ID>" # 替换为已选中的 PWF 任务目录。
+node scripts/validate.mjs "$PLAN_DIR/birdview/architecture.json"
+node scripts/render.mjs "$PLAN_DIR/birdview/architecture.json" "$PLAN_DIR/birdview/architecture.html"
 ```
 
 如果还要展示 Agent 声明的任务过程，加入活动记录：
 
 ```sh
-node scripts/validate.mjs .birdview/architecture.json .birdview/activity.jsonl
-node scripts/render.mjs .birdview/architecture.json .birdview/activity.html .birdview/activity.jsonl
+node scripts/validate.mjs "$PLAN_DIR/birdview/architecture.json" "$PLAN_DIR/birdview/activity.jsonl"
+node scripts/render.mjs "$PLAN_DIR/birdview/architecture.json" "$PLAN_DIR/birdview/activity.html" "$PLAN_DIR/birdview/activity.jsonl"
 ```
 
 要加入已经收集并审查的约束清单：
 
 ```sh
-node scripts/birdview.mjs deliver .birdview/architecture.json .birdview/project.html --constraints .birdview/constraints.reviewed.json
+node scripts/birdview.mjs deliver "$PLAN_DIR/birdview/architecture.json" "$PLAN_DIR/birdview/project.html" --constraints "$PLAN_DIR/birdview/constraints.reviewed.json"
 ```
 
 CLI 生成集成页面及相邻的 `project.sources.html` 辅助导出。来源发现、规则审查和独立约束图生成见[约束流程](references/constraint-graph.zh.md)。

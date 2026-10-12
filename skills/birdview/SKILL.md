@@ -19,6 +19,10 @@ In Codex, use `/skills` to select Birdview or mention `$birdview`. Claude Code e
 
 For mode changes/status, follow [modes.md](references/modes.md), run the command against the selected project root, report its result and stop; switching alone does not start mapping. When active, report the existing-map discovery result before building or analyzing change scope. These are agent instructions, not enforced write interception.
 
+## Artifact location
+
+Use `planning-with-files` to resolve a named, gated plan before writing Birdview artifacts. Initialize one for a new task; if multiple plans exist and `PLAN_ID` is not bound, stop rather than choosing one. Save map, constraint, activity, rendered HTML and source-index files under `<PLAN_DIR>/birdview/`, and record their paths in the selected plan. Existing maps elsewhere, including legacy `.birdview/`, remain discovery sources; copy a reusable map into the selected plan before updating it, leaving the original untouched.
+
 ## Workflow
 
 A bare “use Birdview” request delivers architecture and reviewed constraints together by default. Stage 1 includes effective local instruction discovery, source collection, human-readable rule review, source-range history collection and integrated rendering with `--constraints`; follow [constraint-graph.md](references/constraint-graph.md). Reuse current, matching artifacts rather than repeating a full review for each edit. Honor an explicit architecture-only or constraint-only request. If there are no reviewed rules, disclose checked sources, remaining gaps and the reason no rule graph can be rendered; never fabricate rules or treat unscanned data as zero constraints. Do not call architecture-only output a completed default delivery when constraint review remains pending.
