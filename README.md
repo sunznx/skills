@@ -79,7 +79,7 @@ $sync-skills 更新 agent-messaging 删除某个功能
 | `show-me` | [humanlayer/skills](https://github.com/humanlayer/skills) | `plugins/show-me/skills/show-me/SKILL.md` | 三方合并 |
 | `skill-doctor` | [warpdotdev/common-skills](https://github.com/warpdotdev/common-skills) | `.agents/skills/skill-doctor/SKILL.md` | 三方合并 |
 | `smart-search` | [jackwener/opencli](https://github.com/jackwener/opencli) | `skills/smart-search/SKILL.md` | 三方合并 |
-| `spec-bootstrap` | 本地维护，安装项目级 Ponytail、PWF skill 与官方 hooks，并配置 Serena、Semble | — | 本地维护 |
+| `spec-bootstrap` | 本地维护，安装项目级 PWF skill 与官方 hooks，并配置 Serena、Semble | — | 本地维护 |
 | `sync-skills` | 本仓库维护的同步 skill | — | 本地维护 |
 | `tdd` | [mattpocock/skills](https://github.com/mattpocock/skills) | `skills/engineering/tdd/SKILL.md` | 三方合并 |
 | `to-spec` | [mattpocock/skills](https://github.com/mattpocock/skills) | `skills/engineering/to-spec/SKILL.md` | 三方合并 |
@@ -97,9 +97,6 @@ $sync-skills 更新 agent-messaging 删除某个功能
 
 | Plugin | Marketplace | 外部来源 | Clients | 安装后命令 |
 | --- | --- | --- | --- | --- |
-| `fast-jev-compaction` | `fast-jev-compaction` | codex: [leonaaardob/fast-dev-compaction](https://github.com/leonaaardob/fast-dev-compaction)<br>claude: [tamaratran/fast-jev-compaction](https://github.com/tamaratran/fast-jev-compaction) | codex, claude | — |
 | `i-have-adhd` | `i-have-adhd` | codex: [ayghri/i-have-adhd](https://github.com/ayghri/i-have-adhd)<br>claude: [ayghri/i-have-adhd](https://github.com/ayghri/i-have-adhd) | codex, claude | — |
 | `planning-with-files` | `planning-with-files` | codex: [OthmanAdi/planning-with-files](https://github.com/OthmanAdi/planning-with-files)<br>claude: [OthmanAdi/planning-with-files](https://github.com/OthmanAdi/planning-with-files) | codex, claude | — |
-| `ponytail` | `ponytail` | codex: [DietrichGebert/ponytail](https://github.com/DietrichGebert/ponytail)<br>claude: [DietrichGebert/ponytail](https://github.com/DietrichGebert/ponytail) | codex, claude | — |
-| `typesafe` | `typesafe-ai` | codex: [typesafe-ai/skills](https://github.com/typesafe-ai/skills)<br>claude: [typesafe-ai/skills](https://github.com/typesafe-ai/skills) | codex, claude | — |
 <!-- skill-catalog:end -->

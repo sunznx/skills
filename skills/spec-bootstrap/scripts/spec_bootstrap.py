@@ -22,7 +22,6 @@ BLOCK_START = "# AGENT-WORKFLOW:START"
 BLOCK_END = "# AGENT-WORKFLOW:END"
 SERENA_CLIENT = re.compile(r"--client(?:=|\s+)codex(?:\s|$)")
 PLUGINS = (
-    ("ponytail", "DietrichGebert/ponytail", "ponytail@ponytail"),
     (
         "planning-with-files",
         "OthmanAdi/planning-with-files",
@@ -105,11 +104,8 @@ def ensure_plugins() -> list[str]:
     }
     for marketplace, source, _plugin in PLUGINS:
         if marketplace in configured:
-            if marketplace == "planning-with-files":
-                codex_json("plugin", "marketplace", "upgrade", marketplace)
-                statuses.append(f"updated Codex marketplace {marketplace}")
-            else:
-                statuses.append(f"preserved Codex marketplace {marketplace}")
+            codex_json("plugin", "marketplace", "upgrade", marketplace)
+            statuses.append(f"updated Codex marketplace {marketplace}")
         else:
             codex_json("plugin", "marketplace", "add", source)
             statuses.append(f"added Codex marketplace {marketplace}")

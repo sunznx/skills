@@ -60,7 +60,7 @@ class SpecBootstrapTest(unittest.TestCase):
         self.assertIn("activate --client=codex", text)
         self.assertIn("cleanup --client=codex", text)
 
-    def test_plugins_install_without_migrated_commands(self) -> None:
+    def test_only_planning_plugin_installs_without_migrated_commands(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
             home = root / "codex-home"
@@ -72,23 +72,19 @@ class SpecBootstrapTest(unittest.TestCase):
             cache = home / "plugins" / "cache" / "planning-with-files"
             (cache / "stale").mkdir(parents=True)
             responses = [
-                {"marketplaces": [{"name": "ponytail"}]},
+                {"marketplaces": []},
                 {},
                 {
                     "marketplaces": [
                         {"name": "planning-with-files", "root": str(marketplace)}
                     ]
                 },
-                {
-                    "installed": [
-                        {"pluginId": "ponytail@ponytail", "enabled": True}
-                    ]
-                },
+                {"installed": []},
                 {},
             ]
             with (
                 mock.patch.dict(os.environ, {"CODEX_HOME": str(home)}),
-                mock.patch.object(MODULE, "codex_json", side_effect=responses),
+                mock.patch.object(MODULE, "codex_json", side_effect=responses) as codex_json,
             ):
                 statuses = MODULE.ensure_plugins()
 
@@ -99,6 +95,7 @@ class SpecBootstrapTest(unittest.TestCase):
                 "installed Codex plugin planning-with-files@planning-with-files",
                 statuses,
             )
+            self.assertFalse(any("ponytail" in str(call) for call in codex_json.call_args_list))
             self.assertTrue(any(status.startswith("restored ") for status in statuses))
 
     def test_install_writes_only_global_codex_files(self) -> None:

@@ -272,7 +272,7 @@
     {
       "name": "spec-bootstrap",
       "managed": false,
-      "note": "本地维护，安装项目级 Ponytail、PWF skill 与官方 hooks，并配置 Serena、Semble"
+      "note": "本地维护，安装项目级 PWF skill 与官方 hooks，并配置 Serena、Semble"
     },
     {
       "name": "sync-skills",
@@ -370,17 +370,6 @@
       "ref": "main"
     },
     {
-      "name": "ponytail",
-      "marketplace": "ponytail",
-      "clients": [
-        "codex",
-        "claude"
-      ],
-      "source": "DietrichGebert/ponytail",
-      "url": "https://github.com/DietrichGebert/ponytail.git",
-      "ref": "main"
-    },
-    {
       "name": "i-have-adhd",
       "marketplace": "i-have-adhd",
       "clients": [
@@ -390,42 +379,6 @@
       "source": "ayghri/i-have-adhd",
       "url": "https://github.com/ayghri/i-have-adhd.git",
       "ref": "main"
-    },
-    {
-      "name": "typesafe",
-      "marketplace": "typesafe-ai",
-      "clients": [
-        "codex",
-        "claude"
-      ],
-      "source": "typesafe-ai/skills",
-      "url": "https://github.com/typesafe-ai/skills.git",
-      "ref": "main"
-    },
-    {
-      "name": "fast-jev-compaction",
-      "marketplace": "fast-jev-compaction",
-      "clients": [
-        "codex",
-        "claude"
-      ],
-      "source": "leonaaardob/fast-dev-compaction",
-      "url": "https://github.com/leonaaardob/fast-dev-compaction.git",
-      "ref": "main",
-      "sources": {
-        "claude": {
-          "marketplace": "fast-jev-compaction",
-          "source": "tamaratran/fast-jev-compaction",
-          "url": "https://github.com/tamaratran/fast-jev-compaction.git",
-          "ref": "main"
-        },
-        "codex": {
-          "marketplace": "fast-jev-compaction",
-          "source": "leonaaardob/fast-dev-compaction",
-          "url": "https://github.com/leonaaardob/fast-dev-compaction.git",
-          "ref": "main"
-        }
-      }
     }
   ]
 }
