@@ -74,10 +74,12 @@ $sync-skills 更新 agent-messaging 删除某个功能
 | `planning-with-files` | [OthmanAdi/planning-with-files](https://github.com/OthmanAdi/planning-with-files) | `.agents/skills/planning-with-files/SKILL.md` | 三方合并（仅仓库） |
 | `prototype` | [mattpocock/skills](https://github.com/mattpocock/skills) | `skills/engineering/prototype/SKILL.md` | 三方合并 |
 | `pwf-artifact` | 本地维护，显式保存 PWF 任务产物 | — | 本地维护 |
+| `pwf-recall` | 本地维护，从 PWF 计划和 git 现状重建工作上下文并报告漂移 | — | 本地维护 |
 | `reflect` | [cursor/plugins](https://github.com/cursor/plugins) | `pstack/skills/reflect/SKILL.md` | 三方合并 |
 | `research` | [mattpocock/skills](https://github.com/mattpocock/skills) | `skills/engineering/research/SKILL.md` | 三方合并 |
 | `resolving-merge-conflicts` | [mattpocock/skills](https://github.com/mattpocock/skills) | `skills/engineering/resolving-merge-conflicts/SKILL.md` | 三方合并 |
 | `retro` | [mattpocock/skills](https://github.com/mattpocock/skills) | `skills/engineering/retro/SKILL.md` | 三方合并 |
+| `say-back` | 本地维护，复述任务目标和问题并保存到 PWF | — | 本地维护 |
 | `setup-matt-pocock-skills` | [mattpocock/skills](https://github.com/mattpocock/skills) | `skills/engineering/setup-matt-pocock-skills/SKILL.md` | 三方合并 |
 | `show-me` | [humanlayer/skills](https://github.com/humanlayer/skills) | `plugins/show-me/skills/show-me/SKILL.md` | 三方合并 |
 | `skill-doctor` | [warpdotdev/common-skills](https://github.com/warpdotdev/common-skills) | `.agents/skills/skill-doctor/SKILL.md` | 三方合并 |

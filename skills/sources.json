@@ -233,6 +233,11 @@
       "note": "本地维护，显式保存 PWF 任务产物"
     },
     {
+      "name": "pwf-recall",
+      "managed": false,
+      "note": "本地维护，从 PWF 计划和 git 现状重建工作上下文并报告漂移"
+    },
+    {
       "name": "reflect",
       "source": "cursor/plugins",
       "url": "https://github.com/cursor/plugins.git",
@@ -260,6 +265,11 @@
       "path": "skills/engineering/retro/SKILL.md",
       "ref": "main",
       "base_tree": "335c1862a43da9d629abafdb79ca0c0de118be08"
+    },
+    {
+      "name": "say-back",
+      "managed": false,
+      "note": "本地维护，复述任务目标和问题并保存到 PWF"
     },
     {
       "name": "setup-matt-pocock-skills",
