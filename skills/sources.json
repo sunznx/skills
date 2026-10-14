@@ -267,11 +267,6 @@
       "base_tree": "335c1862a43da9d629abafdb79ca0c0de118be08"
     },
     {
-      "name": "say-back",
-      "managed": false,
-      "note": "本地维护，复述任务目标和问题并保存到 PWF"
-    },
-    {
       "name": "setup-matt-pocock-skills",
       "source": "mattpocock/skills",
       "url": "https://github.com/mattpocock/skills.git",
