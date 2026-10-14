@@ -166,6 +166,13 @@
       "base_tree": "39bd9cc130f7dfcc4e3ea0b3613f6ebed0d0ad2b"
     },
     {
+      "name": "in-your-own-words",
+      "source": "cursor/plugins",
+      "url": "https://github.com/cursor/plugins.git",
+      "path": "pstack/skills/in-your-own-words/SKILL.md",
+      "base_tree": "e5ff93020dd4ed33b80d9df9a235d1945c676a0d"
+    },
+    {
       "name": "lark-doc",
       "source": "larksuite/cli",
       "url": "https://github.com/larksuite/cli.git",

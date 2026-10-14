@@ -9,14 +9,14 @@ disable-model-invocation: true
 
 开工或回来接着干之前，从 PWF 计划文件重建工作上下文，用 git 核对计划写的是否属实，交回一份简短的当前状态简报。计划文件是记录，git 是**现状**；两者不一致就是**漂移**，漂移是简报里最有价值的内容。
 
-1. 分流。当前会话里断了片用 `human-context-rebuild`；要写交接文档用 `handoff`；复述任务目标用 `say-back`。本技能只管从计划文件恢复并核对现状。
+1. 分流。当前会话里断了片用 `human-context-rebuild`；要写交接文档用 `handoff`；复述任务目标用 `in-your-own-words`。本技能只管从计划文件恢复并核对现状。
 2. 锁定范围。在项目根目录运行 `planning-with-files` 技能目录下的 `scripts/` 脚本，计划都在 `.planning/<id>/`：
    - 设了 `PLAN_ID` 或 `PWF_PLAN_ROOT`：用 `resolve-plan-dir.sh` 解析，只看这一个计划。
    - 没绑定：`set-active-plan.sh --list` 列出全部计划和阶段进度。用户给了话题，就用不区分大小写的子串匹配计划目录名和 `task_plan.md` 开头的目标段（标题可能是 `## Goal`、`## 目标` 等；没有就用文件第一个标题）；没给话题就取有未完成阶段的计划，加上 `task_plan.md` 最近 7 天内改过的计划。
    - 用户说“全部”就是全部，按原话执行。
 
    用用户的语言把选中的计划列给用户，然后继续；用户纠正范围就按新范围重来。
-3. 读每个在范围内的 `<PLAN_DIR>/`：`task_plan.md` 全文、`progress.md` 末尾最近的记录、`findings.md` 中和未完成阶段或待决事项相关的部分，以及存在时的 `handoff.md`、`say-back.md`。其他文件只看文件名。
+3. 读每个在范围内的 `<PLAN_DIR>/`：`task_plan.md` 全文、`progress.md` 末尾最近的记录、`findings.md` 中和未完成阶段或待决事项相关的部分，以及存在时的 `handoff.md`、`in-your-own-words.md`。其他文件只看文件名。
 4. 用现状核对计划。运行 `git status --short`、`git diff --stat`、`git log --oneline --since="<日期> 00:00"`（日期取范围内最早的计划目录名日期，目录名没有日期就用 `task_plan.md` 的修改日期；只写日期时 git 会补上当前时刻，漏掉当天早些的 commit），`gh` 可用且计划提到 PR 时运行 `gh pr view <N>`。把计划提到的文件路径、分支、commit 和这些输出逐一对照，需要时看 diff 内容。改动内容是计划要做的事才归到这个计划，只是路径被计划提到不算；其余未提交改动记为未归属。完成判据：每个 Phase 的状态都落在某一行线索的标签里。
 5. 按下方契约写简报，按 **unslop** 写，用用户的语言。
 6. 范围内只有一个计划时，把简报写入 `<PLAN_DIR>/recall.md`，在 `<PLAN_DIR>/progress.md` 记一行路径。发现漂移只报告；要不要更新 `task_plan.md` 由用户决定。
