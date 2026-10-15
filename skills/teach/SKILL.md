@@ -9,7 +9,7 @@ The user has asked you to teach them something. This is a stateful request - the
 
 ## Teaching Workspace
 
-Use `planning-with-files` to resolve the named, gated plan for this learning topic. If multiple plans exist and `PLAN_ID` is not bound, stop rather than choosing one. If no plan exists, create one named after the topic with `init-session.sh --gated`.
+Use `planning-with-files` to resolve the named, gated plan for this learning topic, following [plan resolution](../pwf-artifact/references/plan-resolution.md). Name a new plan after the topic.
 
 Treat `<PLAN_DIR>` as the teaching workspace. Workspace paths (`./lessons/` and the rest) resolve from `<PLAN_DIR>`; only the `*-FORMAT.md` links resolve from this skill's folder. The state of their learning is captured in this directory in several files:
 

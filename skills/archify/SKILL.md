@@ -23,7 +23,7 @@ When the user supplies a frozen candidate, run `finalize` first as one CLI invoc
 
 ## Artifact location
 
-Before diagram generation, reuse or initialize a named, gated `planning-with-files` plan and bind this task's `PLAN_ID` and project root. Follow [PWF integration](references/planning-with-files.md) for selector failures, ambiguity, legacy plans, reuse, and handoff records. Complete plan resolution, existing-artifact discovery, and directory preparation before the fast authoring path. Save specifications, HTML, receipts, screenshots, and exports under `<PLAN_DIR>/archify/`, and record their paths in the selected plan. This is an agent workflow; the CLI uses explicit paths.
+Before diagram generation, reuse or initialize a named, gated `planning-with-files` plan and bind this task's `PLAN_ID` and project root. Choose the plan by [plan resolution](../pwf-artifact/references/plan-resolution.md); follow [PWF integration](references/planning-with-files.md) for selector failures, ambiguity, legacy plans, reuse, and handoff records. Complete plan resolution, existing-artifact discovery, and directory preparation before the fast authoring path. Save specifications, HTML, receipts, screenshots, and exports under `<PLAN_DIR>/archify/`, and record their paths in the selected plan. This is an agent workflow; the CLI uses explicit paths.
 
 ## Fast authoring path
 

@@ -10,7 +10,7 @@ Two-axis review of the diff between `HEAD` and a fixed point the user supplies:
 
 Both axes run as **parallel sub-agents** so they don't pollute each other's context, then this skill aggregates their findings.
 
-Use `planning-with-files` to resolve the named, gated plan for this review. If multiple plans exist and `PLAN_ID` is not bound, stop rather than choosing one. Before reading Matt configuration, follow [shared configuration initialization](../setup-matt-pocock-skills/references/ensure-config.md). Read `.planning/domain.md`. Read `.planning/issue-tracker.md` when fetching issue references; a local tracker cannot resolve a remote-only issue reference, so report that limitation and use an available local or user-supplied spec.
+Use `planning-with-files` to resolve the named, gated plan for this review, following [plan resolution](../pwf-artifact/references/plan-resolution.md). Before reading Matt configuration, follow [shared configuration initialization](../setup-matt-pocock-skills/references/ensure-config.md). Read `.planning/domain.md`. Read `.planning/issue-tracker.md` when fetching issue references; a local tracker cannot resolve a remote-only issue reference, so report that limitation and use an available local or user-supplied spec.
 
 ## Process
 

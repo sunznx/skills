@@ -15,13 +15,9 @@ location convention; its CLI continues to accept explicit input/output paths.
    directory. An explicit selector that resolves to nothing is a stop condition,
    even when the resolver exits zero. Correct the selector rather than falling
    back to the active pointer, another plan, or project-root files.
-3. With no `PLAN_ID`, run the resolver's ambiguity probe. Multiple named plans
-   or `PWF_PLAN_AMBIGUOUS_V1` require a task-specific binding before recovery or
-   artifact writes. Ask which task owns the work; the shared `.active_plan`
-   pointer is not a session binding. For an explicitly new task, initialize a
-   separate named plan with `init-session.sh --gated "<task-name>"` and bind the
-   printed `PLAN_ID`. Preserve other plans. A missing or rejected explicit
-   selector is not authorization to initialize a replacement task.
+3. With no `PLAN_ID`, choose or create the plan by the shared
+   [plan resolution](../../pwf-artifact/references/plan-resolution.md)
+   rule before recovery or artifact writes, and bind the resulting `PLAN_ID`.
 4. Archify generation uses a named, gated plan. If only legacy project-root
    planning files exist, preserve them and initialize a named gated plan for
    this diagram task. For a selected named plan, preserve its contents and

@@ -25,7 +25,7 @@ For requests to optimize architecture, review module boundaries or find architec
 
 ## Artifact location
 
-Use `planning-with-files` to resolve a named, gated plan before writing Birdview artifacts. Initialize one for a new task; if multiple plans exist and `PLAN_ID` is not bound, stop rather than choosing one. Save map, constraint, activity, rendered HTML and source-index files under `<PLAN_DIR>/birdview/`, and record their paths in the selected plan. Existing maps elsewhere, including legacy `.birdview/`, remain discovery sources; copy a reusable map into the selected plan before updating it, leaving the original untouched.
+Use `planning-with-files` to resolve a named, gated plan before writing Birdview artifacts, following [plan resolution](../pwf-artifact/references/plan-resolution.md). Save map, constraint, activity, rendered HTML and source-index files under `<PLAN_DIR>/birdview/`, and record their paths in the selected plan. Existing maps elsewhere, including legacy `.birdview/`, remain discovery sources; copy a reusable map into the selected plan before updating it, leaving the original untouched.
 
 ## Workflow
 

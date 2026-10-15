@@ -3,7 +3,7 @@ name: research
 description: Investigate a question against high-trust primary sources and capture the findings as a Markdown file in the repo. Use when the user wants a topic researched, docs or API facts gathered, or reading legwork delegated to a background agent.
 ---
 
-Use `planning-with-files` to resolve a named, gated plan. If multiple plans exist and `PLAN_ID` is not bound, stop rather than choosing one. Spin up a **background agent** to do the research, so you keep working while it reads. Pass the selected `<PLAN_DIR>` and the research question to that agent.
+Use `planning-with-files` to resolve a named, gated plan, following [plan resolution](../pwf-artifact/references/plan-resolution.md). Spin up a **background agent** to do the research, so you keep working while it reads. Pass the selected `<PLAN_DIR>` and the research question to that agent.
 
 Its job:
 

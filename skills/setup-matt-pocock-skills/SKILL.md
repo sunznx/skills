@@ -14,7 +14,7 @@ Scaffold the per-repo configuration that the engineering skills assume:
 
 Manual setup is prompt-driven: explore, confirm the intended configuration, then write. Dependent skills use the deterministic [missing-only initializer](references/ensure-config.md) directly; that path fills defaults without running this interview or editing steering files.
 
-Use `planning-with-files` to resolve a named, gated plan for manual setup. Bind `PLAN_ID` when multiple plans exist. Project configuration lives in `.planning/issue-tracker.md`, `.planning/triage-labels.md`, and `.planning/domain.md` under the project owning the selected plan. Specs and tickets live under `<PLAN_DIR>`; new ADRs default to the project's `.planning/adr/`, shared across tasks. Preserve existing configuration unless the user explicitly requests a change.
+Use `planning-with-files` to resolve a named, gated plan for manual setup, following [plan resolution](../pwf-artifact/references/plan-resolution.md). Project configuration lives in `.planning/issue-tracker.md`, `.planning/triage-labels.md`, and `.planning/domain.md` under the project owning the selected plan. Specs and tickets live under `<PLAN_DIR>`; new ADRs default to the project's `.planning/adr/`, shared across tasks. Preserve existing configuration unless the user explicitly requests a change.
 
 ## Shared initialization
 
