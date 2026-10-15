@@ -121,6 +121,99 @@ class SyncSkillsTests(unittest.TestCase):
             )
             self.assertIn(("sh", str(script)), calls)
 
+    def test_sync_plugin_updates_every_declared_client(self) -> None:
+        with tempfile.TemporaryDirectory() as temp:
+            codex_root = Path(temp) / "codex"
+            claude_root = Path(temp) / "claude"
+            for root in (codex_root, claude_root):
+                (root / "scripts").mkdir(parents=True)
+                (root / "scripts/setup.sh").write_text("#!/bin/sh\n")
+            manifest = {
+                "plugins": [{
+                    "name": "demo",
+                    "marketplace": "mp",
+                    "clients": ["codex", "claude"],
+                    "source": "owner/demo",
+                    "url": "https://github.com/owner/demo.git",
+                    "ref": "main",
+                    "post_install": "scripts/setup.sh",
+                }],
+            }
+            calls: list[tuple[str, ...]] = []
+
+            def fake_run(*args: str, **_kwargs: object) -> subprocess.CompletedProcess:
+                calls.append(args)
+                if args == ("codex", "plugin", "marketplace", "list"):
+                    stdout = "MARKETPLACE ROOT\nmp /tmp/mp\n"
+                elif args == ("codex", "plugin", "list", "--json"):
+                    stdout = json.dumps({"installed": [{
+                        "pluginId": "demo@mp",
+                        "installed": True,
+                        "enabled": True,
+                        "source": {"path": str(codex_root)},
+                    }]})
+                elif args == ("claude", "plugin", "marketplace", "list", "--json"):
+                    stdout = json.dumps([{"name": "mp"}])
+                elif args == ("claude", "plugin", "list", "--json"):
+                    stdout = json.dumps([{
+                        "id": "demo@mp",
+                        "enabled": True,
+                        "installPath": str(claude_root),
+                    }])
+                else:
+                    stdout = "{}"
+                return subprocess.CompletedProcess(args, 0, stdout, "")
+
+            with patch.object(sync_skills, "run", side_effect=fake_run):
+                sync_skills.sync_plugins(manifest, push=False)
+
+            for expected in (
+                ("codex", "plugin", "marketplace", "upgrade", "mp", "--json"),
+                ("codex", "plugin", "add", "demo@mp", "--json"),
+                ("sh", str(codex_root / "scripts/setup.sh")),
+                ("claude", "plugin", "marketplace", "update", "mp"),
+                ("claude", "plugin", "update", "demo@mp"),
+                ("sh", str(claude_root / "scripts/setup.sh")),
+            ):
+                self.assertIn(expected, calls)
+
+    def test_sync_plugin_installs_missing_claude_plugin(self) -> None:
+        manifest = {
+            "plugins": [{
+                "name": "demo",
+                "marketplace": "mp",
+                "clients": ["claude"],
+                "source": "owner/demo",
+                "url": "https://github.com/owner/demo.git",
+                "ref": "v1",
+            }],
+        }
+        calls: list[tuple[str, ...]] = []
+
+        def fake_run(*args: str, **_kwargs: object) -> subprocess.CompletedProcess:
+            calls.append(args)
+            if args == ("claude", "plugin", "marketplace", "list", "--json"):
+                stdout = "[]"
+            elif args == ("claude", "plugin", "list", "--json"):
+                installed = ("claude", "plugin", "install", "demo@mp") in calls
+                stdout = json.dumps(
+                    [{"id": "demo@mp", "enabled": True, "installPath": "/tmp/demo"}]
+                    if installed else []
+                )
+            else:
+                stdout = "{}"
+            return subprocess.CompletedProcess(args, 0, stdout, "")
+
+        with patch.object(sync_skills, "run", side_effect=fake_run):
+            sync_skills.sync_plugins(manifest, push=False)
+
+        self.assertIn(
+            ("claude", "plugin", "marketplace", "add", "https://github.com/owner/demo.git#v1"),
+            calls,
+        )
+        self.assertIn(("claude", "plugin", "install", "demo@mp"), calls)
+        self.assertFalse([call for call in calls if call[0] == "codex"])
+
     def test_add_does_not_overwrite_another_local_skill(self) -> None:
         with tempfile.TemporaryDirectory() as temp:
             root = Path(temp)

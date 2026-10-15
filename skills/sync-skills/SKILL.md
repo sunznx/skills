@@ -29,7 +29,7 @@ repo="$(cat ~/.config/sync-skills/repo)"
 
 - `$sync-skills`：运行无参数命令，对比全部 skill 上游、部署快照，再同步 `skills/sources.json` 中登记的 plugins。
 - `$sync-skills <skill-name>`：只对比并只部署指定 skill。
-- `$sync-skills plugins`：更新全部登记的 Git marketplaces，重新安装对应 plugins，并执行声明的 `post_install`。
+- `$sync-skills plugins`：按每个 plugin 的 `clients` 分别处理 Codex 和 Claude：更新或添加 Git marketplace，安装缺失的 plugin、更新已安装的 plugin，验证已启用后执行声明的 `post_install`。`sources.<client>` 可覆盖该客户端的来源字段和 `post_install`。Claude plugin 更新后需重启 Claude Code 生效。
 - `$sync-skills plugin <plugin-name>`：只同步指定 plugin。
 - `添加` 从 `~/.agents/skills/<skill-name>` 导入。脚本会读取 `~/.agents/.skill-lock.json` 记录外部来源；没有来源记录时按本地 skill 管理。
 - `删除` 会删除仓库目录和来源目录，commit 成功后再删除 `~/.agents/skills/<skill-name>`。
@@ -54,20 +54,18 @@ repo="$(cat ~/.config/sync-skills/repo)"
 `$sync-skills 安装 <GitHub URL>` 表示安装并登记 Codex plugin，不是 shell 子命令。
 
 1. 读取上游 README 和 plugin manifest，确认 marketplace、plugin 名称及必要的安装后脚本。
-2. 使用 `codex plugin marketplace add` 和 `codex plugin add` 安装；执行上游明确要求的 companion installer。
-3. 将用户配置的 Git marketplace plugin 写入 `skills/sources.json` 的 `plugins`，并用 `clients` 标记 `codex`/`claude`；Codex 内置和 runtime plugins 不登记。
-4. 运行 `update_readme` 更新来源目录，再用 `"$repo/sync-skills" plugin <plugin-name>` 验证。
-5. 只提交本次涉及的清单、文档或脚本，并 push。Plugin 保持由 Codex marketplace 管理，不复制进 `skills/`。
+2. 将用户配置的 Git marketplace plugin 写入 `skills/sources.json` 的 `plugins`，并用 `clients` 标记 `codex`/`claude`（只写上游支持的客户端）；上游明确要求的 companion installer 写进 `post_install`。Codex 内置和 runtime plugins 不登记。
+3. 运行 `"$repo/sync-skills" plugin <plugin-name>` 安装到所有声明的客户端。
+4. 运行 `update_readme` 更新来源目录。
+5. 只提交本次涉及的清单、文档或脚本，并 push。Plugin 保持由各客户端的 marketplace 管理，不复制进 `skills/`。
 
 ## 同步到 Claude
 
 用户要求给 Claude 同步这些 skills/plugins 时：
 
 1. 将 `skills/*` 逐个链接到 `~/.claude/skills/<name>`；同名目标已存在时跳过，不覆盖已有 Claude 本地配置。
-2. 对 `skills/sources.json` 的 `plugins` 逐个判断是否支持 Claude：
-   - 支持 Claude 的 Git marketplace plugin，运行 `claude plugin marketplace add <source>`，再运行 `claude plugin install <name>@<marketplace> -y`。
-   - `sol-advisor` 不安装到 Claude；它只能按 Codex 路径处理。
-3. 用 `claude plugin marketplace list`、`claude plugin list` 和 `ls -la ~/.claude/skills` 验证；报告跳过的已有 skill 和不支持 Claude 的 plugin。
+2. Plugins 运行 `"$repo/sync-skills" plugins`；只有 `clients` 含 `claude` 的条目会装到 Claude。不支持 Claude 的 plugin（如 `sol-advisor`）不要在 `clients` 写 `claude`。
+3. 用 `ls -la ~/.claude/skills` 验证 skill 链接；报告跳过的已有 skill。
 4. Claude 同步是本机配置操作，不修改 `skills/sources.json`；只有新增或更换登记来源时才更新仓库元数据。
 
 ## 本地更新 skill

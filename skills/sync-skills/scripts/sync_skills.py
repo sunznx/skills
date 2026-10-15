@@ -167,11 +167,11 @@ def load_manifest(manifest_path: Path) -> dict:
             config = {**entry, **sources.get(client, {})}
             if any(not config.get(field) for field in ("marketplace", "source", "url")):
                 raise SyncError(f"plugin {entry.get('name')} 缺少 {client} 来源字段")
-        post_install = entry.get("post_install")
-        if post_install:
-            path = PurePosixPath(post_install)
-            if path.is_absolute() or ".." in path.parts:
-                raise SyncError(f"plugin {entry['name']} 的 post_install 路径不安全")
+            post_install = config.get("post_install")
+            if post_install:
+                path = PurePosixPath(post_install)
+                if path.is_absolute() or ".." in path.parts:
+                    raise SyncError(f"plugin {entry['name']} 的 {client} post_install 路径不安全")
     return manifest
 
 
@@ -583,25 +583,36 @@ def deploy_skills(repo: Path, skills_dir: Path, manifest: dict, local_dir: Path)
     print(f"已同步到 {local_dir}")
 
 
-def sync_plugins(manifest: dict, only_name: str | None = None, *, push: bool = True) -> int:
-    entries = [
-        {**entry, **entry.get("sources", {}).get("codex", {})}
-        for entry in manifest.get("plugins", [])
-        if "codex" in entry.get("clients", ["codex"])
-    ]
-    if only_name is not None:
-        entries = [entry for entry in entries if entry["name"] == only_name]
-        if not entries:
-            raise SyncError(f"plugin 不在仓库清单中: {only_name}")
-    if not entries:
-        print("没有登记的 plugins。")
-        return 0
+def plugin_marketplaces(entries: list[dict]) -> dict[str, dict]:
+    marketplaces: dict[str, dict] = {}
+    for entry in entries:
+        previous = marketplaces.setdefault(entry["marketplace"], entry)
+        if previous["url"] != entry["url"] or previous.get("ref") != entry.get("ref"):
+            raise SyncError(f"marketplace {entry['marketplace']} 的来源配置不一致")
+    return marketplaces
 
+
+def run_post_install(entry: dict, selector: str, root: object) -> None:
+    post_install = entry.get("post_install")
+    if not post_install:
+        return
+    script = Path(root) / post_install if isinstance(root, str) and root else None
+    if script is None or not script.is_file():
+        raise SyncError(f"plugin 安装后脚本不存在: {selector}/{post_install}")
+    run("sh", str(script))
+
+
+def read_json_output(*args: str) -> object:
+    try:
+        return json.loads(run(*args).stdout)
+    except json.JSONDecodeError as error:
+        raise SyncError(f"无法解析输出: {' '.join(args)}") from error
+
+
+def sync_codex_plugins(entries: list[dict]) -> None:
     def installed_plugins() -> list[dict]:
-        try:
-            installed = json.loads(run("codex", "plugin", "list", "--json").stdout)["installed"]
-        except (json.JSONDecodeError, KeyError, TypeError) as error:
-            raise SyncError("无法读取 Codex plugin 清单") from error
+        data = read_json_output("codex", "plugin", "list", "--json")
+        installed = data.get("installed") if isinstance(data, dict) else None
         if not isinstance(installed, list):
             raise SyncError("无法读取 Codex plugin 清单")
         return [item for item in installed if isinstance(item, dict)]
@@ -640,13 +651,7 @@ def sync_plugins(manifest: dict, only_name: str | None = None, *, push: bool = T
         try:
             listed = run("codex", "plugin", "marketplace", "list").stdout.splitlines()
             configured = {line.split(maxsplit=1)[0] for line in listed[1:] if line.strip()}
-            marketplaces: dict[str, dict] = {}
-            for entry in entries:
-                previous = marketplaces.setdefault(entry["marketplace"], entry)
-                if previous["url"] != entry["url"] or previous.get("ref") != entry.get("ref"):
-                    raise SyncError(f"marketplace {entry['marketplace']} 的来源配置不一致")
-
-            for marketplace, entry in marketplaces.items():
+            for marketplace, entry in plugin_marketplaces(entries).items():
                 if marketplace in configured:
                     run("codex", "plugin", "marketplace", "upgrade", marketplace, "--json")
                 else:
@@ -664,21 +669,71 @@ def sync_plugins(manifest: dict, only_name: str | None = None, *, push: bool = T
                 selector = f"{entry['name']}@{entry['marketplace']}"
                 item = by_id.get(selector)
                 if not item or not item.get("installed") or not item.get("enabled", True):
-                    raise SyncError(f"plugin 安装验证失败: {selector}")
-                root = item.get("source", {}).get("path")
-                post_install = entry.get("post_install")
-                if post_install:
-                    script = Path(root) / post_install if root else None
-                    if script is None or not script.is_file():
-                        raise SyncError(f"plugin 安装后脚本不存在: {selector}/{post_install}")
-                    run("sh", str(script))
-                print(f"已同步 plugin: {selector}")
+                    raise SyncError(f"plugin 安装验证失败: codex {selector}")
+                run_post_install(entry, selector, item.get("source", {}).get("path"))
+                print(f"已同步 plugin: codex {selector}")
         finally:
             # ponytail: 保留当前会话的旧 hook 路径，重启 Codex 后可由安装器清理。
             for backup, cache in cache_backups:
                 if not cache.exists():
                     cache.parent.mkdir(parents=True, exist_ok=True)
                     shutil.copytree(backup, cache)
+
+
+def sync_claude_plugins(entries: list[dict]) -> None:
+    def installed_plugins() -> dict[str, dict]:
+        installed = read_json_output("claude", "plugin", "list", "--json")
+        if not isinstance(installed, list):
+            raise SyncError("无法读取 Claude plugin 清单")
+        return {item.get("id"): item for item in installed if isinstance(item, dict)}
+
+    listed = read_json_output("claude", "plugin", "marketplace", "list", "--json")
+    if not isinstance(listed, list):
+        raise SyncError("无法读取 Claude marketplace 清单")
+    configured = {item.get("name") for item in listed if isinstance(item, dict)}
+    for marketplace, entry in plugin_marketplaces(entries).items():
+        if marketplace in configured:
+            run("claude", "plugin", "marketplace", "update", marketplace)
+        else:
+            source = entry["url"] + (f"#{entry['ref']}" if entry.get("ref") else "")
+            run("claude", "plugin", "marketplace", "add", source)
+
+    installed_before = installed_plugins()
+    for entry in entries:
+        selector = f"{entry['name']}@{entry['marketplace']}"
+        action = "update" if selector in installed_before else "install"
+        run("claude", "plugin", action, selector)
+
+    by_id = installed_plugins()
+    for entry in entries:
+        selector = f"{entry['name']}@{entry['marketplace']}"
+        item = by_id.get(selector)
+        if not item or not item.get("enabled", True):
+            raise SyncError(f"plugin 安装验证失败: claude {selector}")
+        run_post_install(entry, selector, item.get("installPath"))
+        print(f"已同步 plugin: claude {selector}（重启 Claude Code 生效）")
+
+
+PLUGIN_CLIENTS = {"codex": sync_codex_plugins, "claude": sync_claude_plugins}
+
+
+def sync_plugins(manifest: dict, only_name: str | None = None, *, push: bool = True) -> int:
+    plugins = manifest.get("plugins", [])
+    if only_name is not None:
+        plugins = [entry for entry in plugins if entry["name"] == only_name]
+        if not plugins:
+            raise SyncError(f"plugin 不在仓库清单中: {only_name}")
+    if not plugins:
+        print("没有登记的 plugins。")
+        return 0
+    for client, sync_client in PLUGIN_CLIENTS.items():
+        entries = [
+            {**entry, **entry.get("sources", {}).get(client, {})}
+            for entry in plugins
+            if client in entry.get("clients", ["codex"])
+        ]
+        if entries:
+            sync_client(entries)
 
     if push:
         push_repo(paths()[0])
