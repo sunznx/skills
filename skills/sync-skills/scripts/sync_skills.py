@@ -347,15 +347,7 @@ def update_mirror(repo: Path, url: str, ref: str | None) -> Path:
     mirror.parent.mkdir(parents=True, exist_ok=True)
     if mirror.exists():
         valid = run("git", "rev-parse", "--is-bare-repository", cwd=mirror, check=False)
-        head = run(
-            "git", "rev-parse", "--verify", f"{tracking_ref_for(ref)}^{{commit}}",
-            cwd=mirror, check=False,
-        )
-        if (
-            valid.returncode != 0
-            or valid.stdout.strip() != "true"
-            or head.returncode != 0
-        ):
+        if valid.returncode != 0 or valid.stdout.strip() != "true":
             shutil.rmtree(mirror)
     if mirror.exists():
         remove_conflicted_git_refs(mirror)
@@ -381,11 +373,7 @@ def update_mirror(repo: Path, url: str, ref: str | None) -> Path:
 
 
 def resolve_revision(mirror: Path, ref: str | None) -> str:
-    candidates = (
-        [ref, f"refs/remotes/origin/{ref}", f"refs/heads/{ref}", f"refs/tags/{ref}"]
-        if ref
-        else ["refs/remotes/origin/HEAD", "HEAD"]
-    )
+    candidates = [tracking_ref_for(ref), ref] if ref else ["refs/remotes/origin/HEAD", "HEAD"]
     for candidate in candidates:
         result = run(
             "git", "rev-parse", "--verify", f"{candidate}^{{commit}}", cwd=mirror, check=False
@@ -710,7 +698,7 @@ def sync_upstream(only_name: str | None = None) -> int:
             raise SyncError(f"skill 不在仓库中: {only_name}")
     updated: list[str] = []
     all_conflicts: list[dict[str, str]] = []
-    mirrors: dict[str, Path] = {}
+    mirrors: dict[tuple[str, str | None], Path] = {}
 
     with tempfile.TemporaryDirectory(prefix="sync-skills-") as temp:
         staging_root = Path(temp)
@@ -724,10 +712,11 @@ def sync_upstream(only_name: str | None = None) -> int:
                 raise SyncError(f"{name} 缺少来源字段")
 
             print(f"检查 {name} ...")
-            mirror = mirrors.get(entry["url"])
+            mirror_key = (entry["url"], entry.get("ref"))
+            mirror = mirrors.get(mirror_key)
             if mirror is None:
                 mirror = update_mirror(repo, entry["url"], entry.get("ref"))
-                mirrors[entry["url"]] = mirror
+                mirrors[mirror_key] = mirror
             revision = resolve_revision(mirror, entry.get("ref"))
             latest_tree = skill_tree(mirror, revision, entry["path"])
             if latest_tree == entry["base_tree"]:

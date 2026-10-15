@@ -222,6 +222,76 @@ class SyncSkillsTests(unittest.TestCase):
             sync_skills.ensure_base_tree(mirror, base_tree)
             git(mirror, "cat-file", "-e", f"{base_tree}^{{tree}}")
 
+    def test_ref_prefers_fetched_tracking_ref_over_stale_local_branch(self) -> None:
+        with tempfile.TemporaryDirectory() as temp:
+            root = Path(temp)
+            upstream = root / "upstream"
+            upstream.mkdir()
+            git(upstream, "init", "-q")
+            git(upstream, "config", "user.name", "test")
+            git(upstream, "config", "user.email", "test@example.com")
+            (upstream / "SKILL.md").write_text("old\n")
+            git(upstream, "add", ".")
+            git(upstream, "commit", "-q", "-m", "old")
+            old = git(upstream, "rev-parse", "HEAD")
+            (upstream / "SKILL.md").write_text("new\n")
+            git(upstream, "commit", "-q", "-am", "new")
+            new = git(upstream, "rev-parse", "HEAD")
+
+            mirror = root / "mirror"
+            git(root, "clone", "-q", "--bare", upstream.as_uri(), str(mirror))
+            git(mirror, "update-ref", "refs/heads/main", old)
+            git(mirror, "update-ref", "refs/remotes/origin/main", new)
+
+            self.assertEqual(sync_skills.resolve_revision(mirror, "main"), new)
+            self.assertEqual(sync_skills.resolve_revision(mirror, old), old)
+
+    def test_entries_sharing_url_fetch_their_own_ref(self) -> None:
+        with tempfile.TemporaryDirectory() as temp:
+            root = Path(temp)
+            upstream = root / "upstream"
+            upstream.mkdir()
+            git(upstream, "init", "-q", "-b", "main")
+            git(upstream, "config", "user.name", "test")
+            git(upstream, "config", "user.email", "test@example.com")
+            for name in ("x", "y"):
+                (upstream / name).mkdir()
+                (upstream / name / "SKILL.md").write_text(f"{name}1\n")
+            git(upstream, "add", ".")
+            git(upstream, "commit", "-q", "-m", "v1")
+            url = upstream.as_uri()
+
+            repo = root / "repo"
+            local = root / "agents/skills"
+            repo.mkdir()
+            init_repo(repo, {"a": "x1\n", "b": "y1\n"})
+            manifest = {
+                "version": 1,
+                "skills": [
+                    {"name": "a", "source": "t", "url": url, "path": "x/SKILL.md",
+                     "base_tree": git(upstream, "rev-parse", "HEAD:x")},
+                    {"name": "b", "source": "t", "url": url, "path": "y/SKILL.md",
+                     "ref": "main", "base_tree": git(upstream, "rev-parse", "HEAD:y")},
+                ],
+            }
+            (repo / "skills/sources.json").write_text(json.dumps(manifest) + "\n")
+            git(repo, "commit", "-q", "-am", "manifest")
+            env = {
+                "SYNC_SKILLS_REPO": str(repo),
+                "SYNC_SKILLS_LOCAL_DIR": str(local),
+                "SYNC_SKILLS_CONFIG": str(root / "config"),
+            }
+            with patch.dict(os.environ, env):
+                sync_skills.update_mirror(repo, url, None)
+                sync_skills.update_mirror(repo, url, "main")
+
+            (upstream / "y/SKILL.md").write_text("y2\n")
+            git(upstream, "commit", "-q", "-am", "v2")
+
+            with patch.dict(os.environ, env), patch.object(sync_skills, "push_repo"):
+                sync_skills.sync_upstream()
+            self.assertEqual((repo / "skills/b/SKILL.md").read_text(), "y2\n")
+
 
 if __name__ == "__main__":
     unittest.main()
