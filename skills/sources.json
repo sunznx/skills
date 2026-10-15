@@ -436,17 +436,6 @@
       "source": "OthmanAdi/planning-with-files",
       "url": "https://github.com/OthmanAdi/planning-with-files.git",
       "ref": "main"
-    },
-    {
-      "name": "i-have-adhd",
-      "marketplace": "i-have-adhd",
-      "clients": [
-        "codex",
-        "claude"
-      ],
-      "source": "ayghri/i-have-adhd",
-      "url": "https://github.com/ayghri/i-have-adhd.git",
-      "ref": "main"
     }
   ]
 }

@@ -107,6 +107,5 @@ $sync-skills 更新 agent-messaging 删除某个功能
 
 | Plugin | Marketplace | 外部来源 | Clients | 安装后命令 |
 | --- | --- | --- | --- | --- |
-| `i-have-adhd` | `i-have-adhd` | codex: [ayghri/i-have-adhd](https://github.com/ayghri/i-have-adhd)<br>claude: [ayghri/i-have-adhd](https://github.com/ayghri/i-have-adhd) | codex, claude | — |
 | `planning-with-files` | `planning-with-files` | codex: [OthmanAdi/planning-with-files](https://github.com/OthmanAdi/planning-with-files)<br>claude: [OthmanAdi/planning-with-files](https://github.com/OthmanAdi/planning-with-files) | codex, claude | — |
 <!-- skill-catalog:end -->
