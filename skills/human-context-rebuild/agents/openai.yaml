@@ -2,4 +2,4 @@ interface:
   display_name: "Human Context Rebuild"
   short_description: "Rebuild the current session context in a compact recap"
 policy:
-  allow_implicit_invocation: false
+  allow_implicit_invocation: true

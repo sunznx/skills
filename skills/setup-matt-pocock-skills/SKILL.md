@@ -1,7 +1,6 @@
 ---
 name: setup-matt-pocock-skills
 description: "Configure Matt engineering skills: choose the issue tracker, triage labels and domain layout under .planning. Includes a shared missing-only configuration initializer."
-disable-model-invocation: true
 ---
 
 # Setup Matt Pocock's Skills

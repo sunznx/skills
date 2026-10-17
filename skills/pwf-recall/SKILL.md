@@ -2,7 +2,6 @@
 name: pwf-recall
 description: 从 Planning with Files 计划文件和 git 现状重建最近的工作上下文，核对计划与实际是否漂移，给出一份当前状态简报。开工或隔几天回来接着干之前使用。
 argument-hint: "话题、PLAN_ID 或时间范围（可选）"
-disable-model-invocation: true
 ---
 
 # PWF Recall

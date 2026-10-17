@@ -2,7 +2,6 @@
 name: pwf-artifact
 description: 将用户指定的对话产物保存到当前 Planning with Files 任务目录。
 argument-hint: "要保存的内容或文件路径"
-disable-model-invocation: true
 ---
 
 # PWF Artifact
