@@ -18,7 +18,7 @@
       "source": "tt-a1i/archify",
       "url": "https://github.com/tt-a1i/archify.git",
       "path": "archify/SKILL.md",
-      "base_tree": "7e1de2b2cf3a9a91823ee5dcc2089c1d96a7e4f1"
+      "base_tree": "39069dd190f574064fe410aa3af1b6dfd98a522c"
     },
     {
       "name": "background-agent-jobs",
@@ -71,7 +71,7 @@
       "source": "cathrynlavery/diagram-design",
       "url": "https://github.com/cathrynlavery/diagram-design.git",
       "path": "skills/diagram-design/SKILL.md",
-      "base_tree": "ee9e6703aa7a9946e4ac2b22ad3587e44dbde3fe"
+      "base_tree": "01e393ce6ef4820bc71b90102895815fa6e6676b"
     },
     {
       "name": "documd-visuals",
@@ -92,7 +92,7 @@
       "source": "citrolabs/ego-lite",
       "url": "https://github.com/citrolabs/ego-lite.git",
       "path": "skills/ego-browser/SKILL.md",
-      "base_tree": "de51555db49c45d5491939b0e7485b832a03c902",
+      "base_tree": "1f8b5caa5e43f6ced5c41faf0e25eeadb56ae3dd",
       "deploy": false
     },
     {
@@ -196,35 +196,35 @@
       "source": "jackwener/opencli",
       "url": "https://github.com/jackwener/opencli.git",
       "path": "skills/opencli-adapter-author/SKILL.md",
-      "base_tree": "a49fbc2612cfed9dde3a10650e84daafc2fa38ae"
+      "base_tree": "ab9b06d8b84ee38e9bbeb7b86b79a1158f198394"
     },
     {
       "name": "opencli-autofix",
       "source": "jackwener/opencli",
       "url": "https://github.com/jackwener/opencli.git",
       "path": "skills/opencli-autofix/SKILL.md",
-      "base_tree": "1f9cc52aa2fb2d927b5585de7ae649556f3b683b"
+      "base_tree": "e6a1716d9bf8b4631fde35465f9cecffc202672f"
     },
     {
       "name": "opencli-browser",
       "source": "jackwener/opencli",
       "url": "https://github.com/jackwener/opencli.git",
       "path": "skills/opencli-browser/SKILL.md",
-      "base_tree": "f9da2cbbff309e423c74189aaf5411474c3201ae"
+      "base_tree": "86153768ecea9f6b39efe1411c2e6129f88b7c7d"
     },
     {
       "name": "opencli-usage",
       "source": "jackwener/opencli",
       "url": "https://github.com/jackwener/opencli.git",
       "path": "skills/opencli-usage/SKILL.md",
-      "base_tree": "7562cb3234bd8710a6c9ad5a7e1ed95aad327d88"
+      "base_tree": "71d9fdf9bbcba7a44ebcef799bf07fffcbb72bd9"
     },
     {
       "name": "planning-with-files",
       "source": "OthmanAdi/planning-with-files",
       "url": "https://github.com/OthmanAdi/planning-with-files.git",
       "path": ".agents/skills/planning-with-files/SKILL.md",
-      "base_tree": "833a922293c1122551a6bdd6393a87fa4e81eceb",
+      "base_tree": "8a800be4a2755399b51132ab111ed79113b8eafb",
       "deploy": false
     },
     {
