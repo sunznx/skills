@@ -83,7 +83,7 @@ $sync-skills 更新 agent-messaging 删除某个功能
 | `show-me` | [humanlayer/skills](https://github.com/humanlayer/skills) | `plugins/show-me/skills/show-me/SKILL.md` | 三方合并 |
 | `skill-doctor` | [warpdotdev/common-skills](https://github.com/warpdotdev/common-skills) | `.agents/skills/skill-doctor/SKILL.md` | 三方合并 |
 | `smart-search` | [jackwener/opencli](https://github.com/jackwener/opencli) | `skills/smart-search/SKILL.md` | 三方合并 |
-| `spec-bootstrap` | 本地维护，安装项目级 PWF skill 与官方 hooks，并配置 Serena、Semble | — | 本地维护 |
+| `spec-bootstrap` | 本地维护，全局安装 Planning with Files plugin 与 lifecycle hooks | — | 本地维护 |
 | `sync-skills` | 本仓库维护的同步 skill | — | 本地维护 |
 | `tdd` | [mattpocock/skills](https://github.com/mattpocock/skills) | `skills/engineering/tdd/SKILL.md` | 三方合并 |
 | `teach` | [mattpocock/skills](https://github.com/mattpocock/skills) | `skills/productivity/teach/SKILL.md` | 三方合并 |

@@ -5,7 +5,6 @@ from __future__ import annotations
 
 import json
 import os
-import re
 import shutil
 import subprocess
 import sys
@@ -13,14 +12,6 @@ from pathlib import Path
 from typing import Any
 
 
-SERENA_HOOK = "serena-hooks"
-UVX_TOOLS = (
-    ("Semble", ["uv", "tool", "install", "--upgrade", "semble[mcp]==0.5.5"]),
-    ("Serena", ["uv", "tool", "install", "--upgrade", "-p", "3.13", "serena-agent"]),
-)
-BLOCK_START = "# AGENT-WORKFLOW:START"
-BLOCK_END = "# AGENT-WORKFLOW:END"
-SERENA_CLIENT = re.compile(r"--client(?:=|\s+)codex(?:\s|$)")
 PLUGINS = (
     (
         "planning-with-files",
@@ -28,40 +19,6 @@ PLUGINS = (
         "planning-with-files@planning-with-files",
     ),
 )
-SERENA_HOOKS = {
-    "PreToolUse": [
-        {
-            "matcher": "Bash",
-            "hooks": [
-                {
-                    "type": "command",
-                    "command": f"{SERENA_HOOK} remind --client=codex",
-                }
-            ],
-        }
-    ],
-    "SessionStart": [
-        {
-            "matcher": "startup|resume",
-            "hooks": [
-                {
-                    "type": "command",
-                    "command": f"{SERENA_HOOK} activate --client=codex",
-                }
-            ],
-        }
-    ],
-    "SessionEnd": [
-        {
-            "hooks": [
-                {
-                    "type": "command",
-                    "command": f"{SERENA_HOOK} cleanup --client=codex",
-                }
-            ]
-        }
-    ],
-}
 
 
 class InitError(RuntimeError):
@@ -163,113 +120,8 @@ def ensure_plugins() -> list[str]:
     return statuses
 
 
-def prepare_uvx_tools() -> list[str]:
-    statuses: list[str] = []
-    for name, command in UVX_TOOLS:
-        try:
-            result = subprocess.run(command, text=True, capture_output=True, check=False)
-        except FileNotFoundError as exc:
-            raise InitError("未找到 uv/uvx，无法安装 Semble 和 Serena。") from exc
-        if result.returncode:
-            detail = result.stderr.strip() or result.stdout.strip()
-            raise InitError(f"安装 {name} 失败：{detail}")
-        statuses.append(f"prepared uvx tool {name}")
-    return statuses
-
-
-def managed_config(existing: str) -> str:
-    stripped = re.sub(
-        rf"(?:^|\n){re.escape(BLOCK_START)}\n.*?\n{re.escape(BLOCK_END)}(?=\n|$)",
-        "",
-        existing,
-        flags=re.DOTALL,
-    ).rstrip()
-    sections: list[str] = []
-    if not re.search(r"(?m)^\s*\[mcp_servers\.serena\]\s*$", stripped):
-        sections.append(
-            """[mcp_servers.serena]
-command = "serena"
-args = [
-  "start-mcp-server",
-  "--project-from-cwd",
-  "--context=codex",
-  "--language-backend", "LSP",
-]
-startup_timeout_sec = 120"""
-        )
-    if not re.search(r"(?m)^\s*\[mcp_servers\.semble\]\s*$", stripped):
-        sections.append(
-            """[mcp_servers.semble]
-command = "semble"
-args = []
-startup_timeout_sec = 120"""
-        )
-    if not sections:
-        return stripped + ("\n" if stripped else "")
-    block = f"{BLOCK_START}\n" + "\n\n".join(sections) + f"\n{BLOCK_END}"
-    return f"{stripped}\n\n{block}\n" if stripped else f"{block}\n"
-
-
-def is_serena_hook(item: dict[str, Any]) -> bool:
-    command = item.get("command", "")
-    return isinstance(command, str) and "serena-hooks" in command and bool(SERENA_CLIENT.search(command))
-
-
-def merge_hooks(existing: dict[str, Any]) -> dict[str, Any]:
-    merged = dict(existing)
-    hooks = dict(existing.get("hooks", {})) if isinstance(existing.get("hooks"), dict) else {}
-    for event, groups in list(hooks.items()):
-        if not isinstance(groups, list):
-            continue
-        kept_groups = []
-        for group in groups:
-            if not isinstance(group, dict):
-                kept_groups.append(group)
-                continue
-            commands = group.get("hooks")
-            if not isinstance(commands, list):
-                kept_groups.append(group)
-                continue
-            kept = [item for item in commands if not (isinstance(item, dict) and is_serena_hook(item))]
-            if kept:
-                copy = dict(group)
-                copy["hooks"] = kept
-                kept_groups.append(copy)
-        hooks[event] = kept_groups
-
-    for event, groups in SERENA_HOOKS.items():
-        hooks.setdefault(event, [])
-        hooks[event].extend(groups)
-    merged["hooks"] = hooks
-    return merged
-
-
-def write_if_changed(path: Path, content: str) -> str:
-    current = path.read_text(encoding="utf-8") if path.is_file() else None
-    if current == content:
-        return "preserved"
-    path.parent.mkdir(parents=True, exist_ok=True)
-    path.write_text(content, encoding="utf-8")
-    return "created" if current is None else "updated"
-
-
 def install_global() -> list[str]:
-    statuses = prepare_uvx_tools()
-    statuses.extend(ensure_plugins())
-    home = codex_home()
-
-    config = home / "config.toml"
-    config_text = config.read_text(encoding="utf-8") if config.is_file() else ""
-    statuses.append(f"{write_if_changed(config, managed_config(config_text))} {config}")
-
-    hooks_path = home / "hooks.json"
-    try:
-        existing_hooks = json.loads(hooks_path.read_text(encoding="utf-8")) if hooks_path.is_file() else {}
-    except json.JSONDecodeError as exc:
-        raise InitError(f"hooks JSON 格式错误：{exc}") from exc
-    hooks_text = json.dumps(merge_hooks(existing_hooks), ensure_ascii=False, indent=2) + "\n"
-    statuses.append(f"{write_if_changed(hooks_path, hooks_text)} {hooks_path}")
-    return statuses
+    return ensure_plugins()
 
 
 def main() -> int:

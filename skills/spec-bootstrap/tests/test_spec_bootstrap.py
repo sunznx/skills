@@ -17,49 +17,6 @@ SPEC.loader.exec_module(MODULE)
 
 
 class SpecBootstrapTest(unittest.TestCase):
-    def test_uvx_tools_are_prepared_first(self) -> None:
-        completed = MODULE.subprocess.CompletedProcess([], 0, "", "")
-        with mock.patch.object(MODULE.subprocess, "run", return_value=completed) as run:
-            statuses = MODULE.prepare_uvx_tools()
-        self.assertEqual(statuses, ["prepared uvx tool Semble", "prepared uvx tool Serena"])
-        self.assertEqual(
-            [call.args[0] for call in run.call_args_list],
-            [command for _name, command in MODULE.UVX_TOOLS],
-        )
-
-    def test_config_preserves_existing_server_without_duplicate(self) -> None:
-        original = '[mcp_servers.serena]\ncommand = "custom"\n'
-        result = MODULE.managed_config(original)
-        self.assertEqual(result.count("[mcp_servers.serena]"), 1)
-        self.assertEqual(result.count("[mcp_servers.semble]"), 1)
-        self.assertEqual(result, MODULE.managed_config(result))
-
-    def test_hook_merge_preserves_other_hooks_and_is_idempotent(self) -> None:
-        existing = {
-            "hooks": {
-                "SessionStart": [
-                    {"hooks": [{"type": "command", "command": "echo keep"}]},
-                    {
-                        "hooks": [
-                            {
-                                "type": "command",
-                                "command": "serena-hooks activate --client=codex",
-                            }
-                        ]
-                    },
-                ]
-            }
-        }
-        once = MODULE.merge_hooks(existing)
-        twice = MODULE.merge_hooks(once)
-        text = json.dumps(twice)
-        self.assertEqual(once, twice)
-        self.assertIn("echo keep", text)
-        self.assertEqual(text.count("serena-hooks"), 3)
-        self.assertIn("remind --client=codex", text)
-        self.assertIn("activate --client=codex", text)
-        self.assertIn("cleanup --client=codex", text)
-
     def test_only_planning_plugin_installs_without_migrated_commands(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
@@ -98,29 +55,37 @@ class SpecBootstrapTest(unittest.TestCase):
             self.assertFalse(any("ponytail" in str(call) for call in codex_json.call_args_list))
             self.assertTrue(any(status.startswith("restored ") for status in statuses))
 
-    def test_install_writes_only_global_codex_files(self) -> None:
+    def test_install_preserves_global_config_and_hooks(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
             home = Path(directory) / "codex-home"
             home.mkdir()
-            (home / "config.toml").write_text("[features]\nhooks = true\n", encoding="utf-8")
-            (home / "hooks.json").write_text(
-                '{"hooks":{"SessionStart":[{"hooks":[{"type":"command","command":"echo keep"}]}]}}\n',
-                encoding="utf-8",
-            )
+            original = {
+                "config.toml": b'[features]\nhooks = true\n[mcp_servers.keep]\ncommand = "keep"\n',
+                "hooks.json": b'{"hooks":{"SessionStart":[{"hooks":[{"type":"command","command":"echo keep"}]}]}}\n',
+            }
+            for name, content in original.items():
+                (home / name).write_bytes(content)
             with (
                 mock.patch.dict(os.environ, {"CODEX_HOME": str(home)}),
-                mock.patch.object(MODULE, "prepare_uvx_tools", return_value=["uvx ok"]),
-                mock.patch.object(MODULE, "ensure_plugins", return_value=["plugins ok"]),
+                mock.patch.object(MODULE, "ensure_plugins", return_value=["plugins ok"]) as plugins,
+                mock.patch.object(MODULE.subprocess, "run", side_effect=AssertionError("unexpected tool installation")),
             ):
                 statuses = MODULE.install_global()
-            self.assertEqual(statuses[:2], ["uvx ok", "plugins ok"])
-            config = (home / "config.toml").read_text(encoding="utf-8")
-            self.assertIn("[mcp_servers.serena]", config)
-            self.assertIn("[mcp_servers.semble]", config)
-            hooks = (home / "hooks.json").read_text(encoding="utf-8")
-            self.assertIn("echo keep", hooks)
-            self.assertEqual(hooks.count("serena-hooks"), 3)
-            self.assertEqual(sorted(path.name for path in home.iterdir()), ["config.toml", "hooks.json"])
+            plugins.assert_called_once_with()
+            self.assertEqual(statuses, ["plugins ok"])
+            self.assertEqual({path.name: path.read_bytes() for path in home.iterdir()}, original)
+
+    def test_install_does_not_create_mcp_or_hook_config(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            home = Path(directory) / "codex-home"
+            with (
+                mock.patch.dict(os.environ, {"CODEX_HOME": str(home)}),
+                mock.patch.object(MODULE, "ensure_plugins", return_value=["plugins ok"]) as plugins,
+                mock.patch.object(MODULE.subprocess, "run", side_effect=AssertionError("unexpected tool installation")),
+            ):
+                self.assertEqual(MODULE.install_global(), ["plugins ok"])
+            plugins.assert_called_once_with()
+            self.assertFalse(home.exists())
 
 
 if __name__ == "__main__":
