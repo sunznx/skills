@@ -7,6 +7,10 @@ description: Only use when the user explicitly invokes this skill by name.
 
 Create or update the pull request for the current task with a concise description that helps a reviewer understand why the change exists and the shape of the implementation.
 
+## Plan and artifacts
+
+Before gathering task context, use `planning-with-files` to resolve this task's named, gated plan through [plan resolution](../pwf-artifact/references/plan-resolution.md). Use the selected absolute plan directory as `<PLAN_DIR>` and keep its `PLAN_ID`. Use that same plan for the PR description and any supporting visuals.
+
 ## Workflow
 
 1. Read the description template:
@@ -37,16 +41,17 @@ Create or update the pull request for the current task with a concise descriptio
      - Call-tree, call-stack, control-flow, or data-flow changes.
    - Prefer `diff` blocks when showing changes to an existing shape. Show the complete target shape when most of it is new or diff notation would obscure ownership or order.
    - Keep each view focused on what a reviewer needs. Omit categories that did not change.
-   - optionaL: if you are aware of a ticket id/url, a humanlayer task url, or related plan/document urls, or other relevant links, include them in the header, otherwise omit the header
+   - Optional: include ticket URLs or related plan/document URLs in the header when available; otherwise omit the header.
 
 5. Save and publish the description:
-   - Use `.humanlayer/tasks/{task-slug}/pr-description.md` when the task directory exists; otherwise use `.humanlayer/tasks/pr-{number}/description.md`.
-   - Update the PR with `gh pr edit {number} --body-file {output-path}`.
+   - Create `<PLAN_DIR>/visual-pr/pr-{number}/` and save the description as `<PLAN_DIR>/visual-pr/pr-{number}/pr-description.md`.
+   - Use that saved absolute filename as `{output-path}` in `gh pr edit {number} --body-file "{output-path}"`.
    - Confirm the update succeeded.
+   - Record the PR URL, saved description path, and outcome in the selected plan's `findings.md` and `progress.md`.
 
 6. Report completion:
    - Read `{SKILLBASE}/references/describe_pr_final_answer.md`.
-   - Respond using that final answer template with the PR URL, saved description URL, and concise list of changed files.
+   - Respond using that final answer template with the PR URL, a local file link to the saved description, the selected plan, and a concise list of changed files.
 
 Always read and follow `{SKILLBASE}/references/pr_description_template.md`. Do not expand the PR body beyond that template.
 

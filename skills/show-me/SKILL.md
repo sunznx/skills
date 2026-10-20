@@ -5,6 +5,14 @@ description: Help the user understand the current topic visually with concise di
 
 Help the user understand the current topic of conversation visually. Skip the preamble and keep prose brief. Pick the smallest view that makes the key point clear.
 
+## Plan and artifacts
+
+Before saving a visual, use `planning-with-files` to resolve this task's named, gated plan through [plan resolution](../pwf-artifact/references/plan-resolution.md). Use the selected absolute plan directory as `<PLAN_DIR>` and keep its `PLAN_ID`. When another workflow invokes this skill, use that workflow's selected plan.
+
+Create `<PLAN_DIR>/show-me/` before writing HTML. Save each visual as `<PLAN_DIR>/show-me/show-me-{description}.html`, and record its path and outcome in the selected plan's `findings.md` and `progress.md`. Code sketches and diagrams that only need an inline reply can stay inline.
+
+## Choose a view
+
 - Show logic or an algorithm as pseudocode:
 
 ```text
@@ -117,7 +125,7 @@ function expandSkill(command: string): string {
 - For a visual UI, layout, state comparison, or concept too dense for Mermaid, write one focused HTML file — a diagram, an infographic, or a short slide deck, whichever fits the point. Match the product's colors, type, spacing, and components; use real labels and data; support desktop and mobile. Then open it for the user:
 
 ```
-Bash(open path/to/show-me-{description}.html)
+Bash(open "<PLAN_DIR>/show-me/show-me-{description}.html")
 ```
 
 ### guidance
