@@ -27,6 +27,16 @@ Routing for every diagram, chart, card and layout this document pipeline can ren
 written into the Markdown *is* the figure: the viewer draws it live, the block stays editable, and nothing
 is pre-rendered, built or exported first. `documd` is optional — export and verification only.
 
+## Plan and artifacts
+
+When the figure goes into a document the user named, write it there. Otherwise, before writing, use
+`planning-with-files` to resolve this task's named, gated plan through
+[plan resolution](../pwf-artifact/references/plan-resolution.md); when another workflow invokes this
+skill, use that workflow's selected plan. Save the new document as
+`<PLAN_DIR>/documd-visuals/<description>.md` without overwriting an earlier one, and put any `documd`
+export or extracted figures beside it. Record each path and the question the figure answers in the
+selected plan's `findings.md` and `progress.md`.
+
 ## Iron rules
 
 1. **Allowed fences** — `plantuml` / `puml` · `vega` · `vega-lite` · `echarts` · `infographic`,
