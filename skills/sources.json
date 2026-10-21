@@ -54,6 +54,13 @@
       "base_tree": "5ebee6f7fe9cd7f97b1c698dbbf4f19ed8c4c5f4"
     },
     {
+      "name": "create-formal-verification-skill",
+      "source": "cursor/plugins",
+      "url": "https://github.com/cursor/plugins.git",
+      "path": "pstack/skills/create-formal-verification-skill/SKILL.md",
+      "base_tree": "1a9d7cf78485735e6ff3b14379dbe4a62c4c4d76"
+    },
+    {
       "name": "cua-driver",
       "managed": false,
       "note": "本机链接 ~/.cua-driver/skills/cua-driver，仓库保留快照但不覆盖该链接",

@@ -48,6 +48,7 @@ $sync-skills 更新 agent-messaging 删除某个功能
 | `code-review` | [mattpocock/skills](https://github.com/mattpocock/skills) | `skills/engineering/code-review/SKILL.md` | 三方合并 |
 | `codebase-design` | [mattpocock/skills](https://github.com/mattpocock/skills) | `skills/engineering/codebase-design/SKILL.md` | 三方合并 |
 | `correct` | [cursor/plugins](https://github.com/cursor/plugins) | `pstack/skills/correct/SKILL.md` | 三方合并 |
+| `create-formal-verification-skill` | [cursor/plugins](https://github.com/cursor/plugins) | `pstack/skills/create-formal-verification-skill/SKILL.md` | 三方合并 |
 | `cua-driver` | 本机链接 ~/.cua-driver/skills/cua-driver，仓库保留快照但不覆盖该链接 | — | 仅仓库维护 |
 | `diagnosing-bugs` | [mattpocock/skills](https://github.com/mattpocock/skills) | `skills/engineering/diagnosing-bugs/SKILL.md` | 三方合并 |
 | `diagram-design` | [cathrynlavery/diagram-design](https://github.com/cathrynlavery/diagram-design) | `skills/diagram-design/SKILL.md` | 三方合并 |
