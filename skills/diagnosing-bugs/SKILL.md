@@ -5,7 +5,7 @@ description: Diagnosis loop for hard bugs and performance regressions. Use when 
 
 # Diagnosing Bugs
 
-Use `planning-with-files` to resolve the named, gated plan for this diagnosis, following [plan resolution](../pwf-artifact/references/plan-resolution.md). Keep the red-capable reproduction command, hypotheses, and findings in `<PLAN_DIR>/findings.md`; record each run and its result in `<PLAN_DIR>/progress.md`. Redact secrets as required below.
+Use `planning-with-files` to select or create this task's plan as `<PLAN_DIR>`; when another workflow invokes this skill, use that workflow's selected plan. Keep the red-capable reproduction command, hypotheses, and findings in `<PLAN_DIR>/findings.md`; record each run and its result in `<PLAN_DIR>/progress.md`. Redact secrets as required below.
 
 A discipline for hard bugs. Skip phases only when explicitly justified.
 

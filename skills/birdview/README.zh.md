@@ -195,22 +195,23 @@ node <skill-root>/scripts/birdview.mjs skills audit \
 通常由 Agent 完成下面的步骤。如果你已经有符合格式的架构文件，也可以手动校验并生成 HTML：
 
 ```sh
+MAP_DIR=".planning/birdview" # 项目地图和约束，所有任务共用。
 PLAN_DIR=".planning/<PLAN_ID>" # 替换为已选中的 PWF 任务目录。
-node scripts/validate.mjs "$PLAN_DIR/birdview/architecture.json"
-node scripts/render.mjs "$PLAN_DIR/birdview/architecture.json" "$PLAN_DIR/birdview/architecture.html"
+node scripts/validate.mjs "$MAP_DIR/architecture.json"
+node scripts/render.mjs "$MAP_DIR/architecture.json" "$PLAN_DIR/birdview/architecture.html"
 ```
 
 加入 Agent 声明的任务过程（活动记录）：
 
 ```sh
-node scripts/validate.mjs "$PLAN_DIR/birdview/architecture.json" "$PLAN_DIR/birdview/activity.jsonl"
-node scripts/render.mjs "$PLAN_DIR/birdview/architecture.json" "$PLAN_DIR/birdview/activity.html" "$PLAN_DIR/birdview/activity.jsonl"
+node scripts/validate.mjs "$MAP_DIR/architecture.json" "$PLAN_DIR/birdview/activity.jsonl"
+node scripts/render.mjs "$MAP_DIR/architecture.json" "$PLAN_DIR/birdview/activity.html" "$PLAN_DIR/birdview/activity.jsonl"
 ```
 
 加入已经收集并审查的约束清单：
 
 ```sh
-node scripts/birdview.mjs deliver "$PLAN_DIR/birdview/architecture.json" "$PLAN_DIR/birdview/project.html" --constraints "$PLAN_DIR/birdview/constraints.reviewed.json"
+node scripts/birdview.mjs deliver "$MAP_DIR/architecture.json" "$PLAN_DIR/birdview/project.html" --constraints "$MAP_DIR/constraints.reviewed.json"
 ```
 
 CLI 生成一个集成页面，来源原文在页内阅读。来源发现、规则审查和独立约束图生成见[约束流程](references/constraint-graph.zh.md)。

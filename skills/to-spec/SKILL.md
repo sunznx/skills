@@ -5,7 +5,7 @@ description: "Turn the current conversation into a spec and publish it to the pr
 
 This skill takes the current conversation context and codebase understanding and produces a spec. Do NOT interview the user; just synthesize what you already know.
 
-Use `planning-with-files` to resolve a named, gated plan for this task, following [plan resolution](../pwf-artifact/references/plan-resolution.md). Before reading Matt configuration, follow [shared configuration initialization](../setup-matt-pocock-skills/references/ensure-config.md). Read `.planning/issue-tracker.md` and `.planning/triage-labels.md`. Read `.planning/domain.md` when present.
+Use `planning-with-files` to select or create this task's plan as `<PLAN_DIR>`; when another workflow invokes this skill, use that workflow's selected plan. Before reading Matt configuration, follow [shared configuration initialization](../setup-matt-pocock-skills/references/ensure-config.md). Read `.planning/issue-tracker.md` and `.planning/triage-labels.md`. Read `.planning/domain.md` when present.
 
 ## Process
 

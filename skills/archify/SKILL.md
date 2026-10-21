@@ -31,7 +31,7 @@ When the user supplies a frozen candidate, run `finalize` first as one CLI invoc
 
 ## Artifact location
 
-Before native diagram or explainer generation, reuse or initialize a named, gated `planning-with-files` plan and bind this task's `PLAN_ID` and project root. Choose the plan by [plan resolution](../pwf-artifact/references/plan-resolution.md); follow [PWF integration](references/planning-with-files.md) for selector failures, ambiguity, legacy plans, reuse, and handoff records. Complete plan resolution, existing-artifact discovery, and directory preparation before native diagram or explainer authoring. Save specifications, HTML, receipts, screenshots, and exports under `<PLAN_DIR>/archify/`, and record their paths in the selected plan. This is an agent workflow; the CLI uses explicit paths.
+Before native diagram or explainer generation, use `planning-with-files` to select or create this task's plan as `<PLAN_DIR>`; when another workflow invokes this skill, use that workflow's selected plan. Follow [PWF integration](references/planning-with-files.md) for reuse, the artifact bundle, and handoff records. Complete plan selection, existing-artifact discovery, and directory preparation before native diagram or explainer authoring. Save specifications, HTML, receipts, screenshots, and exports under `<PLAN_DIR>/archify/`, and record their paths in the selected plan. This is an agent workflow; the CLI uses explicit paths.
 
 ## Native diagram authoring
 

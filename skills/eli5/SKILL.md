@@ -11,7 +11,7 @@ Topic: $ARGUMENTS
 
 ## Plan and artifacts
 
-Before writing the HTML, use `planning-with-files` to resolve this task's named, gated plan through [plan resolution](../pwf-artifact/references/plan-resolution.md). Use the selected absolute plan directory as `<PLAN_DIR>` and keep its `PLAN_ID`. When another workflow invokes this skill, use that workflow's selected plan.
+Before writing the HTML, use `planning-with-files` to select or create this task's plan as `<PLAN_DIR>`; when another workflow invokes this skill, use that workflow's selected plan. Keep its absolute directory and `PLAN_ID`.
 
 Create `<PLAN_DIR>/eli5/` and save the explainer as `<PLAN_DIR>/eli5/eli5-{description}.html`; never overwrite an earlier one. Record its path and the one-line takeaway in the selected plan's `findings.md` and `progress.md`, then open it for the user:
 

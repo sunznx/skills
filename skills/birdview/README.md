@@ -195,22 +195,23 @@ On the first visit, follow **Guide** for a short walkthrough, or skip it and pre
 The agent normally handles these steps. If you already have an architecture file in the expected format, you can validate it and generate the HTML yourself:
 
 ```sh
+MAP_DIR=".planning/birdview" # Project map and constraints, shared by every task.
 PLAN_DIR=".planning/<PLAN_ID>" # Replace with the selected PWF task directory.
-node scripts/validate.mjs "$PLAN_DIR/birdview/architecture.json"
-node scripts/render.mjs "$PLAN_DIR/birdview/architecture.json" "$PLAN_DIR/birdview/architecture.html"
+node scripts/validate.mjs "$MAP_DIR/architecture.json"
+node scripts/render.mjs "$MAP_DIR/architecture.json" "$PLAN_DIR/birdview/architecture.html"
 ```
 
 To add the task activity declared by the agent:
 
 ```sh
-node scripts/validate.mjs "$PLAN_DIR/birdview/architecture.json" "$PLAN_DIR/birdview/activity.jsonl"
-node scripts/render.mjs "$PLAN_DIR/birdview/architecture.json" "$PLAN_DIR/birdview/activity.html" "$PLAN_DIR/birdview/activity.jsonl"
+node scripts/validate.mjs "$MAP_DIR/architecture.json" "$PLAN_DIR/birdview/activity.jsonl"
+node scripts/render.mjs "$MAP_DIR/architecture.json" "$PLAN_DIR/birdview/activity.html" "$PLAN_DIR/birdview/activity.jsonl"
 ```
 
 To include an already collected and reviewed constraint catalog:
 
 ```sh
-node scripts/birdview.mjs deliver "$PLAN_DIR/birdview/architecture.json" "$PLAN_DIR/birdview/project.html" --constraints "$PLAN_DIR/birdview/constraints.reviewed.json"
+node scripts/birdview.mjs deliver "$MAP_DIR/architecture.json" "$PLAN_DIR/birdview/project.html" --constraints "$MAP_DIR/constraints.reviewed.json"
 ```
 
 The CLI writes one integrated page with in-page source reading. For source discovery, rule review and standalone constraint rendering, see the [constraint workflow](references/constraint-graph.md).

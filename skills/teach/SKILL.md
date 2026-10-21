@@ -8,9 +8,9 @@ The user has asked you to teach them something. This is a stateful request - the
 
 ## Teaching Workspace
 
-Use `planning-with-files` to resolve the named, gated plan for this learning topic, following [plan resolution](../pwf-artifact/references/plan-resolution.md). Name a new plan after the topic.
+Use `planning-with-files` to select or create this task's plan as `<PLAN_DIR>`; when another workflow invokes this skill, use that workflow's selected plan. Name a new plan after the topic.
 
-Treat `<PLAN_DIR>` as the teaching workspace. Workspace paths (`./lessons/` and the rest) resolve from `<PLAN_DIR>`; only the `*-FORMAT.md` links resolve from this skill's folder. The state of their learning is captured in this directory in several files:
+Treat `<PLAN_DIR>/teach/` as the teaching workspace. Workspace paths (`./lessons/` and the rest) resolve from `<PLAN_DIR>/teach/`; only the `*-FORMAT.md` links resolve from this skill's folder. The state of their learning is captured in this directory in several files:
 
 - `MISSION.md`: A document capturing the _reason_ the user is interested in the topic. This should be used to ground all teaching. Use the format in [MISSION-FORMAT.md](./MISSION-FORMAT.md).
 - `./reference/*.html`: A directory of reference materials. These are the compressed learnings from the lessons - cheat sheets, reference algorithms, syntax, yoga poses, glossaries. They are the raw units of learning. They should be beautiful documents which print out well, and are designed for quick reference.
@@ -20,7 +20,7 @@ Treat `<PLAN_DIR>` as the teaching workspace. Workspace paths (`./lessons/` and 
 - `./assets/*`: Reusable **components** shared across lessons. See [Assets](#assets).
 - `NOTES.md`: A scratchpad for you to jot down user preferences, or working notes.
 
-Keep the plan files in step with the workspace. `task_plan.md` states the goal as one line pointing to `MISSION.md` and holds one phase per planned lesson; its `## Next Step` names the next lesson in the user's zone of proximal development. After each session, record in `progress.md` the lesson path, practice or quiz results, and any new learning record. Put raw research notes in `findings.md` and promote only vetted sources to `RESOURCES.md`.
+Keep the plan files in step with the workspace. `task_plan.md` states the goal as one line pointing to `teach/MISSION.md` and holds one phase per planned lesson; its `## Next Step` names the next lesson in the user's zone of proximal development. After each session, record in `progress.md` the lesson path, practice or quiz results, and any new learning record. Put raw research notes in `findings.md` and promote only vetted sources to `RESOURCES.md`.
 
 ## Philosophy
 

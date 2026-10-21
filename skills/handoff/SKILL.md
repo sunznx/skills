@@ -4,7 +4,7 @@ description: Compact the current conversation into a handoff document for anothe
 argument-hint: "What will the next session be used for?"
 ---
 
-Use `planning-with-files` to resolve the named, gated plan for this work, following [plan resolution](../pwf-artifact/references/plan-resolution.md). Write the handoff document to `<PLAN_DIR>/handoff.md` so a fresh agent can continue the work from the same plan.
+Use `planning-with-files` to select or create this task's plan as `<PLAN_DIR>`; when another workflow invokes this skill, use that workflow's selected plan. Write the handoff document to `<PLAN_DIR>/handoff.md` so a fresh agent can continue the work from the same plan.
 
 Include a "suggested skills" section in the document, naming which skills the next agent should call the Skill tool for.
 

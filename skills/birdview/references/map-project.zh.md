@@ -6,9 +6,9 @@
 
 ## 发现与核对覆盖
 
-1. 依次检查用户提供或文档指定的架构路径、当前 `<PLAN_DIR>/birdview/`、现有产物位置、旧版 `.birdview/`、根目录和 `docs/`。限定 architecture/map 文件名搜索，排除依赖、生成输出与技能示例；这些位置及引用均无结果时才扩大搜索。
+1. 依次检查用户提供或文档指定的架构路径、`.planning/birdview/` 中的项目地图、现有产物位置（包括其他计划 `birdview/` 目录里的旧副本）、旧版 `.birdview/`、根目录和 `docs/`。限定 architecture/map 文件名搜索，排除依赖、生成输出与技能示例；这些位置及引用均无结果时才扩大搜索。
 2. 阅读候选内容，核对项目相关性、覆盖范围、当前归属与源码证据。校验 Birdview JSON；Schema 有效不证明数据最新。优先用户选择或文档指定的权威地图，仅在候选冲突无法解决时询问。
-3. 在当前计划中复用兼容地图，更新过时部分。从其他位置找到的地图先复制到 `<PLAN_DIR>/birdview/` 再更新，保留原产物。其他格式经源码核对后转换，保留有意义的 ID 和原产物。仅有 HTML/图片时，阶段 2 前先补齐模块与归属数据。没有可复用或调整的地图才新建；阶段 2 前必须解决无法运行校验的问题。
+3. 复用 `.planning/birdview/` 中的兼容地图，原地更新过时部分。从其他位置找到的地图先复制到 `.planning/birdview/` 再更新，保留原产物。其他格式经源码核对后转换，保留有意义的 ID 和原产物。仅有 HTML/图片时，阶段 2 前先补齐模块与归属数据。没有可复用或调整的地图才新建；阶段 2 前必须解决无法运行校验的问题。
 4. 遵循明确子系统范围，否则检查选定项目根目录。阅读根文档、顶层目录和相关工作区/构建清单，沿声明的应用检查各自清单、启动/构建入口与源码。依赖本身不能证明应用存在；确认客户端与服务端连接前先追踪调用和路由。
 5. 新地图与复用地图都须将范围内每个应用对应到模块、得到解释的分组或明确覆盖缺口。职责独立的应用保持可见，共享包不必算应用。6–10 个模块只是可读性目标，不能因此遗漏或编造。
 6. 普通局部编辑复查相关入口和变化清单，范围或工作区结构变化时才扩大检查。在架构表旁说明根目录/范围、已查应用及模块 ID、排除项和未解决区域。区分未检查与已检查但未发现；零不确定性不证明完整覆盖。
@@ -42,19 +42,20 @@
 
 不明确或省略时用 `generic`。名称、顺序、模块归属和颜色多样性不是分类证据。分组角色不代表模块角色、部署/信任边界或活动状态。沿用共享调色板，不为单图覆盖或添加颜色字段。Schema 拒绝未知角色/字段但不能验证分类真实性；检查证据，仅在新证据支持时更改已有角色。
 
-替换前阅读现有产物，使用约定位置（默认 `<PLAN_DIR>/birdview/`），不覆盖无关文件。`project.id` 与 `mapId` 是本地标识，不必为 URL。可选 `project.revision` 记录 Git 提交，不是地图版本，也不保证工作区干净。
+替换前阅读现有产物，使用约定位置（默认：地图和约束文件在 `.planning/birdview/`，本任务的活动记录和渲染 HTML 在 `<PLAN_DIR>/birdview/`），不覆盖无关文件。`project.id` 与 `mapId` 是本地标识，不必为 URL。可选 `project.revision` 记录 Git 提交，不是地图版本，也不保证工作区干净。
 
 每次保存地图变化（含布局和翻译）均增加 `revision`。职责持续时保留 ID，不将已移除 ID 分配给其他职责。先在旧地图上完成/取消任务，再针对新版本启动；不得静默重放旧事件。
 
 ## 渲染与检查
 
-默认“使用 Birdview”交付时，最终渲染前完成[约束流程](constraint-graph.zh.md)：检查生效本地指令、收集已提交来源，再撰写并审查 `reviewed-rules.json`。下述交付命令负责编译并采集规则历史到 `<PLAN_DIR>/birdview/architecture.constraints.json`。工作区指令差异须明确列为限制。按[约束契约](constraints.zh.md)在 `map.constraintDiscovery` 记录实际已检查和未检查路径；扫描不等于语义审查。不得复制演示规则。有效时复用匹配的已审查清单。明确范围与快照，检查来源后才能关联模块。来源清单、审查选择与编译后的清单一起保存，供其他 AI 继续审查。审查未完成时报告边界，不得声称完整交付。没有已审查规则时，交付架构与发现结果并注明限制；规则渲染器有意拒绝空清单或未经审查的清单。
+默认“使用 Birdview”交付时，最终渲染前完成[约束流程](constraint-graph.zh.md)：检查生效本地指令、收集已提交来源，再撰写并审查 `reviewed-rules.json`。下述交付命令负责编译并采集规则历史到 `.planning/birdview/architecture.constraints.json`。工作区指令差异须明确列为限制。按[约束契约](constraints.zh.md)在 `map.constraintDiscovery` 记录实际已检查和未检查路径；扫描不等于语义审查。不得复制演示规则。有效时复用匹配的已审查清单。明确范围与快照，检查来源后才能关联模块。来源清单、审查选择与编译后的清单一起保存，供其他 AI 继续审查。审查未完成时报告边界，不得声称完整交付。没有已审查规则时，交付架构与发现结果并注明限制；规则渲染器有意拒绝空清单或未经审查的清单。
 
 使用自带渲染器；从用户项目运行时用绝对路径，`<skill-root>` 是包含 SKILL.md 的目录。按实际约定位置替换路径：
 
 ```sh
+MAP_DIR="<project-root>/.planning/birdview"
 PLAN_DIR="<absolute-selected-plan-dir>"
-node <skill-root>/scripts/birdview.mjs deliver "$PLAN_DIR/birdview/architecture.json" "$PLAN_DIR/birdview/architecture.html" --catalog "$PLAN_DIR/birdview/constraints.catalog.json" --rules "$PLAN_DIR/birdview/reviewed-rules.json" --repo <project-root>
+node <skill-root>/scripts/birdview.mjs deliver "$MAP_DIR/architecture.json" "$PLAN_DIR/birdview/architecture.html" --catalog "$MAP_DIR/constraints.catalog.json" --rules "$MAP_DIR/reviewed-rules.json" --repo <project-root>
 ```
 
 复用有效的编译清单时，将 `--catalog ... --rules ...` 换为 `--constraints <reviewed.json>`。仅在明确的仅架构请求或已披露规则清单不可用时改用 `--architecture-only`。阅读[交付回执](delivery.zh.md)中的警告和历史缺口；成功输入无需另行校验、编译或生成中间 HTML。检查最终集成页面具有架构/约束切换、来源依据、规则版本标识和“按目录”中的页内来源阅读。架构检查面板只统计架构数据中的规则，不统计独立清单；缺少模块关联不等于项目没有规则。

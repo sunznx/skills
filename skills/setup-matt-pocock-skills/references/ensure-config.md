@@ -2,7 +2,7 @@
 
 Shared prerequisite for Matt skills that read project configuration. Use the script directly; it does not invoke the manual setup interview.
 
-1. Resolve the named, gated Planning with Files plan first. Use the same `PLAN_ID`. Set `<PROJECT_ROOT>` to `PWF_PLAN_ROOT` when supplied, otherwise to the project owning the selected `<PLAN_DIR>`; a ticket worktree may belong to a different root. All `.planning/` configuration paths in the calling skill are relative to this project root.
+1. Set `<PROJECT_ROOT>` to `PWF_PLAN_ROOT` when supplied, otherwise to the project owning the calling skill's selected `<PLAN_DIR>`, or to the current project root when the calling skill has no plan; a ticket worktree may belong to a different root. All `.planning/` configuration paths in the calling skill are relative to this project root.
 2. Locate this installed `setup-matt-pocock-skills` directory from the reference path or available installation metadata. If the support skill is missing, report the dependency and stop; keep the default-generation logic in this one place.
 3. Run:
 

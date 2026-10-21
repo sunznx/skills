@@ -1,36 +1,18 @@
 # Planning with Files integration
 
-Use the installed `planning-with-files` (PWF) skill for plan initialization,
-resolution, mode handling, and progress updates. Archify adds an artifact
+The installed `planning-with-files` (PWF) skill owns plan selection, modes,
+and progress updates; follow its instructions. Archify adds an artifact
 location convention; its CLI continues to accept explicit input/output paths.
 
-## Bind the task before authoring
+## Prepare the artifact directory
 
-1. Read the installed PWF instructions. Use the user's project root, keeping
-   the Archify installation separate from the project being diagrammed.
-   Honor an existing `PWF_PLAN_ROOT`; it must be an absolute, existing project
-   directory. Correct a rejected root binding before continuing.
-2. When resuming, resolve the task's `PLAN_ID` with PWF's installed resolver
-   and read `task_plan.md`, `findings.md`, and `progress.md` from that selected
-   directory. An explicit selector that resolves to nothing is a stop condition,
-   even when the resolver exits zero. Correct the selector rather than falling
-   back to the active pointer, another plan, or project-root files.
-3. With no `PLAN_ID`, choose or create the plan by the shared
-   [plan resolution](../../pwf-artifact/references/plan-resolution.md)
-   rule before recovery or artifact writes, and bind the resulting `PLAN_ID`.
-4. Archify generation uses a named, gated plan. If only legacy project-root
-   planning files exist, preserve them and initialize a named gated plan for
-   this diagram task. For a selected named plan, preserve its contents and
-   use PWF's documented mode mechanism to enable gated mode; never reinitialize
-   an existing plan to change its mode. Follow an explicit user mode preference.
-   Gate behavior depends on the host; a mode marker does not prove enforcement,
-   human review, or permission to edit project code.
-5. Resolve again with the bound selectors. Confirm that the selected directory
-   contains the planning files before creating `<PLAN_DIR>/archify/`. Give each
-   diagram a stable, descriptive subdirectory such as `request-lifecycle/`.
-   Record the plan identity and artifact directory, then complete discovery
-   below before reading the matching schema and example. This preserves the
-   fast author's next-tool-action candidate write.
+Use the user's project root, keeping the Archify installation separate from
+the project being diagrammed. Once PWF has selected the plan, read its
+`task_plan.md`, `findings.md`, and `progress.md`, then create
+`<PLAN_DIR>/archify/`. Give each diagram a stable, descriptive subdirectory
+such as `request-lifecycle/`. Record the plan identity and artifact directory,
+then complete discovery below before reading the matching schema and example.
+This preserves the fast author's next-tool-action candidate write.
 
 Resolve PWF scripts relative to its installed skill, and Archify scripts
 relative to the Archify installation. Use absolute paths from the user's

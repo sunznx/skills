@@ -7,7 +7,7 @@ description: Build and sharpen a project's domain model. Use when discussing cod
 
 Actively build and sharpen the project's domain model as you design. This is the *active* discipline: challenging terms, inventing edge-case scenarios, and writing the glossary and decisions down the moment they crystallise. (Merely *reading* `GLOSSARY.md` for vocabulary is not this skill: that's a one-line habit any skill can do. This skill is for when you're changing the model, not just consuming it.)
 
-Use `planning-with-files` to resolve a named, gated plan before writing domain documents, following [plan resolution](../pwf-artifact/references/plan-resolution.md). Before reading Matt configuration, follow [shared configuration initialization](../setup-matt-pocock-skills/references/ensure-config.md). Read `.planning/domain.md`. Unless it or the calling skill specifies another ADR directory, use `.planning/adr/` at the project root resolved by shared initialization, shared across tasks; record each changed `GLOSSARY.md` or ADR path in the selected plan.
+Domain documents are project knowledge, so this skill needs no plan of its own. Before reading Matt configuration, follow [shared configuration initialization](../setup-matt-pocock-skills/references/ensure-config.md). Read `.planning/domain.md`. Unless it or the calling skill specifies another ADR directory, use `.planning/adr/` at the project root resolved by shared initialization, shared across tasks. When the session already has a selected plan (a bound `PLAN_ID` or the calling workflow's plan), record each changed `GLOSSARY.md` or ADR path in it.
 
 ## File structure
 

@@ -13,7 +13,7 @@ Scaffold the per-repo configuration that the engineering skills assume:
 
 Manual setup is prompt-driven: explore, confirm the intended configuration, then write. Dependent skills use the deterministic [missing-only initializer](references/ensure-config.md) directly; that path fills defaults without running this interview or editing steering files.
 
-Use `planning-with-files` to resolve a named, gated plan for manual setup, following [plan resolution](../pwf-artifact/references/plan-resolution.md). Project configuration lives in `.planning/issue-tracker.md`, `.planning/triage-labels.md`, and `.planning/domain.md` under the project owning the selected plan. Specs and tickets live under `<PLAN_DIR>`; new ADRs default to the project's `.planning/adr/`, shared across tasks. Preserve existing configuration unless the user explicitly requests a change.
+Setup writes project configuration, so it needs no plan of its own. Project configuration lives in `.planning/issue-tracker.md`, `.planning/triage-labels.md`, and `.planning/domain.md` at the project root. When the session already has a selected plan, log the setup in its `progress.md`. Specs and tickets live under each task's `<PLAN_DIR>`; new ADRs default to the project's `.planning/adr/`, shared across tasks. Preserve existing configuration unless the user explicitly requests a change.
 
 ## Shared initialization
 
@@ -32,7 +32,7 @@ Look at the current repo to understand its starting state. Read whatever exists;
 - `GLOSSARY.md` and `GLOSSARY-MAP.md` at the repo root
 - `.planning/adr/`, `docs/adr/` and any `src/*/docs/adr/` directories
 - `.planning/` and legacy `docs/agents/`: does configuration already exist? Read it before proposing changes.
-- the selected `<PLAN_DIR>`: check existing `spec.md`, `tickets/`, and `wayfinder/` artifacts
+- the selected `<PLAN_DIR>`, when a plan is selected: check existing `spec.md`, `tickets/`, and `wayfinder/` artifacts
 - Is the `triage` skill installed? (a `triage` skill folder alongside this one, or `triage` in your available skills.) This decides whether remote label creation is needed. The local label mapping is always available to `to-spec` and `to-tickets`.
 - Monorepo signals: a `pnpm-workspace.yaml`, a `workspaces` field in `package.json`, or a populated `packages/*` with its own `src/`. These are present only in a genuinely large multi-package repo; their absence means single-context, which is almost every repo.
 

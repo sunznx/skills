@@ -27,4 +27,4 @@ The two branches produce very different artifacts, so getting this wrong wastes 
 
 ## Plan and artifacts
 
-Before building, use `planning-with-files` to resolve this task's named, gated plan through [plan resolution](../pwf-artifact/references/plan-resolution.md); when another workflow invokes this skill, use that workflow's selected plan. A logic HTML demo with no natural home next to the code goes in `<PLAN_DIR>/prototype/`. Record the question, the prototype's path and run command, the throwaway branch, and the verdict in the selected plan's `findings.md` and `progress.md`.
+Before building, use `planning-with-files` to select or create this task's plan as `<PLAN_DIR>`; when another workflow invokes this skill, use that workflow's selected plan. A logic HTML demo with no natural home next to the code goes in `<PLAN_DIR>/prototype/`. Record the question, the prototype's path and run command, the throwaway branch, and the verdict in the selected plan's `findings.md` and `progress.md`.

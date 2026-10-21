@@ -5,7 +5,7 @@ description: "Implement the result of /to-spec and /to-tickets in code."
 
 You have been provided a spec. This spec should have tickets associated with it, describing how to implement the spec.
 
-Use `planning-with-files` to resolve the named, gated plan, following [plan resolution](../pwf-artifact/references/plan-resolution.md). Read `<PLAN_DIR>/spec.md` and `<PLAN_DIR>/tickets/` first when present; fetch linked spec or tickets when those files are absent. Before reading Matt configuration, follow [shared configuration initialization](../setup-matt-pocock-skills/references/ensure-config.md). Read `.planning/issue-tracker.md`. Read `.planning/domain.md` when present.
+Use `planning-with-files` to select or create this task's plan as `<PLAN_DIR>`; when another workflow invokes this skill, use that workflow's selected plan. Read `<PLAN_DIR>/spec.md` and `<PLAN_DIR>/tickets/` first when present; fetch linked spec or tickets when those files are absent. Before reading Matt configuration, follow [shared configuration initialization](../setup-matt-pocock-skills/references/ensure-config.md). Read `.planning/issue-tracker.md`. Read `.planning/domain.md` when present.
 
 The tracker configuration defines how work is resolved, including local ticket files. Record ticket state, integration commits, test commands and results, and the final commit or PR URL in `<PLAN_DIR>/progress.md`.
 

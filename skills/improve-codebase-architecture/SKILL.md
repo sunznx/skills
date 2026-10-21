@@ -7,7 +7,7 @@ description: Scan a codebase for deepening opportunities, present them as a visu
 
 Surface architectural friction and propose **deepening opportunities**: refactors that turn shallow modules into deep ones. The aim is testability and AI-navigability.
 
-Use `planning-with-files` to resolve a named, gated plan for this review, following [plan resolution](../pwf-artifact/references/plan-resolution.md). Save the report and review findings under the selected `<PLAN_DIR>`. Before reading Matt configuration, follow [shared configuration initialization](../setup-matt-pocock-skills/references/ensure-config.md).
+Use `planning-with-files` to select or create this task's plan as `<PLAN_DIR>`; when another workflow invokes this skill, use that workflow's selected plan. Save each report under `<PLAN_DIR>/improve-codebase-architecture/`. Before reading Matt configuration, follow [shared configuration initialization](../setup-matt-pocock-skills/references/ensure-config.md).
 
 This command is _informed_ by the project's domain model and built on a shared design vocabulary:
 
@@ -37,7 +37,7 @@ Apply the **deletion test** to anything you suspect is shallow: would deleting i
 
 ### 2. Present candidates as an HTML report
 
-Write a self-contained HTML file to `<PLAN_DIR>/architecture-review-<timestamp>.html` so each run gets a fresh file. Open it for the user (`xdg-open <path>` on Linux, `open <path>` on macOS, `start <path>` on Windows) and tell them the absolute path. Record the report path and top recommendation in the plan.
+Write a self-contained HTML file to `<PLAN_DIR>/improve-codebase-architecture/architecture-review-<timestamp>.html` so each run gets a fresh file. Open it for the user (`xdg-open <path>` on Linux, `open <path>` on macOS, `start <path>` on Windows) and tell them the absolute path. Record the report path and top recommendation in the plan.
 
 The report uses **Tailwind via CDN** for layout and styling, and **Mermaid via CDN** for diagrams where a graph/flow/sequence reliably communicates the structure. Mix Mermaid with hand-crafted CSS/SVG visuals: use Mermaid when relationships are graph-shaped (call graphs, dependencies, sequences), and hand-built divs/SVG when you want something more editorial (mass diagrams, cross-sections, collapse animations). Each candidate gets a **before/after visualisation**. Be visual.
 

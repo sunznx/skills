@@ -10,7 +10,7 @@ Two-axis review of the diff between `HEAD` and a fixed point the user supplies:
 
 Both axes run as **parallel sub-agents** so they don't pollute each other's context, then this skill aggregates their findings.
 
-Use `planning-with-files` to resolve the named, gated plan for this review, following [plan resolution](../pwf-artifact/references/plan-resolution.md). Before reading Matt configuration, follow [shared configuration initialization](../setup-matt-pocock-skills/references/ensure-config.md). Read `.planning/domain.md`. Read `.planning/issue-tracker.md` when fetching issue references; a local tracker cannot resolve a remote-only issue reference, so report that limitation and use an available local or user-supplied spec.
+Use `planning-with-files` to select or create this task's plan as `<PLAN_DIR>`; when another workflow invokes this skill, use that workflow's selected plan. Before reading Matt configuration, follow [shared configuration initialization](../setup-matt-pocock-skills/references/ensure-config.md). Read `.planning/domain.md`. Read `.planning/issue-tracker.md` when fetching issue references; a local tracker cannot resolve a remote-only issue reference, so report that limitation and use an available local or user-supplied spec.
 
 ## Process
 
@@ -94,7 +94,7 @@ If the spec is missing, skip the Spec sub-agent and note this in the final repor
 
 Present the two reports under `## Standards` and `## Spec` headings, verbatim or lightly cleaned. Do **not** merge or rerank findings, because the two axes are deliberately separate (see _Why two axes_).
 
-Append the two reports and fixed point to `<PLAN_DIR>/findings.md`; record the review command and result in `<PLAN_DIR>/progress.md`.
+Save the two reports and the fixed point as `<PLAN_DIR>/code-review/<YYYY-MM-DD-HHMM>.md`; append the verdict and that path to `<PLAN_DIR>/findings.md`, and record the review command and result in `<PLAN_DIR>/progress.md`.
 
 End with a one-line summary: total findings per axis, and the worst issue _within each axis_ (if any). Don't pick a single winner across axes: that's the reranking the separation exists to prevent.
 

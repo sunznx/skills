@@ -7,7 +7,7 @@ description: Break a plan, spec, or the current conversation into a set of trace
 
 Break a plan, spec, or conversation into a set of **tickets**: tracer-bullet vertical slices, each declaring the tickets that **block** it.
 
-Use `planning-with-files` to resolve a named, gated plan for this task, following [plan resolution](../pwf-artifact/references/plan-resolution.md). Before reading Matt configuration, follow [shared configuration initialization](../setup-matt-pocock-skills/references/ensure-config.md). Read `.planning/issue-tracker.md` and `.planning/triage-labels.md`. Read `.planning/domain.md` when present.
+Use `planning-with-files` to select or create this task's plan as `<PLAN_DIR>`; when another workflow invokes this skill, use that workflow's selected plan. Before reading Matt configuration, follow [shared configuration initialization](../setup-matt-pocock-skills/references/ensure-config.md). Read `.planning/issue-tracker.md` and `.planning/triage-labels.md`. Read `.planning/domain.md` when present.
 
 ## Process
 

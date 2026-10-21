@@ -7,7 +7,7 @@ description: Run an extremely strict maintainability review for abstraction qual
 
 Use this skill for an unusually strict review focused on implementation quality, maintainability, abstraction quality, and codebase health.
 
-Use `planning-with-files` to resolve the named, gated plan for this review through [plan resolution](../pwf-artifact/references/plan-resolution.md); when another workflow invokes this skill, use that workflow's selected plan. Append the review and the branch or fixed point it covers to `<PLAN_DIR>/findings.md`; record the run and the approval verdict in `<PLAN_DIR>/progress.md`.
+Use `planning-with-files` to select or create this task's plan as `<PLAN_DIR>`; when another workflow invokes this skill, use that workflow's selected plan. Save the review and the branch or fixed point it covers as `<PLAN_DIR>/thermo-nuclear-code-quality-review/<YYYY-MM-DD-HHMM>.md`; append the approval verdict and that path to `<PLAN_DIR>/findings.md`, and record the run in `<PLAN_DIR>/progress.md`.
 
 Above all, this skill should push the reviewer to be **ambitious** about code structure. Do not merely identify local cleanup opportunities. Actively search for "code judo" moves: restructurings that preserve behavior while making the implementation dramatically simpler, smaller, more direct, and more elegant.
 

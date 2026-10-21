@@ -11,7 +11,7 @@ If the host cannot spawn subagents, run each role yourself in order.
 
 ## Plan and artifacts
 
-Use `planning-with-files` to resolve this task's named, gated plan through [plan resolution](../pwf-artifact/references/plan-resolution.md); when another workflow (such as `explain`) invokes this skill, use that workflow's selected plan. After step 4, save the presented explanation as `<PLAN_DIR>/how/<topic-slug>.md` without overwriting an earlier one, and record its path and a one-line takeaway in the selected plan's `findings.md` and `progress.md`. Explorers and the explainer report to you; they do not edit the plan.
+Use `planning-with-files` to select or create this task's plan as `<PLAN_DIR>`; when another workflow (such as `explain`) invokes this skill, use that workflow's selected plan. After step 4, save the presented explanation as `<PLAN_DIR>/how/<topic-slug>.md` without overwriting an earlier one, and record its path and a one-line takeaway in the selected plan's `findings.md` and `progress.md`. Explorers and the explainer report to you; they do not edit the plan.
 
 ## 1. Assess complexity
 

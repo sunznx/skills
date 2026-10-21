@@ -1,6 +1,6 @@
 # Issue tracker: Local Markdown
 
-Issues and specs live as Markdown files in the selected Planning with Files task directory (`<PLAN_DIR>`). Resolve the named, gated plan first; `<PLAN_DIR>` is the resulting path, not a literal directory name. Configuration is per-project under `.planning/`, while task artifacts belong to that selected plan.
+Issues and specs live as Markdown files in the selected Planning with Files task directory (`<PLAN_DIR>`). Use `planning-with-files` to select or create the task's plan first; `<PLAN_DIR>` is the resulting path, not a literal directory name. Configuration is per-project under `.planning/`, while task artifacts belong to that selected plan.
 
 ## Conventions
 

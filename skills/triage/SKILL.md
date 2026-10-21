@@ -7,7 +7,7 @@ description: Move issues and external PRs through a state machine of triage role
 
 Move issues on the project issue tracker through a small state machine of triage roles.
 
-Use `planning-with-files` to resolve a named, gated plan for this triage work, following [plan resolution](../pwf-artifact/references/plan-resolution.md). Before reading Matt configuration, follow [shared configuration initialization](../setup-matt-pocock-skills/references/ensure-config.md). Read `.planning/issue-tracker.md` and `.planning/triage-labels.md`. Read `.planning/domain.md` when present. Record the issue or PR URL and triage outcome in the selected plan.
+Triage writes to the issue tracker and `.planning/out-of-scope/`, both project-level, so it needs no plan of its own. Before reading Matt configuration, follow [shared configuration initialization](../setup-matt-pocock-skills/references/ensure-config.md). Read `.planning/issue-tracker.md` and `.planning/triage-labels.md`. Read `.planning/domain.md` when present. When the session already has a selected plan (a bound `PLAN_ID` or the calling workflow's plan), record the issue or PR URL and triage outcome in it.
 
 If this repo treats external pull requests as a request surface (see the issue-tracker config), triage covers them too: **a PR is an issue with attached code**, using the same roles, same states, and same machine, with a few deltas marked "for a PR" below. Resolve a bare `#42` to an issue or PR per the tracker config.
 

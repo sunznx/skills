@@ -9,7 +9,7 @@ Create or update the pull request for the current task with a concise descriptio
 
 ## Plan and artifacts
 
-Before gathering task context, use `planning-with-files` to resolve this task's named, gated plan through [plan resolution](../pwf-artifact/references/plan-resolution.md). Use the selected absolute plan directory as `<PLAN_DIR>` and keep its `PLAN_ID`. Use that same plan for the PR description and any supporting visuals.
+Before gathering task context, use `planning-with-files` to select or create this task's plan as `<PLAN_DIR>`; when another workflow invokes this skill, use that workflow's selected plan. Keep its absolute directory and `PLAN_ID`. Use that same plan for the PR description and any supporting visuals.
 
 ## Workflow
 

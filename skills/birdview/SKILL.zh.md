@@ -20,7 +20,7 @@ Codex 使用 `/skills` 选择 Birdview，或输入 `$birdview`。独立的环境
 
 ## 产物位置
 
-写入 Birdview 产物前，按[计划解析规则](../pwf-artifact/references/plan-resolution.md)，使用 `planning-with-files` 确定已命名的 gated 计划。地图、约束、活动记录、渲染 HTML 和来源索引都保存到 `<PLAN_DIR>/birdview/`，并在选中的计划中记录路径。其他位置的旧地图（包括 `.birdview/`）仍可作为发现来源；复用时先复制到当前计划再更新，不改动原文件。
+写入 Birdview 产物前，用 `planning-with-files` 选定或新建本任务的计划，记为 `<PLAN_DIR>`；被别的流程调用时沿用它已选的计划。地图是每个任务都要复用的项目知识：`architecture.json`、`architecture.constraints.json`、`constraints.catalog.json`、`reviewed-rules.json` 和 `constraints.reviewed.json` 放在 `.planning/birdview/`，原地更新。本任务的活动记录、渲染 HTML 和来源索引保存到 `<PLAN_DIR>/birdview/`，并在选中的计划中记录路径。其他位置的旧地图（包括 `.birdview/` 和其他计划 `birdview/` 目录里的旧副本）仍可作为发现来源；复用时先复制到 `.planning/birdview/` 再更新，不改动原文件。
 
 ## 流程
 

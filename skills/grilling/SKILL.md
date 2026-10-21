@@ -31,4 +31,4 @@ The session is done when the frontier is empty: every branch of the design tree 
 
 ## Plan and artifacts
 
-Before the first round, use `planning-with-files` to resolve this task's named, gated plan through [plan resolution](../pwf-artifact/references/plan-resolution.md); when another workflow (such as `grill-with-docs`) invokes this skill, use that workflow's selected plan. After each round, append every decision the user settled, with their answer and the branch it unblocks, to the selected plan's `findings.md`, and log the round in `progress.md`. When the user confirms the shared understanding, record it in `findings.md` too. Recording is not acting on it.
+Before the first round, use `planning-with-files` to select or create this task's plan as `<PLAN_DIR>`; when another workflow (such as `grill-with-docs`) invokes this skill, use that workflow's selected plan. After each round, append every decision the user settled, with their answer and the branch it unblocks, to the selected plan's `findings.md`, and log the round in `progress.md`. When the user confirms the shared understanding, record it in `findings.md` too. Recording is not acting on it.

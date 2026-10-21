@@ -7,7 +7,7 @@ Help the user understand the current topic of conversation visually. Skip the pr
 
 ## Plan and artifacts
 
-Before saving a visual, use `planning-with-files` to resolve this task's named, gated plan through [plan resolution](../pwf-artifact/references/plan-resolution.md). Use the selected absolute plan directory as `<PLAN_DIR>` and keep its `PLAN_ID`. When another workflow invokes this skill, use that workflow's selected plan.
+Before saving a visual, use `planning-with-files` to select or create this task's plan as `<PLAN_DIR>`; when another workflow invokes this skill, use that workflow's selected plan. Keep its absolute directory and `PLAN_ID`.
 
 Create `<PLAN_DIR>/show-me/` before writing HTML. Save each visual as `<PLAN_DIR>/show-me/show-me-{description}.html`, and record its path and outcome in the selected plan's `findings.md` and `progress.md`. Code sketches and diagrams that only need an inline reply can stay inline.
 
