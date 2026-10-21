@@ -20,7 +20,7 @@ FORBIDDEN = (
     "若有多个计划且未绑定",
 )
 # Skills that read an existing plan and survey several when none is bound.
-READ_ONLY = {"pwf-recall"}
+READ_ONLY = {"recall"}
 
 
 def main() -> int:

@@ -76,7 +76,7 @@ $sync-skills 更新 agent-messaging 删除某个功能
 | `planning-with-files` | [OthmanAdi/planning-with-files](https://github.com/OthmanAdi/planning-with-files) | `.agents/skills/planning-with-files/SKILL.md` | 三方合并（仅仓库） |
 | `prototype` | [mattpocock/skills](https://github.com/mattpocock/skills) | `skills/engineering/prototype/SKILL.md` | 三方合并 |
 | `pwf-artifact` | 本地维护，显式保存 PWF 任务产物 | — | 本地维护 |
-| `pwf-recall` | 本地维护，从 PWF 计划和 git 现状重建工作上下文并报告漂移 | — | 本地维护 |
+| `recall` | 本地维护，从 PWF 计划和 git 现状重建工作上下文并报告漂移 | — | 本地维护 |
 | `reflect` | [cursor/plugins](https://github.com/cursor/plugins) | `pstack/skills/reflect/SKILL.md` | 三方合并 |
 | `research` | [mattpocock/skills](https://github.com/mattpocock/skills) | `skills/engineering/research/SKILL.md` | 三方合并 |
 | `retro` | [mattpocock/skills](https://github.com/mattpocock/skills) | `skills/engineering/retro/SKILL.md` | 三方合并 |

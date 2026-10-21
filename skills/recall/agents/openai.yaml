@@ -1,5 +1,5 @@
 interface:
-  display_name: "PWF Recall"
+  display_name: "Recall"
   short_description: "Rebuild working context from PWF plans and live git state"
 policy:
   allow_implicit_invocation: true

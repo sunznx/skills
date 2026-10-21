@@ -247,7 +247,7 @@
       "note": "本地维护，显式保存 PWF 任务产物"
     },
     {
-      "name": "pwf-recall",
+      "name": "recall",
       "managed": false,
       "note": "本地维护，从 PWF 计划和 git 现状重建工作上下文并报告漂移"
     },
