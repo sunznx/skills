@@ -7,7 +7,31 @@ description: "Draw how any system moves between states, such as a product flow, 
 
 The chart shows how a system moves between states, in the words of the person who reads it. The scripts call that person the reader, as in `readerActions` and reader steps. The reader decides whether the behavior is right. The reader can be a PM who reads a product flow, an engineer who reads a protocol or a service, or a reviewer who reads a design. Label each state with what the reader can observe or cares about, such as "Paying" in an app or "Lease held, write pending" in a lock service. Label each step with the event that moves the system, such as "tap Pay" in an app, "the request reads the count" in a service, or "the lease expires" in a lock service. Keep variable and action names out of labels.
 
-Run `node <skill dir>/scripts/statechart.mjs --help` for the commands and for how to read a chart. Work in a scratch folder outside the repo. The command writes its files next to its input. The first run installs TLC and Java with mise, which downloads about 305 MB and needs the network. The help's TLC section tells how to use a TLC and Java that you have.
+Run `node <skill dir>/scripts/statechart.mjs --help` for the commands and for how to read a chart. Work in the run folder that [Plan and page](#plan-and-page) names. The command writes its files next to its input. The first run installs TLC and Java with mise, which downloads about 305 MB and needs the network. The help's TLC section tells how to use a TLC and Java that you have.
+
+## Plan and page
+
+Before the first run, use `planning-with-files` to select or create this task's plan as `<PLAN_DIR>`; when another workflow invokes this skill, use that workflow's selected plan. Keep its absolute directory.
+
+Give each system you chart its own run folder, `<PLAN_DIR>/statechart/<YYYY-MM-DD-HHMM>-<description>/`. Reruns of the same model stay in its folder; never reuse an earlier folder for another system.
+
+- `model/` holds the spec, its configs, the mapping file, and any `--fixed` or `--against` model. A `from-chart` chart goes here too.
+- `out/` is the output folder. Pass `--out <run folder>/out --png` on every run. The command replaces this folder on each run and refuses one that holds files it did not write, so keep nothing else in it.
+- `statechart-<description>.html` sits beside `out/`. It is the page for the person who must decide.
+
+The page carries everything that [Hand off](#hand-off) lists. Build it from `out/` after the last run, and rebuild it after each rerun:
+
+- Open with one line that says which rules hold and which break, with counts from `summary.json`.
+- Show the overview PNG with a legend of the state colors it uses. Then give each bug its own section, with its PNG above its hand-off line.
+- Put each chart's Mermaid source in a collapsed block under its PNG.
+- Link `out/stories.md`, and show the command that regenerates everything.
+- Reference files in `out/` by relative path, as in `out/chart.png`. Use inline CSS. The page works on desktop and mobile, in light and dark mode.
+
+Record the run folder, the page path, and the one-line verdict in the selected plan's `findings.md` and `progress.md`, then open the page:
+
+```
+Bash(open "<PLAN_DIR>/statechart/<run folder>/statechart-<description>.html")
+```
 
 ## Pick the direction
 
@@ -33,3 +57,5 @@ If the code already has a TLA+ spec, start from a copy of that spec. Add the var
 ## Hand off
 
 Give the PNG and the Mermaid source of each chart to the person who must decide. Add one line per bug with the rule it breaks, its steps as the chart numbers them, whether it reproduced, and whether the proposed fix fixes it. A broken PROPERTY has no path on the chart, so give the TLC counterexample that `stories.md` names for it. With `--against`, also say whether the spec already lists it: in the configs that `stories.md` names, in the spec's notes on what the model leaves out, or not at all. When the model describes code, do not report that a rule holds while the command lists conditions with no file and line. Take every count you quote from `summary.json`. Attach `stories.md` and the command that regenerates everything. Say what the model leaves out.
+
+Hand all of this off as the page from [Plan and page](#plan-and-page), and give its absolute path.
