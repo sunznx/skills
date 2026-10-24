@@ -39,6 +39,8 @@ Present the synthesizer's full Accepted / Rejected / Backlog output and wait for
 
 Backlog items wait for the user too: file each one where the user says, or leave it in the summary.
 
+Never edit a skill under `plugins/cache/`. Before approval, show its destination, `.cursor/skills/<skill>/` or `~/.cursor/skills/<skill>/`. After approval, copy the skill folder there and edit the copy. Never open a PR or push.
+
 Follow each approved row's Routing exactly:
 
 - Trivial existing-skill edit (a one-line bullet, a tightened sentence, a stale fact corrected): the parent does it directly.
