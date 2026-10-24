@@ -85,6 +85,7 @@ $sync-skills 更新 agent-messaging 删除某个功能
 | `skill-doctor` | [warpdotdev/common-skills](https://github.com/warpdotdev/common-skills) | `.agents/skills/skill-doctor/SKILL.md` | 三方合并 |
 | `smart-search` | [jackwener/opencli](https://github.com/jackwener/opencli) | `skills/smart-search/SKILL.md` | 三方合并 |
 | `spec-bootstrap` | 本地维护，全局安装 Planning with Files plugin 与 lifecycle hooks | — | 本地维护 |
+| `statechart` | [cursor/plugins](https://github.com/cursor/plugins) | `pstack/skills/statechart/SKILL.md` | 三方合并 |
 | `sync-skills` | 本仓库维护的同步 skill | — | 本地维护 |
 | `tdd` | [mattpocock/skills](https://github.com/mattpocock/skills) | `skills/engineering/tdd/SKILL.md` | 三方合并 |
 | `teach` | [mattpocock/skills](https://github.com/mattpocock/skills) | `skills/productivity/teach/SKILL.md` | 三方合并 |

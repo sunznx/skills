@@ -308,6 +308,13 @@
       "note": "本地维护，全局安装 Planning with Files plugin 与 lifecycle hooks"
     },
     {
+      "name": "statechart",
+      "source": "cursor/plugins",
+      "url": "https://github.com/cursor/plugins.git",
+      "path": "pstack/skills/statechart/SKILL.md",
+      "base_tree": "b6373798ceb3e9caf951241f152512cce5de6721"
+    },
+    {
       "name": "sync-skills",
       "managed": false,
       "note": "本仓库维护的同步 skill"
