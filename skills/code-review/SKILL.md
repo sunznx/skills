@@ -1,6 +1,6 @@
 ---
 name: code-review
-description: "Review the changes since a fixed point (commit, branch, tag, or merge-base) along two axes: Standards (does the code follow this repo's documented coding standards?) and Spec (does the code match what the originating issue/spec asked for?). Runs both reviews in parallel sub-agents and reports them side by side. Use when the user wants to review a branch, a PR, work-in-progress changes, or asks to \"review since X\"."
+description: "Review the changes since a fixed point (commit, branch, tag, or merge-base) along two axes: Standards (does the code follow this repo's documented coding standards?) and Spec (does the code match what the originating issue/spec asked for?). Runs the two reviews one after the other and reports them side by side. Use when the user wants to review a branch, a PR, work-in-progress changes, or asks to \"review since X\"."
 ---
 
 Two-axis review of the diff between `HEAD` and a fixed point the user supplies:
@@ -8,7 +8,7 @@ Two-axis review of the diff between `HEAD` and a fixed point the user supplies:
 - **Standards**: does the code conform to this repo's documented coding standards?
 - **Spec**: does the code faithfully implement the originating issue / spec?
 
-Both axes run as **parallel sub-agents** so they don't pollute each other's context, then this skill aggregates their findings.
+Review one axis at a time and write each report before starting the next, so one axis's findings don't color the other; then aggregate.
 
 Use `planning-with-files` to select or create this task's plan as `<PLAN_DIR>`; when another workflow invokes this skill, use that workflow's selected plan. Before reading Matt configuration, follow [shared configuration initialization](../setup-matt-pocock-skills/references/ensure-config.md). Read `.planning/domain.md`. Read `.planning/issue-tracker.md` when fetching issue references; a local tracker cannot resolve a remote-only issue reference, so report that limitation and use an available local or user-supplied spec.
 
@@ -20,7 +20,7 @@ Whatever the user said is the fixed point (a commit SHA, branch name, tag, `main
 
 Capture the diff command once: `git diff <fixed-point>...HEAD` (three-dot, so the comparison is against the merge-base). Also note the list of commits via `git log <fixed-point>..HEAD --oneline`.
 
-Before going further, confirm the fixed point resolves (`git rev-parse <fixed-point>`) and the diff is non-empty. A bad ref or empty diff should fail here, not inside two parallel sub-agents.
+Before going further, confirm the fixed point resolves (`git rev-parse <fixed-point>`) and the diff is non-empty. A bad ref or empty diff should fail here, before either review starts.
 
 ### 2. Identify the spec source
 
@@ -30,7 +30,7 @@ Look for the originating spec, in this order:
 2. Issue references in the commit messages (`#123`, `Closes #45`, GitLab `!67`, etc.), fetched via `.planning/issue-tracker.md`.
 3. A path the user passed as an argument.
 4. An existing spec under the repo's previous conventions (`docs/`, `specs/`, or `.scratch/`) matching the branch name or feature.
-5. If nothing is found, ask the user where the spec is. If they say there isn't one, the **Spec** sub-agent will skip and report "no spec available".
+5. If nothing is found, ask the user where the spec is. If they say there isn't one, the **Spec** review will skip and report "no spec available".
 
 ### 3. Identify the standards sources
 
@@ -70,25 +70,23 @@ Match each hunk against the file around it: its comment density, error handling,
 - **Deep nesting**: nested conditionals where the file uses early returns. → flatten with guard clauses.
 - **Local mismatch**: naming, logging, error shapes, or a hand-rolled helper that differ from what the file already does. → use the file's existing pattern or helper.
 
-### 4. Spawn both sub-agents in parallel
+### 4. Run both reviews
 
-Issue both sub-agent calls together, in the foreground, and aggregate the reports they return.
+Run the Standards review first and write its report, then run the Spec review. Each report covers only its own axis.
 
-**Standards sub-agent prompt** should include:
+**Standards review** works from:
 
-- The full diff command and commit list.
-- The selected `<PLAN_DIR>` path so the review stays attached to the same PWF task; the sub-agent reports to the parent rather than editing the plan.
-- The list of standards-source files you found in step 3, **plus both baselines from step 3** pasted in full (the sub-agent has no other access to them).
+- The full diff and commit list from step 1.
+- The standards-source files you found in step 3, **plus both baselines from step 3**.
 - The brief: "Report, per file/hunk where relevant, (a) every place the diff violates a documented standard: cite the standard (file + the rule); and (b) any smell or slop from the baselines: name it and quote the hunk. Distinguish hard violations from judgement calls: documented-standard breaches can be hard, but baseline items are always judgement calls, and a documented repo standard overrides the baselines. Skip anything tooling enforces. Under 400 words."
 
-**Spec sub-agent prompt** should include:
+**Spec review** works from:
 
-- The diff command and commit list.
-- The selected `<PLAN_DIR>` path so the review stays attached to the same PWF task; the sub-agent reports to the parent rather than editing the plan.
-- The path or fetched contents of the spec.
+- The diff and commit list from step 1.
+- The spec from step 2.
 - The brief: "Report: (a) requirements the spec asked for that are missing or partial; (b) behaviour in the diff that wasn't asked for (scope creep); (c) requirements that look implemented but where the implementation looks wrong. Quote the spec line for each finding. Under 400 words."
 
-If the spec is missing, skip the Spec sub-agent and note this in the final report.
+If the spec is missing, skip the Spec review and note this in the final report.
 
 ### 5. Aggregate
 
