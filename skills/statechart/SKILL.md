@@ -13,11 +13,11 @@ Run `node <skill dir>/scripts/statechart.mjs --help` for the commands and for ho
 
 Before the first run, use `planning-with-files` to select or create this task's plan as `<PLAN_DIR>`; when another workflow invokes this skill, use that workflow's selected plan. Keep its absolute directory.
 
-Give each system you chart its own run folder, `<PLAN_DIR>/statechart/<YYYY-MM-DD-HHMM>-<description>/`. Reruns of the same model stay in its folder; never reuse an earlier folder for another system.
+Give each system you chart its own run folder, `<PLAN_DIR>/statechart/<system>/`, named in kebab case, as in `checkout-payment`. Reruns of the same model stay in its folder; never reuse a folder for another system.
 
 - `model/` holds the spec, its configs, the mapping file, and any `--fixed` or `--against` model. A `from-chart` chart goes here too.
-- `out/` is the output folder. Pass `--out <run folder>/out --png` on every run. The command replaces this folder on each run and refuses one that holds files it did not write, so keep nothing else in it.
-- `statechart-<description>.html` sits beside `out/`. It is the page for the person who must decide.
+- `out/` is the output folder. Pass `--out <PLAN_DIR>/statechart/<system>/out --png` on every run. The command replaces this folder on each run and refuses one that holds files it did not write, so keep nothing else in it.
+- `statechart-<system>.html` sits beside `out/`. It is the page for the person who must decide.
 
 The page carries everything that [Hand off](#hand-off) lists. Build it from `out/` after the last run, and rebuild it after each rerun:
 
@@ -30,7 +30,7 @@ The page carries everything that [Hand off](#hand-off) lists. Build it from `out
 Record the run folder, the page path, and the one-line verdict in the selected plan's `findings.md` and `progress.md`, then open the page:
 
 ```
-Bash(open "<PLAN_DIR>/statechart/<run folder>/statechart-<description>.html")
+Bash(open "<PLAN_DIR>/statechart/<system>/statechart-<system>.html")
 ```
 
 ## Pick the direction
