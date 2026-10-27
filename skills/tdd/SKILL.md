@@ -29,10 +29,17 @@ When the shape of that interface is itself in question (how deep the module is, 
 
 - **Implementation-coupled**: mocks internal collaborators, tests private methods, or verifies through a side channel (querying the database instead of using the interface). The tell: the test breaks when you refactor but behavior hasn't changed.
 - **Tautological**: the assertion recomputes the expected value the way the code does (`expect(add(a, b)).toBe(a + b)`, a snapshot derived by hand the same way, a constant asserted equal to itself), so it passes by construction and can never disagree with the code. Expected values must come from an independent source of truth: a known-good literal, a worked example, the spec.
+- **Vacuous**: the test would still pass if the code under test returned nothing (`undefined`, an empty list, a zero). It asserts that something ran, not what came out. Rewrite it to check a concrete result, or delete it.
 - **Horizontal slicing**: writing all tests first, then all implementation. Bulk tests verify _imagined_ behavior: you test the _shape_ of things rather than user-facing behavior, the tests go insensitive to real changes, and you commit to test structure before understanding the implementation. Work in **vertical slices** instead: one test → one implementation → repeat, each test a **tracer bullet** that responds to what the last cycle taught you.
 
 ## Rules of the loop
 
 - **Red before green.** Write the failing test first, then only enough code to pass it. Don't anticipate future tests or add speculative features.
+- **Red for the right reason.** Run the new test and read the failure before writing code. It must fail because the behavior is missing, with an assertion that names it. A failure from a typo, a missing import, or broken setup is not red yet: fix the test and run it again.
 - **One slice at a time.** One seam, one test, one minimal implementation per cycle.
+- **No honest test, no test.** When no agreed seam lets a test observe the behavior, don't write a weaker test to fill the gap. Tell the user what stays untested and why, and propose the seam that would make it testable.
 - **Refactoring is not part of the loop.** It belongs to the review stage (see the `code-review` skill), not the red → green implementation cycle.
+
+## Checking the tests
+
+Passing tests show the code does what they check, not that they check enough. When the project already runs a mutation-testing tool (Stryker, mutmut, PIT, cargo-mutants, or similar), run it on the code this change touched once the slices are green. For each mutant that survives, add the test that kills it at an agreed seam, or delete the code if no behavior depends on it. Don't install a new tool for this unless the user asks.
