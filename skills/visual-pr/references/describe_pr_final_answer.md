@@ -2,6 +2,7 @@
 
 - PR: [#{number} - {title}]({pr_url})
 - Description saved: [pr-description.md]({absolute_description_path})
+- Page: [pr-description.html]({absolute_page_path})
 - Plan: `{PLAN_ID}` (`{PLAN_DIR}`)
 - Ticket: [{TICKET_ID}]({ticket_url}) (if applicable)
 

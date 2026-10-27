@@ -32,9 +32,18 @@ is pre-rendered, built or exported first. `documd` is optional — export and ve
 When the figure goes into a document the user named, write it there. Otherwise, before writing, use
 `planning-with-files` to select or create this task's plan as `<PLAN_DIR>`; when another workflow
 invokes this skill, use that workflow's selected plan. Save the new document as
-`<PLAN_DIR>/documd-visuals/<description>.md` without overwriting an earlier one, and put any `documd`
-export or extracted figures beside it. Record each path and the question the figure answers in the
-selected plan's `findings.md` and `progress.md`.
+`<PLAN_DIR>/documd-visuals/<description>.md` without overwriting an earlier one. That file stays the
+editable source; the user reads the page exported beside it. Export it, then open the page:
+
+```
+npx @markdown-viewer/documd "<PLAN_DIR>/documd-visuals/<description>.md" "<PLAN_DIR>/documd-visuals/<description>.html"
+open "<PLAN_DIR>/documd-visuals/<description>.html"
+```
+
+Export again after every edit to the source. When the export reports render errors, fix the figures
+and export again. When it cannot run, because Node 18+ or Chrome is missing, say so and give the `.md`
+path instead. Put any other `documd` export or extracted figures beside it. Record each path and the
+question the figure answers in the selected plan's `findings.md` and `progress.md`.
 
 ## Iron rules
 

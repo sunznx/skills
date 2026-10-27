@@ -47,11 +47,22 @@ Before gathering task context, use `planning-with-files` to select or create thi
    - Create `<PLAN_DIR>/visual-pr/pr-{number}/` and save the description as `<PLAN_DIR>/visual-pr/pr-{number}/pr-description.md`.
    - Use that saved absolute filename as `{output-path}` in `gh pr edit {number} --body-file "{output-path}"`.
    - Confirm the update succeeded.
-   - Record the PR URL, saved description path, and outcome in the selected plan's `findings.md` and `progress.md`.
+   - The Markdown file is the PR body that GitHub renders. For the user to read locally, build `<PLAN_DIR>/visual-pr/pr-{number}/pr-description.html` from it:
+     - Keep the same sections, text, and order. Add nothing beyond the description.
+     - Open with the PR number and title, linked to the PR URL.
+     - Color the added and removed lines in each `diff` block. Show other code blocks in monospace that scrolls sideways rather than wrapping.
+     - Make it a single file with inline CSS and no external resources. It works on desktop and mobile, in light and dark mode.
+     - Rebuild it whenever the Markdown file changes, then open it:
+
+       ```
+       Bash(open "<PLAN_DIR>/visual-pr/pr-{number}/pr-description.html")
+       ```
+
+   - Record the PR URL, both saved paths, and the outcome in the selected plan's `findings.md` and `progress.md`.
 
 6. Report completion:
    - Read `{SKILLBASE}/references/describe_pr_final_answer.md`.
-   - Respond using that final answer template with the PR URL, a local file link to the saved description, the selected plan, and a concise list of changed files.
+   - Respond using that final answer template with the PR URL, local file links to the saved description and its page, the selected plan, and a concise list of changed files.
 
 Always read and follow `{SKILLBASE}/references/pr_description_template.md`. Do not expand the PR body beyond that template.
 
