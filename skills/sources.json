@@ -18,7 +18,7 @@
       "source": "tt-a1i/archify",
       "url": "https://github.com/tt-a1i/archify.git",
       "path": "archify/SKILL.md",
-      "base_tree": "39069dd190f574064fe410aa3af1b6dfd98a522c"
+      "base_tree": "d5fc699feb186e8be4e2d9e86f850a8ea1b6959e"
     },
     {
       "name": "background-agent-jobs",
@@ -58,7 +58,7 @@
       "source": "cursor/plugins",
       "url": "https://github.com/cursor/plugins.git",
       "path": "pstack/skills/create-formal-verification-skill/SKILL.md",
-      "base_tree": "d0dde8b2a927266f7783e4e06bc9e1a395a09b11"
+      "base_tree": "091f2a26d46f7bed511d0532a1329532a45899e0"
     },
     {
       "name": "cua-driver",
@@ -78,7 +78,7 @@
       "source": "cathrynlavery/diagram-design",
       "url": "https://github.com/cathrynlavery/diagram-design.git",
       "path": "skills/diagram-design/SKILL.md",
-      "base_tree": "fc621a41771cbfa1836b9e41592c6e123936d133"
+      "base_tree": "c08bd09cdf53ddd0475e91cb17114be8e38dc640"
     },
     {
       "name": "documd-visuals",
@@ -210,7 +210,7 @@
       "source": "jackwener/opencli",
       "url": "https://github.com/jackwener/opencli.git",
       "path": "skills/opencli-autofix/SKILL.md",
-      "base_tree": "e6a1716d9bf8b4631fde35465f9cecffc202672f"
+      "base_tree": "3c420ca9b048b4c71b6734b4acdf06b1417f78c5"
     },
     {
       "name": "opencli-browser",
@@ -231,7 +231,7 @@
       "source": "OthmanAdi/planning-with-files",
       "url": "https://github.com/OthmanAdi/planning-with-files.git",
       "path": ".agents/skills/planning-with-files/SKILL.md",
-      "base_tree": "ce543fb7f5e1aef0f8fc22b297ed450ee5ab1eaa",
+      "base_tree": "2eeed4cf9db6cdafc34ca066eaa73781dc85fc51",
       "deploy": false
     },
     {
@@ -312,7 +312,7 @@
       "source": "cursor/plugins",
       "url": "https://github.com/cursor/plugins.git",
       "path": "pstack/skills/statechart/SKILL.md",
-      "base_tree": "b6373798ceb3e9caf951241f152512cce5de6721"
+      "base_tree": "a79a48c6970be3b63d6efefb0a306b7c87de88d0"
     },
     {
       "name": "sync-skills",
