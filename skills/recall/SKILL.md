@@ -18,7 +18,7 @@ argument-hint: "话题、PLAN_ID 或时间范围（可选）"
 3. 读每个在范围内的 `<PLAN_DIR>/`：`task_plan.md` 全文、`progress.md` 末尾最近的记录、`findings.md` 中和未完成阶段或待决事项相关的部分，以及存在时的 `handoff.md`、`in-your-own-words.md`。其他文件只看文件名。
 4. 用现状核对计划。运行 `git status --short`、`git diff --stat`、`git log --oneline --since="<日期> 00:00"`（日期取范围内最早的计划目录名日期，目录名没有日期就用 `task_plan.md` 的修改日期；只写日期时 git 会补上当前时刻，漏掉当天早些的 commit），`gh` 可用且计划提到 PR 时运行 `gh pr view <N>`。把计划提到的文件路径、分支、commit 和这些输出逐一对照，需要时看 diff 内容。改动内容是计划要做的事才归到这个计划，只是路径被计划提到不算；其余未提交改动记为未归属。完成判据：每个 Phase 的状态都落在某一行线索的标签里。
 5. 按下方契约写简报，按 **unslop** 写，用用户的语言。
-6. 范围内只有一个计划时，把简报写成页面 `<PLAN_DIR>/recall/<YYYY-MM-DD-HHMM>.html`（不覆盖以前的简报）：沿用简报契约的四节和顺序，线索的标签用醒目的标记，漂移最显眼；单文件、内联 CSS、不依赖外部资源，桌面和手机、浅色和深色都能看。在 `<PLAN_DIR>/progress.md` 记一行路径，用 `open` 打开，回复里给出绝对路径。发现漂移只报告；要不要更新 `task_plan.md` 由用户决定。
+6. 范围内只有一个计划时，把简报写成页面 `<PLAN_DIR>/recall/recall.html`；已存在时依次用 `recall-2.html`、`recall-3.html`，不覆盖以前的简报。页面沿用简报契约的四节和顺序，线索的标签用醒目的标记，漂移最显眼；单文件、内联 CSS、不依赖外部资源，桌面和手机、浅色和深色都能看。在 `<PLAN_DIR>/progress.md` 记一行路径，用 `open` 打开，回复里给出绝对路径。发现漂移只报告；要不要更新 `task_plan.md` 由用户决定。
 
 用户点名要读会话记录或外部系统（issue、聊天）时，这些都在 Git 工作树之外：先报出要读的路径或来源和时间范围（会话记录在 Claude Code 下是 `~/.claude/projects/<项目路径把 / 换成 ->/`，在 Codex 下是 `~/.codex/sessions/`），得到同意再读；外部来源交给 **why**。
 
