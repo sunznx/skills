@@ -7,7 +7,7 @@ description: Run an extremely strict maintainability review for abstraction qual
 
 Use this skill for an unusually strict review focused on implementation quality, maintainability, abstraction quality, and codebase health.
 
-Use `planning-with-files` to select or create this task's plan as `<PLAN_DIR>`; when another workflow invokes this skill, use that workflow's selected plan. Save the review and the branch or fixed point it covers as `<PLAN_DIR>/thermo-nuclear-code-quality-review/<YYYY-MM-DD-HHMM>.md`; append the approval verdict and that path to `<PLAN_DIR>/findings.md`, and record the run in `<PLAN_DIR>/progress.md`.
+Use `planning-with-files` to select or create this task's plan as `<PLAN_DIR>`; when another workflow invokes this skill, use that workflow's selected plan. Save the review as a page, `<PLAN_DIR>/thermo-nuclear-code-quality-review/<YYYY-MM-DD-HHMM>.html`, with the branch or fixed point it covers and the approval verdict at the top, then the review with its sections, text and order. Make it a single file with inline CSS and no external resources; show code, commands and file trees in monospace that scrolls sideways rather than wrapping; it works on desktop and mobile, in light and dark mode. Append the approval verdict and that path to `<PLAN_DIR>/findings.md`, record the run in `<PLAN_DIR>/progress.md`, then open the page with `open` and give its absolute path.
 
 Above all, this skill should push the reviewer to be **ambitious** about code structure. Do not merely identify local cleanup opportunities. Actively search for "code judo" moves: restructurings that preserve behavior while making the implementation dramatically simpler, smaller, more direct, and more elegant.
 

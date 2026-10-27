@@ -92,7 +92,7 @@ If the spec is missing, skip the Spec review and note this in the final report.
 
 Present the two reports under `## Standards` and `## Spec` headings, verbatim or lightly cleaned. Do **not** merge or rerank findings, because the two axes are deliberately separate (see _Why two axes_).
 
-Save the two reports and the fixed point as `<PLAN_DIR>/code-review/<YYYY-MM-DD-HHMM>.md`; append the verdict and that path to `<PLAN_DIR>/findings.md`, and record the review command and result in `<PLAN_DIR>/progress.md`.
+Save the review as a page, `<PLAN_DIR>/code-review/<YYYY-MM-DD-HHMM>.html`: the fixed point and commit list at the top, then the two reports under the same `Standards` and `Spec` headings, unmerged and unreranked. Make it a single file with inline CSS and no external resources; show code, commands and file trees in monospace that scrolls sideways rather than wrapping; it works on desktop and mobile, in light and dark mode. Append the verdict and that path to `<PLAN_DIR>/findings.md`, record the review command and result in `<PLAN_DIR>/progress.md`, then open the page with `open` and give its absolute path.
 
 End with a one-line summary: total findings per axis, and the worst issue _within each axis_ (if any). Don't pick a single winner across axes: that's the reranking the separation exists to prevent.
 

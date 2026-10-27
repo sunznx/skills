@@ -11,7 +11,7 @@ If the host cannot spawn subagents, run each role yourself in order.
 
 ## Plan and artifacts
 
-Use `planning-with-files` to select or create this task's plan as `<PLAN_DIR>`; when another workflow (such as `explain`) invokes this skill, use that workflow's selected plan. After Step 5, save the presented read as `<PLAN_DIR>/why/<topic-slug>.md` without overwriting an earlier one, and record its path, the confidence summary, and any Preserve / Change / Avoid / Risk constraints in the selected plan's `findings.md`; log the run in `progress.md`. Investigators and the synthesizer report to you; they do not edit the plan.
+Use `planning-with-files` to select or create this task's plan as `<PLAN_DIR>`; when another workflow (such as `explain`) invokes this skill, use that workflow's selected plan. After Step 5, save the presented read as a page, `<PLAN_DIR>/why/<topic-slug>.html`, without overwriting an earlier one. Keep its sections, text and order, and keep what was found visibly apart from what is inferred. Make it a single file with inline CSS and no external resources; show code, commands and file trees in monospace that scrolls sideways rather than wrapping; it works on desktop and mobile, in light and dark mode. Open it with `open`, give its absolute path, and record that path, the confidence summary, and any Preserve / Change / Avoid / Risk constraints in the selected plan's `findings.md`; log the run in `progress.md`. Investigators and the synthesizer report to you; they do not edit the plan.
 
 ## Operating Posture
 

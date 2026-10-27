@@ -11,7 +11,7 @@ If the host cannot spawn subagents, run each role yourself in order.
 
 ## Plan and artifacts
 
-Use `planning-with-files` to select or create this task's plan as `<PLAN_DIR>`; when another workflow (such as `explain`) invokes this skill, use that workflow's selected plan. After step 4, save the presented explanation as `<PLAN_DIR>/how/<topic-slug>.md` without overwriting an earlier one, and record its path and a one-line takeaway in the selected plan's `findings.md` and `progress.md`. Explorers and the explainer report to you; they do not edit the plan.
+Use `planning-with-files` to select or create this task's plan as `<PLAN_DIR>`; when another workflow (such as `explain`) invokes this skill, use that workflow's selected plan. After step 4, save the presented explanation as a page, `<PLAN_DIR>/how/<topic-slug>.html`, without overwriting an earlier one. Keep its sections, text and order. Make it a single file with inline CSS and no external resources; show code, commands and file trees in monospace that scrolls sideways rather than wrapping; it works on desktop and mobile, in light and dark mode. Open it with `open`, give its absolute path, and record that path and a one-line takeaway in the selected plan's `findings.md` and `progress.md`. Explorers and the explainer report to you; they do not edit the plan.
 
 ## 1. Assess complexity
 
