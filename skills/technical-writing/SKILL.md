@@ -17,6 +17,15 @@ The codebase is the word list. Write the real symbol, file, flag, or command nam
 
 Don't invent jargon. Use the words a developer would say out loud: "move", "delete", "a budget that only decreases", not "evacuate", "ratchet", or "endgame". A named pattern is fine when the doc says what it means the first time. Propose a new offender and its replacement as an addition to `unslop`'s abstract-metaphor rule in your reply, with the diff. Don't edit that skill.
 
+## Check every fact in the code before you write
+
+A guess written as a fact gets built on. Check before you write, not after a reader asks.
+
+- Find each symbol, path, endpoint, field, default, and claim about behavior in the source, the config, a generated contract, or the command's `--help` before it goes in the doc. Note the file and line for each, so a reviewer can check it.
+- One call site is not enough for a claim that a value identifies one thing, that a value is always present, or that one part calls another. Find where the value is made and every place that reads it. Check what happens when reading it fails, and check each client, because one client may never send it.
+- Mark a claim you could not check as unchecked, next to the claim. Never write it as fact. Mark a name that does not exist yet, such as a new method or endpoint, as a proposal.
+- Check the premises of a recommendation before you recommend it.
+
 ## Language
 
 Write in the language the reader works in. The examples and the STE and Global English rules are written for English. For other languages, apply each rule's intent (one instruction per sentence, one name per thing, one reading per sentence) and keep that language's own punctuation. The rules on articles, "-ing" words, "(s)" plurals, and semicolons are English-only.
