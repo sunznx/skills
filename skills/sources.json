@@ -37,14 +37,14 @@
       "source": "mattpocock/skills",
       "url": "https://github.com/mattpocock/skills.git",
       "path": "skills/engineering/code-review/SKILL.md",
-      "base_tree": "fee7bb5fdddc069d58cbea09b2c36b5a859eac05"
+      "base_tree": "a8ef561571acbb611de8ff19ba6da75b197c63a8"
     },
     {
       "name": "codebase-design",
       "source": "mattpocock/skills",
       "url": "https://github.com/mattpocock/skills.git",
       "path": "skills/engineering/codebase-design/SKILL.md",
-      "base_tree": "07ba1cd60efc12d0d3a083005c1d9651cf15e39a"
+      "base_tree": "4cbe1c131e1ea54109cb1e4e5f3c505810db6606"
     },
     {
       "name": "correct",
@@ -78,7 +78,7 @@
       "source": "cathrynlavery/diagram-design",
       "url": "https://github.com/cathrynlavery/diagram-design.git",
       "path": "skills/diagram-design/SKILL.md",
-      "base_tree": "c08bd09cdf53ddd0475e91cb17114be8e38dc640"
+      "base_tree": "bcecaf90a9082b1820d32c9416665bec0d9d713e"
     },
     {
       "name": "documd-visuals",
@@ -128,7 +128,7 @@
       "source": "mattpocock/skills",
       "url": "https://github.com/mattpocock/skills.git",
       "path": "skills/productivity/grilling/SKILL.md",
-      "base_tree": "28aceb4c9567b985cb47f7db88cf23c9f33af8b8"
+      "base_tree": "f551b6e0d219fdda0b6abf277f8f915b3127d1e9"
     },
     {
       "name": "handoff",
@@ -163,14 +163,14 @@
       "source": "mattpocock/skills",
       "url": "https://github.com/mattpocock/skills.git",
       "path": "skills/engineering/implement-spec/SKILL.md",
-      "base_tree": "0cfefc751d0cb64f0c948ffcb17e13b94e778f08"
+      "base_tree": "407c196f5c88af53c71efc8f31ee37c02dbb12e7"
     },
     {
       "name": "improve-codebase-architecture",
       "source": "mattpocock/skills",
       "url": "https://github.com/mattpocock/skills.git",
       "path": "skills/engineering/improve-codebase-architecture/SKILL.md",
-      "base_tree": "39bd9cc130f7dfcc4e3ea0b3613f6ebed0d0ad2b"
+      "base_tree": "587147dd230da299cc5e84971cb0a33f6676f8a6"
     },
     {
       "name": "in-your-own-words",
@@ -184,14 +184,14 @@
       "source": "larksuite/cli",
       "url": "https://github.com/larksuite/cli.git",
       "path": "skills/lark-doc/SKILL.md",
-      "base_tree": "6e929318cdcd6dbd81202fac754887ae3dd0705c"
+      "base_tree": "b09131fb8e94a775f821789cea36ea99c7cdda45"
     },
     {
       "name": "lark-shared",
       "source": "larksuite/cli",
       "url": "https://github.com/larksuite/cli.git",
       "path": "skills/lark-shared/SKILL.md",
-      "base_tree": "33e1e66a176020c65152e2315c22b721e9415ca9"
+      "base_tree": "6b1c0df2a409162ec5b6a8ab65e2e80fed79903e"
     },
     {
       "name": "obsidian-simple-mind-map",
@@ -231,7 +231,7 @@
       "source": "OthmanAdi/planning-with-files",
       "url": "https://github.com/OthmanAdi/planning-with-files.git",
       "path": ".agents/skills/planning-with-files/SKILL.md",
-      "base_tree": "2eeed4cf9db6cdafc34ca066eaa73781dc85fc51",
+      "base_tree": "c55bcb38542f8856db12214318a9a649d98d5843",
       "deploy": false
     },
     {
@@ -263,7 +263,7 @@
       "source": "mattpocock/skills",
       "url": "https://github.com/mattpocock/skills.git",
       "path": "skills/engineering/research/SKILL.md",
-      "base_tree": "0a6796c5667e95ed2301ba7381c123b4acb2ae1a"
+      "base_tree": "2f8f36af48796faed5c687c75bb650071631a984"
     },
     {
       "name": "retro",
@@ -279,7 +279,7 @@
       "url": "https://github.com/mattpocock/skills.git",
       "path": "skills/engineering/setup-matt-pocock-skills/SKILL.md",
       "ref": "main",
-      "base_tree": "aafaabf96fa3945d8a4069317a7a6d36b7169670"
+      "base_tree": "b644b684781fd5baae57f6be000a180a4d4448d7"
     },
     {
       "name": "show-me",
@@ -401,7 +401,7 @@
       "source": "mattpocock/skills",
       "url": "https://github.com/mattpocock/skills.git",
       "path": "skills/engineering/wayfinder/SKILL.md",
-      "base_tree": "32b0ce970b1394ede47116e1d3e07f9ccc87591f"
+      "base_tree": "25da74eadc3e388b2f2a2cc716f3d44b2fb9dfe0"
     },
     {
       "name": "what-did-i-get-done",

@@ -13,6 +13,8 @@ The goal is the entire spec implemented on a single **integration branch**, with
 
 The tickets are not a list of steps. They are a **task graph** with blocking relationships between them. This means there is always a **frontier** of tickets which are ready to be grabbed.
 
+Start every subagent with a fresh context window.
+
 Communication to and from subagents should be sparse. Communicate primarily through **context pointers**: to the spec, tickets, research notes, and previous commits. Don't duplicate information already available via pointers. Give every subagent the same `PLAN_ID`, the absolute `<PLAN_DIR>`, and `PWF_PLAN_ROOT` pointing to the project that owns the plan, even when it runs in a separate worktree. The orchestrator owns the shared planning files; workers report through their own ledgers or assigned files.
 
 **Implementer subagents** should be run in the background where possible for maximum concurrency.
@@ -25,7 +27,7 @@ Communication to and from subagents should be sparse. Communicate primarily thro
 
 3. Create the integration branch from the agreed base and record its starting commit as the fixed point for review. If the issue tracker closes work through PRs, or the user asks for one, open a draft PR after the first integration in step 5 (a branch with no commits ahead of its base can't open one), marked as closing the spec and tickets. Follow the repository's PR template and keep the PR in draft until step 8.
 
-4. Use **implementer subagents** to implement each ticket, each in its own worktree on its own branch. Each implementer subagent:
+4. Use a fresh **implementer subagent** for each ticket, each in its own worktree on its own branch. Each implementer subagent:
    - receives ownership of its ticket and affected files, knows other agents are working in the codebase, and preserves their edits;
    - confirms its worktree is based on the current integration branch before starting; if it has existing work on another base, preserves that work and rebases onto the integration branch;
    - uses `/tdd` at the spec's agreed seams to build the ticket, runs typechecking and focused tests regularly, and verifies user-visible behavior with the project's repeatable E2E scenario when available;
@@ -35,7 +37,7 @@ Communication to and from subagents should be sparse. Communicate primarily thro
 
 6. Advance the **frontier** only when blocker changes are integrated and their relevant checks pass. Kick off **implementer subagents** for newly available tickets. This allows for maximum concurrency.
 
-7. Once all tickets are integrated, run the full test suite once on the integration branch and record the results. Use `/code-review` from the fixed point recorded in step 3 with the same `PLAN_ID` and `<PLAN_DIR>`. Fix the issues raised in a single **implementer subagent**, integrate those fixes through step 5, and verify the affected behavior before completing review.
+7. Once all tickets are integrated, run the full test suite once on the integration branch and record the results. Use `/code-review` from the fixed point recorded in step 3 with the same `PLAN_ID` and `<PLAN_DIR>`. Fix the issues raised in a single fresh **implementer subagent**, integrate those fixes through step 5, and verify the affected behavior before completing review.
 
 8. If a draft PR exists, refresh its description, retain the tracker closing references, and mark it ready for review after checks and review pass. Report that tracker closure is pending merge. Otherwise, resolve each ticket the way the issue tracker closes work, updating local ticket files when they are the tracker, and report the integration branch.
 
