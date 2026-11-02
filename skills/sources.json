@@ -231,7 +231,7 @@
       "source": "OthmanAdi/planning-with-files",
       "url": "https://github.com/OthmanAdi/planning-with-files.git",
       "path": ".agents/skills/planning-with-files/SKILL.md",
-      "base_tree": "c55bcb38542f8856db12214318a9a649d98d5843",
+      "base_tree": "9b01543a148195d95360c959808ad8cf5a9736a3",
       "deploy": false
     },
     {
@@ -415,7 +415,7 @@
       "source": "lycfyi/yskills",
       "url": "https://github.com/lycfyi/yskills.git",
       "path": "skills/whats-next/SKILL.md",
-      "base_tree": "afe0aec64192342dfcf34d91b9068f995cba4d12"
+      "base_tree": "1ecc1fee4c49c732a8e8b1550d6a7d27c117e3d5"
     },
     {
       "name": "why",
