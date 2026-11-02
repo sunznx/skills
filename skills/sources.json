@@ -308,6 +308,13 @@
       "note": "本地维护，全局安装 Planning with Files plugin 与 lifecycle hooks"
     },
     {
+      "name": "spike",
+      "source": "openclaw/openclaw",
+      "url": "https://github.com/openclaw/openclaw.git",
+      "path": "skills/spike/SKILL.md",
+      "base_tree": "bab215c3320d1c06ed038578956a3eb005d22770"
+    },
+    {
       "name": "statechart",
       "source": "cursor/plugins",
       "url": "https://github.com/cursor/plugins.git",
