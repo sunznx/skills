@@ -18,9 +18,13 @@ Loop
 4. Stress: try one edge case or failure mode.
 5. Verdict: `VALIDATED`, `PARTIAL`, or `INVALIDATED`.
 
+Plan and artifacts
+
+Before building, use `planning-with-files` to select or create this task's plan as `<PLAN_DIR>`; when another workflow invokes this skill, use that workflow's selected plan. Record each spike's question, path, run command, and verdict in the selected plan's `findings.md` and `progress.md`.
+
 Output shape
 
-- Default workspace: `.tmp/openclaw-spikes/<slug>` unless user asks for a tracked repo-local path.
+- Default workspace: `<PLAN_DIR>/spike/<slug>/` with `README.md` (question and verdict) and minimal code, unless user asks for a tracked repo-local path. Don't overwrite an earlier spike; add `-2`, `-3` to the slug.
 - Repo-local option: `spikes/<NNN-slug>/` with `README.md` and minimal code.
 - Prefer runnable CLI, tiny HTML, one endpoint, or focused test.
 - Avoid package sprawl, Docker, env files, app frameworks, and production cleanup.
