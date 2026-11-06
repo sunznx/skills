@@ -14,6 +14,13 @@
       "base_tree": "a4b2519484b1c115778affda36397ca2c394c052"
     },
     {
+      "name": "answer-me-with-html",
+      "source": "QingYunA/answer-me-with-html",
+      "url": "https://github.com/QingYunA/answer-me-with-html.git",
+      "path": "skills/answer-me-with-html/SKILL.md",
+      "base_tree": "dacef7eb7483fe5ead1d27bfdda0668e1a58dc29"
+    },
+    {
       "name": "archify",
       "source": "tt-a1i/archify",
       "url": "https://github.com/tt-a1i/archify.git",

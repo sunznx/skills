@@ -42,6 +42,7 @@ $sync-skills 更新 agent-messaging 删除某个功能
 | --- | --- | --- | --- |
 | `agent-messaging` | 本地维护，暂无外部 Git 来源 | — | 本地维护 |
 | `alibabacloud-cli-guidance` | [aliyun/alibabacloud-aiops-skills](https://github.com/aliyun/alibabacloud-aiops-skills) | `skills/developertools/solutions/alibabacloud-cli-guidance/SKILL.md` | 三方合并 |
+| `answer-me-with-html` | [QingYunA/answer-me-with-html](https://github.com/QingYunA/answer-me-with-html) | `skills/answer-me-with-html/SKILL.md` | 三方合并 |
 | `archify` | [tt-a1i/archify](https://github.com/tt-a1i/archify) | `archify/SKILL.md` | 三方合并 |
 | `background-agent-jobs` | 本地维护，暂无外部 Git 来源 | — | 本地维护 |
 | `birdview` | [Qiuner/birdview](https://github.com/Qiuner/birdview) | `SKILL.md` | 三方合并 |
