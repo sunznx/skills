@@ -89,13 +89,13 @@ title: Title
 A -> B: label
 ```
 AM_EOF
-node "${CLAUDE_SKILL_DIR}/scripts/am.mjs" render "$PLAN_DIR/answer-me-with-html/topic.md" -o "$PLAN_DIR/answer-me-with-html/topic.html" --no-open
+node "${CLAUDE_SKILL_DIR}/scripts/am.mjs" render "$PLAN_DIR/answer-me-with-html/topic.md" -o "$PLAN_DIR/answer-me-with-html/topic.html"
 ````
 
 4. Read the output:
    - `✓ <path>`: success. Whether the browser opens automatically depends on the user's settings (`am config`); `--no-open` affects only this run. A page with STE or code warnings never opens automatically.
    - `✗ L<line> …` + `Correct example:`: no page was written. The CLI lists every error of the draft at once, in line order (`✗ n errors in the draft`). Read all of them, fix each flagged line following its example, then render again.
-   - Draft errors refer to the Markdown file in the artifact directory. Edit only the flagged lines there, then run `am render <draft-path> -o <html-path> --no-open` with the same absolute paths. Keep the source draft beside the page.
+   - Draft errors refer to the Markdown file in the artifact directory. Edit only the flagged lines there, then run `am render <draft-path> -o <html-path>` with the same absolute paths. Keep the source draft beside the page.
    - `code n warnings`: a code block is longer than 40 lines, or a diff hunk has a different number of lines than its `@@` header says. Cut the block or fix the header to the lines that make the point and render again, or keep it if every line matters.
    - `STE n warnings`: rewrite the flagged lines as suggested, then render again. Retry at most 2 rounds; if warnings remain, keep the last page and say so.
    - When rendering again after a `✓`, reuse the same quoted `-o` HTML file path to overwrite it in place.
@@ -110,7 +110,7 @@ node "${CLAUDE_SKILL_DIR}/scripts/am.mjs" render "$PLAN_DIR/answer-me-with-html/
 When a page already exists and only one panel needs to change, do not rewrite the whole page. Take the source draft from the HTML's `#am-source`, replace only the matching `##` section, and overwrite the page in place:
 
 ````bash
-node "${CLAUDE_SKILL_DIR}/scripts/am.mjs" patch "<PLAN_DIR>/answer-me-with-html/topic.html" --panel "Panel title" --no-open <<'AM_EOF'
+node "${CLAUDE_SKILL_DIR}/scripts/am.mjs" patch "<PLAN_DIR>/answer-me-with-html/topic.html" --panel "Panel title" <<'AM_EOF'
 ## A Panel title
 New content
 AM_EOF
