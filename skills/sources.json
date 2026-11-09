@@ -289,6 +289,13 @@
       "base_tree": "b644b684781fd5baae57f6be000a180a4d4448d7"
     },
     {
+      "name": "sharpen",
+      "source": "cursor/plugins",
+      "url": "https://github.com/cursor/plugins.git",
+      "path": "pstack/skills/sharpen/SKILL.md",
+      "base_tree": "726fcb216692c5a2ad78b5c2ae19c2e6ac66cb67"
+    },
+    {
       "name": "show-me",
       "source": "humanlayer/skills",
       "url": "https://github.com/humanlayer/skills.git",
@@ -308,6 +315,13 @@
       "url": "https://github.com/jackwener/opencli.git",
       "path": "skills/smart-search/SKILL.md",
       "base_tree": "2d42a77425f4d8b740610e6d91c670ae76f5c47f"
+    },
+    {
+      "name": "software-factory",
+      "source": "mattpocock/skills",
+      "url": "https://github.com/mattpocock/skills.git",
+      "path": "skills/in-progress/software-factory/SKILL.md",
+      "base_tree": "4b9e59cb67b8e5858525d93cf2ac1eb03a39d46b"
     },
     {
       "name": "spec-bootstrap",

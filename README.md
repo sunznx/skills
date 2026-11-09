@@ -82,9 +82,11 @@ $sync-skills 更新 agent-messaging 删除某个功能
 | `research` | [mattpocock/skills](https://github.com/mattpocock/skills) | `skills/engineering/research/SKILL.md` | 三方合并 |
 | `retro` | [mattpocock/skills](https://github.com/mattpocock/skills) | `skills/engineering/retro/SKILL.md` | 三方合并 |
 | `setup-matt-pocock-skills` | [mattpocock/skills](https://github.com/mattpocock/skills) | `skills/engineering/setup-matt-pocock-skills/SKILL.md` | 三方合并 |
+| `sharpen` | [cursor/plugins](https://github.com/cursor/plugins) | `pstack/skills/sharpen/SKILL.md` | 三方合并 |
 | `show-me` | [humanlayer/skills](https://github.com/humanlayer/skills) | `plugins/show-me/skills/show-me/SKILL.md` | 三方合并 |
 | `skill-doctor` | [warpdotdev/common-skills](https://github.com/warpdotdev/common-skills) | `.agents/skills/skill-doctor/SKILL.md` | 三方合并 |
 | `smart-search` | [jackwener/opencli](https://github.com/jackwener/opencli) | `skills/smart-search/SKILL.md` | 三方合并 |
+| `software-factory` | [mattpocock/skills](https://github.com/mattpocock/skills) | `skills/in-progress/software-factory/SKILL.md` | 三方合并 |
 | `spec-bootstrap` | 本地维护，全局安装 Planning with Files plugin 与 lifecycle hooks | — | 本地维护 |
 | `spike` | [openclaw/openclaw](https://github.com/openclaw/openclaw) | `skills/spike/SKILL.md` | 三方合并 |
 | `statechart` | [cursor/plugins](https://github.com/cursor/plugins) | `pstack/skills/statechart/SKILL.md` | 三方合并 |
