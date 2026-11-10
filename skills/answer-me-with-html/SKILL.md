@@ -94,6 +94,7 @@ node "${CLAUDE_SKILL_DIR}/scripts/am.mjs" render "$PLAN_DIR/answer-me-with-html/
 
 4. Read the output:
    - `✓ <path>`: success. Whether the browser opens automatically depends on the user's settings (`am config`); `--no-open` affects only this run. A page with STE or code warnings never opens automatically.
+   - Opening waits for the operating system command. `! Could not open ...` means the page was saved but opening failed; report that failure. Verify this behavior after CLI changes with `node --test <skill-dir>/tests/open-file.test.mjs`.
    - `✗ L<line> …` + `Correct example:`: no page was written. The CLI lists every error of the draft at once, in line order (`✗ n errors in the draft`). Read all of them, fix each flagged line following its example, then render again.
    - Draft errors refer to the Markdown file in the artifact directory. Edit only the flagged lines there, then run `am render <draft-path> -o <html-path>` with the same absolute paths. Keep the source draft beside the page.
    - `code n warnings`: a code block is longer than 40 lines, or a diff hunk has a different number of lines than its `@@` header says. Cut the block or fix the header to the lines that make the point and render again, or keep it if every line matters.

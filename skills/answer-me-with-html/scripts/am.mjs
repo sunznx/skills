@@ -14417,10 +14417,10 @@ function stamp(d) {
 }
 function openFile(file) {
   const [cmd, args] = process.platform === "darwin" ? ["open", [file]] : process.platform === "win32" ? ["cmd", ["/c", "start", "", file]] : ["xdg-open", [file]];
-  try {
-    spawn5(cmd, args, { detached: true, stdio: "ignore" }).on("error", () => {
-    }).unref();
-  } catch {
+  const result = spawnSync3(cmd, args, { stdio: "ignore", timeout: 1e4 });
+  if (result.error || result.status !== 0) {
+    const reason = result.error?.message ?? `exit status ${result.status}`;
+    process.stderr.write(`! Could not open ${file}: ${reason}\n`);
   }
 }
 
