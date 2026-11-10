@@ -18,14 +18,14 @@
       "source": "QingYunA/answer-me-with-html",
       "url": "https://github.com/QingYunA/answer-me-with-html.git",
       "path": "skills/answer-me-with-html/SKILL.md",
-      "base_tree": "dacef7eb7483fe5ead1d27bfdda0668e1a58dc29"
+      "base_tree": "8007aad826a73cd28b6cbcb697cd1459a88b0bf0"
     },
     {
       "name": "archify",
       "source": "tt-a1i/archify",
       "url": "https://github.com/tt-a1i/archify.git",
       "path": "archify/SKILL.md",
-      "base_tree": "d5fc699feb186e8be4e2d9e86f850a8ea1b6959e"
+      "base_tree": "03645a096811664da641153a4a42e862c4a6bc62"
     },
     {
       "name": "background-agent-jobs",
@@ -37,7 +37,7 @@
       "source": "Qiuner/birdview",
       "url": "https://github.com/Qiuner/birdview.git",
       "path": "SKILL.md",
-      "base_tree": "cb6db7162333f11a7754d26964df3410e7893445"
+      "base_tree": "c74baa5692ce451c1ecf48417f2cd0a6a61b8ef0"
     },
     {
       "name": "code-review",
@@ -85,7 +85,7 @@
       "source": "cathrynlavery/diagram-design",
       "url": "https://github.com/cathrynlavery/diagram-design.git",
       "path": "skills/diagram-design/SKILL.md",
-      "base_tree": "bcecaf90a9082b1820d32c9416665bec0d9d713e"
+      "base_tree": "7c64ced4ca34f0e77fd4f3c5f77421cf59de3762"
     },
     {
       "name": "documd-visuals",
@@ -106,7 +106,7 @@
       "source": "citrolabs/ego-lite",
       "url": "https://github.com/citrolabs/ego-lite.git",
       "path": "skills/ego-browser/SKILL.md",
-      "base_tree": "1f8b5caa5e43f6ced5c41faf0e25eeadb56ae3dd",
+      "base_tree": "f1ffe63fbdc36b9a32be9a59394854d1e3f4e6f0",
       "deploy": false
     },
     {
@@ -238,7 +238,7 @@
       "source": "OthmanAdi/planning-with-files",
       "url": "https://github.com/OthmanAdi/planning-with-files.git",
       "path": ".agents/skills/planning-with-files/SKILL.md",
-      "base_tree": "9b01543a148195d95360c959808ad8cf5a9736a3",
+      "base_tree": "8724d238f242ea940968fa7e82edb92e27ad9060",
       "deploy": false
     },
     {
