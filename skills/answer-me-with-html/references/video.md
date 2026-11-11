@@ -24,7 +24,7 @@ Client -> Server: ACK
 > [Server] answers with SYN-ACK.
 > The client replies with ACK, and the connection is open.
 AM_EOF
-am video "$PLAN_DIR/answer-me-with-html/video.md" -o "$PLAN_DIR/answer-me-with-html/video.html" --no-open
+am video "$PLAN_DIR/answer-me-with-html/video.md" -o "$PLAN_DIR/answer-me-with-html/video.html"
 ````
 
 - One `## ` is one scene. Put one component (or one table, one list) in a scene as the picture, and write 2–5 narration lines below it.

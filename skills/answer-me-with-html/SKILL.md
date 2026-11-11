@@ -46,7 +46,7 @@ Automatic pages are for replies to the user. An internal report returned to anot
 
 ### Always-on mode
 
-If the context contains the `[answer-me-with-html always-on]` reminder (the user added the always-on rule to a rules file such as `CLAUDE.md` or `AGENTS.md`), the bar is lower:
+Apply this mode only when the context contains the `[answer-me-with-html always-on]` reminder (the user added the always-on rule to a rules file such as `CLAUDE.md` or `AGENTS.md`):
 
 - Whenever this turn gives a conclusion, summary, plan, comparison, review or explanation, attach a page.
 - Do not skip it because "the answer is short". If there is a conclusion, produce a page.
@@ -72,6 +72,8 @@ On every other host the token is left as it stands or comes out empty. There, be
 
 Write the draft to the selected artifact directory, then pass its absolute path and an explicit `-o` HTML file path to `render` or `video`. Use descriptive names for separate topics; reuse the same paths when revising one answer. Keep the working directory at the user's project root so code references still resolve there. CLI settings and shared caches retain their existing locations.
 
+For normal user-facing pages and video players, omit both `--open` and `--no-open` so the existing `open` setting controls opening; keep this behavior on retries and patches. Use `--no-open` only when the user explicitly requests no opening, the always-on reminder above is present, or generating an internal test artifact that will not be delivered as the answer. Proactively making a page under the normal trigger rules does not activate always-on mode. Use `--open` when the user explicitly requests opening this output.
+
 1. First list 3–8 panels in your head. Each panel answers one sub-question only.
    The draft language follows the language of the user's question: an English question gets an English draft, a Chinese question a Chinese draft, a Japanese question a Japanese draft. The page button labels, `<html lang>` and the STE check rules switch automatically by the draft language (a draft containing kana counts as Japanese); STE applies the English or Chinese rules to each sentence by its language (Japanese sentences get only the sentence-length and paragraph-length checks, with the same character limits as Chinese; any other language gets only those two checks, counted in words). To set the language yourself, write `lang:` in the frontmatter: `en`, `zh` (Simplified Chinese), `zh-Hant` or `zh-TW` (Traditional Chinese), `ja`, or any other language tag such as `fr` or `ko`. Detection reads Chinese (Simplified, or Traditional when the text has characters written in only one form), Japanese, Korean, and Cyrillic, Arabic, Hebrew, Thai and Greek text, and reads all Latin-script text as English. Declare the language when the user writes a Latin-script language other than English, when a Chinese text is too short or too plain to show Traditional characters, or when an exact tag matters (Arabic script also writes Persian, Cyrillic also Ukrainian). A language without its own labels still gets the right `<html lang>`, with English page labels.
 2. Choose components by the shape of the information (see section 4).
@@ -94,6 +96,7 @@ node "${CLAUDE_SKILL_DIR}/scripts/am.mjs" render "$PLAN_DIR/answer-me-with-html/
 
 4. Read the output:
    - `✓ <path>`: success. Whether the browser opens automatically depends on the user's settings (`am config`); `--no-open` affects only this run. A page with STE or code warnings never opens automatically.
+   - If opening is in question, first run `am config get open` and inspect the actual command for `--no-open`. That flag overrides `open=on`; fix an unintended override before investigating the CLI or changing settings. With `--no-open`, report the page as saved; claim it was opened only after a separate opening command succeeds.
    - Opening waits for the operating system command. `! Could not open ...` means the page was saved but opening failed; report that failure. Verify this behavior after CLI changes with `node --test <skill-dir>/tests/open-file.test.mjs`.
    - `✗ L<line> …` + `Correct example:`: no page was written. The CLI lists every error of the draft at once, in line order (`✗ n errors in the draft`). Read all of them, fix each flagged line following its example, then render again.
    - Draft errors refer to the Markdown file in the artifact directory. Edit only the flagged lines there, then run `am render <draft-path> -o <html-path>` with the same absolute paths. Keep the source draft beside the page.
