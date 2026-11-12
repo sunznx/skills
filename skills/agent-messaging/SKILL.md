@@ -1,6 +1,6 @@
 ---
 name: agent-messaging
-description: 向一个或多个 agent 发送任务，默认异步通知；支持当前协作树、Codex TUI session 和 Herdr，也能新开 Herdr tab 启动指定类型的 agent 再交接任务。用户要求联系、通知、委派任务给其他 agent、新开 tab 交接或等待其结果时使用。
+description: 向一个或多个 agent 发送任务，默认异步通知；支持当前协作树、Codex TUI session 和 Herdr。用户要求联系、通知、委派任务给其他 agent 或等待其结果时使用；新建 Herdr 会话由 herdr-new-agent 启动后再投递。
 ---
 
 # Agent Messaging
@@ -89,45 +89,15 @@ Herdr 的 `notify` 接收方完成后，应调用本 skill 把结果发回 `<sen
 
 ## 新开 Herdr tab
 
-用户明确要求新开 tab、新开会话，或要在某个目录新起一个 agent 时，走本节。这是用户指定的布局，不是投递失败后的回退，所以不先试原生工具。目标目录里没有可用的 agent、用户也没要求新开时，报告并询问是否新开 tab，不要自行新开。
+用户明确要求新开 tab、新开会话，或在某个目录新起 agent 时，先使用 `herdr-new-agent`；启动类型和 workspace 默认继承调用方。该技能负责创建、启动和就绪验证，本技能在返回的新 agent 上投递任务。
 
-参数：
+1. 需要较长交接或用户说要 handoff 时，用 `handoff` skill 写交接件，消息中给出目标和文件绝对路径。
+2. 按[Herdr 回退](#herdr-回退)第 4、5 步确定发送方、追加回报要求，并用该节的 `notify` 或 `request` 命令向新 agent 投递。这是用户指定的新会话，不先尝试原生投递回退链。
+3. `notify` 下用 `herdr agent wait <agent名> --until working --timeout 60000` 确认接手；没等到时读取近期界面并报告真实状态，不重复发消息。
 
-- 目标目录：绝对路径，必填。
-- agent 类型：`--kind`，默认 `claude`。可用的值见 `herdr agent` 输出的 `kinds`。
-- agent 名：匹配 `[a-z][a-z0-9_-]{0,31}`，并且在 live agent 中唯一。按目录和任务起一个短名，例如 `nas-handoff`。
-- tab label：默认用 agent 名。
-- env：可选，`--env KEY=VALUE` 可重复。目标目录和当前在同一个项目时，传 `PLAN_ID=<PLAN_ID>`，让新会话沿用同一个计划。
-- 模式：`notify`（默认）或 `request`，规则同[选择模式](#选择模式)。
+返回通道记为 `herdr-new-tab`，附启动技能返回的 tab ID、pane ID 和 agent 名。多目标时各建一个 tab。
 
-步骤：
-
-1. 检查 `HERDR_ENV=1`。不成立就报告 Herdr 不可用并停止。
-2. 选 workspace。`herdr workspace list` 不返回 cwd，所以用 `herdr pane list` 找 cwd 等于目标目录或在它下面的 pane，取这些 pane 的 `workspace_id`：
-   - 只有一个 workspace：用它。
-   - 有多个：用 label 等于目录名的那个。仍不唯一就问用户。
-   - 一个都没有：问用户是新建 workspace，还是放进某个现有 workspace。用户选新建时运行 `herdr workspace create --cwd <目标目录> --label <label> --no-focus`，用返回的 `.result.root_pane.pane_id` 直接做第 4 步，跳过第 3 步。
-3. 建 tab，从返回的 `.result.tab.tab_id` 和 `.result.root_pane.pane_id` 取 tab 和 pane：
-
-```bash
-herdr tab create --workspace <ws> --cwd <目标目录> --label <label> [--env KEY=VALUE ...] --no-focus
-```
-
-4. 在新 pane 里启动 agent。返回的 `.result.type` 为 `agent_started`，并且 `.result.agent.interactive_ready` 为 `true`，才算启动成功：
-
-```bash
-herdr agent start <agent名> --kind <kind> --pane <pane_id> --timeout 90000
-```
-
-   - 返回 `agent_not_ready`：agent 停在启动时的审批或问题界面。用 `herdr agent read <pane_id> --source recent-unwrapped --lines 40` 读出界面并报告，不替它回答。
-   - 其他失败或超时：先运行一次 `herdr agent get <pane_id>`。pane 上已经是这个 agent 并且状态为 `idle` 时继续；否则停止并报告 tab ID。不重建 tab，不重复 start，避免同一个任务被执行两次。这个 tab 留给用户处理。
-
-5. 投递任务。交接内容超过几段，或用户说要 handoff 时，先用 `handoff` skill 写 `<PLAN_DIR>/handoff.md`，prompt 里只写一句目标和这个文件的绝对路径。sender 和末尾那句话按[Herdr 回退](#herdr-回退)第 4、5 步处理，命令也用那里的 `notify` 或 `request` 写法，目标是新的 agent 名。
-6. `notify` 模式下确认对方已接手。`herdr agent prompt` 成功只说明文字已经提交，不说明 agent 开始干活。运行 `herdr agent wait <agent名> --until working --timeout 60000`，确认状态变成 `working`。没等到时用 `herdr agent read <agent名> --source recent-unwrapped --lines 15` 查看它在做什么，再如实报告。
-
-返回结果时，额外报告 tab ID、pane ID 和 agent 名，通道记为 `herdr-new-tab`。多目标时每个目标各建一个 tab。
-
-改动本节后，在 Herdr 里运行 [`scripts/e2e-herdr-new-tab.sh`](scripts/e2e-herdr-new-tab.sh) `[kind ...]`（默认 `claude`）。脚本在 `scratch` workspace 走一遍第 3 到第 6 步，读到回执后关掉测试 tab，不留残余；`HERDR_ENV` 不为 `1` 时跳过。
+已有端到端检查为 [`scripts/e2e-herdr-new-tab.sh`](scripts/e2e-herdr-new-tab.sh) `[kind ...]`，仅在用户允许真实启动测试 agent 时运行；脚本默认测试 Claude，使用临时测试 tab，覆盖创建、启动、投递与清理，不覆盖调用方类型和 workspace 的默认选择。
 
 ## 本地文件兜底
 

@@ -61,6 +61,7 @@ $sync-skills 更新 agent-messaging 删除某个功能
 | `grill-with-docs` | [mattpocock/skills](https://github.com/mattpocock/skills) | `skills/engineering/grill-with-docs/SKILL.md` | 三方合并 |
 | `grilling` | [mattpocock/skills](https://github.com/mattpocock/skills) | `skills/productivity/grilling/SKILL.md` | 三方合并 |
 | `handoff` | [mattpocock/skills](https://github.com/mattpocock/skills) | `skills/productivity/handoff/SKILL.md` | 三方合并 |
+| `herdr-new-agent` | 本地维护，默认在当前 workspace 新开同类型 agent | — | 本地维护 |
 | `how` | [cursor/plugins](https://github.com/cursor/plugins) | `pstack/skills/how/SKILL.md` | 三方合并 |
 | `human-context-rebuild` | [lycfyi/yskills](https://github.com/lycfyi/yskills) | `skills/human-context-rebuild/SKILL.md` | 三方合并 |
 | `implement` | [mattpocock/skills](https://github.com/mattpocock/skills) | `skills/engineering/implement/SKILL.md` | 三方合并 |

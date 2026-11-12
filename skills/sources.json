@@ -145,6 +145,11 @@
       "base_tree": "ce24892bd2d4b9e7fd5ac9b95c03175e18bef388"
     },
     {
+      "name": "herdr-new-agent",
+      "managed": false,
+      "note": "本地维护，默认在当前 workspace 新开同类型 agent"
+    },
+    {
       "name": "how",
       "source": "cursor/plugins",
       "url": "https://github.com/cursor/plugins.git",
