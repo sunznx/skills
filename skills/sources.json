@@ -117,6 +117,11 @@
       "base_tree": "d16165120b7658216c79601b0ee568f42e540961"
     },
     {
+      "name": "enable-subagent",
+      "managed": false,
+      "note": "本地维护，暂无外部 Git 来源"
+    },
+    {
       "name": "explain",
       "source": "cursor/plugins",
       "url": "https://github.com/cursor/plugins.git",
