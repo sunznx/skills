@@ -26,13 +26,17 @@ function collect() {
   })) };
 }
 
+function unanswered() {
+  return controls.filter(({ inputs, text, skip }) => !skip?.checked && !inputs.some(input => input.checked) && !text.value.trim());
+}
+
 function remaining() {
-  return collect().answers.filter((a) => !a.skipped && !a.picked.length && !a.text.trim()).length;
+  return unanswered().length;
 }
 
 function refresh() {
   const count = remaining();
-  submit.disabled = busy || finished || count > 0;
+  submit.disabled = busy || finished;
   save.disabled = busy || finished;
   cancel.disabled = busy || finished;
   for (const { inputs, text, skip } of controls) {
@@ -64,6 +68,16 @@ function changed() {
 
 async function finish(route) {
   if (busy || finished) return;
+  if (route === 'submit') {
+    const missing = unanswered();
+    if (missing.length) {
+      const first = missing[0];
+      const action = first.inputs.length ? '请选择选项或填写文字' : '请填写回答';
+      status.textContent = `还有 ${missing.length} 题未回答：「${first.q.question}」。${action}${first.skip ? '，也可勾选「本轮暂不决定」' : ''}。`;
+      (first.inputs[0] ?? first.text).focus();
+      return;
+    }
+  }
   clearTimeout(timer);
   busy = true;
   refresh();

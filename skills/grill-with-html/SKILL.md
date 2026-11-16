@@ -38,6 +38,8 @@ This environment installs the entry at `~/.agents/skills/grill-with-html/scripts
 
 The page saves drafts while the user edits. After a save acknowledgment, the user may close and reopen the same URL while the wait remains active. Only the submit button confirms answers; an explicit skip does not accept the recommendation.
 
+Submitting an incomplete round identifies the first unanswered question and focuses its answer control. It leaves recommendations unselected and sends no submission. If a user reports an unresponsive button, inspect the page status, entered values and saved receipts; preserve unsaved values before any reload or restart. A later timeout does not establish why an earlier click failed. Never submit or approve the user's round while diagnosing it.
+
 ## Process the result
 
 The command emits JSON events, followed by the final result:
@@ -80,6 +82,7 @@ node --test "$SKILL_DIR/tests/ask.test.mjs"
 node --test "$SKILL_DIR/tests/browser-open.test.mjs"
 node --test "$SKILL_DIR/tests/browser-close.test.mjs"
 node --test "$SKILL_DIR/tests/content-layout.test.mjs"
+node --test "$SKILL_DIR/tests/submit-feedback.test.mjs"
 ```
 
-`SKILL_DIR` is this skill's actual directory. The opening suite models the external browser-service boundary to reproduce a background tab, activation refusal, and duplicate-tab safety. It does not prove native window visibility; verify a real default-opened form in the visible browser window when changing this behavior. The closing and content-layout suites require the installed, running `ego-browser`. They verify actual page removal, retention, navigation safety, content ownership/order, independent demo controls, and durable answers. The API suite covers selection, drafts, recovery, cancellation, timeout, and duplicate submissions. Distinguish shared tool-protocol compatibility from a complete Claude Code session test when that client has not been exercised.
+`SKILL_DIR` is this skill's actual directory. The opening suite models the external browser-service boundary to reproduce a background tab, activation refusal, and duplicate-tab safety. It does not prove native window visibility; verify a real default-opened form in the visible browser window when changing this behavior. The closing, content-layout, and submit-feedback suites require the installed, running `ego-browser`. They verify actual page removal, retention, navigation safety, content ownership/order, independent demo controls, incomplete-submit feedback, and durable answers. The API suite covers selection, drafts, recovery, cancellation, timeout, and duplicate submissions. Distinguish shared tool-protocol compatibility from a complete Claude Code session test when that client has not been exercised.
