@@ -8,13 +8,17 @@ Use UTF-8 JSON. Start from [the example](../examples/round.json) and adjust it f
 | `context` | Optional Markdown context. Reserve level-two headings for question panels; use level three or deeper in context. |
 | `questions` | At least one question. |
 | `questions[].id` | Unique, stable, nonempty ID for matching answers. |
-| `question` | Nonempty question on one line; put longer background in its `context`. |
+| `question` | A direct, single-line decision question, displayed as the card heading. Put longer background in its `context`. |
+| `questions[].context` | Optional Markdown supporting the decision, displayed after the options. Reserve level-two headings for question panels. |
 | `type` | `single` (default), `multi`, or `text`. |
 | `options` | Two to six single/multiple-choice options, each with a unique `id` and single-line `label`; omit for text. |
 | `recommended` | Recommended option IDs: exactly one for single choice, any valid subset for multiple choice; omit for text. |
 | `allowSkip` | Optional boolean enabling explicit deferral. |
 
 Single and multiple choice also accept free text without a selection. The agent determines whether that text resolves the decision. Untouched recommendations are not submitted.
+
+For example, ask `调整目录后，是否接受现有 Go SDK 使用者修改 import？` with choices `保留现有 import，使用者无需修改` and `统一新路径，使用者需要修改`.
+Explain the recommendation and any unchanged HTTP/JSON behavior in `context`. Keep the question understandable before the reader reaches that background.
 
 The tool renders through the existing `answer-me-with-html` CLI. The current UI adapter was verified against am 0.5.11; incompatible panel/option markup produces a visible error instead of inventing answer mappings.
 

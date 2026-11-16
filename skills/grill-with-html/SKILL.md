@@ -12,6 +12,7 @@ Use `grilling` for the design tree and round selection, and `domain-modeling` fo
 1. Use `planning-with-files` to select or create this task's plan as `<PLAN_DIR>`; when another workflow invokes this skill, use its selected plan. Keep inputs, pages, drafts, answers, browser receipts, and verification records in `<PLAN_DIR>/grill-with-html/`.
 2. Verify facts, then select this round's questions using `grilling`. Defer questions with unresolved prerequisites. Write the input to `grill-with-html/round-01.input.json`; use a new number and directory for each subsequent round.
 3. Follow [the input reference](references/input.md) and [example](examples/round.json). Give every question a stable ID. A single-choice question has exactly one recommendation, initially unselected. Accept free text; set `allowSkip` explicitly when deferral is allowed.
+4. Put the decision in `question`: one direct question about the user's intended behavior or the consequence they accept. Use that question as the card heading, with choices before supporting context. Write short option labels that answer it directly; keep recommendation rationale, terminology explanations, and shared guarantees in `context`. IDs identify answers in saved data.
 
 ## Open and await submission
 

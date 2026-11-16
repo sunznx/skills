@@ -5,18 +5,16 @@ import { join } from 'node:path';
 export function renderRound(input, dir, renderer) {
   const lines = ['---', `title: ${JSON.stringify(input.title)}`, 'lang: zh', 'template: doc', 'theme: paper', '---'];
   if (input.context) lines.push('', input.context);
-  for (const [index, q] of input.questions.entries()) {
-    lines.push('', `## Q${index + 1}`, '');
-    if (q.context) lines.push(q.context, '');
-    if (q.type === 'text') {
-      lines.push(q.question);
-    } else {
+  for (const q of input.questions) {
+    lines.push('', `## ${q.question}`, '');
+    if (q.type !== 'text') {
       lines.push(`\`\`\`ask${q.type === 'multi' ? ' multi' : ''}`, q.question);
       for (const option of q.options) {
         lines.push(`${q.recommended.includes(option.id) ? '*' : '-'} ${option.label.replaceAll('|', '\\|')}`);
       }
       lines.push('```');
     }
+    if (q.context) lines.push('', q.context);
   }
   const draft = join(dir, 'questions.md');
   const page = join(dir, 'page.html');

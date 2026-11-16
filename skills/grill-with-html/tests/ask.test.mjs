@@ -174,6 +174,31 @@ test('the browser URL serves the interview shell and the existing renderer handl
   assert.equal((await run.done).result.answers[2].skipped, true);
 });
 
+test('each panel leads with its decision question and places background after the choices', { timeout: 15000 }, async (t) => {
+  const f = await fixture(t, { title: '目录整理', questions: [
+    { id: 'FQ6', question: '这次调整目录后，现有 Go SDK 使用者需要修改 import 吗？',
+      context: '推荐保留公开 SDK 的兼容路径。HTTP、JSON、数据库及签名协议保持不变。',
+      recommended: ['compatible'], options: [
+        { id: 'compatible', label: '不需要，保留公开 SDK 的原有路径' },
+        { id: 'align', label: '需要，允许公开 SDK 的路径一起调整' },
+      ] },
+    { id: 'other', question: '还有哪些外部使用者需要考虑？', type: 'text', context: '例如其他仓库或客户的集成。' },
+  ] });
+  const run = launch(t, f);
+  const ready = await run.started;
+  assert.ok(ready?.url);
+  const html = await fetch(new URL('page', ready.url)).then((r) => r.text());
+  const panels = [...html.matchAll(/<section\b[^>]*class="am-panel[^"\n]*"[^>]*>([\s\S]*?)<\/section>/g)].map((m) => m[1]);
+  assert.equal(panels.length, 2);
+  assert.match(panels[0], /<h2>这次调整目录后，现有 Go SDK 使用者需要修改 import 吗？<\/h2>/,
+    'The decision itself must be the question heading, rather than a generic question ID.');
+  const choice = panels[0].indexOf('需要，允许公开 SDK 的路径一起调整');
+  const background = panels[0].indexOf('推荐保留公开 SDK 的兼容路径');
+  assert.ok(choice >= 0 && background > choice, 'Readers must reach the choices before longer background.');
+  assert.match(panels[1], /<h2>还有哪些外部使用者需要考虑？<\/h2>/);
+  assert.ok(panels[1].indexOf('还有哪些外部使用者需要考虑？') < panels[1].indexOf('例如其他仓库或客户的集成。'));
+});
+
 test('only one waiting command owns a round, and interruption releases it for reopening', { timeout: 15000 }, async (t) => {
   const f = await fixture(t);
   const first = launch(t, f);
