@@ -84,9 +84,9 @@ async function finish(route) {
 try {
   const loaded = new Promise((resolve) => frame.addEventListener('load', resolve, { once: true }));
   state = await request('state');
-  if (!frame.contentDocument?.querySelector('.am-panel')) await loaded;
+  if (!frame.contentDocument?.querySelector('.am-doc-body > .am-panel')) await loaded;
   const doc = frame.contentDocument;
-  const panels = [...doc.querySelectorAll('.am-panel')];
+  const panels = [...doc.querySelectorAll('.am-doc-body > .am-panel')];
   if (panels.length !== state.input.questions.length) throw new Error('问题页面与本轮数据不匹配');
   document.querySelector('#title').textContent = state.input.title;
   document.title = state.input.title;
@@ -94,14 +94,15 @@ try {
   doc.querySelector('.am-reply-bar')?.remove();
   controls = state.input.questions.map((q, i) => {
     const panel = panels[i];
-    const inputs = [...panel.querySelectorAll('.am-ask input')];
+    const ask = panel.querySelector(':scope > .am-panel-body > .am-ask');
+    const inputs = q.type === 'text' ? [] : [...(ask?.querySelectorAll(':scope > .am-ask-opt > input') ?? [])];
     if (inputs.length !== (q.type === 'text' ? 0 : q.options.length)) throw new Error('选项数量不匹配');
-    const text = panel.querySelector('.am-comment textarea');
+    const text = panel.querySelector(':scope > .am-comment > textarea');
     if (!text) throw new Error('页面缺少回答输入框');
     text.parentElement.hidden = false;
     text.placeholder = q.type === 'text' ? '填写你的回答' : '补充说明，也可以在这里直接回答';
     text.setAttribute('aria-label', q.type === 'text' ? q.question : `补充说明：${q.question}`);
-    panel.querySelector('.am-comment-btn')?.remove();
+    panel.querySelector(':scope > .am-panel-head > .am-comment-btn')?.remove();
     let skip;
     if (q.allowSkip) {
       const label = doc.createElement('label');
