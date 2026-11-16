@@ -136,6 +136,11 @@
       "base_tree": "eedaf2562c83155115e9c649fa3ecaac2e10e81d"
     },
     {
+      "name": "grill-with-html",
+      "managed": false,
+      "note": "本地维护，网页作答后返回原会话，支持 Codex 和 Claude Code"
+    },
+    {
       "name": "grilling",
       "source": "mattpocock/skills",
       "url": "https://github.com/mattpocock/skills.git",

@@ -1,0 +1,21 @@
+{
+  "title": "第 1 轮：确认范围",
+  "context": "先明确使用方式，再讨论实现细节。",
+  "questions": [
+    {
+      "id": "clients",
+      "question": "同时支持 Codex 和 Claude Code？",
+      "recommended": ["both"],
+      "options": [
+        { "id": "both", "label": "是，两者共用网页问答" },
+        { "id": "codex", "label": "这次只需要 Codex" }
+      ]
+    },
+    {
+      "id": "details",
+      "question": "还有哪些使用限制需要考虑？",
+      "type": "text",
+      "allowSkip": true
+    }
+  ]
+}

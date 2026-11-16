@@ -1,0 +1,13 @@
+<!doctype html>
+<html lang="zh-CN">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>设计问答</title>
+<link rel="stylesheet" href="ui.css">
+<script src="ui.js" type="module"></script>
+<header>
+  <div><strong id="title">设计问答</strong><p id="status" role="status" aria-live="polite">正在打开本轮问题…</p></div>
+  <div class="actions"><button id="save" disabled>保存草稿</button><button id="cancel">取消本轮</button><button id="submit" disabled>提交本轮</button></div>
+</header>
+<iframe id="questions" src="page" title="本轮问题"></iframe>
+</html>
