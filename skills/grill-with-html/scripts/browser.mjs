@@ -21,16 +21,25 @@ async function browserScript(source, directory) {
 export async function openRoundPage(url, directory) {
   const manifest = join(directory, 'browser.json');
   try {
-    return await browserScript(`
+    const browser = await browserScript(`
       const task = await taskSpace(${JSON.stringify(`grill-round-${randomUUID()}`)});
       const page = task.page("p1");
       const receipt = {driver:"ego",spaceId:task.spaceId,page:page.label,url:${JSON.stringify(url)},directory:${JSON.stringify(directory)}};
       const fs = await import("node:fs/promises");
       await fs.writeFile(${JSON.stringify(manifest)},JSON.stringify(receipt),{mode:0o600});
       await page.goto(receipt.url);
+      await page.cdp("Page.bringToFront");
       await emit(receipt);
       await task.handOff();
     `, directory);
+    if (process.platform === 'darwin') {
+      try {
+        await execute('open', ['-b', 'com.citrolabs.ego.lite'], { timeout: 5000 });
+      } catch {
+        return { ...browser, warning: 'The round tab was activated, but the Ego window could not be brought to the foreground.' };
+      }
+    }
+    return browser;
   } catch (error) {
     if (error.code === 'ENOENT') {
       const [command, args] = process.platform === 'darwin' ? ['open', [url]] : process.platform === 'win32'
@@ -42,7 +51,7 @@ export async function openRoundPage(url, directory) {
     // An uncertain launch may already own a page. Never open a duplicate as a fallback.
     try {
       const receipt = JSON.parse(readFileSync(manifest, 'utf8'));
-      if (receipt.url === url) return { ...receipt, warning: 'Browser launch needs inspection; use the ready URL if necessary.' };
+      if (receipt.url === url) return { ...receipt, warning: 'Browser loading or foreground activation could not be confirmed; inspect the recorded page and ready URL.' };
     } catch { /* No confirmed managed page. */ }
     return { driver: 'unavailable', reason: 'Browser automation failed; open the ready URL manually.' };
   }

@@ -26,7 +26,8 @@ node "$ASK_CLI" --input "$ROUND_INPUT" --round-dir "$ROUND_DIR" --timeout 540
 
 This environment installs the entry at `~/.agents/skills/grill-with-html/scripts/ask.mjs`; Claude links to that copy.
 
-- By default, the command uses the installed `ego-browser` CLI to create and identify its own page, then hands control to the user. It records the identity in the round's `browser.json`.
+- By default, the command uses the installed `ego-browser` CLI to create and identify its own page, loads it, activates that tab with `Page.bringToFront`, then hands control to the user. On macOS it also foregrounds the existing Ego app without opening another URL. It records the page identity in the round's `browser.json`.
+- Inspect `browser_opened` for `warning` or `reason` before reporting that the page opened. An activation failure stops further browser commands, preserves the existing page and answers, and reports the visibility problem. If the user cannot see a live round, use the browser skill to reveal its recorded page under its control rules; keep the original waiting command and page rather than creating another round or tab.
 - The default closes the managed page after a successful submission is saved. If the user requests retention, or the page is needed for review or continued interaction, add `--keep-open` before starting the round.
 - `--no-open` leaves browser opening and cleanup to the caller. Use it for remote hosts, external browser control, or tests. It does not provide automatic tab cleanup.
 - If `ego-browser` is absent, the system opener remains available, but cleanup is reported as `unavailable`. An uncertain managed launch is not retried through another opener. Report the actual limitation rather than promising automatic closure.
@@ -75,7 +76,8 @@ Run the public command/API suite and the real-browser lifecycle regression:
 
 ```bash
 node --test "$SKILL_DIR/tests/ask.test.mjs"
+node --test "$SKILL_DIR/tests/browser-open.test.mjs"
 node --test "$SKILL_DIR/tests/browser-close.test.mjs"
 ```
 
-`SKILL_DIR` is this skill's actual directory. The browser suite requires the installed, running `ego-browser`; it verifies actual page removal, explicit retention, navigation safety, and durable answers. The API suite covers selection, drafts, recovery, cancellation, timeout, and duplicate submissions. Distinguish shared tool-protocol compatibility from a complete Claude Code session test when that client has not been exercised.
+`SKILL_DIR` is this skill's actual directory. The opening suite models the external browser-service boundary to reproduce a background tab, activation refusal, and duplicate-tab safety. It does not prove native window visibility; verify a real default-opened form in the visible browser window when changing this behavior. The closing suite requires the installed, running `ego-browser`; it verifies actual page removal, explicit retention, navigation safety, and durable answers. The API suite covers selection, drafts, recovery, cancellation, timeout, and duplicate submissions. Distinguish shared tool-protocol compatibility from a complete Claude Code session test when that client has not been exercised.
