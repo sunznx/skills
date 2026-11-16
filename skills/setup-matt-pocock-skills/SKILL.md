@@ -1,6 +1,6 @@
 ---
 name: setup-matt-pocock-skills
-description: "Configure Matt engineering skills: choose the issue tracker, triage labels and domain layout under .planning. Includes a shared missing-only configuration initializer."
+description: "Configure Matt engineering skills: choose the issue tracker, triage labels and domain layout under .planning, and link them from AGENTS.override.md. Includes a shared missing-only configuration initializer."
 ---
 
 # Setup Matt Pocock's Skills
@@ -13,13 +13,15 @@ Scaffold the per-repo configuration that the engineering skills assume:
 
 Manual setup is prompt-driven: explore, confirm the intended configuration, then write. Dependent skills use the deterministic [missing-only initializer](references/ensure-config.md) directly; that path fills defaults without running this interview or editing steering files.
 
-Setup writes project configuration, so it needs no plan of its own. Project configuration lives in `.planning/issue-tracker.md`, `.planning/triage-labels.md`, and `.planning/domain.md` at the project root. When the session already has a selected plan, log the setup in its `progress.md`. Specs and tickets live under each task's `<PLAN_DIR>`; new ADRs default to the project's `.planning/adr/`, shared across tasks. Preserve existing configuration unless the user explicitly requests a change.
+Use `planning-with-files` to select or create this task's plan as `<PLAN_DIR>`; when another workflow invokes this skill, use that workflow's selected plan. Log setup in its `progress.md`, and keep per-run drafts and verification records in `<PLAN_DIR>/setup-matt-pocock-skills/`.
+
+Project configuration lives in `.planning/issue-tracker.md`, `.planning/triage-labels.md`, and `.planning/domain.md` at the project root. Manual setup writes their summaries and reading pointers to the root `AGENTS.override.md`. Specs and tickets live under each task's `<PLAN_DIR>`; new ADRs default to the project's `.planning/adr/`, shared across tasks. Preserve existing configuration unless the user explicitly requests a change.
 
 ## Shared initialization
 
 Before a dependent skill reads configuration, follow [references/ensure-config.md](references/ensure-config.md). The script preserves existing files and imports a corresponding `docs/agents/` file unchanged when the `.planning/` file is missing. Otherwise it seeds local Markdown tracking, the five standard triage labels and the PWF domain layout. It reports created, preserved and imported paths.
 
-The automatic path writes configuration only. It does not create issues, labels, glossary/ADR documents or modify `AGENTS.md`/`CLAUDE.md`.
+The automatic path writes configuration only. It does not create issues, labels, glossary/ADR documents or modify agent instruction files, including `AGENTS.override.md`.
 
 ## Process
 
@@ -28,11 +30,11 @@ The automatic path writes configuration only. It does not create issues, labels,
 Look at the current repo to understand its starting state. Read whatever exists; don't assume:
 
 - `git remote -v` and `.git/config`: is this a GitHub repo? Which one?
-- `AGENTS.md` and `CLAUDE.md` at the repo root: does either exist? Is there already an `## Agent skills` section in either?
+- `AGENTS.override.md`, `AGENTS.md`, and `CLAUDE.md` at the repo root: read existing rules and any `## Agent skills` sections before drafting the override update.
 - `GLOSSARY.md` and `GLOSSARY-MAP.md` at the repo root, and the legacy `CONTEXT.md` / `CONTEXT-MAP.md`. If a legacy file exists, offer to `git mv` it to its `GLOSSARY` name and rewrite those names in `.planning/domain.md`.
 - `.planning/adr/`, `docs/adr/` and any `src/*/docs/adr/` directories
 - `.planning/` and legacy `docs/agents/`: does configuration already exist? Read it before proposing changes.
-- the selected `<PLAN_DIR>`, when a plan is selected: check existing `spec.md`, `tickets/`, and `wayfinder/` artifacts
+- the selected `<PLAN_DIR>`: check existing `spec.md`, `tickets/`, and `wayfinder/` artifacts
 - Is the `triage` skill installed? (a `triage` skill folder alongside this one, or `triage` in your available skills.) This decides whether remote label creation is needed. The local label mapping is always available to `to-spec` and `to-tickets`.
 - Monorepo signals: a `pnpm-workspace.yaml`, a `workspaces` field in `package.json`, or a populated `packages/*` with its own `src/`. These are present only in a genuinely large multi-package repo; their absence means single-context, which is almost every repo.
 
@@ -73,22 +75,18 @@ Offer **multi-context** (a root `GLOSSARY-MAP.md` pointing to per-context `GLOSS
 
 Show the user a draft of:
 
-- The `## Agent skills` block to add to whichever of `CLAUDE.md` / `AGENTS.md` is being edited (see step 4 for selection rules)
+- The `## Agent skills` block to add or update in the project root's `AGENTS.override.md`, including any baseline-reading instruction needed when creating it
 - The contents of `.planning/issue-tracker.md`, `.planning/domain.md`, and `.planning/triage-labels.md` (all three are available to dependent skills)
 
 Let them edit before writing.
 
 ### 4. Write
 
-**Pick the file to edit:**
+**Write the configuration index to `AGENTS.override.md`.** Use `update-agents-override-md` to create or update that file at the project root. This destination applies whether `CLAUDE.md` or `AGENTS.md` exists. Leave those files intact.
 
-- If `CLAUDE.md` exists, edit it.
-- Else if `AGENTS.md` exists, edit it.
-- If neither exists, ask the user which one to create; don't pick for them.
+Preserve existing override rules and its instruction to read the same-directory `AGENTS.md`. When creating an override beside an existing `AGENTS.md`, include an explicit instruction to read that file and follow its rules except where the override changes them. Keep one baseline-reading pointer.
 
-Never create `AGENTS.md` when `CLAUDE.md` already exists (or vice versa); always edit the one that's already there.
-
-If an `## Agent skills` block already exists in the chosen file, update its contents in-place rather than appending a duplicate. Don't overwrite user edits to the surrounding sections.
+If an `## Agent skills` block already exists in `AGENTS.override.md`, update it in place rather than appending a duplicate. Preserve user edits outside the block. Keep full configuration in `.planning/`; the override contains only summaries and reading pointers.
 
 The block:
 
@@ -130,4 +128,4 @@ For "other" issue trackers, write `.planning/issue-tracker.md` from scratch usin
 
 ### 5. Done
 
-Tell the user the setup is complete and which engineering skills will now read from these files. Mention they can edit `.planning/*.md` directly later; re-running this skill is only necessary if they want to switch issue trackers or restart from scratch.
+Tell the user which configuration files were created or updated, that their index is in `AGENTS.override.md`, and which engineering skills read them. Mention they can edit `.planning/*.md` directly later; re-running this skill is only necessary if they want to switch issue trackers or restart from scratch.
