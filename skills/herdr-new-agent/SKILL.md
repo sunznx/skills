@@ -16,10 +16,20 @@ test "${HERDR_ENV:-}" = 1
 herdr --help
 herdr agent
 herdr tab
-herdr agent get "$HERDR_PANE_ID"
+herdr pane current --current
 ```
 
-逐条运行；`herdr agent` 和 `herdr tab` 只打印命令组帮助，可能以状态 2 退出，不用 `&&` 把后续命令接在它们后面。`HERDR_ENV` 不为 `1`、调用方 pane 无法解析或没有可识别的 agent 时，停止并报告原始错误，避免控制 UI 聚焦的其他窗口。
+逐条运行；`HERDR_ENV` 不为 `1` 时立即停止。`herdr agent` 和 `herdr tab` 只打印命令组帮助，可能以状态 2 退出，不用 `&&` 把后续命令接在它们后面。
+
+从 `pane current --current` 的 `.result.pane` 记录 `pane_id` 为 `caller_pane_id`，同时记录 `terminal_id` 和 `workspace_id`，然后查询：
+
+```bash
+herdr agent get "$caller_pane_id"
+```
+
+pane 跨 workspace 移动后，进程环境中的 `HERDR_PANE_ID` 和 `HERDR_WORKSPACE_ID` 可能仍为旧值；pane 查询能解析旧别名，agent 查询未必能。使用调用方解析结果中的当前 ID，不直接用环境变量查询 agent 或决定 workspace，也不依赖 UI 焦点或同目录的其他 agent。
+
+核对 `.result.agent` 的 `pane_id`、`terminal_id`、`workspace_id` 均非空，且分别与调用方 pane 的记录一致。调用方 pane 无法解析、没有可识别的 agent 或身份不一致时，停止并报告原始错误或不一致的字段；尚未创建任何 tab 或 agent。创建前若发现调用方已移动，重新执行上述解析与核对，再填写参数。
 
 从 `agent get` 的 JSON 结果填写本次参数：
 
