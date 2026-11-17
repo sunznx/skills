@@ -109,7 +109,8 @@ try {
   controls = state.input.questions.map((q, i) => {
     const panel = panels[i];
     const ask = panel.querySelector(':scope > .am-panel-body > .am-ask');
-    const inputs = q.type === 'text' ? [] : [...(ask?.querySelectorAll(':scope > .am-ask-opt > input') ?? [])];
+    const inputs = q.type === 'text' ? [] : [...(ask?.querySelectorAll('.am-ask-opt > input') ?? [])]
+      .filter(input => input.closest('.am-ask') === ask);
     if (inputs.length !== (q.type === 'text' ? 0 : q.options.length)) throw new Error('选项数量不匹配');
     const text = panel.querySelector(':scope > .am-comment > textarea');
     if (!text) throw new Error('页面缺少回答输入框');

@@ -20,7 +20,7 @@ Single and multiple choice also accept free text without a selection. The agent 
 For example, ask `调整目录后，是否接受现有 Go SDK 使用者修改 import？` with choices `保留现有 import，使用者无需修改` and `统一新路径，使用者需要修改`.
 Explain the recommendation and any unchanged HTTP/JSON behavior in that question's `context`. Keep the question understandable before the reader reaches that background.
 
-The tool renders through the existing `answer-me-with-html` CLI. The current UI adapter was verified against am 0.5.11; incompatible panel/option markup produces a visible error instead of inventing answer mappings.
+The tool renders through the existing `answer-me-with-html` CLI. The UI adapter supports the native option labels in both the flat am 0.5.11 layout and the card-wrapped am 0.6.1 layout. Choices belong to their nearest question fieldset; nested demo fields remain independent. Incompatible panel/option markup produces a visible error instead of inventing answer mappings.
 
 ## Content ownership and preview
 
