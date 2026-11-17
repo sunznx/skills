@@ -18,7 +18,7 @@
       "source": "QingYunA/answer-me-with-html",
       "url": "https://github.com/QingYunA/answer-me-with-html.git",
       "path": "skills/answer-me-with-html/SKILL.md",
-      "base_tree": "8007aad826a73cd28b6cbcb697cd1459a88b0bf0"
+      "base_tree": "2840a8b076f16dea1385a693ae7e3d2a6799e2e0"
     },
     {
       "name": "archify",
@@ -37,7 +37,7 @@
       "source": "Qiuner/birdview",
       "url": "https://github.com/Qiuner/birdview.git",
       "path": "SKILL.md",
-      "base_tree": "c74baa5692ce451c1ecf48417f2cd0a6a61b8ef0"
+      "base_tree": "9576f6c54adedde6cae11469671fb5e3e672abfe"
     },
     {
       "name": "code-review",
@@ -85,7 +85,7 @@
       "source": "cathrynlavery/diagram-design",
       "url": "https://github.com/cathrynlavery/diagram-design.git",
       "path": "skills/diagram-design/SKILL.md",
-      "base_tree": "7c64ced4ca34f0e77fd4f3c5f77421cf59de3762"
+      "base_tree": "cde001a0341ed67e818207c4e3f06d4727a42cde"
     },
     {
       "name": "documd-visuals",
@@ -106,7 +106,7 @@
       "source": "citrolabs/ego-lite",
       "url": "https://github.com/citrolabs/ego-lite.git",
       "path": "skills/ego-browser/SKILL.md",
-      "base_tree": "f1ffe63fbdc36b9a32be9a59394854d1e3f4e6f0",
+      "base_tree": "7c886b39720f07b1d6a6f5834aee41356a316e5d",
       "deploy": false
     },
     {
@@ -126,7 +126,7 @@
       "source": "cursor/plugins",
       "url": "https://github.com/cursor/plugins.git",
       "path": "pstack/skills/teach/SKILL.md",
-      "base_tree": "3ee517292dae0476dc516f9f3805c08fb943c6ff"
+      "base_tree": "f8530de72921e487b8b1e5d53a0f7867d31d6053"
     },
     {
       "name": "grill-with-docs",
@@ -164,7 +164,7 @@
       "source": "cursor/plugins",
       "url": "https://github.com/cursor/plugins.git",
       "path": "pstack/skills/how/SKILL.md",
-      "base_tree": "3fd1c05ec675e7225d51e19e8ec80b92217adfbf"
+      "base_tree": "9c370cd686f570877a24997e9ccfba0f49096f00"
     },
     {
       "name": "human-context-rebuild",
@@ -253,7 +253,7 @@
       "source": "OthmanAdi/planning-with-files",
       "url": "https://github.com/OthmanAdi/planning-with-files.git",
       "path": ".agents/skills/planning-with-files/SKILL.md",
-      "base_tree": "8724d238f242ea940968fa7e82edb92e27ad9060",
+      "base_tree": "ee1007d9fa50ad11ccc0d6324ed04325364d43e0",
       "deploy": false
     },
     {
@@ -278,7 +278,7 @@
       "source": "cursor/plugins",
       "url": "https://github.com/cursor/plugins.git",
       "path": "pstack/skills/reflect/SKILL.md",
-      "base_tree": "fbc98c056509e9ee3dfceebbc0acfa4591491cc2"
+      "base_tree": "e55de8143f337465bbbe2a7320065c4c9e7f14fe"
     },
     {
       "name": "research",
@@ -308,7 +308,7 @@
       "source": "cursor/plugins",
       "url": "https://github.com/cursor/plugins.git",
       "path": "pstack/skills/sharpen/SKILL.md",
-      "base_tree": "726fcb216692c5a2ad78b5c2ae19c2e6ac66cb67"
+      "base_tree": "672ef555c7b4c24b4a5bd016647c5d836a1d6aa6"
     },
     {
       "name": "show-me",
@@ -336,7 +336,7 @@
       "source": "mattpocock/skills",
       "url": "https://github.com/mattpocock/skills.git",
       "path": "skills/in-progress/software-factory/SKILL.md",
-      "base_tree": "4b9e59cb67b8e5858525d93cf2ac1eb03a39d46b"
+      "base_tree": "2a146bd4f7d68ff44d8dfdad8d6e5bc369ac931c"
     },
     {
       "name": "spec-bootstrap",
@@ -355,7 +355,7 @@
       "source": "cursor/plugins",
       "url": "https://github.com/cursor/plugins.git",
       "path": "pstack/skills/statechart/SKILL.md",
-      "base_tree": "a79a48c6970be3b63d6efefb0a306b7c87de88d0"
+      "base_tree": "e7f097e74b3297b2fbb2707be7d8e336e0df8b7c"
     },
     {
       "name": "sync-skills",
@@ -381,7 +381,7 @@
       "source": "cursor/plugins",
       "url": "https://github.com/cursor/plugins.git",
       "path": "pstack/skills/technical-writing/SKILL.md",
-      "base_tree": "f35560fd015d95ae92eb3c7414d3a48065299dfa"
+      "base_tree": "545f2339fc1812c1b8343dec8937054a0dc29155"
     },
     {
       "name": "thermo-nuclear-code-quality-review",
@@ -416,7 +416,7 @@
       "source": "cursor/plugins",
       "url": "https://github.com/cursor/plugins.git",
       "path": "pstack/skills/unslop/SKILL.md",
-      "base_tree": "4e572dd70e5557f490e3991c52ea58f0dcee8936"
+      "base_tree": "3319d5baa095167501a128703a008446dd099d0c"
     },
     {
       "name": "update-skill",
@@ -465,7 +465,7 @@
       "source": "cursor/plugins",
       "url": "https://github.com/cursor/plugins.git",
       "path": "pstack/skills/why/SKILL.md",
-      "base_tree": "ba549f92c3a8dc1506b21674e8794eb980019bf3"
+      "base_tree": "2608dc2d93794dd7060b826b81b6da0be6bc673c"
     },
     {
       "name": "wizard",
