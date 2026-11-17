@@ -20,7 +20,7 @@ async function submittedRound(t, { extra = [], arrange } = {}) {
   const bin = join(dir, 'bin');
   await mkdir(bin);
   for (const name of ['open', 'xdg-open']) await writeFile(join(bin, name), '#!/bin/sh\nexit 0\n', { mode: 0o755 });
-  const child = spawn(process.execPath, [command, '--input', input, '--round-dir', join(dir, 'round'), '--timeout', '30', ...extra], {
+  const child = spawn(process.execPath, [command, '--browser', 'ego', '--input', input, '--round-dir', join(dir, 'round'), '--timeout', '30', ...extra], {
     env: { ...process.env, PATH: `${bin}:${process.env.PATH}`, AM_NO_UPDATE_CHECK: '1' }, stdio: ['ignore', 'pipe', 'pipe'],
   });
   t.after(() => { if (child.exitCode === null) child.kill(); });
@@ -66,7 +66,7 @@ async function browserProbe(dir, source) {
   return JSON.parse(await readFile(path, 'utf8'));
 }
 
-test('the default command closes its own submitted page and retains the saved answers', { timeout: 60000 }, async (t) => {
+test('the SDK driver closes its own submitted page and retains the saved answers', { timeout: 60000 }, async (t) => {
   const { records, dir, managed } = await submittedRound(t);
   const cleanup = records.find((r) => r.event === 'browser_cleanup');
   assert.equal(cleanup?.status, 'closed', `A submitted round must close its managed page automatically. ${JSON.stringify(cleanup)}`);

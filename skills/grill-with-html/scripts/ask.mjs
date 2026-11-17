@@ -14,11 +14,12 @@ let release = () => {};
 
 try {
   const { values } = parseArgs({ options: {
-    input: { type: 'string' }, 'round-dir': { type: 'string' }, 'no-open': { type: 'boolean' }, 'keep-open': { type: 'boolean' },
+    browser: { type: 'string', default: 'auto' }, input: { type: 'string' }, 'round-dir': { type: 'string' }, 'no-open': { type: 'boolean' }, 'keep-open': { type: 'boolean' },
     timeout: { type: 'string', default: '1800' },
     renderer: { type: 'string', default: fileURLToPath(new URL('../../answer-me-with-html/scripts/am.mjs', import.meta.url)) },
   } });
   if (!values.input || !values['round-dir']) throw new Error('--input and --round-dir are required.');
+  if (!['auto', 'ego'].includes(values.browser)) throw new Error('--browser must be auto or ego.');
   const timeoutMs = Number(values.timeout) * 1000;
   if (!Number.isFinite(timeoutMs) || timeoutMs <= 0 || timeoutMs > 86400000) throw new Error('--timeout must be between 0 and 86400 seconds.');
   release = acquireRound(resolve(values['round-dir']));
@@ -35,7 +36,7 @@ try {
     print({ event: 'ready', url: server.url });
     let browser;
     if (!values['no-open']) {
-      browser = await openRoundPage(server.url, resolve(values['round-dir']));
+      browser = await openRoundPage(server.url, resolve(values['round-dir']), { driver: values.browser });
       print({ event: 'browser_opened', ...browser });
       if (browser.reason || browser.warning) console.error(browser.reason ?? browser.warning);
     }

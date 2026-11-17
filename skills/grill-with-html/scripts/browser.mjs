@@ -4,6 +4,8 @@ import { join } from 'node:path';
 import { randomUUID } from 'node:crypto';
 import { promisify } from 'node:util';
 
+import { openNativeRoundPage, finishNativeRoundPage } from './native-browser.mjs';
+
 const execute = promisify(execFile);
 async function browserScript(source, directory) {
   const receiptPath = join(directory, `.browser-result-${randomUUID()}.json`);
@@ -18,7 +20,9 @@ async function browserScript(source, directory) {
   }
 }
 
-export async function openRoundPage(url, directory) {
+export async function openRoundPage(url, directory, { driver = 'auto' } = {}) {
+  if (!['auto', 'ego'].includes(driver)) throw new Error('--browser must be auto or ego.');
+  if (driver === 'auto' && process.platform === 'darwin') return openNativeRoundPage(url, directory);
   const manifest = join(directory, 'browser.json');
   try {
     const browser = await browserScript(`
@@ -58,6 +62,7 @@ export async function openRoundPage(url, directory) {
 }
 
 export async function finishRoundPage(browser, { status, keepOpen = false }) {
+  if (browser.driver === 'ego-native') return finishNativeRoundPage(browser, { status, keepOpen });
   if (browser.driver !== 'ego') return { status: 'unavailable', reason: browser.reason };
   if (status !== 'submitted') return { status: 'kept', reason: status, spaceId: browser.spaceId };
   try {

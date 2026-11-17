@@ -45,7 +45,7 @@ state.appFront=process.argv.slice(2).join(' ')==='-b com.citrolabs.ego.lite';
 state.externalURLs.push(...process.argv.slice(2).filter(value=>value.startsWith('http')));
 fs.writeFileSync(path,JSON.stringify(state));
 `, { mode: 0o755 });
-  const child = spawn(process.execPath, [command, '--input', input, '--round-dir', join(dir, 'round'), '--timeout', '10'], {
+  const child = spawn(process.execPath, [command, '--browser', 'ego', '--input', input, '--round-dir', join(dir, 'round'), '--timeout', '10'], {
     env: { ...process.env, PATH: `${bin}:${process.env.PATH}`, AM_NO_UPDATE_CHECK: '1' }, stdio: ['ignore', 'pipe', 'pipe'],
   });
   let stderr = '';
@@ -70,7 +70,7 @@ fs.writeFileSync(path,JSON.stringify(state));
   return { browser, ready, done, records, state: () => readFile(statePath, 'utf8').then(JSON.parse) };
 }
 
-test('the default opener selects the round tab before user handoff and foregrounds Ego without a duplicate URL', { timeout: 15000 }, async t => {
+test('the SDK opener selects the round tab before user handoff and foregrounds Ego without a duplicate URL', { timeout: 15000 }, async t => {
   const run = await round(t);
   assert.equal(run.browser.driver, 'ego', 'The browser-service fixture must execute the actual managed opener.');
   assert.equal(run.browser.warning, undefined);

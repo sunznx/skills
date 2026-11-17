@@ -27,11 +27,12 @@ node "$ASK_CLI" --input "$ROUND_INPUT" --round-dir "$ROUND_DIR" --timeout 540
 
 This environment installs the entry at `~/.agents/skills/grill-with-html/scripts/ask.mjs`; Claude links to that copy.
 
-- By default, the command uses the installed `ego-browser` CLI to create and identify its own page, loads it, activates that tab with `Page.bringToFront`, then hands control to the user. On macOS it also foregrounds the existing Ego app without opening another URL. It records the page identity in the round's `browser.json`.
-- Inspect `browser_opened` for `warning` or `reason` before reporting that the page opened. An activation failure stops further browser commands, preserves the existing page and answers, and reports the visibility problem. If the user cannot see a live round, use the browser skill to reveal its recorded page under its control rules; keep the original waiting command and page rather than creating another round or tab.
+- On macOS, the default uses Ego's native scripting interface through `osascript`. It creates a visible window, records its native window and tab IDs in `browser.json`, then verifies that the round tab is selected in the foreground. macOS may require Automation permission for the calling app to control Ego.
+- `--browser ego` selects the SDK driver. It creates a managed task space and hands its page to the user. This remains the default on other platforms. SDK tab activation and application activation do not establish which page the native window displays. Use this mode for browser automation; verify native visibility separately before telling the user a form is visible.
+- Inspect the `browser_opened` driver, IDs, `visibility`, `warning`, and `reason` before reporting that the page opened. A native success reports `driver: "ego-native"` and `visibility: "foreground"`. An uncertain launch preserves its recorded tab and reports the problem. Keep the original waiting command and page when diagnosing visibility. Creating another tab from the ready URL makes a separate copy with its own lifecycle.
 - The default closes the managed page after a successful submission is saved. If the user requests retention, or the page is needed for review or continued interaction, add `--keep-open` before starting the round.
 - `--no-open` leaves browser opening and cleanup to the caller. Use it for remote hosts, external browser control, or tests. It does not provide automatic tab cleanup.
-- If `ego-browser` is absent, the system opener remains available, but cleanup is reported as `unavailable`. An uncertain managed launch is not retried through another opener. Report the actual limitation rather than promising automatic closure.
+- The native driver requires Ego and macOS Automation access. A refusal is reported without opening a second copy. In SDK mode, an absent `ego-browser` CLI falls back to the system opener, with automatic cleanup reported as `unavailable`. Report the actual limitation.
 - Give the user the `ready.url`. Remote hosts must make that loopback URL reachable from the user's browser; a server-side URL alone does not establish reachability.
 - Keep the current tool call running. When Codex returns a process session ID, wait on that same process. For Claude Code, configure the foreground Bash timeout to cover the command, such as 600000 milliseconds for the 540-second wait above.
 - Waiting relies on the current tool result. Do not end the turn claiming that a detached command will wake the agent; this workflow does not use another model session or a message queue.
@@ -47,7 +48,7 @@ The command emits JSON events, followed by the final result:
 | Event | Meaning |
 | --- | --- |
 | `ready` | The round URL is available. |
-| `browser_opened` | The selected driver and any managed space/page identity. |
+| `browser_opened` | The selected driver, native tab IDs or SDK space/page identity, and any visibility warning. |
 | `browser_cleanup` | `closed`, `kept`, `unavailable`, or `failed`; inspect this receipt before reporting cleanup. |
 
 The final status remains the authority for the answers:
@@ -67,7 +68,7 @@ When the frontier is empty, ask a final confirmation round before implementation
 
 ## Page lifecycle
 
-The waiting command owns automatic cleanup. A submitted result is persisted before cleanup starts, and HTML, inputs, drafts, answers, and browser receipts remain on disk. Cleanup targets only the page created for this round. Other pages and a round tab navigated to different content are retained.
+The waiting command owns automatic cleanup. A submitted result is persisted before cleanup starts, and HTML, inputs, drafts, answers, and browser receipts remain on disk. The native driver closes only its recorded tab ID when its URL still matches, then verifies that the tab disappeared. Another copy of the round remains protected and produces a `kept` receipt with `managedClosed` and `retainedCopies`. SDK cleanup establishes only that its managed page disappeared. Other pages and a round tab navigated to different content are retained.
 
 `--keep-open`, timeout, and cancellation preserve the page. A browser launch or cleanup failure preserves the saved answers and reports its outcome separately; a closed HTTP server is not evidence that a browser tab closed.
 
@@ -79,10 +80,11 @@ Run the public command/API suite and the real-browser lifecycle regression:
 
 ```bash
 node --test "$SKILL_DIR/tests/ask.test.mjs"
+node --test "$SKILL_DIR/tests/native-browser.test.mjs"
 node --test "$SKILL_DIR/tests/browser-open.test.mjs"
 node --test "$SKILL_DIR/tests/browser-close.test.mjs"
 node --test "$SKILL_DIR/tests/content-layout.test.mjs"
 node --test "$SKILL_DIR/tests/submit-feedback.test.mjs"
 ```
 
-`SKILL_DIR` is this skill's actual directory. The opening suite models the external browser-service boundary to reproduce a background tab, activation refusal, and duplicate-tab safety. It does not prove native window visibility; verify a real default-opened form in the visible browser window when changing this behavior. The closing, content-layout, and submit-feedback suites require the installed, running `ego-browser`. They verify actual page removal, retention, navigation safety, content ownership/order, independent demo controls, incomplete-submit feedback, and durable answers. The API suite covers selection, drafts, recovery, cancellation, timeout, and duplicate submissions. Distinguish shared tool-protocol compatibility from a complete Claude Code session test when that client has not been exercised.
+`SKILL_DIR` is this skill's actual directory. On macOS, the native suite opens real Ego windows and checks foreground selection, saved answers, actual tab disappearance, keep-open, navigation, and separate-copy safety. It skips on other platforms. The SDK opening suite models the browser-service boundary; it cannot prove native visibility. The SDK closing, content-layout, and submit-feedback suites require the installed, running `ego-browser`. They verify managed page cleanup and the real form behavior. The API suite covers selections, drafts, recovery, cancellation, timeout, and duplicate submissions. Distinguish tool-protocol compatibility from a complete Claude Code session test when that client has not been exercised.
