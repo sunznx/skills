@@ -34,7 +34,7 @@ PLAN_FILES = {"task_plan.md", "findings.md", "progress.md", "spec.md", "handoff.
 SHARED_PLAN_DIRS = {"tickets", "research"}
 # Only pwf-artifact saves what the user hands it.
 OWNED_PLAN_DIRS = {"artifacts": "pwf-artifact"}
-PROJECT_ENTRIES = {"issue-tracker.md", "triage-labels.md", "domain.md", "adr", "out-of-scope", "birdview", ".active_plan"}
+PROJECT_ENTRIES = {"issue-tracker.md", "triage-labels.md", "domain.md", "adr", "out-of-scope", "birdview", "lint", ".active_plan"}
 
 PLAN_PATH = re.compile(r"(?:<PLAN_DIR>|\$PLAN_DIR|\$\{PLAN_DIR\})/([^\s`\"')/]+)")
 PROJECT_PATH = re.compile(r"(?<![\w>])\.planning/([^\s`\"')/]+)")
