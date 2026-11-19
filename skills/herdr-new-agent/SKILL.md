@@ -7,9 +7,9 @@ description: 在 Herdr 中新开 tab 并启动 agent，默认继承当前 agent 
 
 把用户的新建请求落实为一个可接受输入的 agent。默认在当前 workspace 新开 tab，保留用户焦点；用户指定 agent 类型、workspace 或目录时分别覆盖对应默认值。
 
-## 确定调用方和参数
+## Resolve the caller and launch arguments
 
-先确认当前在 Herdr 中，再读取实际 CLI 与调用方：
+Confirm that the session is in Herdr and inspect the installed CLI:
 
 ```bash
 test "${HERDR_ENV:-}" = 1
@@ -19,24 +19,22 @@ herdr tab
 herdr pane current --current
 ```
 
-逐条运行；`HERDR_ENV` 不为 `1` 时立即停止。`herdr agent` 和 `herdr tab` 只打印命令组帮助，可能以状态 2 退出，不用 `&&` 把后续命令接在它们后面。
+Run the commands individually. Stop if `HERDR_ENV` is not `1`. The `herdr agent` and `herdr tab` help commands may exit with status 2.
 
-从 `pane current --current` 的 `.result.pane` 记录 `pane_id` 为 `caller_pane_id`，同时记录 `terminal_id` 和 `workspace_id`，然后查询：
+If the pane lookup succeeds, record `.result.pane.pane_id` as `caller_pane_id`, along with `terminal_id` and `workspace_id`:
 
 ```bash
 herdr agent get "$caller_pane_id"
 ```
 
-pane 跨 workspace 移动后，进程环境中的 `HERDR_PANE_ID` 和 `HERDR_WORKSPACE_ID` 可能仍为旧值；pane 查询能解析旧别名，agent 查询未必能。使用调用方解析结果中的当前 ID，不直接用环境变量查询 agent 或决定 workspace，也不依赖 UI 焦点或同目录的其他 agent。
+Use the caller for defaults only after the live agent record matches all three nonempty IDs. A moved pane may resolve an old alias, so use the IDs returned by the pane lookup. If the live IDs disagree, resolve them again and stop if they still disagree.
 
-核对 `.result.agent` 的 `pane_id`、`terminal_id`、`workspace_id` 均非空，且分别与调用方 pane 的记录一致。调用方 pane 无法解析、没有可识别的 agent 或身份不一致时，停止并报告原始错误或不一致的字段；尚未创建任何 tab 或 agent。创建前若发现调用方已移动，重新执行上述解析与核对，再填写参数。
+If Herdr returns `pane_not_found` or the resolved pane has no agent (`agent_not_found`), proceed when both the agent kind and the destination are explicit. A prior user choice for the same work counts. Resolve an existing workspace against `herdr workspace list` by ID or unique exact label. An explicit request to create a workspace also supplies the destination. Ask only for any missing choice. Do not guess from stale environment IDs, UI focus, the working directory, or another agent. For other lookup errors, report the error before creating anything.
 
-从 `agent get` 的 JSON 结果填写本次参数：
-
-- `agent_kind`：默认取 `.result.agent.agent` 对应的程序类型，例如 Codex → `codex`、Claude → `claude`。以 `herdr agent` 的 `kinds` 为准；不能对应时先澄清类型。`name` 和 `display_agent` 不作为类型。用户明确指定时使用指定类型。
-- `target_workspace`：默认取 `.result.agent.workspace_id`。用户指定 workspace 时，运行 `herdr workspace list`，按 ID 或唯一的准确名称解析；有歧义时澄清。目录不同只影响 cwd，不据此重新选择 workspace。
-- `target_cwd`：默认用当前 `$PWD`；用户指定时解析为存在的绝对目录。
-- `agent_name`：按任务取短名，匹配 `[a-z][a-z0-9_-]{0,31}`；用 `herdr agent list` 检查 live 名称唯一。tab label 默认同名。
+- `agent_kind`: Use the user-specified kind or map the verified caller's `.result.agent.agent` to a kind listed by `herdr agent`. Use the program type field.
+- `target_workspace`: Use the user-specified workspace resolved against the live list or inherit the verified caller's workspace. Ask on ambiguous matches. Changing cwd does not change the workspace.
+- `target_cwd`: Default to `$PWD`. Resolve a user-specified directory to an existing absolute path.
+- `agent_name`: Choose a name matching `[a-z][a-z0-9_-]{0,31}`. Confirm it is free in `herdr agent list`. Use it as the default tab label.
 
 用户明确要求新建 workspace 时，先从 `herdr workspace` 核对语法，再运行：
 
@@ -71,3 +69,5 @@ herdr agent start "$agent_name" --kind "$agent_kind" --pane "$pane_id" --timeout
 - 创建 tab 本身超时且未返回 ID：运行 `herdr tab list --workspace "$target_workspace"`，按本次唯一 label 检查，再检查对应 pane；无法确认时报告不确定，不重放创建命令。
 
 用户只要求启动时，到此完成。附带任务时，启动成功后使用 `agent-messaging` 的 Herdr 投递流程发送任务并确认接手，沿用用户指定的等待方式；启动成功和任务已接手分别报告。
+
+If caller lookup failed, do not look up the stale pane again during task delivery. Give the new agent an independently known reply destination. For a Codex caller with an active `CODEX_THREAD_ID`, pass that ID and use the Codex queue reply path in `agent-messaging`. If no reply destination is known, have the agent report in its new tab and include the tab and pane IDs in your handoff.
