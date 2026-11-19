@@ -9,7 +9,7 @@ Use examples to agree on behavior before treating a scenario as an acceptance cr
 
 ## 0. Select the work plan
 
-For BDD work, load `planning-with-files` and use its plan selection and initialization workflow before writing artifacts. Reuse the current task's `PLAN_ID` and `<PLAN_DIR>` across discovery, review, implementation, and verification. On resume, read that plan and its linked acceptance source. Do not create a second plan for BDD or infer the task from a different session's active plan.
+Use `planning-with-files` to select or create this task's plan as `<PLAN_DIR>`. When another workflow invokes BDD, reuse its selected plan. On resume, follow the acceptance links in `task_plan.md` before drafting more scenarios.
 
 ## 1. Discover the rule
 
@@ -32,7 +32,7 @@ For BDD work, load `planning-with-files` and use its plan selection and initiali
 ## 4. Persist decisions, scenarios, and evidence
 
 - `findings.md`: Record confirmed rules and open decisions separately. Link each decision to the affected scenario IDs. A proposed answer or skipped question does not settle a rule.
-- Acceptance source: Update the relevant existing spec or `.feature` file when it owns the acceptance criteria. Otherwise write `<PLAN_DIR>/acceptance.md`. Keep the scenario details and planned verification there. Link from the relevant phase in `task_plan.md` by path and scenario ID instead of maintaining a second editable copy.
+- Acceptance source: Keep scenarios in the existing spec or `.feature` file if it owns the acceptance criteria. Otherwise create `<PLAN_DIR>/bdd/` and save each scenario in its own `<scenario-name>.md`. Use the title without the ID as the filename, preserving its language and replacing only characters disallowed in filenames, including path separators. If the path already belongs to another scenario, use a more specific title rather than overwriting. Keep the scenario ID, Given/When/Then, and planned verification in the file. Link to each scenario by ID from `task_plan.md`. When a title changes, rename the file, update the current plan's links, and retain the ID.
 - `progress.md`: Record each agreed scenario's verification status by ID and target environment. After a check runs, record the test command or manual entry point, actual result, and evidence link when available. If not run or blocked, name the missing check or prerequisite. Advance the applicable PWF phase only when its acceptance obligations are met; a PWF format or completion check does not verify product behavior.
 
 References: [Cucumber BDD practices](https://cucumber.io/docs/bdd/) and [Writing better Gherkin](https://cucumber.io/docs/bdd/better-gherkin/).
