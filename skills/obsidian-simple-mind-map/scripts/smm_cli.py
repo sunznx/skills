@@ -223,7 +223,9 @@ const waitForMutation = async (view, action, uid, text, uidsBefore, expectedPare
 
 
 def js_value(value: object) -> str:
-    return json.dumps(value, ensure_ascii=False)
+    # ASCII only: the Obsidian CLI decodes its argument in 8 KiB chunks and turns a
+    # multi-byte character that straddles a boundary into U+FFFD.
+    return json.dumps(value, ensure_ascii=True)
 
 
 def normalize_path(raw: str, root: Path) -> str:

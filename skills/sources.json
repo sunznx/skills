@@ -117,11 +117,6 @@
       "base_tree": "d16165120b7658216c79601b0ee568f42e540961"
     },
     {
-      "name": "enable-subagent",
-      "managed": false,
-      "note": "本地维护，暂无外部 Git 来源"
-    },
-    {
       "name": "explain",
       "source": "cursor/plugins",
       "url": "https://github.com/cursor/plugins.git",
@@ -296,6 +291,11 @@
       "base_tree": "335c1862a43da9d629abafdb79ca0c0de118be08"
     },
     {
+      "name": "retro-lint",
+      "managed": false,
+      "note": "本地维护，复盘纠正固化为检查与 .planning/lint 索引"
+    },
+    {
       "name": "setup-matt-pocock-skills",
       "source": "mattpocock/skills",
       "url": "https://github.com/mattpocock/skills.git",
@@ -417,6 +417,21 @@
       "url": "https://github.com/cursor/plugins.git",
       "path": "pstack/skills/unslop/SKILL.md",
       "base_tree": "3319d5baa095167501a128703a008446dd099d0c"
+    },
+    {
+      "name": "update-agents-md",
+      "managed": false,
+      "note": "本地维护，暂无外部 Git 来源"
+    },
+    {
+      "name": "update-agents-override-md",
+      "managed": false,
+      "note": "本地维护，暂无外部 Git 来源"
+    },
+    {
+      "name": "update-global-agent-md",
+      "managed": false,
+      "note": "本地维护，暂无外部 Git 来源"
     },
     {
       "name": "update-skill",

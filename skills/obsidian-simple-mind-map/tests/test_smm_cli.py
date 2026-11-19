@@ -74,6 +74,26 @@ class RunEvalTests(unittest.TestCase):
             self.run_eval(fake)
         self.assertEqual(fake.launches, 3)
 
+    def test_eval_code_is_ascii(self) -> None:
+        # The Obsidian CLI decodes its argument in 8 KiB chunks, so a multi-byte
+        # character on a chunk boundary turns into U+FFFD. Non-ASCII must be escaped.
+        sent: list[str] = []
+        fake = FakeObsidian([])
+
+        def run(args: list[str], **kwargs: object) -> subprocess.CompletedProcess:
+            sent.append(args[-1])
+            return fake.run(args, **kwargs)
+
+        with (
+            patch.object(smm_cli.shutil, "which", return_value="/usr/local/bin/obsidian"),
+            patch.object(smm_cli.subprocess, "run", side_effect=run),
+            patch.object(smm_cli.time, "sleep"),
+        ):
+            smm_cli.run_eval("vault", f"const text = {smm_cli.js_value('尝试没做过的事')};")
+        self.assertTrue(sent)
+        for arg in sent:
+            self.assertTrue(arg.isascii(), arg[:200])
+
     def test_subtree_input(self) -> None:
         tree, count = smm_cli.parse_subtree(
             '{"text":"A","children":[{"text":"same"},{"text":"same"}]}'

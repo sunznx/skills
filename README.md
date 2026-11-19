@@ -57,7 +57,6 @@ $sync-skills 更新 agent-messaging 删除某个功能
 | `domain-modeling` | [mattpocock/skills](https://github.com/mattpocock/skills) | `skills/engineering/domain-modeling/SKILL.md` | 三方合并 |
 | `ego-browser` | [citrolabs/ego-lite](https://github.com/citrolabs/ego-lite) | `skills/ego-browser/SKILL.md` | 三方合并（仅仓库） |
 | `eli5` | [anthropics/claude-plugins-community](https://github.com/anthropics/claude-plugins-community) | `eli5/skills/eli5/SKILL.md` | 三方合并 |
-| `enable-subagent` | 本地维护，暂无外部 Git 来源 | — | 本地维护 |
 | `explain` | [cursor/plugins](https://github.com/cursor/plugins) | `pstack/skills/teach/SKILL.md` | 三方合并 |
 | `grill-with-docs` | [mattpocock/skills](https://github.com/mattpocock/skills) | `skills/engineering/grill-with-docs/SKILL.md` | 三方合并 |
 | `grill-with-html` | 本地维护，网页作答后返回原会话，支持 Codex 和 Claude Code | — | 本地维护 |
@@ -84,6 +83,7 @@ $sync-skills 更新 agent-messaging 删除某个功能
 | `reflect` | [cursor/plugins](https://github.com/cursor/plugins) | `pstack/skills/reflect/SKILL.md` | 三方合并 |
 | `research` | [mattpocock/skills](https://github.com/mattpocock/skills) | `skills/engineering/research/SKILL.md` | 三方合并 |
 | `retro` | [mattpocock/skills](https://github.com/mattpocock/skills) | `skills/engineering/retro/SKILL.md` | 三方合并 |
+| `retro-lint` | 本地维护，复盘纠正固化为检查与 .planning/lint 索引 | — | 本地维护 |
 | `setup-matt-pocock-skills` | [mattpocock/skills](https://github.com/mattpocock/skills) | `skills/engineering/setup-matt-pocock-skills/SKILL.md` | 三方合并 |
 | `sharpen` | [cursor/plugins](https://github.com/cursor/plugins) | `pstack/skills/sharpen/SKILL.md` | 三方合并 |
 | `show-me` | [humanlayer/skills](https://github.com/humanlayer/skills) | `plugins/show-me/skills/show-me/SKILL.md` | 三方合并 |
@@ -102,6 +102,9 @@ $sync-skills 更新 agent-messaging 删除某个功能
 | `to-tickets` | [mattpocock/skills](https://github.com/mattpocock/skills) | `skills/engineering/to-tickets/SKILL.md` | 三方合并 |
 | `triage` | [mattpocock/skills](https://github.com/mattpocock/skills) | `skills/engineering/triage/SKILL.md` | 三方合并 |
 | `unslop` | [cursor/plugins](https://github.com/cursor/plugins) | `pstack/skills/unslop/SKILL.md` | 三方合并 |
+| `update-agents-md` | 本地维护，暂无外部 Git 来源 | — | 本地维护 |
+| `update-agents-override-md` | 本地维护，暂无外部 Git 来源 | — | 本地维护 |
+| `update-global-agent-md` | 本地维护，暂无外部 Git 来源 | — | 本地维护 |
 | `update-skill` | [warpdotdev/common-skills](https://github.com/warpdotdev/common-skills) | `.agents/skills/update-skill/SKILL.md` | 三方合并 |
 | `visual-pr` | [humanlayer/skills](https://github.com/humanlayer/skills) | `plugins/visual-pr/skills/visual-pr/SKILL.md` | 三方合并 |
 | `wait-what` | [mattpocock/skills](https://github.com/mattpocock/skills) | `skills/productivity/wait-what/SKILL.md` | 三方合并 |
