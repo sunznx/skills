@@ -1,5 +1,5 @@
 interface:
   display_name: "Grill with HTML"
-  short_description: "在网页回答设计问题，提交后原会话自动继续"
+  short_description: "Answer design questions in a browser and resume the session after submitting"
 policy:
   allow_implicit_invocation: true

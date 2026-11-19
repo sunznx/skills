@@ -1,34 +1,34 @@
 ---
 name: recall
-description: 从 Planning with Files 计划文件和 git 现状重建最近的工作上下文，核对计划与实际是否漂移，给出一份当前状态简报。开工或隔几天回来接着干之前使用。
-argument-hint: "话题、PLAN_ID 或时间范围（可选）"
+description: Reconstructs recent work from Planning with Files and checks it against Git, highlighting drift. Use before starting or resuming work after a gap.
+argument-hint: "Topic, PLAN_ID, or date range (optional)"
 ---
 
 # Recall
 
-开工或回来接着干之前，从 PWF 计划文件重建工作上下文，用 git 核对计划写的是否属实，交回一份简短的当前状态简报。计划文件是记录，git 是**现状**；两者不一致就是**漂移**，漂移是简报里最有价值的内容。
+Rebuild the work context from PWF plans, verify their claims against Git, and report the current state. The plan is the record; Git is the current state. Lead with discrepancies.
 
-1. 分流。当前会话里断了片用 `human-context-rebuild`；要写交接文档用 `handoff`；复述任务目标用 `in-your-own-words`。本技能只管从计划文件恢复并核对现状。
-2. 锁定范围。在项目根目录运行 `planning-with-files` 技能目录下的 `scripts/` 脚本，计划都在 `.planning/<id>/`：
-   - 设了 `PLAN_ID` 或 `PWF_PLAN_ROOT`：用 `resolve-plan-dir.sh` 解析，只看这一个计划。
-   - 没绑定：`set-active-plan.sh --list` 列出全部计划和阶段进度。用户给了话题，就用不区分大小写的子串匹配计划目录名和 `task_plan.md` 开头的目标段（标题可能是 `## Goal`、`## 目标` 等；没有就用文件第一个标题）；没给话题就取有未完成阶段的计划，加上 `task_plan.md` 最近 7 天内改过的计划。
-   - 用户说“全部”就是全部，按原话执行。
+1. Choose the right workflow. Use `human-context-rebuild` for lost context within the current conversation, `handoff` for a handoff document, and `in-your-own-words` to restate the user's goal. Use this skill to recover and verify plan state.
+2. Select plans under `.planning/<id>/` with the `planning-with-files` scripts from the project root:
+   - If `PLAN_ID` or `PWF_PLAN_ROOT` is set, use `resolve-plan-dir.sh` and read only the selected plan.
+   - Without a pin, use `set-active-plan.sh --list`. If the user supplied a topic, match it case-insensitively as a substring of the plan directory name and the goal near the top of `task_plan.md` (for example, `## Goal` or `## 目标`; otherwise the first heading). With no topic, select plans with incomplete phases and those whose `task_plan.md` changed in the past seven days.
+   - If the user says all, include all plans.
 
-   用用户的语言把选中的计划列给用户，然后继续；用户纠正范围就按新范围重来。
-3. 读每个在范围内的 `<PLAN_DIR>/`：`task_plan.md` 全文、`progress.md` 末尾最近的记录、`findings.md` 中和未完成阶段或待决事项相关的部分，以及存在时的 `handoff.md`、`in-your-own-words.md`。其他文件只看文件名。
-4. 用现状核对计划。运行 `git status --short`、`git diff --stat`、`git log --oneline --since="<日期> 00:00"`（日期取范围内最早的计划目录名日期，目录名没有日期就用 `task_plan.md` 的修改日期；只写日期时 git 会补上当前时刻，漏掉当天早些的 commit），`gh` 可用且计划提到 PR 时运行 `gh pr view <N>`。把计划提到的文件路径、分支、commit 和这些输出逐一对照，需要时看 diff 内容。改动内容是计划要做的事才归到这个计划，只是路径被计划提到不算；其余未提交改动记为未归属。完成判据：每个 Phase 的状态都落在某一行线索的标签里。
-5. 按下方契约写简报，按 **unslop** 写，用用户的语言。
-6. 范围内只有一个计划时，把简报写成页面 `<PLAN_DIR>/recall/recall.html`；已存在时依次用 `recall-2.html`、`recall-3.html`，不覆盖以前的简报。页面沿用简报契约的四节和顺序，线索的标签用醒目的标记，漂移最显眼；单文件、内联 CSS、不依赖外部资源，桌面和手机、浅色和深色都能看。在 `<PLAN_DIR>/progress.md` 记一行路径，用 `open` 打开，回复里给出绝对路径。发现漂移只报告；要不要更新 `task_plan.md` 由用户决定。
+   Tell the user which plans you selected in their language, then continue. Reapply selection if they correct the scope.
+3. For each selected `<PLAN_DIR>/`, read all of `task_plan.md`, recent entries at the end of `progress.md`, and sections of `findings.md` about remaining phases or decisions. Read `handoff.md` and `in-your-own-words.md` if present. For other files, inspect names only.
+4. Compare the plans with `git status --short`, `git diff --stat`, and `git log --oneline --since="<date> 00:00"`. Use the earliest selected plan's directory date, or its `task_plan.md` modification date if undated. Include midnight so Git does not omit earlier commits that day. When `gh` is available and a plan mentions a PR, run `gh pr view <N>`. Check each cited file, branch, commit, and PR against the results. Read a diff only when needed. Attribute a change to a plan by what it does, not just its path. Mark other uncommitted changes as unattributed. Each phase must map to an evidence row and label.
+5. Follow the report contract below. Apply `unslop` and write in the user's language.
+6. If exactly one plan is in scope, save the report to `<PLAN_DIR>/recall/recall.html`. Use `recall-2.html`, `recall-3.html`, and so on rather than overwriting. Keep the four report sections in order. Make evidence labels visible and drift the most prominent. Use a standalone HTML file with inline CSS, no external resources, and support for desktop, mobile, light, and dark modes. Record the path in `progress.md`, open it with `open`, and report the absolute path. Report drift without editing `task_plan.md` unless the user decides to update it.
 
-用户点名要读会话记录或外部系统（issue、聊天）时，这些都在 Git 工作树之外：先报出要读的路径或来源和时间范围（会话记录在 Claude Code 下是 `~/.claude/projects/<项目路径把 / 换成 ->/`，在 Codex 下是 `~/.codex/sessions/`），得到同意再读；外部来源交给 **why**。
+Before reading requested session history or external systems such as issues or chat, name the source and date range and obtain approval. Known session roots are `~/.claude/projects/<project-path-with-slashes-replaced-by-hyphens>/` for Claude Code and `~/.codex/sessions/` for Codex. Route external sources through `why`.
 
-## 简报契约
+## Report contract
 
-依次写概况、线索、问题、下一步。
+Use four sections in order: overview, evidence, issues, and next step. Translate the headings and labels into the user's language when needed.
 
-- **概况**：最多 5 条，这件事是什么、整体到哪了；有未归属的未提交改动时单列一条，提交前需要拆开。
-- **线索**：每行行首带一个标签：`[已提交 <sha>]`、`[已合并 #N]`、`[PR #N 未合并]`、`[已验证未提交]`、`[进行中]`、`[未开始]`、`[已回退 <sha>]`、`[无 git 产物]`、`[漂移：<一句话>]`。`[无 git 产物]` 给调研、对比这类本来就不改仓库的 Phase。漂移有三种：计划和 git 不一致（写 pending 但已有对应改动，写 complete 但改动不在工作区也不在历史里）；计划自相矛盾（`## Current Phase` 和各 Phase 状态对不上）；结论已被后来的计划或改动推翻。单个计划按 Phase 一行；多个计划按计划一行，同一计划里 Phase 的标签不同就按标签拆开。
-- **问题**：最多 5 条，取自 Errors 表、progress 里反复出现的失败和第 4 步发现的风险，让下一次从上次失败的地方开始。
-- **下一步**：一个具体动作。取 `## Next Step`，没有就取第一个未完成的 Phase 或待决事项，经第 4 步核对后再写；多计划未绑定时，写出要设置的 `PLAN_ID=<id>`。
+- **Overview:** At most five points on the goal and current state. List unattributed uncommitted changes separately so they can be isolated before committing.
+- **Evidence:** Start each row with a status label: `[Committed <sha>]`, `[Merged #N]`, `[PR #N open]`, `[Verified, not committed]`, `[In progress]`, `[Not started]`, `[Reverted <sha>]`, `[No Git artifact]`, or `[Drift: <one sentence>]`. Use `[No Git artifact]` for research or comparisons that do not change the repository. Drift includes disagreement between plan and Git, contradictory phase markers inside the plan, and conclusions superseded by later work. With one plan, use a row per phase. With several, use a row per plan and split it when phase labels differ.
+- **Issues:** At most five points from the Errors table, repeated failures in progress, or risks found during verification. Include what the next session needs to avoid repeating a failure.
+- **Next step:** One action from `## Next Step`, or the first incomplete phase or open decision. Confirm it against Git. If multiple plans are unpinned, name the `PLAN_ID=<id>` to set.
 
-引用写计划路径、文件路径、commit sha、PR 号。
+Cite plan and file paths, commit SHAs, and PR numbers.

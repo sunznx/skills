@@ -1,21 +1,21 @@
 ---
 name: sync-skills
-description: 同步本仓库与外部 skill 上游、~/.agents/skills、Claude skills 和已登记的 Codex/Claude plugins。用户要求检查、安装或更新 skills/plugins，以及添加、删除仓库中的 skill 时使用。
+description: Synchronizes skills with upstream sources, ~/.agents/skills, and Claude skills, and manages registered Codex and Claude plugins. Use to check, install, update, add, or remove skills or plugins.
 ---
 
 # Sync Skills
 
-## 调用入口
+## Start
 
-每次调用先运行 `git rev-parse --show-toplevel`：
+Run `git rev-parse --show-toplevel` first:
 
-- 命令失败时，当前不在 Git 工作树，跳过 `.mode` 初始化。
-- 命令成功时，以输出路径为项目根目录；根目录中没有 `.mode` 时创建该文件，内容为单行 `autonomous gate`。
-- 已存在同名文件、目录或符号链接时保持不变。
+- If it fails, you are outside a Git worktree. Skip `.mode` initialization.
+- In Git, use the reported project root. If `.mode` does not exist there, create it with the single line `autonomous gate`.
+- Leave any existing file, directory, or symlink named `.mode` unchanged.
 
-先读取仓库根目录 `README.md` 和 `skills/sources.json`，再判断用户要同步还是本地修改 skill。
+Read the repository's `README.md` and `skills/sources.json` before choosing between synchronization and a local edit.
 
-## 同步
+## Synchronize
 
 ```bash
 repo="$(cat ~/.config/sync-skills/repo)"
@@ -27,56 +27,55 @@ repo="$(cat ~/.config/sync-skills/repo)"
 "$repo/sync-skills" 删除 <skill-name>
 ```
 
-- `$sync-skills`：运行无参数命令，对比全部 skill 上游、部署快照，再同步 `skills/sources.json` 中登记的 plugins。
-- `$sync-skills <skill-name>`：只对比并只部署指定 skill。
-- `$sync-skills plugins`：按每个 plugin 的 `clients` 分别处理 Codex 和 Claude：更新或添加 Git marketplace，安装缺失的 plugin、更新已安装的 plugin，验证已启用后执行声明的 `post_install`。`sources.<client>` 可覆盖该客户端的来源字段和 `post_install`。Claude plugin 更新后需重启 Claude Code 生效。
-- `$sync-skills plugin <plugin-name>`：只同步指定 plugin。
-- `添加` 从 `~/.agents/skills/<skill-name>` 导入。脚本会读取 `~/.agents/.skill-lock.json` 记录外部来源；没有来源记录时按本地 skill 管理。
-- `删除` 会删除仓库目录和来源目录，commit 成功后再删除 `~/.agents/skills/<skill-name>`。
-- 上游有更新时使用旧上游、本地版本和新上游做三方合并。合并成功后自动 commit，再同步本机目录。
-- 出现冲突时检查 `skills/.sync-conflicts.json` 和文件内的冲突标记。解决冲突并手动 commit 前，不同步本机目录。
-- 上游 Git 缓存统一写入 `~/.agents/cache/sync-skills`。
-- 拉取上游失败但本地镜像可用时，警告后继续使用缓存并部署；没有可用镜像时停止。
-- 每次成功调用最后都执行 `git push`。没有改动时不创建空 commit；push 失败时报告错误，但不要撤销已经完成的 commit 或本机同步。
+- `$sync-skills`: Check upstream sources for all skills, deploy snapshots, and synchronize plugins in `skills/sources.json`.
+- `$sync-skills <skill-name>`: Check and deploy just that skill.
+- `$sync-skills plugins`: For each plugin's `clients`, update or add its Git marketplace, install or update it, verify that it is enabled, then run its `post_install`. `sources.<client>` may override the source and `post_install` for one client. Restart Claude Code to load an updated plugin.
+- `$sync-skills plugin <plugin-name>`: Synchronize just that plugin.
+- `添加`: Import from `~/.agents/skills/<skill-name>`. The script looks for upstream provenance in `~/.agents/.skill-lock.json` and treats the skill as local if absent.
+- `删除`: Remove the repository and provenance entries, then remove `~/.agents/skills/<skill-name>` after committing.
+- For an upstream update, merge the old upstream, local version, and new upstream. Commit a clean merge before deploying it locally.
+- If the merge conflicts, inspect `skills/.sync-conflicts.json` and the conflict markers. Do not deploy before resolving and manually committing.
+- The upstream Git cache is `~/.agents/cache/sync-skills`.
+- If fetching fails, warn and use the local upstream cache if available. Stop if no usable cache exists.
+- Every successful invocation ends with `git push`. Do not make an empty commit. If push fails, report it without reverting the commit or local deployment.
 
-## 实时镜像与同步边界
+## Live mirrors and upstream synchronization
 
-本环境中，仓库 `skills/<skill-name>/` 与 `~/.agents/skills/<skill-name>/` 由 syncer 实时镜像；文件改动会自动出现在另一侧，不需要 commit、部署命令或手动复制来传播文件。
+In this environment, syncer mirrors `skills/<skill-name>/` and `~/.agents/skills/<skill-name>/`. Mirroring does not require a commit, deployment command, or manual copy.
 
-- `添加 <skill-name>` 表示把已有本机 skill 纳入仓库管理，并补齐来源记录；不是“部署到本机”。
-- `$sync-skills <skill-name>` 负责检查/合并上游、更新仓库快照和来源状态；实时镜像会负责让文件出现在 `~/.agents/skills`。
-- 新增或修改 skill 后，仍要更新 `README.md`、`skills/sources.json`（名称或来源变化时）并运行校验；这些是仓库元数据，不由实时镜像替代。
-- 工作树不干净时，同步脚本可能拒绝执行上游合并、commit 或 push；这不表示文件没有实时镜像，只表示本次 Git 同步没有完成。
-- 不要把“实时镜像”与“上游同步”混为一谈：前者传播文件，后者维护来源、三方合并和 Git 历史。
+- `添加 <skill-name>` tracks an existing local skill and records its provenance; it is not a local deployment command.
+- `$sync-skills <skill-name>` checks and merges upstream, updates the snapshot and provenance, and lets the live mirror propagate the files.
+- Run the applicable check on skill changes. Update `README.md` and `skills/sources.json` when a name or source changes; mirroring does not update repository metadata.
+- A dirty worktree can prevent upstream merges, commits, or pushes without affecting live mirroring.
 
-## 安装 plugin
+## Install a plugin
 
-`$sync-skills 安装 <GitHub URL>` 表示安装并登记 Codex plugin，不是 shell 子命令。
+`$sync-skills 安装 <GitHub URL>` requests installation and registration of a Codex plugin; it is not a shell command.
 
-1. 读取上游 README 和 plugin manifest，确认 marketplace、plugin 名称及必要的安装后脚本。
-2. 将用户配置的 Git marketplace plugin 写入 `skills/sources.json` 的 `plugins`，并用 `clients` 标记 `codex`/`claude`（只写上游支持的客户端）；上游明确要求的 companion installer 写进 `post_install`。Codex 内置和 runtime plugins 不登记。
-3. 运行 `"$repo/sync-skills" plugin <plugin-name>` 安装到所有声明的客户端。
-4. 运行 `update_readme` 更新来源目录。
-5. 只提交本次涉及的清单、文档或脚本，并 push。Plugin 保持由各客户端的 marketplace 管理，不复制进 `skills/`。
+1. Read the upstream README and plugin manifest. Verify the marketplace, plugin name, and required `post_install` steps.
+2. Register the Git marketplace plugin in `plugins` in `skills/sources.json`. Set `clients` to the supported subset of `codex` and `claude`. Put any upstream-required companion installer in `post_install`. Do not register bundled Codex or runtime plugins.
+3. Run `"$repo/sync-skills" plugin <plugin-name>` for the declared clients.
+4. Run `update_readme` to refresh the source index.
+5. Commit and push only the changed registry, docs, and scripts. Client marketplaces manage the plugins; do not copy them into `skills/`.
 
-## 同步到 Claude
+## Synchronize Claude
 
-用户要求给 Claude 同步这些 skills/plugins 时：
+When the user requests skill or plugin synchronization for Claude:
 
-1. 将 `skills/*` 逐个链接到 `~/.claude/skills/<name>`；同名目标已存在时跳过，不覆盖已有 Claude 本地配置。
-2. Plugins 运行 `"$repo/sync-skills" plugins`；只有 `clients` 含 `claude` 的条目会装到 Claude。不支持 Claude 的 plugin（如 `sol-advisor`）不要在 `clients` 写 `claude`。
-3. 用 `ls -la ~/.claude/skills` 验证 skill 链接；报告跳过的已有 skill。
-4. Claude 同步是本机配置操作，不修改 `skills/sources.json`；只有新增或更换登记来源时才更新仓库元数据。
+1. Link each `skills/*` entry to `~/.claude/skills/<name>`. Leave an existing target unchanged.
+2. Run `"$repo/sync-skills" plugins` for plugins. Only entries whose `clients` includes `claude` install for Claude. Do not list `claude` for unsupported plugins such as `sol-advisor`.
+3. Verify links with `ls -la ~/.claude/skills` and report any skipped targets.
+4. Do not change `skills/sources.json` for client setup alone. Update it only when registering or replacing provenance.
 
-## 本地更新 skill
+## Make a local edit
 
-`$sync-skills 更新 <skill-name> <需求>` 表示修改仓库快照，不是执行 `./sync-skills 更新 ...`。
+`$sync-skills 更新 <skill-name> <requirement>` requests an edit to the repository snapshot, not invocation of `./sync-skills 更新 ...`.
 
-1. 工作树干净时，先运行 `"$repo/sync-skills" <skill-name>`，确保目标基于最新上游。
-2. 按需求编辑 `skills/<skill-name>`；“加入某个功能”和“删除某个功能”都只做明确要求的最小改动。
-3. 使用 skill 自带校验或 `skill-creator` 的 `quick_validate.py` 验证。
-4. 仅在名称或来源变化时更新 `README.md` 和 `skills/sources.json`；普通内容修改不改目录记录。
-5. 只提交本次修改的目标文件，不带入其他 working tree 改动。
-6. 提交后运行 `"$repo/sync-skills" <skill-name>`，只把该 skill 部署到 `~/.agents/skills`，并 push 到远端。
+1. If the worktree is clean, run `"$repo/sync-skills" <skill-name>` first to check the upstream baseline.
+2. Edit `skills/<skill-name>` only within the requested scope.
+3. Run the skill's validation or `skill-creator`'s `quick_validate.py`.
+4. Update `README.md` and `skills/sources.json` only if the name or source changes.
+5. Commit only the requested files, not other worktree changes.
+6. Run `"$repo/sync-skills" <skill-name>` after committing to deploy that skill and push to the remote.
 
-每次添加、删除或更换来源后，确认 `README.md` 与 `skills/sources.json` 一致。
+After adding, removing, or changing a source, confirm that `README.md` agrees with `skills/sources.json`.

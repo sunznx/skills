@@ -1,126 +1,100 @@
 ---
 name: agent-messaging
-description: Sends tasks or status updates to identified agents, including existing main sessions, using native messaging or the documented Codex and Herdr fallbacks. Use when the user requests agent coordination or a reply.
+description: Delivers tasks or replies to existing agents using native messaging, Codex TUI queue, or Herdr. Use when the user wants to contact an identified agent or wait for its reply.
 ---
 
 # Agent Messaging
 
-把每个目标当作一次独立投递。优先使用当前运行环境的原生 agent 协作工具，只说明直接投递流程，不增加额外消息层或配置。
+## Recipients
 
-## Scope and routing
+Deliver only to existing agents. To assign work to an existing main agent in another session, the user must explicitly request cross-session assignment or designate the collaborator for this task. Resolve the intended recipient before sending. If the recipient is unclear, ask instead of picking one. A failed delivery does not authorize starting an agent or opening a session.
 
-An explicit user invocation of this skill to perform a concrete task counts as permission to use native subagents for that task, subject to narrower constraints. If there is an independent slice worth delegating to a new native subagent, use `background-agent-jobs`. Do not start a duplicate worker for work already assigned to a recipient. Merely loading, mentioning, reading, or editing this skill does not grant permission.
+## Choose a mode
 
-To assign work to an existing main agent in another session, the user must explicitly request cross-session assignment or designate that collaborator for the current task. Resolve the intended recipient from the request and current task context. If you cannot identify the recipient, ask before sending. Do not contact unrelated peers or expand the scope. Use `herdr-new-agent` only when the user explicitly asks for a new Herdr agent, tab, or session, never as a fallback for failed delivery or unavailable native subagents.
+- **`notify` (default):** Deliver asynchronously and continue without waiting. Ask the recipient to report when the task is `completed`, `failed`, or `blocked`.
+- **`request`:** Deliver and wait only when the user explicitly asks to wait, get a reply, or receive the result, or selects `request`.
+- In `request` mode, match replies by agent identity. Keep only one outstanding task per recipient.
 
-## 选择模式
+## Prefer native messaging
 
-- `notify`：默认模式。异步投递，发送成功后立即继续，不在本次调用中等待；消息中必须要求接收方在任务 `completed`、`failed` 或 `blocked` 后通知发送方。
-- `request`：投递后等待接收方回复。只有用户明确说“等待”“等回复”“拿到结果”或指定 `request` 时使用。
-- 用户没有指定模式或语义不明确时使用 `notify`。
-- 需要等待时按 agent 身份匹配回复。同一目标同时只保留一个未完成任务。
+Use the current runtime's messaging tools first. A recipient being reachable through Herdr is not a reason to bypass native delivery.
 
-## 原生工具优先
+In Codex:
 
-使用当前运行环境提供的 agent 通信能力。不要仅因为目标也能被 Herdr 找到就跳过原生工具。用户明确要求新开 Herdr tab 或新会话时，按[新开 Herdr tab](#新开-herdr-tab)处理，不经过本节。
-
-在 Codex 中：
-
-1. 对 `notify` 和 `request` 都使用 `followup_task` 投递任务。`send_message` 不会唤醒空闲 agent，不用它发起新任务。
-2. `notify` 在任务末尾追加：`这是 notify 模式；处理完成、失败或阻塞后，请用原生通信工具通知发送方。` 所有目标得到 `delivered` 或 `queued` 后结束本次发送，不调用 `wait_agent`。
-3. `request` 先向所有目标投递，再使用较长超时的 `wait_agent` 收集回复。回复可以乱序到达；按发送方身份从待处理目标中移除。
-4. 接收方处理结束后，使用 `send_message` 向原生 sender metadata 中的发送方回传简短结果，并标明 `completed`、`failed` 或 `blocked`。
-
-原生消息依赖平台自带的 sender metadata 识别发送方，不要在正文中重复包装发送方信息。
+1. Use `followup_task` to deliver tasks in either mode. `send_message` does not wake an idle agent and is not a task dispatch tool.
+2. For `notify`, append: `This is a notify request. Use native messaging to report when the task is completed, failed, or blocked.` Once every recipient returns `delivered` or `queued`, continue without calling `wait_agent`.
+3. For `request`, dispatch to all recipients first, then collect replies with a longer `wait_agent` timeout. Replies may arrive out of order. Remove each sender from the pending set when its reply arrives.
+4. When you finish an incoming task, use `send_message` to send a brief result to the sender in the platform's sender metadata. Include `completed`, `failed`, or `blocked`. Do not duplicate the sender metadata in the message body.
 
 ## Codex TUI session
 
-当 `followup_task` 明确返回目标不在当前协作树，且目标是 Codex session UUID 或准确名称时，`notify` 先尝试 Codex CLI 自带的消息队列，再考虑 Herdr：
+If `followup_task` definitively reports that the recipient is outside the current collaboration tree and the user supplied a Codex session UUID or exact name, try the Codex CLI queue before Herdr for `notify`.
 
-1. 运行 `codex queue --help`，确认当前 CLI 支持该命令。
-2. 在消息末尾追加：`这是 notify 模式；处理完成、失败或阻塞后，请通知发送方。`
-3. 异步投递，不启动或恢复另一个 TUI：
+1. Run `codex queue --help` to check that the installed CLI supports it.
+2. Append: `This is a notify request. Report when the task is completed, failed, or blocked.`
+3. Queue the message without launching or resuming the other TUI:
 
 ```bash
 codex queue --thread "$target" --message "$message"
 ```
 
-命令退出码为 0 且输出包含 `Queued message` 时记为 `queued`，立即结束该目标的发送，不调用 `wait_agent`，也不回退到 Herdr。非零退出属于明确失败，可以继续 Herdr 回退；超时或结果含糊时停止，避免重复投递。
+An exit code of 0 plus `Queued message` means `queued`. Do not wait or fall back. A nonzero exit is a definite failure and permits the Herdr fallback. Stop on a timeout or ambiguous result to avoid duplicate delivery.
 
-`codex queue` 没有等待指定 session 回复的接口，只用于 `notify`。`request` 仍使用可匹配回复的原生协作工具；原生投递明确失败后再尝试 Herdr。
+`codex queue` supports `notify` only. For `request`, use native tools that can match replies and try Herdr only after a definite failure.
 
-## 多目标投递
+## Multiple recipients
 
-- 每个目标单独调用一次，不使用广播。
-- 先完成 fan-out，再在 `request` 模式下 fan-in；不要等待第一个目标结束后才给下一个目标发送。
-- 分别记录每个目标使用的通道和状态。单个目标失败不抹掉其他目标的成功结果。
-- 每个目标独立决定通道，因此同一批任务可以同时包含原生协作、Codex TUI queue 和 Herdr。
+Send once per recipient; do not broadcast. In `request` mode, send to every recipient before waiting for any reply. Record the channel and status separately for each recipient, even if another delivery fails.
 
-## 只在明确失败时回退
+## When to fall back
 
-按以下规则解释原生投递结果：
+- **Delivered or queued:** Stop for that recipient. Do not fall back.
+- **Definite failure:** The native tool is unavailable, or the recipient is outside the current tree or uses another runtime. For eligible `notify` requests, try the Codex TUI queue first. Otherwise try Herdr.
+- **Uncertain delivery:** A timeout, interruption, or ambiguous result may mean the task was delivered. Stop, report uncertainty, and do not retry using another channel.
 
-- `delivered` 或 `queued`：投递成功。不要回退。
-- 工具不可用、目标不在当前协作树、目标属于其他运行环境：明确失败；符合条件的 `notify` 先尝试 Codex TUI queue，其余情况尝试 Herdr。
-- 超时、中断或结果含糊：投递状态不确定。停止并报告，不要回退，避免同一任务被执行两次。
+## Herdr delivery
 
-## Herdr 回退
+Use Herdr after a definite native delivery failure, or directly when Herdr has already been selected to reach the existing recipient.
 
-只有命中明确失败时才执行本节。
+1. Confirm `HERDR_ENV=1`. Otherwise report that Herdr is unavailable and stop. Do not control sessions from outside Herdr.
+2. Run `herdr --help`. Use the recipient's name or pane ID from the request.
+3. Check `herdr agent get <target>`:
+   - `idle` or `done`: Proceed.
+   - `working`: Run `herdr agent wait <target> --timeout 300000`, then check the status once more.
+   - `blocked`: Report the status. Do not answer requests or approvals for the recipient.
+   - `unknown` or unresolved: Stop and report.
+4. Run `herdr agent get "$HERDR_PANE_ID"` to read your sender name. Use your pane ID if no name is set.
+5. Keep the task body unchanged and append the return address and callback request: `发送方：<sender>。处理完后通知发送方。`
 
-1. 检查 `HERDR_ENV=1`。若不成立，报告 Herdr 不可用并停止；不要从 Herdr 外部控制其他 session。
-2. 运行 `herdr --help` 确认当前 CLI，再直接使用用户给出的目标作为 agent 名称或 pane ID。
-3. 用 `herdr agent get <target>` 检查目标：
-   - `idle` 或 `done`：可以发送。
-   - `working`：先用 `herdr agent wait <target> --timeout 300000` 等待稳定状态，再检查一次。
-   - `blocked`：读取状态并报告，不替接收方回答审批或问题。
-   - `unknown` 或无法解析目标：停止并报告。
-4. 用 `herdr agent get "$HERDR_PANE_ID"` 读取当前发送方的 agent 名称；没有名称时使用当前 pane ID。
-5. 保持用户任务正文不变，只在末尾追加一句：`发送方：<sender>。处理完后通知发送方。`
-
-`notify` 不等待：
+For `notify`, send without waiting:
 
 ```bash
 herdr agent prompt <target> '<message>\n\n发送方：<sender>。处理完后通知发送方。'
 ```
 
-`request` 等待并读取结果：
+For `request`, wait and read the result:
 
 ```bash
 herdr agent prompt <target> '<message>\n\n发送方：<sender>。处理完后通知发送方。' --wait --timeout 300000
 herdr agent read <target> --source recent-unwrapped --lines 120
 ```
 
-Herdr 的 `notify` 接收方完成后，应调用本 skill 把结果发回 `<sender>`。发送方不会在原调用中等待这条回报。
+After completing a Herdr `notify` task, use this delivery flow to return the result to `<sender>`. The original sender does not wait in its original call.
 
-## 新开 Herdr tab
+## Local file fallback
 
-用户明确要求新开 tab、新开会话，或在某个目录新起 agent 时，先使用 `herdr-new-agent`；启动类型和 workspace 默认继承调用方。该技能负责创建、启动和就绪验证，本技能在返回的新 agent 上投递任务。
+If every applicable channel is unavailable or has definitively failed for a recipient, save the original message as Markdown. Saving does not count as delivery. Do not use this fallback after a timeout, interruption, or ambiguous result.
 
-1. 需要较长交接或用户说要 handoff 时，用 `handoff` skill 写交接件，消息中给出目标和文件绝对路径。
-2. 按[Herdr 回退](#herdr-回退)第 4、5 步确定发送方、追加回报要求，并用该节的 `notify` 或 `request` 命令向新 agent 投递。这是用户指定的新会话，不先尝试原生投递回退链。
-3. `notify` 下用 `herdr agent wait <agent名> --until working --timeout 60000` 确认接手；没等到时读取近期界面并报告真实状态，不重复发消息。
-
-返回通道记为 `herdr-new-tab`，附启动技能返回的 tab ID、pane ID 和 agent 名。多目标时各建一个 tab。
-
-已有端到端检查为 [`scripts/e2e-herdr-new-tab.sh`](scripts/e2e-herdr-new-tab.sh) `[kind ...]`，仅在用户允许真实启动测试 agent 时运行；脚本默认测试 Claude，使用临时测试 tab，覆盖创建、启动、投递与清理，不覆盖调用方类型和 workspace 的默认选择。
-
-## 本地文件兜底
-
-当一个目标没有任何适用通道成功，且所有适用通道都已明确失败或不可用时，把原始消息正文写入本地 Markdown 文件；这只是保留待投递内容，不算发送成功。
-
-1. 从任务生成简短的文件名安全标题 `$title`；不得包含路径分隔符，且不得为 `.` 或 `..`。
-2. 创建唯一临时目录：
+1. Choose a short, filename-safe `$title` for the task. Reject path separators, `.` and `..`.
+2. Create a unique temporary directory:
 
 ```bash
 mktemp -d "${TMPDIR:-/tmp}/agent-messaging-XXXXXX"
 ```
 
-3. 将原始消息正文原样写入返回目录下的 `$title.md`。
-4. 向用户报告绝对路径，并明确标记该目标为 `not_delivered`。
+3. Save the original message unchanged as `$title.md` in that directory.
+4. Report the absolute path and mark the recipient `not_delivered`.
 
-多目标任务仍按目标独立兜底。超时、中断或结果含糊不属于明确失败，沿用停止投递的规则，避免用户根据文件再次转发后产生重复执行。
+## Report delivery
 
-## 返回结果
-
-向用户按目标简要报告：投递通道、是否已投递、是否仍在等待，以及最终的 `completed`、`failed`、`blocked` 或 `not_delivered` 状态。本地兜底时附文件绝对路径。部分成功时保留每个目标的真实结果，不把整批任务合并成单一状态。
+For each recipient, report the channel, whether delivery succeeded, whether you are waiting, and the final state if known: `completed`, `failed`, `blocked`, or `not_delivered`. Include the absolute path for any saved message. Report partial success per recipient.

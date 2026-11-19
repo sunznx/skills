@@ -1,11 +1,11 @@
 ---
 name: herdr-new-agent
-description: 在 Herdr 中新开 tab 并启动 agent，默认继承当前 agent 类型、workspace 和工作目录。用户要求用 Herdr 新开 agent、tab 或会话时使用；仅向已有 agent 发消息走 agent-messaging。
+description: Opens a Herdr tab and starts an agent, inheriting the caller's agent kind, workspace, and working directory by default. Use when the user asks for a new Herdr agent, tab, or session.
 ---
 
 # Herdr New Agent
 
-把用户的新建请求落实为一个可接受输入的 agent。默认在当前 workspace 新开 tab，保留用户焦点；用户指定 agent 类型、workspace 或目录时分别覆盖对应默认值。
+Create a new agent that can accept input. By default, open a tab in the caller's workspace without stealing focus. Apply any requested agent kind, workspace, or directory instead of the corresponding default.
 
 ## Resolve the caller and launch arguments
 
@@ -36,38 +36,38 @@ If Herdr returns `pane_not_found` or the resolved pane has no agent (`agent_not_
 - `target_cwd`: Default to `$PWD`. Resolve a user-specified directory to an existing absolute path.
 - `agent_name`: Choose a name matching `[a-z][a-z0-9_-]{0,31}`. Confirm it is free in `herdr agent list`. Use it as the default tab label.
 
-用户明确要求新建 workspace 时，先从 `herdr workspace` 核对语法，再运行：
+If the user explicitly requests a new workspace, check `herdr workspace` syntax first, then run:
 
 ```bash
 herdr workspace create --cwd "$target_cwd" --label "$workspace_label" --no-focus
 ```
 
-取返回的 `.result.workspace.workspace_id`、`.result.tab.tab_id` 和 `.result.root_pane.pane_id`；它已自带 tab 和空闲 shell pane，直接进入启动步骤。
+Record `.result.workspace.workspace_id`, `.result.tab.tab_id`, and `.result.root_pane.pane_id`. The workspace already includes a tab and an idle shell pane. Use that pane for the launch step.
 
-## 新建 tab 并启动
+## Open the tab and start the agent
 
-在选定的现有 workspace 中创建一个 tab：
+To use an existing workspace, create a tab:
 
 ```bash
 herdr tab create --workspace "$target_workspace" --cwd "$target_cwd" --label "$agent_name" --no-focus
 ```
 
-从返回的 `.result.tab.tab_id` 和 `.result.root_pane.pane_id` 记录 `tab_id`、`pane_id`，立即在这个新 shell pane 启动：
+Record `.result.tab.tab_id` and `.result.root_pane.pane_id` as `tab_id` and `pane_id`. Then start the agent in that shell pane:
 
 ```bash
 herdr agent start "$agent_name" --kind "$agent_kind" --pane "$pane_id" --timeout 60000
 ```
 
-用户要求的环境变量通过 `tab create --env KEY=VALUE` 传入；用户要求的 agent 原生参数放在 `agent start` 的 `--` 后。启动流程只做参数解析、新建与启动；用户附带的调研或旧任务恢复由启动后的目标 agent 执行。
+Pass user-requested environment variables through `tab create --env KEY=VALUE`. Pass program arguments after `--` in `agent start`. The new agent, not the caller, handles any accompanying research or resumed work.
 
-## 验证并交付
+## Verify and report
 
-返回 `.result.type = agent_started` 且 `.result.agent.interactive_ready = true` 才算启动成功。核对返回的 workspace、pane 和 agent 类型符合本次参数，报告 agent 名、类型、workspace ID、tab ID、pane ID 和 cwd。
+Count the launch as successful only when `.result.type` is `agent_started` and `.result.agent.interactive_ready` is `true`. Check the returned workspace, pane, and kind. Report the agent name, kind, workspace ID, tab ID, pane ID, and cwd.
 
-- `agent_not_ready`：用 `herdr agent read "$pane_id" --source recent-unwrapped --lines 40` 查看启动审批或问题，报告给用户处理。
-- 失败、超时或结果不确定：保留已返回的 ID，先用 `herdr agent get "$pane_id"` 和 `agent read` 检查是否已经启动；只有身份符合且 `interactive_ready` 为 `true` 才报告可用。状态无法确认时停止，保留新 tab，不重复创建或启动。
-- 创建 tab 本身超时且未返回 ID：运行 `herdr tab list --workspace "$target_workspace"`，按本次唯一 label 检查，再检查对应 pane；无法确认时报告不确定，不重放创建命令。
+- `agent_not_ready`: Use `herdr agent read "$pane_id" --source recent-unwrapped --lines 40` to identify a startup question or approval. Report it for the user to handle.
+- Failed, timed-out, or ambiguous launch: Keep any returned IDs. Check `herdr agent get "$pane_id"` and `agent read` before retrying. Report ready only if the identity matches and `interactive_ready` is `true`. If still uncertain, keep the tab and do not repeat creation or launch.
+- Tab creation times out without an ID: Use `herdr tab list --workspace "$target_workspace"` to find the unique label, then check its pane. If uncertain, report that and do not repeat creation.
 
-用户只要求启动时，到此完成。附带任务时，启动成功后使用 `agent-messaging` 的 Herdr 投递流程发送任务并确认接手，沿用用户指定的等待方式；启动成功和任务已接手分别报告。
+If the user requested only a launch, stop after verification. If they included a task, use the Herdr delivery flow in `agent-messaging` after the agent is ready. Confirm it took the task, honor the requested wait mode, and report launch and task acceptance separately.
 
 If caller lookup failed, do not look up the stale pane again during task delivery. Give the new agent an independently known reply destination. For a Codex caller with an active `CODEX_THREAD_ID`, pass that ID and use the Codex queue reply path in `agent-messaging`. If no reply destination is known, have the agent report in its new tab and include the tab and pane IDs in your handoff.
