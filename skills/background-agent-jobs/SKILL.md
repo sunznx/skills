@@ -1,19 +1,19 @@
 ---
 name: background-agent-jobs
-description: 用当前平台的原生 subagent 异步执行任务，支持并发。用户在任务请求中显式调用本 skill，即授予该任务使用 subagent 的例外；独立调研时也自动使用，但自动加载不产生授权。
+description: Runs independent task slices asynchronously with the current platform's native subagents. Use when the user explicitly authorizes subagents for the current task, including by invoking background-agent-jobs or agent-messaging to perform a concrete task.
 ---
 
 # Background Agent Jobs
 
-## 触发与授权
+## Triggers and authorization
 
-用户在任务请求中显式调用 `$background-agent-jobs`，即明确允许为该任务使用原生 subagent，覆盖同层级 `AGENTS.md` 中默认禁止 subagent 的规则。范围明确时直接进入下述委派流程，无需重复询问许可。只引用、阅读或编辑本 skill，不构成执行委派的授权。
+Use native subagents only when the user explicitly authorizes them for the current task. An explicit user invocation of `background-agent-jobs` or `agent-messaging` to perform a concrete task counts as permission. Merely loading, mentioning, reading, or editing either skill, or receiving a research or time-consuming task, does not authorize delegation.
 
-从用户请求和当前上下文确定任务范围，并记录这次授权。同一任务的后续对话、恢复和上下文压缩继续沿用，直到任务完成、取消或用户撤销；其他任务和会话按各自的授权执行。保持 `AGENTS.md` 和全局配置原样。
+Record the authorization and its scope. It applies only to the current task, including follow-up turns and resumed work, and ends when the task is completed or cancelled or the user revokes permission.
 
-遇到可独立交付的调研任务（查文档、核对 API、比较方案、调查代码）时，主动选用本流程。仅由模型自动加载时，按本任务已有授权和项目默认规则执行，不据此新增例外。一次简单查询或主 agent 正在调查的同一个问题直接完成，避免重复调研。
+After authorization, look for independently verifiable slices, such as separate lines of evidence in research or separate modules in a longer task. Handle quick lookups and small edits directly when delegation adds no value. Do not start a second worker for a slice already assigned to a recipient.
 
-系统、开发者指令及工具权限继续生效，其他项目规则也保持有效。例外只允许本任务的原生 subagent，不授权 worktree、CLI 后台 agent 或外部消息发送；原生工具不可用或更高层级限制禁止时，由当前 agent 完成并说明原因。
+Follow narrower project and tool constraints. If no suitable native subagent tool is available, do the work in the current agent and report the limitation. Do not substitute a separate CLI process, worktree, or main session.
 
 ## 拆分与启动
 

@@ -1,11 +1,17 @@
 ---
 name: agent-messaging
-description: 向一个或多个 agent 发送任务，默认异步通知；支持当前协作树、Codex TUI session 和 Herdr。用户要求联系、通知、委派任务给其他 agent 或等待其结果时使用；新建 Herdr 会话由 herdr-new-agent 启动后再投递。
+description: Sends tasks or status updates to identified agents, including existing main sessions, using native messaging or the documented Codex and Herdr fallbacks. Use when the user requests agent coordination or a reply.
 ---
 
 # Agent Messaging
 
 把每个目标当作一次独立投递。优先使用当前运行环境的原生 agent 协作工具，只说明直接投递流程，不增加额外消息层或配置。
+
+## Scope and routing
+
+An explicit user invocation of this skill to perform a concrete task counts as permission to use native subagents for that task, subject to narrower constraints. If there is an independent slice worth delegating to a new native subagent, use `background-agent-jobs`. Do not start a duplicate worker for work already assigned to a recipient. Merely loading, mentioning, reading, or editing this skill does not grant permission.
+
+To assign work to an existing main agent in another session, the user must explicitly request cross-session assignment or designate that collaborator for the current task. Resolve the intended recipient from the request and current task context. If you cannot identify the recipient, ask before sending. Do not contact unrelated peers or expand the scope. Use `herdr-new-agent` only when the user explicitly asks for a new Herdr agent, tab, or session, never as a fallback for failed delivery or unavailable native subagents.
 
 ## 选择模式
 
