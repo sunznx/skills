@@ -45,6 +45,7 @@ $sync-skills 更新 agent-messaging 删除某个功能
 | `answer-me-with-html` | [QingYunA/answer-me-with-html](https://github.com/QingYunA/answer-me-with-html) | `skills/answer-me-with-html/SKILL.md` | 三方合并 |
 | `archify` | [tt-a1i/archify](https://github.com/tt-a1i/archify) | `archify/SKILL.md` | 三方合并 |
 | `background-agent-jobs` | 本地维护，暂无外部 Git 来源 | — | 本地维护 |
+| `bdd` | 本地维护，从业务规则编写和审查 Gherkin 验收场景 | — | 本地维护 |
 | `birdview` | [Qiuner/birdview](https://github.com/Qiuner/birdview) | `SKILL.md` | 三方合并 |
 | `code-review` | [mattpocock/skills](https://github.com/mattpocock/skills) | `skills/engineering/code-review/SKILL.md` | 三方合并 |
 | `codebase-design` | [mattpocock/skills](https://github.com/mattpocock/skills) | `skills/engineering/codebase-design/SKILL.md` | 三方合并 |

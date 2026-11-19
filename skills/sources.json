@@ -33,6 +33,11 @@
       "note": "本地维护，暂无外部 Git 来源"
     },
     {
+      "name": "bdd",
+      "managed": false,
+      "note": "本地维护，从业务规则编写和审查 Gherkin 验收场景"
+    },
+    {
       "name": "birdview",
       "source": "Qiuner/birdview",
       "url": "https://github.com/Qiuner/birdview.git",
