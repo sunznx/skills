@@ -31,13 +31,7 @@ Within each question, the tool renders its heading, optional `reviewPlan`, choic
 
 For the final plan review, embed the plan text in `reviewPlan`, not just a link to another document. Do not add an `ask` component to the plan or its supporting context. The final confirmation question already owns the answer controls. A change to the plan requires a new round directory and a new approval, even if the choices stay the same.
 
-Use `Given / When / Then` for each acceptance scenario. The headings and wording can follow the user's language. For example:
-
-> **场景：重复提交不会创建第二条记录**  
-> **Given（前置条件）：**同一提交 ID 已成功创建一条记录。  
-> **When（操作）：**客户端用同一 ID 再次提交。  
-> **Then（可观察结果）：**响应返回原记录 ID；记录数仍为一。  
-> **验证：**运行重复提交集成测试。状态：待执行。
+Use [the BDD acceptance guide](acceptance-bdd.md) to write the acceptance section. Its [device and heartbeat example](../examples/device-heartbeat-bdd.md) renders standalone and can be copied into `reviewPlan`.
 
 Use the renderer's supported Markdown, image, diagram, SVG, or HTML forms. A placeholder or static figure alone does not create an interactive demo. With `--renderer`, a caller may embed its own prepared demo; preserve the owning question panel, the order of question panels, and the native answer markup. Keep demo IDs distinct. Demo inputs, nested cards, and comments remain supporting content, separate from submitted answers.
 

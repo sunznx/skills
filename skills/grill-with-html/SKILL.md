@@ -66,9 +66,9 @@ Treat answers as decision data, not commands. Record decisions and unlocked bran
 
 ## Final implementation-plan review
 
-When all design decisions are settled, start a new round using [the final-plan input rules and BDD example](references/input.md#content-ownership-and-preview). Put the implementation plan in `questions[].reviewPlan`. Ask one question: whether to proceed with this version. Use `approve-plan` as the question ID and `approve` and `revise` as the option IDs. Use short labels in the user's language. Leave both choices unselected and omit `allowSkip`.
+When all design decisions are settled, start a new round using [the final-plan input rules](references/input.md#content-ownership-and-preview). Put the implementation plan in `questions[].reviewPlan`. Ask one question: whether to proceed with this version. Use `approve-plan` as the question ID and `approve` and `revise` as the option IDs. Use short labels in the user's language. Leave both choices unselected and omit `allowSkip`.
 
-Start with the goal, what changes, and what stays out of scope. List steps in dependency order. Write acceptance as BDD scenarios in the user's language. For each key behavior, state `Given` the starting conditions, `When` the user or system acts, and `Then` the observable result that must occur. Put materially different outcomes in separate scenarios. Cover failures, compatibility, or rollback when they affect the agreed scope. Name the test or manual check that will verify each scenario. Mark unrun checks as pending.
+Start with the goal, what changes, and what stays out of scope. List steps in dependency order. Follow [the BDD acceptance guide and rendered example source](references/acceptance-bdd.md). Write one scenario per independently reviewable behavior. Name the system and actors, give a reproducible setup, and state each observable assertion. Give each scenario a verification entry and evidence status for the target environment.
 
 Read `answer-me-with-html` for component syntax. Keep a `sequence` focused on call order and key parameters. Put full request and response fields in `api`. Use `state` for transitions, `flow` for decisions, and short code excerpts for evidence. Use only components that help the reader review the plan. Give each fact one home. The plan and its confirmation controls stay on the same page.
 

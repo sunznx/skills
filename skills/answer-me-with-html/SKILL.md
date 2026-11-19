@@ -178,6 +178,8 @@ Write a component as a fenced code block (```` ```flow ```` … ```` ``` ````); 
 
 For `api`, field syntax is `name type [required|optional] | description`. The first unescaped `|` starts the description; write `\|` only for a literal pipe in a type, such as `string \| null`.
 
+For acceptance, write BDD scenarios in ordinary Markdown. Give each scenario a heading, Given setup, When trigger, observable Then assertions, and a separate verification and evidence line. Use `state` for allowed transitions and `api` for the interface contract. Refer to those components by name from the scenario rather than repeating diagrams or field tables. Mark checks pending until evidence exists for the target environment. For the final round, see `references/acceptance-bdd.md` in `grill-with-html`.
+
 Selection rules:
 - Conclusion first. The first panel or the lead gives the core answer; the following panels give the evidence.
 - One panel, one question. With more than 8 panels, split the page or cut panels.
