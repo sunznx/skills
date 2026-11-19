@@ -1,116 +1,82 @@
 ---
 name: obsidian-simple-mind-map
-description: 在 Obsidian 中创建、读取和增量编辑 Simple Mind Map 的 `.smm.md` 文件。用于 Markdown 转脑图、按 UID 批量插入子树或增删改节点、设置链接及刷新预览；不用于普通脑图图片或 XMind 文件。
+description: Creates, reads, and edits Simple Mind Map .smm.md files in Obsidian. Use to convert Markdown, edit nodes by UID, set links, or refresh previews. Not for images or XMind files.
 ---
 
 # Obsidian Simple Mind Map
 
-通过已安装的 `simple-mind-map` 插件操作 `.smm.md`，让插件负责数据规范化、压缩、索引和预览图生成。使用本 skill 目录中的 `scripts/smm_cli.py`；不要直接改 `.smm.md` 的 Base64 metadata。
+Use `scripts/smm_cli.py` to call the installed `simple-mind-map` plugin. The plugin owns the format, compression, index, and preview. Use the CLI for reads and writes. Use incremental commands for an existing map so its styles, links, and positions survive. Do not edit Base64 metadata directly.
 
-## 前提
+## Before you begin
 
-- Obsidian 正在运行，CLI 已启用。
-- 目标 vault 已启用 `simple-mind-map` 插件。
-- 默认 vault 名为 `obsidian`，默认根目录为 `/Users/sunx/Dropbox/syncer/apps/obsidian`；其他 vault 用 `--vault` 和 `--vault-root` 覆盖。
-
-先探测接口：
+Obsidian must be running with its CLI enabled and the plugin enabled in the target vault. Set `SMM_CLI` to the absolute path of this skill's `scripts/smm_cli.py`:
 
 ```bash
-python3 <skill-dir>/scripts/smm_cli.py probe
+SMM_CLI="/Users/sunx/Dropbox/syncer/.agents/skills/obsidian-simple-mind-map/scripts/smm_cli.py"
+python3 "$SMM_CLI" probe
 ```
 
-`probe` 同时确认插件、转换接口和实际 Vault 根目录；根目录与 `--vault-root` 不一致时停止。若 CLI 无输出，查询同一 operation ID 的状态；不要重放命令，也不要据此断言 Obsidian 未运行。
+The default vault is `obsidian` at `/Users/sunx/Dropbox/syncer/apps/obsidian`. For another vault, pass `--vault NAME --vault-root /absolute/path` on each command. The options may go before or after the subcommand.
 
-## 工作流
+Check that `probe` returns the intended `vaultRoot`; the CLI stops on a mismatch. Before converting Markdown, also check that `markdownTransform` is `true`. Every command other than `self-test` probes automatically.
 
-### Markdown 转 `.smm.md`
+## Create a map
 
-临时 Markdown 必须已在 vault 中；转换成功或失败后都删除它，最终只保留新建的 `.smm.md`：
+Write the Markdown to the vault, then convert it:
 
 ```bash
-python3 <skill-dir>/scripts/smm_cli.py convert-md "notes/path/topic.md" --delete-source
+python3 "$SMM_CLI" convert-md "notes/path/topic.md" --delete-source
 ```
 
-只在输入是临时产物时使用 `--delete-source`；转换已有 Markdown 文档时省略该参数。不要自动选择插件的“覆盖转换”。新图的全部节点使用 Obsidian `textFontFamily`；未配置自定义字体时使用当前主题的 `--font-text`。返回值中的 `path` 是实际生成文件，文件重名时插件会自动改名。
+Use `--delete-source` only for temporary Markdown you created for this conversion. Once conversion starts, the CLI deletes that source on success or failure. Omit the flag when converting a user's existing document.
 
-### 读取与定位节点
+Use the returned `path`. The plugin picks a new name if one already exists. New nodes use Obsidian's `textFontFamily` or the theme's `--font-text`. Verify the new map and confirm any temporary source was removed.
+
+## Find and edit nodes
 
 ```bash
-python3 <skill-dir>/scripts/smm_cli.py read "notes/path/topic.smm.md"
+python3 "$SMM_CLI" read "notes/path/topic.smm.md"
 ```
 
-节点文字可能重复；增量编辑必须使用 `uid`。用户只给文字时，先读取并展示所有匹配项；只有唯一匹配时才能继续。
-
-### 增量编辑
+Address nodes by the returned `uid` and display their `plainText`. If the user supplied only text, look up every match. Continue for one match; for several, show the candidate UIDs and parents and ask which to use.
 
 ```bash
-python3 <skill-dir>/scripts/smm_cli.py add-child FILE PARENT_UID "新节点"
-python3 <skill-dir>/scripts/smm_cli.py add-subtree FILE PARENT_UID '{"text":"新分支","children":[{"text":"子节点"}]}'
-python3 <skill-dir>/scripts/smm_cli.py add-sibling FILE NODE_UID "同级节点"
-python3 <skill-dir>/scripts/smm_cli.py set-text FILE NODE_UID "新文字"
-python3 <skill-dir>/scripts/smm_cli.py set-link FILE NODE_UID URL "链接标题"
-python3 <skill-dir>/scripts/smm_cli.py delete FILE NODE_UID
+python3 "$SMM_CLI" add-child FILE PARENT_UID "New node"
+python3 "$SMM_CLI" add-subtree FILE PARENT_UID '{"text":"New branch","children":[{"text":"Child node"}]}'
+python3 "$SMM_CLI" add-sibling FILE NODE_UID "Sibling node"
+python3 "$SMM_CLI" set-text FILE NODE_UID "New text"
+python3 "$SMM_CLI" set-link FILE NODE_UID URL "Link title"
+python3 "$SMM_CLI" delete FILE NODE_UID
 ```
 
-向已有脑图插入多个父子节点时优先用 `add-subtree`：JSON 顶层是一棵树，`children` 可嵌套；命令调用插件原生插入命令一次，再保存、刷新预览和验证。单个节点仍用 `add-child`。批量命令失败时先 `read` 检查是否已有部分节点，不要直接重放。
+Replace `FILE` and the UIDs. Use `add-child` for one node and `add-subtree` for a group with parent-child relations. Run independent edits one at a time. A subtree is a single JSON tree; each node has a nonempty `text` and optional `children`. The plugin assigns UIDs.
 
-`set-link` 使用插件原生的 `SET_NODE_HYPERLINK` 命令，将目标写入节点数据的 `hyperlink` 和 `hyperlinkTitle` 字段；它不是把 Markdown 链接写进 `text`。
+The CLI waits for the change, saves it, and reads it back. Check any returned new UID. Read again to locate nodes, verify several edits, or diagnose partial success. Check both text and parent links.
 
-外部链接使用完整 URL 和普通标题：
-
-```json
-{
-  "data": {
-    "text": "<p>打开 Grafana：。</p>",
-    "hyperlink": "http://127.0.0.1:3001",
-    "hyperlinkTitle": "http://127.0.0.1:3001",
-    "richText": true
-  }
-}
-```
-
-Vault 内部文件引用使用文件的 vault 相对路径作为 `URL` 参数，并用 Obsidian 内部链接作为标题：
+Links are stored in `hyperlink` and `hyperlinkTitle`, one per node, not in the Markdown body:
 
 ```bash
-python3 <skill-dir>/scripts/smm_cli.py set-link \
-  "notes/工作/项目/待办事项.smm.md" NODE_UID \
-  "notes/工作/项目/心得.md" "[[心得]]"
+python3 "$SMM_CLI" set-link FILE NODE_UID "https://example.com" "Website"
+python3 "$SMM_CLI" set-link FILE NODE_UID "notes/work/lessons.md" "[[Lessons]]"
 ```
 
-对应节点数据为：
+For internal links, use a vault-relative URL and an Obsidian internal link as the title. Read back `hyperlink`, `hyperlinkTitle`, and `richText: true`. Do not embed link syntax in node `text`.
 
-```json
-{
-  "data": {
-    "hyperlink": "notes/工作/项目/心得.md",
-    "hyperlinkTitle": "[[心得]]",
-    "richText": true
-  }
-}
-```
+## Save and recover from errors
 
-插件会把这种非 Web 链接交给 Obsidian 打开，并支持悬停预览。每个节点只有一个 `hyperlink`；这是可点击引用，不会把目标文件内容嵌入节点。
-
-这些操作调用插件原生命令，因此保留撤销历史并由插件生成新节点 UID。`delete` 拒绝删除根节点。修改默认更新预览图；仅在用户明确接受预览暂时过期时传 `--no-preview`。
-
-所有打开脑图视图的 CLI 读写命令按 Vault 使用同一把进程文件锁串行执行；`probe` 和 `self-test` 不占锁。每次 CLI 操作使用独立 leaf，核对文件路径，完成后关闭；Obsidian 中已有只读视图不影响 CLI，agent 之间仍必须通过这把锁串行写入。
-
-CLI 会临时激活自己的 leaf，完成后恢复原活动 leaf。`read` 使用该 fresh leaf 已解析的数据，不依赖渲染；编辑和保存需要插件内部 `mindMap` 实例，后台窗口未触发 `ResizeObserver` 时由 CLI 在编辑区有尺寸后初始化；插件组件的 `initMindMap()` 遇到容器尺寸为 0 会直接放弃，CLI 在等待期间对有尺寸的未初始化组件补调一次，再等待组件就绪。每次增量修改都等待插件当前数据反映预期变化后再保存；完成后再次 `read`，确认目标节点、父子关系和返回的新 UID。独立修改逐项执行，成组父子节点用 `add-subtree`；不要通过 Markdown 全量重建来代替局部编辑，以免丢失节点样式、链接和位置。
-
-### 保存和刷新预览
+Edits refresh the preview by default. Use `--no-preview` only if the user accepts a stale preview. To save or refresh the preview separately:
 
 ```bash
-python3 <skill-dir>/scripts/smm_cli.py save FILE
+python3 "$SMM_CLI" save FILE
 ```
 
-## 边界
+The CLI polls its operation internally. If it is briefly silent, wait for the current process instead of replaying the write. It has no separate `status` command and does not expose the operation ID. After an error, timeout, or interruption, run `read` before retrying to check for partial success. Keep the original error. Silence does not prove that Obsidian is stopped.
 
-- 文件路径可用 vault 相对路径；绝对路径必须位于 `--vault-root` 内。
-- 相对路径保留前导点并拒绝任何 `..` 段；脚本不会猜测或改写目标路径。
-- `set-text` 写入普通文本。`delete` 支持删除既有自由节点；富文本、节点图片、自由节点的创建/移动、主题和布局暂不自动修改，需要这些操作时先检查插件接口再扩展脚本。
-- 外部 URL 和 Vault 内部文件引用都使用 `set-link` 写入 `hyperlink` 元数据；不要把链接语法塞进 `text`。
-- `read` 会输出 `hyperlink`、`hyperlinkTitle`、`richText`，增量设置链接后必须重新 `read` 验证这三个字段。
-- mutation 失败时报告原始错误。脚本只通过插件保存，不自行序列化 `.smm.md`。
-- 命令通过挂在 Obsidian `app` 对象上的 operation ID 等待异步结果；写命令在插件保存落盘并重新读取验证前保持进程锁，不重放非幂等命令。
-- 临时 Markdown 使用 `convert-md --delete-source`，无论转换结果如何都清理；完成后确认只留下 `.smm.md`。
-- 本接入基于插件 `0.2.7` 已确认的事件：`execCommand`、`getMindMapCurrentData`、`saveToLocal`，并在每次操作前做能力探测。
+## Limits
+
+- Prefer vault-relative paths. Preserve leading dots and reject `..` segments. An absolute path must be inside `--vault-root`.
+- `set-text` writes plain text. The root cannot be deleted or given siblings. Existing free nodes can only be read or deleted.
+- Inspect the plugin API before extending the CLI for rich text, images, creating or moving free nodes, themes, or layouts.
+- Commands that open views run under a per-vault lock; `probe` and `self-test` do not take it. Keep this entry point to prevent concurrent writes. The CLI can briefly switch the active tab and trigger an existing map save or refresh, even when using a separate leaf.
+
+For initialization, saving, CLI polling, or plugin integration work, read [Plugin integration and verification](references/plugin-integration.md). Routine commands do not need those details.
