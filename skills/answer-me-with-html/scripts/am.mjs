@@ -14233,7 +14233,6 @@ function shouldOpen(opts, env, config) {
   if (opts.open) return true;
   if (opts["no-open"]) return false;
   if (env.AM_NO_OPEN && env.AM_NO_OPEN !== "0") return false;
-  if (env.CI) return false;
   return config.open !== false;
 }
 async function cmdRender(src, opts, ctx, baseDir, from) {

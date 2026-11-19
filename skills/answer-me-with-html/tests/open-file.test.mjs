@@ -28,9 +28,10 @@ function fixture() {
   return { root, marker, env, html, run, render: (args = []) => run(['render', draft, '-o', html, ...args]) };
 }
 
-test('automatic opening finishes before render returns', { skip: process.platform === 'win32' }, () => {
+test('CI does not suppress automatic opening, and render waits for the opener', { skip: process.platform === 'win32' }, () => {
   const f = fixture();
   try {
+    f.env.CI = 'true';
     const result = f.render();
     assert.equal(result.status, 0, result.stderr);
     assert.ok(existsSync(f.marker), 'render returned before the system opener completed');
