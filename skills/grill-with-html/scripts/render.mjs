@@ -7,6 +7,7 @@ export function renderRound(input, dir, renderer) {
   if (input.context) lines.push('', input.context);
   for (const q of input.questions) {
     lines.push('', `## ${q.question}`, '');
+    if (q.reviewPlan) lines.push(q.reviewPlan, '');
     if (q.type !== 'text') {
       lines.push(`\`\`\`ask${q.type === 'multi' ? ' multi' : ''}`, q.question);
       for (const option of q.options) {

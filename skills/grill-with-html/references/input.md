@@ -9,7 +9,8 @@ Use UTF-8 JSON. Start from [the example](../examples/round.json) and adjust it f
 | `questions` | At least one question. |
 | `questions[].id` | Unique, stable, nonempty ID for matching answers. |
 | `question` | A direct, single-line decision question, displayed as the card heading. Put longer background in its `context`. |
-| `questions[].context` | All supporting content for this decision, displayed after its options in the supplied order. |
+| `questions[].context` | Supporting content displayed after the options in the supplied order. |
+| `questions[].reviewPlan` | Nonempty Markdown for the final plan review, displayed before the options. The round must have one single-choice question, two options, and no skipping. |
 | `type` | `single` (default), `multi`, or `text`. |
 | `options` | Two to six single/multiple-choice options, each with a unique `id` and single-line `label`; omit for text. |
 | `recommended` | Recommended option IDs: exactly one for single choice, any valid subset for multiple choice; omit for text. |
@@ -26,7 +27,17 @@ The tool renders through the existing `answer-me-with-html` CLI. The UI adapter 
 
 Choose an owner for every supporting item before rendering. Material about one decision belongs in that question's `context`, regardless of whether it is text, a recommendation, sources, an image, a diagram, a demo, or an interface example. Only shared round information belongs in the top-level `context`; placing a question-specific item there intentionally renders it before the questions. The tool cannot determine a different owner from its meaning.
 
-Within each question, the tool renders its heading, answer choices when present, and context. Context keeps its authored order. Use level-three or deeper headings for supporting sections. Level-two headings outside code fences create additional renderer panels and violate the one-panel-per-question contract. Put literal protocol or code samples in code fences so their headings, tags, and controls remain examples.
+Within each question, the tool renders its heading, optional `reviewPlan`, choices, and `context`, in that order. Use level-three or deeper headings inside either Markdown field. Level-two headings outside code fences create extra panels and violate the one-panel-per-question contract. Put literal protocol or code samples in code fences so their headings, tags, and controls remain examples.
+
+For the final plan review, embed the plan text in `reviewPlan`, not just a link to another document. Do not add an `ask` component to the plan or its supporting context. The final confirmation question already owns the answer controls. A change to the plan requires a new round directory and a new approval, even if the choices stay the same.
+
+Use `Given / When / Then` for each acceptance scenario. The headings and wording can follow the user's language. For example:
+
+> **场景：重复提交不会创建第二条记录**  
+> **Given（前置条件）：**同一提交 ID 已成功创建一条记录。  
+> **When（操作）：**客户端用同一 ID 再次提交。  
+> **Then（可观察结果）：**响应返回原记录 ID；记录数仍为一。  
+> **验证：**运行重复提交集成测试。状态：待执行。
 
 Use the renderer's supported Markdown, image, diagram, SVG, or HTML forms. A placeholder or static figure alone does not create an interactive demo. With `--renderer`, a caller may embed its own prepared demo; preserve the owning question panel, the order of question panels, and the native answer markup. Keep demo IDs distinct. Demo inputs, nested cards, and comments remain supporting content, separate from submitted answers.
 

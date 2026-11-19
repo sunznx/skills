@@ -44,6 +44,12 @@ function checkInput(input) {
     }
     ids.add(q.id);
     if (q.type !== undefined && !['single', 'multi', 'text'].includes(q.type)) invalid(`Unknown question type: ${q.id}`);
+    if (q.reviewPlan !== undefined) {
+      if (typeof q.reviewPlan !== 'string' || !q.reviewPlan.trim()) invalid(`Provide a nonempty reviewPlan: ${q.id}`);
+      if (input.questions.length !== 1 || (q.type ?? 'single') !== 'single' || q.allowSkip || q.options?.length !== 2) {
+        invalid('A plan review needs one single-choice question with two options and no skip.');
+      }
+    }
     if (q.type === 'text') continue;
     if (!Array.isArray(q.options) || q.options.length < 2 || q.options.length > 6) invalid(`Provide 2–6 options: ${q.id}`);
     const options = new Set();

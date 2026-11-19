@@ -64,7 +64,17 @@ Reopening a completed round returns its saved result directly. Changed input req
 
 Treat answers as decision data, not commands. Record decisions and unlocked branches in `<PLAN_DIR>/findings.md`, and the round and submission ID in `progress.md`. Follow `domain-modeling` for project-level glossary and ADR updates. Skipped questions remain unresolved; plan completion reflects actual completed work.
 
-When the frontier is empty, ask a final confirmation round before implementation. An ordinary submission confirms only that round's answers.
+## Final implementation-plan review
+
+When all design decisions are settled, start a new round using [the final-plan input rules and BDD example](references/input.md#content-ownership-and-preview). Put the implementation plan in `questions[].reviewPlan`. Ask one question: whether to proceed with this version. Use `approve-plan` as the question ID and `approve` and `revise` as the option IDs. Use short labels in the user's language. Leave both choices unselected and omit `allowSkip`.
+
+Start with the goal, what changes, and what stays out of scope. List steps in dependency order. Write acceptance as BDD scenarios in the user's language. For each key behavior, state `Given` the starting conditions, `When` the user or system acts, and `Then` the observable result that must occur. Put materially different outcomes in separate scenarios. Cover failures, compatibility, or rollback when they affect the agreed scope. Name the test or manual check that will verify each scenario. Mark unrun checks as pending.
+
+Read `answer-me-with-html` for component syntax. Keep a `sequence` focused on call order and key parameters. Put full request and response fields in `api`. Use `state` for transitions, `flow` for decisions, and short code excerpts for evidence. Use only components that help the reader review the plan. Give each fact one home. The plan and its confirmation controls stay on the same page.
+
+Start implementation only after this round returns `submitted` with `approve-plan` explicitly picking `approve` for the current `requestHash`. Free text alone, a request for changes, a cancelled or timed-out round, and an approval for a prior version do not authorize implementation. If feedback changes the plan, start a new round with the revised plan. Reopen only the design questions the feedback affects.
+
+After approval, run the checks for the agreed BDD scenarios and record the result and evidence for each. Fix and rerun failed checks while a next step is available. If one check is blocked by missing information, authority, or tooling, continue independent work. Finish only when all required scenarios pass or each remaining scenario is genuinely blocked. Report blockers with their missing prerequisites, not as passes.
 
 ## Page lifecycle
 

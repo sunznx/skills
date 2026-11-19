@@ -108,7 +108,9 @@ try {
   doc.querySelector('.am-reply-bar')?.remove();
   controls = state.input.questions.map((q, i) => {
     const panel = panels[i];
-    const ask = panel.querySelector(':scope > .am-panel-body > .am-ask');
+    const asks = panel.querySelectorAll(':scope > .am-panel-body > .am-ask');
+    if (q.reviewPlan && asks.length !== 1) throw new Error('实施计划不能包含其他答题组件');
+    const ask = asks[0];
     const inputs = q.type === 'text' ? [] : [...(ask?.querySelectorAll('.am-ask-opt > input') ?? [])]
       .filter(input => input.closest('.am-ask') === ask);
     if (inputs.length !== (q.type === 'text' ? 0 : q.options.length)) throw new Error('选项数量不匹配');

@@ -199,6 +199,33 @@ test('each panel leads with its decision question and places background after th
   assert.ok(panels[1].indexOf('还有哪些外部使用者需要考虑？') < panels[1].indexOf('例如其他仓库或客户的集成。'));
 });
 
+test('a final confirmation shows the implementation plan before its choices and binds the receipt to it', { timeout: 15000 }, async (t) => {
+  const input = { title: '实施计划确认', questions: [{
+    id: 'approve-plan', question: '是否按本版计划开工？',
+    reviewPlan: '### 验收方法\n\n重复提交不应改变状态。\n\n```sequence\n客户端 -> 服务: 提交\n```',
+    options: [{ id: 'approve', label: '同意按本版开工' }, { id: 'revise', label: '要求修改' }],
+    recommended: ['approve'],
+  }] };
+  const f = await fixture(t, input);
+  const run = launch(t, f);
+  const ready = await run.started;
+  assert.ok(ready?.url);
+  const html = (await fetch(new URL('page', ready.url)).then((r) => r.text())).split('</main>')[0];
+  const plan = html.indexOf('重复提交不应改变状态。');
+  const choice = html.indexOf('同意按本版开工');
+  assert.ok(plan >= 0 && choice > plan, 'The implementation plan must be visible before the approval options.');
+  assert.match(html, /class="am-diagram am-seq"/, 'The plan must support native diagrams.');
+  const state = await fetch(new URL('state', ready.url)).then((r) => r.json());
+  const result = await fetch(new URL('submit', ready.url), { method: 'POST', headers: { 'content-type': 'application/json' },
+    body: JSON.stringify({ submissionId: 'plan-v1', requestHash: state.requestHash,
+      answers: [{ questionId: 'approve-plan', picked: ['approve'], text: '', skipped: false }] }) });
+  assert.equal(result.status, 200);
+  assert.deepEqual((await run.done).result.answers[0].picked, ['approve']);
+  input.questions[0].reviewPlan += '\n\n失败时回退。';
+  await writeFile(f.path, JSON.stringify(input));
+  assert.match((await launch(t, f).done).error, /new round/i, 'A revised plan must not inherit an old approval.');
+});
+
 test('only one waiting command owns a round, and interruption releases it for reopening', { timeout: 15000 }, async (t) => {
   const f = await fixture(t);
   const first = launch(t, f);
