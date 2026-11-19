@@ -2,6 +2,15 @@
 
 Write one scenario per behavior a reviewer can accept or reject independently. Give each scenario a stable ID so the plan, test, and evidence can refer to the same behavior. Use the reviewer's language. A BDD runner is optional.
 
+## Arrange the review
+
+1. Start with a short `kv` block for the acceptance scope, target environment, and current evidence status. List fixtures shared by several scenarios once below it. Put BDD after any `state` or `api` reference the reader needs.
+2. Group scenarios by behavior. Use a heading with the scenario ID and outcome. Put Given and When together in a two-column `kv` block. Use short values so the trigger stays visible beside the setup.
+3. Keep a simple Then and its verification entry as short Markdown. If several assertions need separate checks, use a three-column table: **Observation | Pass condition | Verification entry**. Give each assertion one row. Put the criterion and where to check it together, rather than repeating a second list of verification steps.
+4. Put **Evidence · status** below the assertion text or table. Link actual receipts here. If the scenario is pending, list the evidence to capture instead. An overview does not replace each scenario's evidence status.
+
+Use the plan's existing panel. In `reviewPlan`, use level-three headings for groups and level-four headings for scenarios. Do not give every scenario a panel or add a custom renderer component.
+
 ## Write the scenario
 
 - **System and actors:** Name the system under test and the actor that initiates the behavior. Name external systems only when they supply a fixture or an observation. Share this information above the scenarios when it applies to all of them.
