@@ -14,4 +14,6 @@ python3 "<SETUP_SKILL_DIR>/scripts/ensure-config.py" --project-root "<PROJECT_RO
 
 Existing configuration wins, byte-for-byte. A missing file first imports the same-named legacy `docs/agents/` file unchanged; otherwise it uses the bundled local-tracker, triage-label, or domain template. New local tickets use `<PLAN_DIR>/tickets/`, decision maps use `<PLAN_DIR>/wayfinder/`, and new ADRs use `<PROJECT_ROOT>/.planning/adr/`, shared across tasks. Legacy configuration retains its explicit paths until manually revised.
 
+When consuming domain docs, apply the bundled [glossary selection rules](../domain.md#glossary-selection) if the project has not set its own glossary paths or selection policy. A preserved configuration that only mentions `GLOSSARY.md` as the default can still use `GLOSSARY.zh-CN.md`; no rewrite is needed.
+
 The script creates only the three project-level configuration files. It does not create a PWF plan, task artifacts, glossary/ADR documents, remote issues/labels or steering files, including `AGENTS.override.md`. It does not infer a tracker from git remotes. Run manual `setup-matt-pocock-skills` to choose a different tracker or domain layout and write the configuration index to `AGENTS.override.md`. Its `--tracker` option selects a template for a missing file only.

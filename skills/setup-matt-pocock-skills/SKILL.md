@@ -31,7 +31,7 @@ Look at the current repo to understand its starting state. Read whatever exists;
 
 - `git remote -v` and `.git/config`: is this a GitHub repo? Which one?
 - `AGENTS.override.md`, `AGENTS.md`, and `CLAUDE.md` at the repo root: read existing rules and any `## Agent skills` sections before drafting the override update.
-- `GLOSSARY.md` and `GLOSSARY-MAP.md` at the repo root, and the legacy `CONTEXT.md` / `CONTEXT-MAP.md`. If a legacy file exists, offer to `git mv` it to its `GLOSSARY` name and rewrite those names in `.planning/domain.md`.
+- Root `GLOSSARY.md`, `GLOSSARY.zh-CN.md`, and `GLOSSARY-MAP.md`, plus any glossaries linked by the map. Use the [glossary selection rules](domain.md#glossary-selection). Check for legacy `CONTEXT.md` and `CONTEXT-MAP.md`. Offer to rename a legacy file only if its replacement is absent, and update the references in `.planning/domain.md` if approved.
 - `.planning/adr/`, `docs/adr/` and any `src/*/docs/adr/` directories
 - `.planning/` and legacy `docs/agents/`: does configuration already exist? Read it before proposing changes.
 - the selected `<PLAN_DIR>`: check existing `spec.md`, `tickets/`, and `wayfinder/` artifacts
@@ -67,9 +67,9 @@ If it is installed, ask exactly one question:
 
 The defaults are the five canonical roles, each label string equal to its name: `needs-triage`, `needs-info`, `ready-for-agent`, `ready-for-human`, `wontfix`. On **yes**, write them as-is. Only if the user says no, usually because their tracker already uses other names (e.g. `bug:triage` for `needs-triage`), collect the overrides so `triage` applies existing labels instead of creating duplicates.
 
-**Section C: Domain docs.** Default to **single-context** (`GLOSSARY.md` at the repo root + new ADRs in the project's `.planning/adr/`; read existing project ADRs too). This fits almost every repo; write it without asking.
+**Section C: Domain docs.** Keep an existing layout. Otherwise default to **single-context**: a root glossary (`GLOSSARY.md` or `GLOSSARY.zh-CN.md`) and new ADRs in `.planning/adr/`. Read existing project ADRs too. Write the layout without asking when there is no layout choice to make.
 
-Offer **multi-context** (a root `GLOSSARY-MAP.md` pointing to per-context `GLOSSARY.md` files) only when exploration found monorepo signals. Then confirm which layout they want.
+Offer a new **multi-context** layout only when exploration found monorepo signals. Confirm the layout with the user. `GLOSSARY-MAP.md` remains the root index and can link either glossary filename.
 
 ### 3. Confirm and edit
 

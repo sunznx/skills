@@ -31,7 +31,7 @@ _Avoid_: Client, buyer, account
 
 ## Single vs multi-context repos
 
-**Single context (most repos):** One `GLOSSARY.md` at the repo root.
+**Single context (most repos):** A root `GLOSSARY.md` or `GLOSSARY.zh-CN.md`.
 
 **Multiple contexts:** A `GLOSSARY-MAP.md` at the repo root lists the contexts, where they live, and how they relate to each other:
 
@@ -51,10 +51,6 @@ _Avoid_: Client, buyer, account
 - **Ordering ↔ Billing**: Shared types for `CustomerId` and `Money`
 ```
 
-The skill infers which structure applies:
-
-- If `GLOSSARY-MAP.md` exists, read it to find contexts
-- If only a root `GLOSSARY.md` exists, single context
-- If neither exists, create a root `GLOSSARY.md` lazily when the first term is resolved
+Use the [glossary selection rules](../setup-matt-pocock-skills/domain.md#glossary-selection) for the root glossary or for each relevant context in the map. Create a glossary only when the first term for that context is resolved and no glossary exists.
 
 When multiple contexts exist, infer which one the current topic relates to. If unclear, ask.
