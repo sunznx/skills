@@ -7,7 +7,7 @@ description: Build and sharpen a project's domain model. Use when discussing cod
 
 Actively build and sharpen the project's domain model as you design. This is the *active* discipline: challenging terms, inventing edge-case scenarios, and writing the glossary and decisions down the moment they crystallise. (Merely *reading* `GLOSSARY.md` for vocabulary is not this skill: that's a one-line habit any skill can do. This skill is for when you're changing the model, not just consuming it.)
 
-Domain documents are project knowledge, so this skill needs no plan of its own. Before reading Matt configuration, follow [shared configuration initialization](../setup-matt-pocock-skills/references/ensure-config.md). Read `.planning/domain.md` and use the [glossary selection rules](../setup-matt-pocock-skills/domain.md#glossary-selection) when the project has no explicit glossary policy. Unless the project configuration or calling skill specifies another ADR directory, use `.planning/adr/` at the project root, shared across tasks. Record paths to changed glossaries and ADRs in the selected plan, if any.
+Domain documents are project knowledge, so this skill needs no plan of its own. Before reading Matt configuration, follow [shared configuration initialization](../setup-matt-pocock-skills/references/ensure-config.md). Read `.planning/domain.md` and use the [bilingual glossary rules](../setup-matt-pocock-skills/domain.md#bilingual-glossaries) when the project has no explicit glossary policy. Unless the project configuration or calling skill specifies another ADR directory, use `.planning/adr/` at the project root, shared across tasks. Record paths to changed glossaries and ADRs in the selected plan, if any.
 
 ## File structure
 
@@ -40,13 +40,13 @@ If a `GLOSSARY-MAP.md` exists at the root, the repo has multiple contexts. The m
         └── GLOSSARY.md
 ```
 
-Create files lazily. When the first term is resolved, use the selected glossary; create one only if no glossary exists for that context. Create the ADR directory only when the first ADR is needed.
+Create files lazily. When the first term is resolved, create a glossary only if none exists for that context. Create the ADR directory only when the first ADR is needed.
 
 ## During the session
 
 ### Challenge against the glossary
 
-When the user's wording conflicts with the selected glossary, call it out immediately. "Your glossary defines 'cancellation' as X, but you seem to mean Y. Which is it?"
+When the user's wording conflicts with the glossary, call it out immediately. "Your glossary defines 'cancellation' as X, but you seem to mean Y. Which is it?"
 
 ### Sharpen fuzzy language
 
@@ -60,9 +60,9 @@ When domain relationships are being discussed, stress-test them with specific sc
 
 When the user states how something works, check whether the code agrees. If you find a contradiction, surface it: "Your code cancels entire Orders, but you just said partial cancellation is possible. Which is right?"
 
-### Update the selected glossary inline
+### Update the glossary inline
 
-When a term is resolved, update the selected glossary on the spot. Use [GLOSSARY-FORMAT.md](./GLOSSARY-FORMAT.md) for either filename.
+When a term is resolved, record it on the spot. Follow the bilingual glossary rules when both files exist. Use [GLOSSARY-FORMAT.md](./GLOSSARY-FORMAT.md) for both filenames.
 
 Keep implementation details and decisions out of the glossary.
 

@@ -23,7 +23,7 @@ This command is _informed_ by the project's domain model and built on a shared d
 - If the user named a direction (a module, a subsystem, a pain point), take it, and skip the inference below.
 - Otherwise, walk back a good stretch of the commit history (`git log --oneline`) to find the codebase's hot spots, the files and areas that keep coming up, and let those paths pull your attention first. If the changes are scattered with no clear hot spot, widen the net.
 
-Read `.planning/domain.md` and select the relevant glossary using the project's convention or the [default glossary selection rules](../setup-matt-pocock-skills/domain.md#glossary-selection).
+Read `.planning/domain.md` and the relevant glossaries using the project's convention or the [default bilingual glossary rules](../setup-matt-pocock-skills/domain.md#bilingual-glossaries).
 
 Then spawn a sub-agent with a fresh context window to walk the codebase. Pass it the selected `<PLAN_DIR>` so it reports findings for this task. Don't follow rigid heuristics; explore organically and note where you experience friction:
 
@@ -52,7 +52,7 @@ For each candidate, render a card with:
 
 End the report with a **Top recommendation** section: which candidate you'd tackle first and why.
 
-**Use the selected glossary for domain vocabulary and `/codebase-design` for architecture vocabulary.** If the glossary defines "Order," talk about "the Order intake module," not "the FooBarHandler," and not "the Order service."
+**Use the glossaries for domain vocabulary and `/codebase-design` for architecture vocabulary.** If the glossary defines "Order," talk about "the Order intake module," not "the FooBarHandler," and not "the Order service."
 
 **ADR conflicts**: if a candidate contradicts an existing ADR, only surface it when the friction is real enough to warrant revisiting the ADR. Mark it clearly in the card (e.g. a warning callout: _"contradicts ADR-0007, but worth reopening because…"_). Don't list every theoretical refactor an ADR forbids.
 
@@ -66,6 +66,6 @@ Once the user picks a candidate, call the Skill tool with "grilling" to walk the
 
 Side effects happen inline as decisions crystallize; call the Skill tool with "domain-modeling" to keep the domain model current as you go:
 
-- **Naming a deepened module after a concept not in the selected glossary, or sharpening a fuzzy term?** Use `domain-modeling` to record the agreed term.
+- **Naming a deepened module after a concept not in the glossary, or sharpening a fuzzy term?** Use `domain-modeling` to record the agreed term.
 - **User rejects the candidate with a load-bearing reason?** Offer an ADR, framed as: _"Want me to record this as an ADR so future architecture reviews don't re-suggest it?"_ Only offer when the reason would actually be needed by a future explorer to avoid re-suggesting the same thing; skip ephemeral reasons ("not worth it right now") and self-evident ones.
 - **Want to explore alternative interfaces for the deepened module?** Call the Skill tool with "codebase-design" and use its design-it-twice parallel sub-agent pattern.

@@ -31,7 +31,7 @@ _Avoid_: Client, buyer, account
 
 ## Single vs multi-context repos
 
-**Single context (most repos):** A root `GLOSSARY.md` or `GLOSSARY.zh-CN.md`.
+**Single context (most repos):** Root glossaries. `GLOSSARY.md` and `GLOSSARY.zh-CN.md` can coexist.
 
 **Multiple contexts:** A `GLOSSARY-MAP.md` at the repo root lists the contexts, where they live, and how they relate to each other:
 
@@ -51,6 +51,6 @@ _Avoid_: Client, buyer, account
 - **Ordering ↔ Billing**: Shared types for `CustomerId` and `Money`
 ```
 
-Use the [glossary selection rules](../setup-matt-pocock-skills/domain.md#glossary-selection) for the root glossary or for each relevant context in the map. Create a glossary only when the first term for that context is resolved and no glossary exists.
+Use the [bilingual glossary rules](../setup-matt-pocock-skills/domain.md#bilingual-glossaries) for the root or each relevant context in the map. Create a glossary only when the first term for that context is resolved and no glossary exists.
 
 When multiple contexts exist, infer which one the current topic relates to. If unclear, ask.

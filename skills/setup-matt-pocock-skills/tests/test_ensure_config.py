@@ -44,6 +44,20 @@ class EnsureConfigTests(unittest.TestCase):
         self.assertEqual({p.name for p in self.project.iterdir()}, {".planning"})
         self.assertEqual({p.name for p in (self.project / ".planning").iterdir()}, set(CONFIGS))
 
+    def test_default_domain_policy_supports_coexisting_glossaries(self):
+        glossaries = {
+            self.project / "GLOSSARY.md": b"# Order\n",
+            self.project / "GLOSSARY.zh-CN.md": "# 订单\n".encode("utf-8"),
+        }
+        for path, content in glossaries.items():
+            path.write_bytes(content)
+
+        result = self.run_cli()
+        self.assertEqual(result.returncode, 0, result.stderr)
+        domain = (self.project / ".planning/domain.md").read_text(encoding="utf-8")
+        self.assertRegex(domain, r"(?m)^- Read both `GLOSSARY\.md` and `GLOSSARY\.zh-CN\.md`")
+        self.assertEqual({path: path.read_bytes() for path in glossaries}, glossaries)
+
     def test_repeated_runs_preserve_custom_configuration_bytes_and_mtime(self):
         self.assertEqual(self.run_cli().returncode, 0)
         paths = [self.project / ".planning" / n for n in CONFIGS]
