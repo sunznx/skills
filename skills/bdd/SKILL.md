@@ -1,11 +1,11 @@
 ---
 name: bdd
-description: Turns business rules and user stories into verifiable Given/When/Then scenarios. Use to discover missing acceptance decisions, draft or review BDD scenarios, write Gherkin `.feature` files, or track BDD acceptance in Planning with Files (PWF).
+description: Turns business rules and user stories into verifiable Given/When/Then scenarios. Use to discover missing acceptance decisions, draft or review Markdown scenarios, or track BDD acceptance in Planning with Files (PWF).
 ---
 
 # BDD
 
-Use examples to agree on behavior before treating a scenario as an acceptance criterion. Gherkin records the agreement; a runner is optional.
+Use examples to agree on behavior before treating a scenario as an acceptance criterion. Use Markdown (`.md`) by default. A test runner is optional.
 
 ## 0. Select the work plan
 
@@ -22,17 +22,17 @@ Use `planning-with-files` to select or create this task's plan as `<PLAN_DIR>`. 
 - Give each scenario a stable ID and a title that names one independently reviewable behavior. Keep the ID across edits and use it in review and verification. Keep one business trigger per scenario. Use `And` for related setup or effects of that trigger; split when a different trigger or starting state changes which rule applies.
 - **Given** sets up reproducible state. Name only the actor, data, permissions, or clock values that affect the result. **When** states the business action or event. **Then** names observable outcomes and their expected values. Use the domain's language rather than selectors, private methods, or storage details.
 - In review mode, name each affected scenario and the ambiguity, overlap, missing case, or unobservable result. Show the smallest rewrite that fixes it. If the correct rewrite depends on a product decision, ask rather than choosing it.
-- Return scenarios and open decisions in the reviewer's language. Use Markdown for discussion or acceptance review. When asked for `.feature` files, use the project's Gherkin dialect, grouping, and tags; keep unresolved decisions in the accompanying notes. Use `Scenario Outline` only when rows exercise the same rule with the same step structure. See the [Gherkin reference](https://cucumber.io/docs/gherkin/reference/) for syntax.
+- Write scenarios and open decisions in the reviewer's language. Keep unresolved decisions separate from agreed scenarios.
 
 ## 3. Map to verification
 
 - For each agreed scenario, name the existing test or the manual entry point and the observation that would prove the result. Mark proposed checks as such and report a result only after running or observing the check in the stated environment.
-- If asked to automate, reuse the project's runner and step definitions where they fit. If the project has no Gherkin runner, use its existing test stack unless a new runner is explicitly requested. Use `tdd` to implement the check at the public boundary where the result is observable.
+- If asked to automate, use the project's existing test stack unless a new runner is explicitly requested. Use `tdd` to implement the check at the public boundary where the result is observable.
 
 ## 4. Persist decisions, scenarios, and evidence
 
 - `findings.md`: Record confirmed rules and open decisions separately. Link each decision to the affected scenario IDs. A proposed answer or skipped question does not settle a rule.
-- Acceptance source: Keep scenarios in the existing spec or `.feature` file if it owns the acceptance criteria. Otherwise create `<PLAN_DIR>/bdd/` and save each scenario in its own `<scenario-name>.md`. Use the title without the ID as the filename, preserving its language and replacing only characters disallowed in filenames, including path separators. If the path already belongs to another scenario, use a more specific title rather than overwriting. Keep the scenario ID, Given/When/Then, and planned verification in the file. Link to each scenario by ID from `task_plan.md`. When a title changes, rename the file, update the current plan's links, and retain the ID.
+- Acceptance scenarios: Save each scenario as its own `<PLAN_DIR>/bdd/<scenario-name>.md`. Use the title without the ID as the filename, preserving its language and replacing only characters disallowed in filenames, including path separators. If the path already belongs to another scenario, use a more specific title rather than overwriting. Keep the scenario ID, Given/When/Then, and planned verification in the file. Link to each scenario by ID from `task_plan.md`. When a title changes, rename the file, update the current plan's links, and retain the ID.
 - `progress.md`: Record each agreed scenario's verification status by ID and target environment. After a check runs, record the test command or manual entry point, actual result, and evidence link when available. If not run or blocked, name the missing check or prerequisite. Advance the applicable PWF phase only when its acceptance obligations are met; a PWF format or completion check does not verify product behavior.
 
-References: [Cucumber BDD practices](https://cucumber.io/docs/bdd/) and [Writing better Gherkin](https://cucumber.io/docs/bdd/better-gherkin/).
+Reference: [Cucumber BDD practices](https://cucumber.io/docs/bdd/).

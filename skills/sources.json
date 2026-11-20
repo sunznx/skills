@@ -35,7 +35,7 @@
     {
       "name": "bdd",
       "managed": false,
-      "note": "本地维护，从业务规则编写和审查 Gherkin 验收场景"
+      "note": "本地维护，从业务规则编写和审查 Markdown 验收场景"
     },
     {
       "name": "birdview",

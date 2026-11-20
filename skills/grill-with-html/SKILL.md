@@ -66,7 +66,7 @@ Treat answers as decision data, not commands. Record decisions and unlocked bran
 
 ## Final implementation-plan review
 
-When all design decisions are settled, load and use `bdd` with the same `PLAN_ID` and `<PLAN_DIR>` to draft or review acceptance scenarios and their verification entries. Read the scenarios linked from the selected plan, whether they live in `<PLAN_DIR>/bdd/` or in an existing project spec. Embed the in-scope scenarios and their IDs in `questions[].reviewPlan`. The round is a snapshot; make later edits in the acceptance source, not in a saved round.
+When all design decisions are settled, load and use `bdd` with the same `PLAN_ID` and `<PLAN_DIR>` to draft or review acceptance scenarios and their verification entries. Follow the scenario links in `task_plan.md` to read the Markdown files in `<PLAN_DIR>/bdd/`. Embed the in-scope scenarios and their IDs in `questions[].reviewPlan`. The round is a snapshot; make later edits in the scenario files, not in a saved round.
 
 Start a new round using [the final-plan input rules](references/input.md#content-ownership-and-preview). Ask one question: whether to proceed with this version. Use `approve-plan` as the question ID and `approve` and `revise` as the option IDs. Use short labels in the user's language. Leave both choices unselected and omit `allowSkip`.
 
