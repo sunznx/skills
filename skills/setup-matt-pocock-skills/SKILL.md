@@ -9,7 +9,7 @@ Scaffold the per-repo configuration that the engineering skills assume:
 
 - **Issue tracker**: where issues live (GitHub by default; local markdown is also supported out of the box)
 - **Triage labels**: the strings used for the five canonical triage roles
-- **Domain docs**: where `GLOSSARY.md` (术语表), `GLOSSARY-MAP.md` (术语表索引, for multi-context repos), and ADRs live, and the consumer rules for reading them
+- **Domain docs**: where `GLOSSARY.md` and ADRs live, and the consumer rules for reading them
 
 Manual setup is prompt-driven: explore, confirm the intended configuration, then write. Dependent skills use the deterministic [missing-only initializer](references/ensure-config.md) directly; that path fills defaults without running this interview or editing steering files.
 
