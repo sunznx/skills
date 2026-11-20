@@ -369,10 +369,10 @@
     },
     {
       "name": "tdd",
-      "source": "mattpocock/skills",
-      "url": "https://github.com/mattpocock/skills.git",
-      "path": "skills/engineering/tdd/SKILL.md",
-      "base_tree": "667dbdd00c09d0e2189e082986e6a4d61a67c2a6"
+      "source": "cursor/plugins",
+      "url": "https://github.com/cursor/plugins.git",
+      "path": "pstack/skills/tdd/SKILL.md",
+      "base_tree": "1064da72ceca07bf7f36bddebada585bb59da7bc"
     },
     {
       "name": "teach",

@@ -95,7 +95,7 @@ $sync-skills 更新 agent-messaging 删除某个功能
 | `spike` | [openclaw/openclaw](https://github.com/openclaw/openclaw) | `skills/spike/SKILL.md` | 三方合并 |
 | `statechart` | [cursor/plugins](https://github.com/cursor/plugins) | `pstack/skills/statechart/SKILL.md` | 三方合并 |
 | `sync-skills` | 本仓库维护的同步 skill | — | 本地维护 |
-| `tdd` | [mattpocock/skills](https://github.com/mattpocock/skills) | `skills/engineering/tdd/SKILL.md` | 三方合并 |
+| `tdd` | [cursor/plugins](https://github.com/cursor/plugins) | `pstack/skills/tdd/SKILL.md` | 三方合并 |
 | `teach` | [mattpocock/skills](https://github.com/mattpocock/skills) | `skills/productivity/teach/SKILL.md` | 三方合并 |
 | `technical-writing` | [cursor/plugins](https://github.com/cursor/plugins) | `pstack/skills/technical-writing/SKILL.md` | 三方合并 |
 | `thermo-nuclear-code-quality-review` | [cursor/plugins](https://github.com/cursor/plugins) | `cursor-team-kit/skills/thermo-nuclear-code-quality-review/SKILL.md` | 三方合并 |

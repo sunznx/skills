@@ -27,7 +27,7 @@ Use `planning-with-files` to select or create this task's plan as `<PLAN_DIR>`. 
 ## 3. Map to verification
 
 - For each agreed scenario, name the existing test or the manual entry point and the observation that would prove the result. Mark proposed checks as such and report a result only after running or observing the check in the stated environment.
-- If asked to automate, use the project's existing test stack unless a new runner is explicitly requested. Use `tdd` to implement the check at the public boundary where the result is observable.
+- If asked to automate, use the project's existing test stack unless a new runner is explicitly requested. Verify the behavior at its public boundary. For a bug with an obvious, cheap local test path or an explicit request for test-first or regression testing, follow the `tdd` skill.
 
 ## 4. Persist decisions, scenarios, and evidence
 
