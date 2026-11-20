@@ -9,8 +9,6 @@ Use `planning-with-files` to select or create this task's plan as `<PLAN_DIR>`; 
 
 If the user passes a ticket reference, fetch it from the issue tracker and state its title before starting. If the reference is ambiguous, ask.
 
-Call the Skill tool with "tdd" where possible, at pre-agreed seams.
-
 Run typechecking regularly, single test files regularly, and the full test suite once at the end.
 
 Once done, call the Skill tool with "code-review" to review the work with the same `PLAN_ID` and `<PLAN_DIR>`.

@@ -30,7 +30,7 @@ Communication to and from subagents should be sparse. Communicate primarily thro
 4. Use a fresh **implementer subagent** for each ticket, each in its own worktree on its own branch. Each implementer subagent:
    - receives ownership of its ticket and affected files, knows other agents are working in the codebase, and preserves their edits;
    - confirms its worktree is based on the current integration branch before starting; if it has existing work on another base, preserves that work and rebases onto the integration branch;
-   - uses `/tdd` at the spec's agreed seams to build the ticket, runs typechecking and focused tests regularly, and verifies user-visible behavior with the project's repeatable E2E scenario when available;
+   - runs typechecking and focused tests regularly, and verifies user-visible behavior with the project's repeatable E2E scenario when available;
    - commits only its ticket changes and rebases onto the latest integration branch tip before reporting done, with acceptance evidence and commit references.
 
 5. Once an **implementer subagent** completes, integrate its work with a **merger subagent**. Serialize integrations: synchronize the latest integration branch, rebase the ticket branch onto it, run the relevant checks, then fast-forward the integration branch. Resolve conflicts by preserving the intent of both sides; preserve unfinished worktrees until resolved. After each rebase or conflict resolution, check `git status` and `git stash list`; identify each stash's purpose and drop only confirmed obsolete entries.
