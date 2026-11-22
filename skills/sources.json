@@ -453,13 +453,6 @@
       "base_tree": "2104d685d33ba9594a4dfe13241f0f7f02190401"
     },
     {
-      "name": "wait-what",
-      "source": "mattpocock/skills",
-      "url": "https://github.com/mattpocock/skills.git",
-      "path": "skills/productivity/wait-what/SKILL.md",
-      "base_tree": "c8b050e6b8c711be1a9008ceacb2126914f0763e"
-    },
-    {
       "name": "wayfinder",
       "source": "mattpocock/skills",
       "url": "https://github.com/mattpocock/skills.git",
