@@ -18,7 +18,7 @@
       "source": "QingYunA/answer-me-with-html",
       "url": "https://github.com/QingYunA/answer-me-with-html.git",
       "path": "skills/answer-me-with-html/SKILL.md",
-      "base_tree": "193227a0df61d26c2c1ba7a8730daaa47de88ec1"
+      "base_tree": "9cb617862948eb8390dd5a8745656f472f75de8d"
     },
     {
       "name": "archify",
@@ -42,7 +42,7 @@
       "source": "Qiuner/birdview",
       "url": "https://github.com/Qiuner/birdview.git",
       "path": "SKILL.md",
-      "base_tree": "9576f6c54adedde6cae11469671fb5e3e672abfe"
+      "base_tree": "fc52a10653bfeda171ecb724f4b6325dc1fab720"
     },
     {
       "name": "code-review",
@@ -90,7 +90,7 @@
       "source": "cathrynlavery/diagram-design",
       "url": "https://github.com/cathrynlavery/diagram-design.git",
       "path": "skills/diagram-design/SKILL.md",
-      "base_tree": "cde001a0341ed67e818207c4e3f06d4727a42cde"
+      "base_tree": "ed58ce288b23b5fc2f26b57e91c794088cc557bd"
     },
     {
       "name": "documd-visuals",
@@ -171,7 +171,7 @@
       "source": "lycfyi/yskills",
       "url": "https://github.com/lycfyi/yskills.git",
       "path": "skills/human-context-rebuild/SKILL.md",
-      "base_tree": "424478b5dba49cbd4da9ebae2d3df74c124994c9"
+      "base_tree": "66db685d617500dcfa215aa41e706c4cc1d09d81"
     },
     {
       "name": "implement",
@@ -253,7 +253,7 @@
       "source": "OthmanAdi/planning-with-files",
       "url": "https://github.com/OthmanAdi/planning-with-files.git",
       "path": ".agents/skills/planning-with-files/SKILL.md",
-      "base_tree": "ee1007d9fa50ad11ccc0d6324ed04325364d43e0",
+      "base_tree": "5fb94afe28c6982de3fb3540d9525fef1ad06ca4",
       "deploy": false
     },
     {
@@ -341,7 +341,7 @@
       "source": "mattpocock/skills",
       "url": "https://github.com/mattpocock/skills.git",
       "path": "skills/in-progress/software-factory/SKILL.md",
-      "base_tree": "2a146bd4f7d68ff44d8dfdad8d6e5bc369ac931c"
+      "base_tree": "6562f61d6af157b109e7e1f61f670966d62218de"
     },
     {
       "name": "spec-bootstrap",
@@ -360,7 +360,7 @@
       "source": "cursor/plugins",
       "url": "https://github.com/cursor/plugins.git",
       "path": "pstack/skills/statechart/SKILL.md",
-      "base_tree": "e7f097e74b3297b2fbb2707be7d8e336e0df8b7c"
+      "base_tree": "d3d60f78916e8c17a598c39738e45ab419603f06"
     },
     {
       "name": "sync-skills",
@@ -471,7 +471,7 @@
       "source": "lycfyi/yskills",
       "url": "https://github.com/lycfyi/yskills.git",
       "path": "skills/whats-next/SKILL.md",
-      "base_tree": "1ecc1fee4c49c732a8e8b1550d6a7d27c117e3d5"
+      "base_tree": "39cf604a5515de61fd2e54c8f7c14dd1c3ee5961"
     },
     {
       "name": "why",
