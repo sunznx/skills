@@ -18,14 +18,14 @@
       "source": "QingYunA/answer-me-with-html",
       "url": "https://github.com/QingYunA/answer-me-with-html.git",
       "path": "skills/answer-me-with-html/SKILL.md",
-      "base_tree": "9cb617862948eb8390dd5a8745656f472f75de8d"
+      "base_tree": "603f3b52b560447b60317297572d8ebfe86921a0"
     },
     {
       "name": "archify",
       "source": "tt-a1i/archify",
       "url": "https://github.com/tt-a1i/archify.git",
       "path": "archify/SKILL.md",
-      "base_tree": "03645a096811664da641153a4a42e862c4a6bc62"
+      "base_tree": "d3e9c89dd9510a64c1114d685b68ebf1887f135e"
     },
     {
       "name": "background-agent-jobs",
@@ -90,7 +90,7 @@
       "source": "cathrynlavery/diagram-design",
       "url": "https://github.com/cathrynlavery/diagram-design.git",
       "path": "skills/diagram-design/SKILL.md",
-      "base_tree": "ed58ce288b23b5fc2f26b57e91c794088cc557bd"
+      "base_tree": "455a09aec349931d55f9438756b1ccfcdfa6b04f"
     },
     {
       "name": "documd-visuals",
