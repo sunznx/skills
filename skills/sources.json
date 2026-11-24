@@ -281,6 +281,13 @@
       "base_tree": "e55de8143f337465bbbe2a7320065c4c9e7f14fe"
     },
     {
+      "name": "reframe",
+      "source": "cursor/plugins",
+      "url": "https://github.com/cursor/plugins.git",
+      "path": "pstack/skills/reframe/SKILL.md",
+      "base_tree": "69c91262372cacf9182c0434077c4b8c844a9ebf"
+    },
+    {
       "name": "research",
       "source": "mattpocock/skills",
       "url": "https://github.com/mattpocock/skills.git",

@@ -82,6 +82,7 @@ $sync-skills 更新 agent-messaging 删除某个功能
 | `pwf-artifact` | 本地维护，显式保存 PWF 任务产物 | — | 本地维护 |
 | `recall` | 本地维护，从 PWF 计划和 git 现状重建工作上下文并报告漂移 | — | 本地维护 |
 | `reflect` | [cursor/plugins](https://github.com/cursor/plugins) | `pstack/skills/reflect/SKILL.md` | 三方合并 |
+| `reframe` | [cursor/plugins](https://github.com/cursor/plugins) | `pstack/skills/reframe/SKILL.md` | 三方合并 |
 | `research` | [mattpocock/skills](https://github.com/mattpocock/skills) | `skills/engineering/research/SKILL.md` | 三方合并 |
 | `retro` | [mattpocock/skills](https://github.com/mattpocock/skills) | `skills/engineering/retro/SKILL.md` | 三方合并 |
 | `retro-lint` | 本地维护，复盘纠正固化为检查与 .planning/lint 索引 | — | 本地维护 |
