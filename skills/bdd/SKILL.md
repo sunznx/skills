@@ -1,6 +1,6 @@
 ---
 name: bdd
-description: Turns business rules and user stories into verifiable Given/When/Then scenarios. Use to discover missing acceptance decisions, draft or review Markdown scenarios, or track BDD acceptance in Planning with Files (PWF).
+description: Turns business rules and user stories into verifiable Given/When/Then scenarios. Use to discover missing acceptance decisions, synthesize scenarios for specs and tickets, review Markdown scenarios, or track BDD acceptance in Planning with Files (PWF).
 ---
 
 # BDD
@@ -11,17 +11,23 @@ Use examples to agree on behavior before treating a scenario as an acceptance cr
 
 Use `planning-with-files` to select or create this task's plan as `<PLAN_DIR>`. When another workflow invokes BDD, reuse its selected plan. On resume, follow the acceptance links in `task_plan.md` before drafting more scenarios.
 
+## Synthesis for specs and tickets
+
+When `to-spec` or `to-tickets` invokes BDD, start from confirmed rules and follow the scenario links in the selected plan. Reuse each matching scenario. Add a scenario for a confirmed rule that lacks one. When the user confirms a change to an existing rule, revise its scenario under the same ID.
+
+Record material gaps as open decisions for the caller to include in its output. Finish the confirmed scenarios in this pass and leave questions to the calling workflow.
+
 ## 1. Discover the rule
 
 - Read the requested change, accepted requirements, and relevant existing scenarios or public tests. Reuse domain terms. Keep **current behavior** distinct from **intended behavior**; a test of the former does not settle the latter when the feature is changing.
-- Identify the actor, the rule, and a concrete example for the normal path. Add a boundary, denial, or failure example when its result distinguishes plausible rules. Ask the smallest question that would resolve each material gap. For example: "Does a link expire at exactly 24 hours, or only after 24 hours?"
+- Identify the actor, the rule, and a concrete example for the normal path. Add a boundary, denial, or failure example when its result distinguishes plausible rules. Outside synthesis, ask the smallest question that would resolve each material gap. For example: "Does a link expire at exactly 24 hours, or only after 24 hours?"
 - Keep confirmed rules, proposed rules, and open questions separate. Draft the settled scenarios without waiting for unrelated answers. Leave disputed expectations out of agreed scenarios and executable tests.
 
 ## 2. Formulate scenarios
 
 - Give each scenario a stable ID and a title that names one independently reviewable behavior. Keep the ID across edits and use it in review and verification. Keep one business trigger per scenario. Use `And` for related setup or effects of that trigger; split when a different trigger or starting state changes which rule applies.
 - **Given** sets up reproducible state. Name only the actor, data, permissions, or clock values that affect the result. **When** states the business action or event. **Then** names observable outcomes and their expected values. Use the domain's language rather than selectors, private methods, or storage details.
-- In review mode, name each affected scenario and the ambiguity, overlap, missing case, or unobservable result. Show the smallest rewrite that fixes it. If the correct rewrite depends on a product decision, ask rather than choosing it.
+- In review mode, name each affected scenario and the ambiguity, overlap, missing case, or unobservable result. Show the smallest rewrite that fixes it. If the rewrite depends on a product decision, record the gap in synthesis mode or ask in a standalone review.
 - Write scenarios and open decisions in the reviewer's language. Keep unresolved decisions separate from agreed scenarios.
 
 ## 3. Map to verification
@@ -31,8 +37,12 @@ Use `planning-with-files` to select or create this task's plan as `<PLAN_DIR>`. 
 
 ## 4. Persist decisions, scenarios, and evidence
 
-- `findings.md`: Record confirmed rules and open decisions separately. Link each decision to the affected scenario IDs. A proposed answer or skipped question does not settle a rule.
+- `findings.md`: Record confirmed rules and open decisions separately. Link each decision to the affected scenario IDs when they exist. A proposed answer or skipped question does not settle a rule.
 - Acceptance scenarios: Save each scenario as its own `<PLAN_DIR>/bdd/<scenario-name>.md`. Use the title without the ID as the filename, preserving its language and replacing only characters disallowed in filenames, including path separators. If the path already belongs to another scenario, use a more specific title rather than overwriting. Keep the scenario ID, Given/When/Then, and planned verification in the file. Link to each scenario by ID from `task_plan.md`. When a title changes, rename the file, update the current plan's links, and retain the ID.
-- `progress.md`: Record each agreed scenario's verification status by ID and target environment. After a check runs, record the test command or manual entry point, actual result, and evidence link when available. If not run or blocked, name the missing check or prerequisite. Advance the applicable PWF phase only when its acceptance obligations are met; a PWF format or completion check does not verify product behavior.
+- `progress.md`: Record each agreed scenario's verification status by ID and target environment once the environment is known. After a check runs, record the test command or manual entry point, actual result, and evidence link when available. If not run or blocked, name the missing check or prerequisite. Preserve existing results when drafting. When a rule changes, retain the prior evidence as history and mark verification of the revised expectation as pending. Advance the applicable PWF phase only when its acceptance obligations are met; a PWF format or completion check does not verify product behavior.
+
+## Referencing scenarios
+
+Use the stable ID to refer to the canonical scenario. In local artifacts, link it with a path relative to the artifact and URL-encode the filename as needed. In a remote issue, link to the same scenario if its URL is accessible to the issue readers. Otherwise, give the ID and the project-relative path to the plan's `task_plan.md` so readers with access can resolve it in the scenario index. Keep the Given/When/Then body in the scenario file.
 
 Reference: [Cucumber BDD practices](https://cucumber.io/docs/bdd/).

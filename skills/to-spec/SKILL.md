@@ -3,7 +3,7 @@ name: to-spec
 description: "Turn the current conversation into a spec and publish it to the project issue tracker: no interview, just synthesis of what you've already discussed."
 ---
 
-This skill takes the current conversation context and codebase understanding and produces a spec. Do NOT interview the user; just synthesize what you already know.
+Synthesize the spec from the current conversation and codebase. Record gaps as open decisions without interviewing the user.
 
 Use `planning-with-files` to select or create this task's plan as `<PLAN_DIR>`; when another workflow invokes this skill, use that workflow's selected plan. Before reading Matt configuration, follow [shared configuration initialization](../setup-matt-pocock-skills/references/ensure-config.md). Read `.planning/issue-tracker.md` and `.planning/triage-labels.md`. Read `.planning/domain.md` when present.
 
@@ -11,11 +11,11 @@ Use `planning-with-files` to select or create this task's plan as `<PLAN_DIR>`; 
 
 1. Explore the repo to understand the current state of the codebase, if you haven't already. Use the project's domain glossary vocabulary throughout the spec, and respect any ADRs in the area you're touching.
 
-2. Sketch out the seams at which you're going to test the feature. Existing seams should be preferred to new ones. Use the highest seam possible. If new seams are needed, propose them at the highest point you can. The fewer seams across the codebase, the better - the ideal number is one.
+2. Invoke [BDD synthesis](../bdd/SKILL.md#synthesis-for-specs-and-tickets) in the selected plan for confirmed business rules. Put the linked scenario IDs under BDD Acceptance and unsettled rules under Open Decisions.
 
-Check with the user that these seams match their expectations.
+3. Sketch the highest public seams at which to verify the feature. Prefer existing seams and keep the number small. Record any seam decisions that need confirmation under Open Decisions.
 
-3. Write the spec using the template below to `<PLAN_DIR>/spec.md`, then publish the same body to the project issue tracker. Apply the `ready-for-agent` triage label - no need for additional triage. Record the published issue URL in the plan; keep the local spec and issue body in sync when revising it.
+4. Write the spec using the template below to `<PLAN_DIR>/spec.md` and publish it with `ready-for-agent` in the configured tracker's format. For a remote issue, use the [BDD reference format](../bdd/SKILL.md#referencing-scenarios) for scenario links and record the issue URL in the plan. Keep the spec and issue in sync when revising them.
 
 <spec-template>
 
@@ -62,6 +62,16 @@ A list of testing decisions that were made. Include:
 - A description of what makes a good test (only test external behavior, not implementation details)
 - Which modules will be tested
 - Prior art for the tests (i.e. similar types of tests in the codebase)
+
+## BDD Acceptance
+
+- [<Scenario ID>](<relative scenario path>) — <behavior title>
+
+Omit this section when there are no agreed scenarios.
+
+## Open Decisions
+
+List unresolved rules or test seams. Omit this section when there are none.
 
 ## Out of Scope
 
