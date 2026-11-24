@@ -34,7 +34,7 @@ Pick whichever shape best fits the question being asked, *not* whichever is easi
 
 ### 3. Build the shareable HTML file
 
-One file, plain HTML/CSS/JS: no framework, no bundler, no server, everything inline so it opens by double-click and survives being emailed around. Anyone should be able to run it by opening it.
+Save `<PLAN_DIR>/prototype/<slug>/index.html` as one self-contained HTML/CSS/JS file. Keep everything inline so it opens directly without a framework, bundler, or server.
 
 Write it for a non-developer. Every label is in **domain language**, not code: buttons and state read like the business, not the reducer. Explain in plain words what's happening.
 
@@ -55,7 +55,7 @@ Send them the file, or open it for them. They'll click through the walkthroughs 
 
 ### 5. Capture the answer and the prototype
 
-Once the prototype has answered its question, capture the answer, then capture the prototype the way the [SKILL](SKILL.md) describes. The logic-specific mapping: the validated reducer / machine / function set lifts into the real module (the decision, absorbed); the HTML shell rides along to the throwaway branch that keeps the prototype as a primary source, and being one self-contained file, it stays trivially re-runnable there.
+Leave the runnable HTML in the plan directory. Record the observed transitions and the verdict as described in [SKILL.md](SKILL.md#rules-that-apply-to-both). If implementation follows, use the validated logic and leave the preview page behind.
 
 ## Anti-patterns
 
