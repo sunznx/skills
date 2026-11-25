@@ -18,14 +18,14 @@
       "source": "QingYunA/answer-me-with-html",
       "url": "https://github.com/QingYunA/answer-me-with-html.git",
       "path": "skills/answer-me-with-html/SKILL.md",
-      "base_tree": "603f3b52b560447b60317297572d8ebfe86921a0"
+      "base_tree": "e7a5de9709207c576585778ca4e430ff0b5d20a8"
     },
     {
       "name": "archify",
       "source": "tt-a1i/archify",
       "url": "https://github.com/tt-a1i/archify.git",
       "path": "archify/SKILL.md",
-      "base_tree": "d3e9c89dd9510a64c1114d685b68ebf1887f135e"
+      "base_tree": "193c697e93622c9a306567d0d84c7b23a15f2e24"
     },
     {
       "name": "background-agent-jobs",
@@ -90,7 +90,7 @@
       "source": "cathrynlavery/diagram-design",
       "url": "https://github.com/cathrynlavery/diagram-design.git",
       "path": "skills/diagram-design/SKILL.md",
-      "base_tree": "455a09aec349931d55f9438756b1ccfcdfa6b04f"
+      "base_tree": "912c4832afaf65c33969cf025c0a30c05e4f9cdf"
     },
     {
       "name": "documd-visuals",
@@ -253,7 +253,7 @@
       "source": "OthmanAdi/planning-with-files",
       "url": "https://github.com/OthmanAdi/planning-with-files.git",
       "path": ".agents/skills/planning-with-files/SKILL.md",
-      "base_tree": "5fb94afe28c6982de3fb3540d9525fef1ad06ca4",
+      "base_tree": "02e1177bbacdd4c3ea9898e73365927b52fad9ce",
       "deploy": false
     },
     {
