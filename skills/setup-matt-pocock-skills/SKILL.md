@@ -76,7 +76,7 @@ Offer a new **multi-context** layout only when exploration found monorepo signal
 
 Show the user a draft of:
 
-- The `## Agent skills` block to add or update in the project root's `AGENTS.override.md`, including any baseline-reading instruction needed when creating it
+- The `## Agent skills` block to add or update in the project root's `AGENTS.override.md`, plus the baseline header if `AGENTS.md` exists
 - The contents of `.planning/issue-tracker.md`, `.planning/domain.md`, `.planning/triage-labels.md`, and `.planning/lint.md`
 
 Let them edit before writing.
@@ -85,13 +85,17 @@ Let them edit before writing.
 
 **Write the configuration index to `AGENTS.override.md`.** Use `update-agents-override-md` to create or update that file at the project root. This destination applies whether `CLAUDE.md` or `AGENTS.md` exists. Leave those files intact.
 
-Preserve existing override rules and its instruction to read the same-directory `AGENTS.md`. When creating an override beside an existing `AGENTS.md`, include an explicit instruction to read that file and follow its rules except where the override changes them. Keep one baseline-reading pointer.
+When the project root has an `AGENTS.md`, begin `AGENTS.override.md` with one standalone `@AGENTS.md` line and explicitly tell the agent to read and follow the baseline. Preserve existing exceptions. Omit the baseline header when the project has no `AGENTS.md`.
 
-If an `## Agent skills` block already exists in `AGENTS.override.md`, update it in place rather than appending a duplicate. Preserve user edits outside the block. Keep full configuration in `.planning/`; the override contains only summaries and reading pointers.
+Update an existing `## Agent skills` block in place. Preserve user edits outside the block. Put the project rules for reading ADRs and running lint checks in the override. Keep detailed configuration in `.planning/`.
 
 The block:
 
 ```markdown
+@AGENTS.md
+
+Read and follow the same-directory [AGENTS.md](AGENTS.md).
+
 ## Agent skills
 
 ### Issue tracker
@@ -104,11 +108,11 @@ The block:
 
 ### Domain docs
 
-[one-line summary of layout: "single-context" or "multi-context"]. See `.planning/domain.md`.
+[Summarize the domain layout and name the directory for new ADRs. Default to `.planning/adr/`.] Before changing an area, read the ADRs that apply. See [domain.md](.planning/domain.md).
 
 ### Lint and verification
 
-Before changing code, read `.planning/lint.md` for the project's checks.
+Before changing code, read [lint.md](.planning/lint.md). Read the rules that apply from `.planning/lint/README.md` if it exists, and run their checks after editing. Use `retro-lint` when turning retrospective findings into automated checks.
 ```
 
 Include the label mapping and its pointer even without `triage`; preserve any existing custom mapping.
