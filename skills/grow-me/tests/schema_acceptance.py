@@ -1,0 +1,87 @@
+"""Validate protocol variants with JSON Schema as well as runtime/API regressions."""
+import copy,json
+from pathlib import Path
+from jsonschema import Draft202012Validator
+from referencing import Registry,Resource
+
+BASE=Path(__file__).resolve().parents[1];file=BASE/'references/tree.schema.json'
+schema=json.loads(file.read_text(encoding='utf-8'));schema['$id']=file.as_uri()
+legacy=BASE/'references/tree-v1.schema.json';registry=Registry().with_resource(legacy.as_uri(),Resource.from_contents(json.loads(legacy.read_text(encoding='utf-8'))))
+validator=Draft202012Validator(schema,registry=registry);Draft202012Validator.check_schema(schema)
+sample=json.loads((BASE/'assets/example.tree.json').read_text(encoding='utf-8'));validator.validate(sample)
+multi=copy.deepcopy(sample);n=multi['nodes'][0];n.update(input='multi_choice',status='answered',answer={'option_ids':[o['id'] for o in n['options']],'text':'原文\n 🌱'})
+validator.validate(multi)
+count=2
+for change in ['no_reason','blank_reason','single_many','text_options','empty_multi','duplicate','bad_recommendation','two_exclusive']:
+    candidate=copy.deepcopy(multi);node=candidate['nodes'][0]
+    if change=='no_reason':del node['rationale']
+    elif change=='blank_reason':node['rationale']=' \n '
+    elif change=='single_many':node['input']='single_choice'
+    elif change=='text_options':node['input']='text'
+    elif change=='empty_multi':node['answer']['option_ids']=[]
+    elif change=='duplicate':node['answer']['option_ids']=[node['options'][0]['id']]*2
+    elif change=='bad_recommendation':node['recommendation']={'option_ids':['web'],'reason':'理由','source_ids':['old']}
+    else:
+        for option in node['options']:option['exclusive']=True
+    assert list(validator.iter_errors(candidate)),change;count+=1
+old=copy.deepcopy(sample);old['schema_version']=1
+for node in old['nodes']:del node['rationale']
+validator.validate(old);count+=1
+annotated=copy.deepcopy(sample)
+for node in annotated['nodes']:
+    if not node['depends_on']:node['chapter_id']=node['id']
+validator.validate(annotated);count+=1
+for value in [None,'',' \n ',42,[]]:
+    candidate=copy.deepcopy(sample);candidate['nodes'][0]['chapter_id']=value
+    assert list(validator.iter_errors(candidate)),repr(value);count+=1
+old['nodes'][0]['chapter_id']=old['nodes'][0]['id']
+assert list(validator.iter_errors(old)),'v1 must not accept chapter_id';count+=1
+
+for input_type in ['text', 'single_choice', 'multi_choice']:
+    candidate = copy.deepcopy(sample)
+    node = candidate['nodes'][0]
+    node.update(input=input_type, status='answered')
+    if input_type == 'text':
+        node['options'] = []
+    for flag in ['deferred', 'unclear']:
+        node['answer'] = {'option_ids': [], 'text': '', flag: True}
+        validator.validate(candidate)
+        count += 1
+        for value in [False, 'true', None]:
+            node['answer'][flag] = value
+            assert list(validator.iter_errors(candidate)), (input_type, flag, value)
+            count += 1
+    node['answer'].update(unclear=True, deferred=True)
+    assert list(validator.iter_errors(candidate)), input_type
+    count += 1
+
+rephrased = copy.deepcopy(sample)
+rephrased['nodes'][-1]['rephrases'] = rephrased['nodes'][0]['id']
+validator.validate(rephrased)
+count += 1
+for value in [None, '', ' \n ', 42, []]:
+    rephrased['nodes'][-1]['rephrases'] = value
+    assert list(validator.iter_errors(rephrased)), repr(value)
+    count += 1
+
+for input_type in ['text', 'single_choice', 'multi_choice']:
+    candidate = copy.deepcopy(sample)
+    node = candidate['nodes'][0]
+    node.update(input=input_type, status='pending', answer=None)
+    if input_type == 'text':
+        node['options'] = []
+    target = node['options'][0] if input_type == 'single_choice' else node
+    target['reply'] = '🌱' * 40
+    validator.validate(candidate)
+    count += 1
+    for value in ['', '  ', '🌱' * 41, 42, None]:
+        target['reply'] = value
+        assert list(validator.iter_errors(candidate)), (input_type, value)
+        count += 1
+    if input_type == 'single_choice':
+        del target['reply']
+        node['reply'] = '只写在选项里。'
+        assert list(validator.iter_errors(candidate))
+        count += 1
+
+print(json.dumps({'status':'passed','schema_cases':count,'note':'Runtime/API tests additionally enforce ID relationships, dependency cycles, source binding and exclusive selections.'}))

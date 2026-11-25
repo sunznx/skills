@@ -1,0 +1,15 @@
+{
+  "name": "grow-me",
+  "version": "0.3.0",
+  "private": true,
+  "description": "Let requirements grow into a tree, then into a readable project plan.",
+  "license": "MIT",
+  "type": "module",
+  "engines": {"node": ">=22"},
+  "scripts": {
+    "test": "node --test tests/acceptance.test.mjs tests/document.test.mjs tests/tree-layout.test.mjs tests/reduced-motion.test.mjs tests/wait-flow.test.mjs tests/v2.test.mjs tests/runtime.test.mjs",
+    "demo": "node scripts/demo.mjs",
+    "preview": "node scripts/preview.mjs"
+  },
+  "repository": {"type": "git", "url": "https://github.com/Trunks820/grow-me.git"}
+}

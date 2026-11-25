@@ -1,0 +1,463 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "grow-me v2 (v1 read-only compatibility)",
+  "description": "Runtime additionally verifies IDs, dependencies, rephrased questions, exclusive selections and recommendation source binding.",
+  "oneOf": [
+    {
+      "$ref": "tree-v1.schema.json"
+    },
+    {
+      "$ref": "#/$defs/treeV2"
+    }
+  ],
+  "$defs": {
+    "treeV2": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_version",
+        "session_id",
+        "topic",
+        "revision",
+        "current_round",
+        "status",
+        "nodes"
+      ],
+      "properties": {
+        "schema_version": {
+          "const": 2
+        },
+        "session_id": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "\\S"
+        },
+        "topic": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "\\S"
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "current_round": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "status": {
+          "enum": [
+            "active",
+            "complete"
+          ]
+        },
+        "nodes": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "#/$defs/node"
+          }
+        }
+      }
+    },
+    "reply": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 40,
+      "pattern": "\\S"
+    },
+    "option": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "label"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "\\S"
+        },
+        "label": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "\\S"
+        },
+        "exclusive": {
+          "type": "boolean"
+        },
+        "reply": {
+          "$ref": "#/$defs/reply"
+        }
+      }
+    },
+    "answer": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "option_ids",
+        "text"
+      ],
+      "properties": {
+        "option_ids": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "pattern": "\\S"
+          }
+        },
+        "text": {
+          "type": "string"
+        },
+        "deferred": {
+          "type": "boolean",
+          "description": "True submits the question as unresolved. Option IDs and text may both be empty."
+        },
+        "unclear": {
+          "type": "boolean",
+          "description": "True asks for the question to be rephrased. Option IDs and text may both be empty."
+        }
+      },
+      "not": {
+        "required": ["deferred", "unclear"],
+        "properties": {
+          "deferred": { "const": true },
+          "unclear": { "const": true }
+        }
+      }
+    },
+    "confirmedAnswer": {
+      "type": "object",
+      "not": {
+        "anyOf": [
+          { "required": ["deferred"], "properties": { "deferred": { "const": true } } },
+          { "required": ["unclear"], "properties": { "unclear": { "const": true } } }
+        ]
+      }
+    },
+    "recommendation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "option_ids",
+        "reason",
+        "source_ids"
+      ],
+      "properties": {
+        "option_ids": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "pattern": "\\S"
+          },
+          "minItems": 1
+        },
+        "reason": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "\\S"
+        },
+        "source_ids": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "pattern": "\\S"
+          }
+        },
+        "source_digest": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "source_ids": {
+                "minItems": 1
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "source_digest"
+            ]
+          }
+        }
+      ]
+    },
+    "node": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "question",
+        "rationale",
+        "input",
+        "options",
+        "answer",
+        "depends_on",
+        "status",
+        "round"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "\\S"
+        },
+        "question": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "\\S"
+        },
+        "rationale": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "\\S"
+        },
+        "input": {
+          "enum": [
+            "single_choice",
+            "multi_choice",
+            "text"
+          ]
+        },
+        "reply": {
+          "$ref": "#/$defs/reply"
+        },
+        "options": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/option"
+          },
+          "contains": {
+            "required": [
+              "exclusive"
+            ],
+            "properties": {
+              "exclusive": {
+                "const": true
+              }
+            }
+          },
+          "minContains": 0,
+          "maxContains": 1
+        },
+        "answer": {
+          "oneOf": [
+            {
+              "type": "null"
+            },
+            {
+              "$ref": "#/$defs/answer"
+            }
+          ]
+        },
+        "recommendation": {
+          "oneOf": [
+            {
+              "type": "null"
+            },
+            {
+              "$ref": "#/$defs/recommendation"
+            }
+          ]
+        },
+        "chapter_id": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "\\S",
+          "description": "Optional root question ID used for document membership; runtime validates it is a root reachable through depends_on."
+        },
+        "rephrases": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "\\S",
+          "description": "Optional ID of the earlier question this question rephrases."
+        },
+        "depends_on": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "pattern": "\\S"
+          }
+        },
+        "status": {
+          "enum": [
+            "pending",
+            "answered",
+            "needs_review"
+          ]
+        },
+        "round": {
+          "type": "integer",
+          "minimum": 1
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "input": {
+                "const": "text"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "answer": {
+                "properties": {
+                  "option_ids": { "maxItems": 0 }
+                },
+                "if": { "$ref": "#/$defs/confirmedAnswer" },
+                "then": {
+                  "properties": {
+                    "text": {
+                      "minLength": 1,
+                      "pattern": "\\S"
+                    }
+                  }
+                }
+              },
+              "options": {
+                "maxItems": 0,
+                "items": {
+                  "not": {
+                    "required": [
+                      "exclusive"
+                    ]
+                  }
+                }
+              },
+              "recommendation": {
+                "type": "null"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "input": {
+                "const": "single_choice"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "reply": false,
+              "answer": {
+                "properties": {
+                  "option_ids": { "maxItems": 1 }
+                },
+                "if": { "$ref": "#/$defs/confirmedAnswer" },
+                "then": {
+                  "properties": {
+                    "option_ids": { "minItems": 1 }
+                  }
+                }
+              },
+              "options": {
+                "minItems": 1,
+                "items": {
+                  "not": {
+                    "required": [
+                      "exclusive"
+                    ]
+                  }
+                }
+              },
+              "recommendation": {
+                "oneOf": [
+                  {
+                    "type": "null"
+                  },
+                  {
+                    "allOf": [
+                      {
+                        "$ref": "#/$defs/recommendation"
+                      },
+                      {
+                        "properties": {
+                          "option_ids": {
+                            "maxItems": 1
+                          }
+                        }
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "input": {
+                "const": "multi_choice"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "answer": {
+                "if": { "$ref": "#/$defs/confirmedAnswer" },
+                "then": {
+                  "properties": {
+                    "option_ids": { "minItems": 1 }
+                  }
+                }
+              },
+              "options": {
+                "minItems": 1
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "const": "pending"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "answer": {
+                "type": "null"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "const": "answered"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "answer": {
+                "$ref": "#/$defs/answer"
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}

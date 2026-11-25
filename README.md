@@ -62,6 +62,7 @@ $sync-skills 更新 agent-messaging 删除某个功能
 | `grill-with-docs` | [mattpocock/skills](https://github.com/mattpocock/skills) | `skills/engineering/grill-with-docs/SKILL.md` | 三方合并 |
 | `grill-with-html` | 本地维护，网页作答后返回原会话，支持 Codex 和 Claude Code | — | 本地维护 |
 | `grilling` | [mattpocock/skills](https://github.com/mattpocock/skills) | `skills/productivity/grilling/SKILL.md` | 三方合并 |
+| `grow-me` | [Trunks820/grow-me](https://github.com/Trunks820/grow-me) | `SKILL.md` | 三方合并 |
 | `handoff` | [mattpocock/skills](https://github.com/mattpocock/skills) | `skills/productivity/handoff/SKILL.md` | 三方合并 |
 | `herdr-new-agent` | 本地维护，默认在当前 workspace 新开同类型 agent | — | 本地维护 |
 | `how` | [cursor/plugins](https://github.com/cursor/plugins) | `pstack/skills/how/SKILL.md` | 三方合并 |

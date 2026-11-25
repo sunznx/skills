@@ -148,6 +148,13 @@
       "base_tree": "f551b6e0d219fdda0b6abf277f8f915b3127d1e9"
     },
     {
+      "name": "grow-me",
+      "source": "Trunks820/grow-me",
+      "url": "https://github.com/Trunks820/grow-me.git",
+      "path": "SKILL.md",
+      "base_tree": "73e02fb6a927f09d46da75d4e540fcab45495e0f"
+    },
+    {
       "name": "handoff",
       "source": "mattpocock/skills",
       "url": "https://github.com/mattpocock/skills.git",

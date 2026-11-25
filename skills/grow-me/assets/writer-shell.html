@@ -1,0 +1,1008 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>{{TITLE}} · grow-me 方案</title>
+<style>
+:root {
+  --paper: #f6f3ec;
+  --ink: #243730;
+  --muted: #5f6b63;
+  --line: #d9dacf;
+  --green: #245d48;
+  --accent: #9d4930;
+  --white: #fffef9;
+  --soft: #eef1e9;
+  --pending-paper: #fdf6f1;
+  --pending-line: #e2c3b4;
+}
+* {
+  box-sizing: border-box;
+}
+html {
+  scroll-padding-top: 72px;
+}
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font:
+    16px/1.8 'Microsoft YaHei',
+    'PingFang SC',
+    sans-serif;
+}
+.layout {
+  display: grid;
+  grid-template-columns: 200px minmax(0, 1fr);
+  gap: 40px;
+  max-width: 1240px;
+  margin: auto;
+  padding: 28px 32px 60px;
+}
+main {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+.directory {
+  position: sticky;
+  top: 20px;
+  align-self: start;
+  max-height: calc(100vh - 40px);
+  overflow: auto;
+  overflow-wrap: anywhere;
+  padding: 0 4px 4px 0;
+  margin: 0;
+  border: 0;
+  font-size: 14px;
+  line-height: 1.55;
+}
+.directory summary {
+  color: var(--muted);
+  margin-bottom: 8px;
+}
+.directory a {
+  display: block;
+  color: var(--ink);
+  padding: 5px 10px;
+  border-left: 2px solid var(--line);
+  text-decoration: none;
+}
+.directory a:hover,
+.directory a[aria-current] {
+  border-color: var(--green);
+  color: var(--green);
+  background: var(--soft);
+}
+.directory .toc-section {
+  padding-left: 21px;
+  color: var(--muted);
+  font-size: 13px;
+}
+h1 {
+  font:
+    700 clamp(27px, 3.4vw, 39px)/1.3 Georgia,
+    'SimSun',
+    serif;
+  margin: 22px 0 12px;
+}
+h2 {
+  font-size: 22px;
+  margin: 0 0 12px;
+}
+h3 {
+  font-size: 18px;
+  margin: 0 0 6px;
+}
+p {
+  margin: 0 0 12px;
+}
+a {
+  color: var(--green);
+  text-underline-offset: 3px;
+}
+button,
+textarea {
+  font: inherit;
+}
+button {
+  background: var(--white);
+  border: 1px solid var(--green);
+  color: var(--green);
+  padding: 8px 14px;
+  cursor: pointer;
+}
+button:hover {
+  background: #e8eee5;
+}
+button:disabled {
+  opacity: 0.55;
+  cursor: default;
+}
+button:focus-visible,
+a:focus-visible,
+summary:focus-visible,
+textarea:focus-visible {
+  outline: 3px solid var(--accent);
+  outline-offset: 3px;
+}
+[hidden] {
+  display: none !important;
+}
+.masthead {
+  display: flex;
+  justify-content: space-between;
+  gap: 14px;
+  border-bottom: 2px solid var(--ink);
+  padding-bottom: 10px;
+  font-size: 13px;
+  color: var(--muted);
+}
+.lead {
+  font-size: 18px;
+}
+.overview-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+  margin: 20px 0 24px;
+}
+.summary-box {
+  background: var(--white);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 14px 16px;
+  line-height: 1.6;
+}
+.summary-box p {
+  margin: 0;
+}
+.summary-box.pending-box,
+.pending-list {
+  background: var(--pending-paper);
+  border: 1px solid var(--pending-line);
+  border-radius: 10px;
+}
+.pending-box .label {
+  color: var(--accent);
+}
+.label,
+.small {
+  font-size: 13px;
+  color: var(--muted);
+}
+.label {
+  display: block;
+  margin-bottom: 5px;
+}
+.tabs {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  display: flex;
+  gap: 5px;
+  background: var(--paper);
+  padding: 6px 0 0;
+  border-bottom: 1px solid var(--line);
+  margin: 0 0 14px;
+}
+.tabs a {
+  text-align: center;
+  text-decoration: none;
+  border: 1px solid var(--line);
+  border-bottom: 0;
+  border-radius: 8px 8px 0 0;
+  padding: 9px 16px;
+  background: var(--white);
+  color: var(--ink);
+  font-size: 15px;
+}
+.tabs [aria-selected='true'] {
+  background: var(--green);
+  color: white;
+  border-color: var(--green);
+}
+.section {
+  padding: 20px 0 6px;
+}
+.requirement,
+.acceptance,
+.phase,
+.work-item,
+.constraint,
+.chapter {
+  padding: 18px 21px;
+  margin: 12px 0;
+  background: var(--white);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  min-width: 0;
+}
+.pending-list {
+  margin: 0;
+  padding: 12px 18px 12px 35px;
+}
+.question-origin {
+  display: inline-block;
+  margin-right: 6px;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  padding: 0 7px;
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.65;
+}
+[data-question-origin='user'] .question-origin {
+  border-color: #a9c3b4;
+  color: var(--green);
+  background: #eef5f0;
+}
+[data-question-origin='suggestion'] .question-origin {
+  border-color: #c8b7a0;
+  color: #745231;
+  background: #fbf3e6;
+}
+.chapter-conclusion {
+  font-size: 17px;
+  margin-bottom: 8px;
+}
+.interview-answers {
+  margin-top: 10px;
+  color: var(--muted);
+  font-size: 14px;
+}
+.interview-answers section + section {
+  margin-top: 16px;
+  border-top: 1px solid var(--line);
+  padding-top: 14px;
+}
+.interview-answers p,
+.interview-answers ul {
+  margin: 0 0 4px;
+}
+.frozen-answer {
+  white-space: pre-wrap;
+}
+.work-item[data-number] {
+  display: grid;
+  grid-template-columns: 44px minmax(0, 1fr);
+  column-gap: 13px;
+}
+.work-item[data-number] > * {
+  grid-column: 2;
+}
+.work-item[data-number]::before {
+  content: attr(data-number);
+  grid-area: 1 / 1;
+  padding-top: 3px;
+  color: var(--green);
+  font: 700 26px/1.1 Georgia, serif;
+  text-align: center;
+}
+.work-heading {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 8px;
+}
+[data-field='status'] {
+  display: inline-block;
+  flex: none;
+  background: var(--soft);
+  border-radius: 999px;
+  padding: 1px 10px;
+  color: var(--muted);
+  font-size: 13px;
+}
+[data-field='status'][data-status='passed'],
+[data-field='status'][data-status='verified'] {
+  background: #e8f2e9;
+  color: var(--green);
+}
+[data-field='status'][data-status='failed'],
+[data-field='status'][data-status='blocked'],
+[data-field='status'][data-status='stale'] {
+  background: #f6e8e1;
+  color: var(--accent);
+}
+.work-meta,
+.work-effects {
+  color: var(--muted);
+  font-size: 14px;
+  margin: 0 0 6px;
+}
+.work-effects ul {
+  margin: 0;
+}
+.work-effects li {
+  margin: 0;
+}
+details {
+  border-top: 1px dashed var(--line);
+  padding: 8px 0 0;
+  margin-top: 12px;
+}
+summary {
+  cursor: pointer;
+  font-weight: 600;
+  color: var(--green);
+  font-size: 14px;
+}
+summary::marker {
+  color: var(--green);
+}
+.detail {
+  padding: 13px 0 0 15px;
+}
+code {
+  font:
+    0.9em Consolas,
+    monospace;
+  overflow-wrap: anywhere;
+}
+pre {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  background: #e8ece3;
+  padding: 15px;
+}
+table {
+  border-collapse: collapse;
+  width: 100%;
+  font-size: 14px;
+}
+th,
+td {
+  text-align: left;
+  vertical-align: top;
+  border-bottom: 1px solid var(--line);
+  padding: 10px;
+  overflow-wrap: anywhere;
+}
+th {
+  color: var(--muted);
+  background: #e8ece3;
+}
+.table-wrap {
+  max-width: 100%;
+  overflow-x: auto;
+  background: var(--white);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+}
+.acceptance-table {
+  min-width: 640px;
+}
+.acceptance-table thead th {
+  font-size: 13px;
+}
+.acceptance-table th[scope='row'] {
+  width: 22%;
+  color: var(--ink);
+  background: transparent;
+}
+.acceptance-table th:last-child,
+.acceptance-table td:last-child {
+  width: 13%;
+}
+.acceptance-table tbody tr:last-child > * {
+  border-bottom: 0;
+}
+ul,
+ol {
+  padding-left: 24px;
+}
+li {
+  margin: 7px 0;
+}
+.tools {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin: 12px 0;
+}
+#package-text {
+  width: 100%;
+  min-height: 310px;
+  padding: 14px;
+  background: var(--white);
+  color: var(--ink);
+  border: 1px solid var(--line);
+  font:
+    13px/1.6 Consolas,
+    'Microsoft YaHei',
+    monospace;
+  resize: vertical;
+}
+#record-check:not(:empty) {
+  color: var(--accent);
+  white-space: pre-line;
+}
+.record-info {
+  margin-top: 28px;
+  color: var(--muted);
+  font-size: 13px;
+}
+.number-index {
+  columns: 2 240px;
+  margin-top: 4px;
+}
+.number-index li {
+  break-inside: avoid;
+}
+@media (max-width: 860px) {
+  .layout {
+    display: block;
+    padding: 22px 16px 40px;
+  }
+  .directory {
+    position: static;
+    max-height: none;
+    margin-bottom: 14px;
+    padding: 10px 12px;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    background: var(--white);
+  }
+  .directory:not([open]) summary {
+    margin-bottom: 0;
+  }
+}
+@media (max-width: 580px) {
+  .overview-grid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+  .tabs {
+    gap: 3px;
+    font-size: 14px;
+  }
+  .tabs a {
+    flex: 1;
+    padding: 8px 5px;
+    font-size: 14px;
+  }
+  .phase,
+  .work-item,
+  .requirement,
+  .acceptance,
+  .constraint,
+  .chapter {
+    padding: 14px;
+  }
+  .work-item[data-number] {
+    grid-template-columns: 24px minmax(0, 1fr);
+    column-gap: 8px;
+  }
+  .work-item[data-number]::before {
+    font-size: 21px;
+  }
+  .detail {
+    padding-left: 3px;
+  }
+  .lead {
+    font-size: 17px;
+  }
+}
+@media print {
+  body {
+    background: white;
+  }
+  .layout {
+    display: block;
+    padding: 0;
+    max-width: none;
+  }
+  .directory,
+  .tabs,
+  .tools,
+  #package-preview,
+  #record-check {
+    display: none !important;
+  }
+  .tab-panel[hidden] {
+    display: block !important;
+  }
+  details {
+    break-inside: avoid;
+  }
+  a {
+    color: inherit;
+  }
+  .acceptance-table {
+    min-width: 0;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition: none !important;
+    scroll-behavior: auto !important;
+  }
+}
+</style>
+</head>
+<body>
+<div class="layout">
+<details class="directory" id="page-directory">
+<summary>本页目录</summary>
+<nav aria-label="本页目录">
+  <a href="#overview">先看这里</a>
+  <a href="#design-view">设计方案</a>
+  <a class="toc-section" href="#decisions">{{PENDINGTITLE}}</a>
+  <a class="toc-section" href="#design">这一版做什么</a>
+  {{DIRECTORY}}
+  <a href="#plan-view">开发清单</a>
+  <a href="#acceptance-view">验收标准</a>
+  <a href="#record-info">记录信息</a>
+</nav>
+</details>
+<main data-task-record data-revision="{{REVISION}}">
+<header class="masthead"><span>grow-me 方案</span><span>{{UPDATED}}</span></header>
+<section id="overview" aria-labelledby="task-title">
+<h1 id="task-title">{{TITLE}}</h1>
+<p class="lead">{{SUMMARY}}</p>
+<div class="overview-grid">
+  <div class="summary-box"><span class="label">现在到哪了</span><p>{{POSITION}}</p></div>
+  <div class="summary-box"><span class="label">下一步</span><p>{{NEXT}}</p></div>
+  <div class="summary-box pending-box"><span class="label">{{PENDINGTITLE}}</span><p>{{PENDINGSUMMARY}}</p></div>
+</div>
+</section>
+<nav class="tabs" aria-label="任务视图"><a id="tab-design" href="#design-view">设计方案</a><a id="tab-plan" href="#plan-view">开发清单</a><a id="tab-acceptance" href="#acceptance-view">验收标准</a></nav>
+{{PREVIEWNOTE}}
+<section id="design-view" class="tab-panel" aria-labelledby="tab-design">
+  <section id="decisions" class="section"><h2>{{PENDINGTITLE}}</h2>{{DECISIONS}}</section>
+  <section id="design" class="section"><h2>这一版做什么</h2>{{DESIGN}}</section>
+</section>
+<section id="plan-view" class="tab-panel" aria-labelledby="tab-plan">
+  <section id="plan" class="section"><h2>开发清单</h2>{{PLAN}}</section>
+</section>
+<section id="acceptance-view" class="tab-panel" aria-labelledby="tab-acceptance">
+  <section id="verification" class="section"><h2 id="verification-title">验收标准</h2>{{ACCEPTANCE}}</section>
+</section>
+<div class="tools"><button type="button" id="toggle-details" hidden>展开当前视图细节</button></div>
+<details id="package-preview" hidden>
+  <summary>任务包预览</summary>
+  <p class="small">方案有改动时，请重新生成任务包。</p>
+  <textarea id="package-text" readonly aria-label="生成的任务包"></textarea>
+  <div class="tools">
+    <button type="button" id="copy-package">复制任务包</button>
+    <button type="button" id="download-package">下载 TXT</button>
+  </div>
+  <p id="package-status" role="status" aria-live="polite"></p>
+</details>
+<details id="record-info" class="record-info">
+  <summary>记录信息</summary>
+  <dl id="task-context">
+    <dt>会话编号</dt><dd>{{SESSION}}</dd>
+    <dt>版本</dt><dd>{{VERSION}}</dd>
+    <dt>生成时间</dt><dd><time datetime="{{GENERATED}}">{{GENERATED}}</time></dd>
+  </dl>
+  <h3>编号对照</h3>
+  {{NUMBERS}}
+  <p id="record-check" role="status" aria-live="polite"></p>
+</details>
+</main>
+</div>
+<script>
+(() => {
+  'use strict';
+  const record = document.querySelector('[data-task-record]');
+  const generating = record.hasAttribute('data-generating');
+  const split = s => (s || '').trim().split(/\s+/).filter(Boolean);
+  const refs = {
+    requirements: 'requirement',
+    criteria: 'criterion',
+    constraints: 'constraint',
+    depends: 'dependency'
+  };
+  const nodes = () => [...record.querySelectorAll('[data-kind]')];
+  const statusOf = el => {
+    const status = [...el.querySelectorAll('[data-field="status"]')]
+      .find(x => x.closest('[data-kind]') === el);
+    return (status?.getAttribute('data-status') ?? status?.textContent ?? '').trim();
+  };
+  function inspect() {
+    const errors = [],
+      index = new Map();
+    for (const el of document.querySelectorAll('[id]')) {
+      if (index.has(el.id)) errors.push(`重复 ID：${el.id}`);
+      else index.set(el.id, el);
+    }
+    const revision = record.dataset.revision || '';
+    if (!revision.trim() || revision.includes('{{')) errors.push('缺少已填写的需求版本');
+    const items = nodes(),
+      requirements = items.filter(x => x.dataset.kind === 'requirement'),
+      criteria = items.filter(x => x.dataset.kind === 'criterion'),
+      work = items.filter(x => ['phase', 'work'].includes(x.dataset.kind));
+    for (const el of items) {
+      if (!el.id) errors.push(`定义缺少 ID：${el.dataset.kind}`);
+      for (const [attr, type] of Object.entries(refs))
+        for (const id of split(el.dataset[attr])) {
+          const target = index.get(id);
+          if (!target) errors.push(`${el.id} 引用不存在：${id}`);
+          else if (
+            type === 'dependency'
+              ? !['phase', 'work'].includes(target.dataset.kind)
+              : target.dataset.kind !== type
+          )
+            errors.push(`${el.id} 引用类型不符：${id} 应为 ${type}`);
+        }
+      if (el.dataset.kind === 'criterion') {
+        if (!split(el.dataset.requirements).length) errors.push(`${el.id} 缺少来源需求关联`);
+        if (!['passed', 'failed', 'unverified', 'blocked', 'stale'].includes(statusOf(el)))
+          errors.push(`${el.id} 缺少有效验收状态`);
+      }
+    }
+    for (const link of record.querySelectorAll('a[href^="#"]')) {
+      const id = decodeURIComponent(link.getAttribute('href').slice(1));
+      if (id && !index.has(id)) errors.push(`失效锚点：${id}`);
+    }
+    for (const req of requirements.filter(x => x.dataset.important !== 'false')) {
+      const covered = criteria.filter(x => split(x.dataset.requirements).includes(req.id));
+      if (!covered.length) errors.push(`${req.id} 缺少验收关联`);
+      if (
+        work.length &&
+        !work.some(
+          x =>
+            split(x.dataset.requirements).includes(req.id) ||
+            split(x.dataset.criteria).some(id => covered.some(c => c.id === id))
+        )
+      )
+        errors.push(`${req.id} 缺少计划关联`);
+    }
+    for (const c of criteria.filter(x => x.dataset.final !== 'true'))
+      if (work.length && !work.some(w => split(w.dataset.criteria).includes(c.id)))
+        errors.push(`${c.id} 缺少开发清单关联`);
+    return { errors: [...new Set(errors)], index, revision, requirements, criteria, work };
+  }
+  // Read collapsed content too; omit generated controls/summaries. No innerText or hidden JSON source.
+  function sourceText(el) {
+    if (!el) return '';
+    const clone = el.cloneNode(true);
+    clone
+      .querySelectorAll('button,script,style,[data-derived],[data-package-ui]')
+      .forEach(x => x.remove());
+    const blocks = new Set([
+      'ARTICLE',
+      'SECTION',
+      'P',
+      'DIV',
+      'H1',
+      'H2',
+      'H3',
+      'H4',
+      'LI',
+      'TR',
+      'DETAILS',
+      'SUMMARY',
+      'PRE',
+      'DT',
+      'DD',
+      'BR'
+    ]);
+    function walk(node) {
+      if (node.nodeType === Node.TEXT_NODE) return node.nodeValue;
+      if (node.nodeType !== Node.ELEMENT_NODE) return '';
+      let t = node.matches('[data-field="status"][data-status]')
+        ? node.dataset.status
+        : [...node.childNodes].map(walk).join('');
+      if (['TD', 'TH'].includes(node.tagName)) t += ' | ';
+      return blocks.has(node.tagName) ? '\n' + t + '\n' : t;
+    }
+    return walk(clone)
+      .split(/\r?\n/)
+      .map(x => x.replace(/\s+/g, ' ').trim())
+      .filter(Boolean)
+      .join('\n');
+  }
+  function scopeFor(target, info) {
+    const scopes = [target, ...target.querySelectorAll('[data-kind="work"]')];
+    const collect = attr => [...new Set(scopes.flatMap(x => split(x.dataset[attr])))];
+    const criteria = collect('criteria').map(id => info.index.get(id));
+    const reqIds = new Set([
+      ...collect('requirements'),
+      ...criteria.flatMap(x => split(x.dataset.requirements))
+    ]);
+    const finals = info.criteria.filter(
+      x => x.dataset.final === 'true' && split(x.dataset.requirements).some(id => reqIds.has(id))
+    );
+    const allCriteria = [...new Map([...criteria, ...finals].map(x => [x.id, x])).values()];
+    for (const c of allCriteria) for (const id of split(c.dataset.requirements)) reqIds.add(id);
+    const requirementNodes = [...reqIds].map(id => info.index.get(id));
+    const constraintIds = new Set([
+      ...collect('constraints'),
+      ...allCriteria.flatMap(x => split(x.dataset.constraints)),
+      ...requirementNodes.flatMap(x => split(x.dataset.constraints))
+    ]);
+    for (const x of nodes())
+      if (x.dataset.kind === 'constraint' && x.dataset.global === 'true') constraintIds.add(x.id);
+    return {
+      requirements: requirementNodes,
+      criteria: allCriteria,
+      constraints: [...constraintIds].map(id => info.index.get(id)),
+      dependencies: collect('depends').map(id => info.index.get(id))
+    };
+  }
+  async function buildPackage(id) {
+    if (generating) throw new Error('全文校验通过后可以生成任务包。');
+    const info = inspect();
+    if (info.errors.length) throw new Error(info.errors.join('\n'));
+    const target = info.index.get(id);
+    if (!target || !['phase', 'work'].includes(target.dataset.kind))
+      throw new Error('找不到 Phase 或工作项：' + id);
+    const scope = scopeFor(target, info);
+    if (!scope.criteria.length) throw new Error(id + ' 缺少验收标准，不能生成任务包');
+    const sections = [
+      ['任务与工作项', [target]],
+      ['需求原文', scope.requirements],
+      ['验收原文（含关联最终业务验收）', scope.criteria],
+      ['适用约束', scope.constraints]
+    ];
+    const body = sections
+      .map(
+        ([title, items]) =>
+          '## ' +
+          title +
+          '\n' +
+          (items.length
+            ? items.map(x => '[' + x.id + ']\n' + sourceText(x)).join('\n\n')
+            : '无已登记适用项')
+      )
+      .join('\n\n');
+    const dependencyText =
+      scope.dependencies
+        .map(
+          x =>
+            x.id +
+            ' · ' +
+            (statusOf(x) || '状态未登记') +
+            ' · ' +
+            (x.querySelector('h3,h2')?.textContent.trim() || x.id)
+        )
+        .join('\n') || '无已登记依赖';
+    const context =
+      sourceText(document.getElementById('task-context')) +
+      '\n' +
+      sourceText(document.getElementById('handoff'));
+    const fingerprintInput =
+      'task-package-v1\n' +
+      info.revision +
+      '\n' +
+      id +
+      '\n' +
+      context +
+      '\n' +
+      dependencyText +
+      '\n' +
+      body;
+    if (!globalThis.crypto?.subtle)
+      throw new Error('当前浏览器无法计算 SHA-256；请用支持安全本地页面的浏览器生成任务包');
+    const digest = await crypto.subtle.digest(
+      'SHA-256',
+      new TextEncoder().encode(fingerprintInput)
+    );
+    const fingerprint = [...new Uint8Array(digest)]
+      .map(x => x.toString(16).padStart(2, '0'))
+      .join('');
+    const text = [
+      '任务包 · 只读快照（不构成执行授权）',
+      '任务：' + document.getElementById('task-title').textContent.trim(),
+      '源：' + location.href.split('#')[0] + '#' + id,
+      '需求版本：' + info.revision,
+      '范围：' + id,
+      '生成时间：' + new Date().toISOString(),
+      '定义指纹：task-package-v1 / SHA-256 / ' + fingerprint,
+      '核对：开始前读取当前源，核对版本及本包定义；源更新后重新导出。',
+      '正文保留原文词句，规范化空白并包含折叠细节。',
+      '\n## 当前候选、权限与接续\n' + context,
+      '\n## 依赖状态\n' + dependencyText,
+      '\n' + body
+    ].join('\n');
+    return { text, fingerprint, revision: info.revision, id };
+  }
+  const tabs = [...document.querySelectorAll('.tabs a')],
+    panels = [...document.querySelectorAll('.tab-panel')];
+  const directory = document.getElementById('page-directory');
+  const directoryLinks = [...directory.querySelectorAll('a')];
+  const compact = matchMedia('(max-width: 860px)');
+  const updateDirectory = () => { directory.open = !compact.matches; };
+  updateDirectory();
+  compact.addEventListener('change', updateDirectory);
+  document.querySelector('.tabs').setAttribute('role', 'tablist');
+  tabs.forEach(a => {
+    a.setAttribute('role', 'tab');
+    a.setAttribute('aria-controls', a.hash.slice(1));
+  });
+  panels.forEach(p => p.setAttribute('role', 'tabpanel'));
+  function refreshRecordCheck() {
+    const { errors } = inspect();
+    document.getElementById('record-check').textContent = errors.join('\n');
+  }
+  function markDirectory(id, fallback) {
+    const selected = directoryLinks.find(link => link.hash === '#' + id) ??
+      directoryLinks.find(link => link.hash === '#' + fallback);
+    for (const link of directoryLinks) {
+      if (link === selected) link.setAttribute('aria-current', 'location');
+      else link.removeAttribute('aria-current');
+    }
+  }
+  function activate(panelId, focus = false) {
+    panels.forEach(p => (p.hidden = p.id !== panelId));
+    tabs.forEach(a => {
+      const selected = a.hash === '#' + panelId;
+      a.setAttribute('aria-selected', String(selected));
+      a.tabIndex = selected ? 0 : -1;
+      if (selected && focus) a.focus();
+    });
+    markDirectory(panelId);
+  }
+  function revealAnchor(hash) {
+    const el = document.getElementById(decodeURIComponent(hash.slice(1)));
+    if (!el) return null;
+    const panel = el.closest('.tab-panel');
+    if (panel) activate(panel.id);
+    for (let p = el; p; p = p.parentElement) if (p.tagName === 'DETAILS') p.open = true;
+    markDirectory(el.id, panel?.id);
+    return el;
+  }
+  function revealHash() {
+    if (!location.hash) {
+      activate('design-view');
+      markDirectory('overview');
+      return;
+    }
+    const target = revealAnchor(location.hash);
+    if (target) requestAnimationFrame(() => target.scrollIntoView({ block: 'start' }));
+  }
+  tabs.forEach((a, i) => {
+    a.addEventListener('click', () => activate(a.hash.slice(1)));
+    a.addEventListener('keydown', e => {
+      let n;
+      if (e.key === 'ArrowRight') n = (i + 1) % tabs.length;
+      else if (e.key === 'ArrowLeft') n = (i + tabs.length - 1) % tabs.length;
+      else if (e.key === 'Home') n = 0;
+      else if (e.key === 'End') n = tabs.length - 1;
+      if (n !== undefined) {
+        e.preventDefault();
+        activate(tabs[n].hash.slice(1), true);
+      }
+    });
+  });
+  activate('design-view');
+  revealHash();
+  window.addEventListener('hashchange', revealHash);
+  document.addEventListener('click', e => {
+    const a = e.target.closest('a[href^="#"]');
+    if (!a) return;
+    const target = revealAnchor(a.hash);
+    if (target && a.hash === location.hash)
+      requestAnimationFrame(() => target.scrollIntoView({ block: 'start' }));
+  });
+  if (!generating) {
+    for (const item of nodes().filter(x => ['phase', 'work'].includes(x.dataset.kind))) {
+      let detail = item.querySelector(':scope > details.work-details');
+      if (!detail) {
+        detail = document.createElement('details');
+        detail.className = 'work-details';
+        detail.dataset.derived = 'true';
+        const summary = document.createElement('summary');
+        summary.textContent = '任务包';
+        detail.append(summary);
+        item.append(detail);
+      }
+      const box = document.createElement('div');
+      box.dataset.packageUi = 'true';
+      box.className = 'tools';
+      const button = document.createElement('button');
+      button.type = 'button';
+      button.textContent = '复制给 AI 的任务包';
+      button.dataset.package = item.id;
+      box.append(button);
+      detail.append(box);
+    }
+    refreshRecordCheck();
+  }
+  let lastPackage = null,
+    buildSerial = 0;
+  document.addEventListener('click', async e => {
+    const b = e.target.closest('[data-package]');
+    if (!b) return;
+    const serial = ++buildSerial;
+    const preview = document.getElementById('package-preview'),
+      status = document.getElementById('package-status');
+    preview.hidden = false;
+    preview.open = true;
+    status.textContent = '正在从当前定义生成…';
+    lastPackage = null;
+    document.getElementById('package-text').value = '';
+    try {
+      const result = await buildPackage(b.dataset.package);
+      if (serial !== buildSerial) return;
+      lastPackage = result;
+      document.getElementById('package-text').value = result.text;
+      status.textContent = '已生成任务包。开始前请核对当前方案。';
+      preview.scrollIntoView({
+        block: 'start',
+        behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'auto'
+      });
+    } catch (err) {
+      if (serial !== buildSerial) return;
+      document.getElementById('record-check').textContent = err.message;
+      status.textContent = '任务包暂未生成，请查看记录信息。';
+      preview.scrollIntoView({ block: 'start' });
+    }
+  });
+  async function freshPackage() {
+    if (!lastPackage) throw new Error('请先生成任务包');
+    const current = await buildPackage(lastPackage.id);
+    if (current.fingerprint !== lastPackage.fingerprint) {
+      lastPackage = current;
+      document.getElementById('package-text').value = current.text;
+      document.getElementById('package-status').textContent = '源定义已变化，任务包已重新生成。';
+    }
+    return current;
+  }
+  document.getElementById('copy-package').addEventListener('click', async () => {
+    const status = document.getElementById('package-status');
+    try {
+      const p = await freshPackage();
+      if (navigator.clipboard?.writeText) {
+        try {
+          await navigator.clipboard.writeText(p.text);
+          status.textContent = '已复制当前任务包。';
+          return;
+        } catch {
+          // A downloaded page may lack clipboard permission.
+        }
+      }
+      const t = document.getElementById('package-text');
+      t.focus();
+      t.select();
+      status.textContent = '已选中文本，可以直接复制。';
+    } catch (err) {
+      document.getElementById('record-check').textContent = err.message;
+      status.textContent = '任务包暂未复制，请查看记录信息。';
+    }
+  });
+  document.getElementById('download-package').addEventListener('click', async () => {
+    try {
+      const p = await freshPackage();
+      const blob = new Blob([p.text], { type: 'text/plain;charset=utf-8' }),
+        url = URL.createObjectURL(blob),
+        a = document.createElement('a');
+      a.href = url;
+      a.download = (p.id + '-' + p.revision).replace(/[^\w.\-]/g, '_') + '.txt';
+      a.click();
+      setTimeout(() => URL.revokeObjectURL(url), 1000);
+      document.getElementById('package-status').textContent = '已下载当前任务包。';
+    } catch (err) {
+      document.getElementById('record-check').textContent = err.message;
+      document.getElementById('package-status').textContent = '任务包暂未下载，请查看记录信息。';
+    }
+  });
+  const toggle = document.getElementById('toggle-details');
+  toggle.hidden = false;
+  toggle.addEventListener('click', () => {
+    const panel = panels.find(p => !p.hidden),
+      details = [...panel.querySelectorAll('details')],
+      open = details.some(x => !x.open);
+    details.forEach(x => (x.open = open));
+    toggle.textContent = open ? '收起当前视图细节' : '展开当前视图细节';
+  });
+  let printState = [];
+  window.addEventListener('beforeprint', () => {
+    printState = [...record.querySelectorAll('.tab-panel details')].map(x => [x, x.open]);
+    printState.forEach(([x]) => (x.open = true));
+  });
+  window.addEventListener('afterprint', () => {
+    printState.forEach(([x, open]) => (x.open = open));
+    printState = [];
+  });
+  window.taskRecord = Object.freeze({ inspect, buildPackage, refresh: refreshRecordCheck });
+})();
+</script>
+</body>
+</html>
