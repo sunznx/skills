@@ -1,6 +1,6 @@
 ---
 name: setup-matt-pocock-skills
-description: "Configure Matt engineering skills: choose the issue tracker, triage labels and domain layout under .planning, and link them from AGENTS.override.md. Includes a shared missing-only configuration initializer."
+description: "Configure Matt engineering skills: set up the issue tracker, triage labels, domain layout, and lint guidance under .planning, and link them from AGENTS.override.md. Includes a shared missing-only configuration initializer."
 ---
 
 # Setup Matt Pocock's Skills
@@ -10,16 +10,17 @@ Scaffold the per-repo configuration that the engineering skills assume:
 - **Issue tracker**: where issues live (GitHub by default; local markdown is also supported out of the box)
 - **Triage labels**: the strings used for the five canonical triage roles
 - **Domain docs**: where `GLOSSARY.md` and ADRs live, and the consumer rules for reading them
+- **Lint and verification**: where to find the project's checks and retrospective rules
 
 Manual setup is prompt-driven: explore, confirm the intended configuration, then write. Dependent skills use the deterministic [missing-only initializer](references/ensure-config.md) directly; that path fills defaults without running this interview or editing steering files.
 
 Use `planning-with-files` to select or create this task's plan as `<PLAN_DIR>`; when another workflow invokes this skill, use that workflow's selected plan. Log setup in its `progress.md`, and keep per-run drafts and verification records in `<PLAN_DIR>/setup-matt-pocock-skills/`.
 
-Project configuration lives in `.planning/issue-tracker.md`, `.planning/triage-labels.md`, and `.planning/domain.md` at the project root. Manual setup writes their summaries and reading pointers to the root `AGENTS.override.md`. Specs and tickets live under each task's `<PLAN_DIR>`; new ADRs default to the project's `.planning/adr/`, shared across tasks. Preserve existing configuration unless the user explicitly requests a change.
+Project configuration lives in `.planning/issue-tracker.md`, `.planning/triage-labels.md`, `.planning/domain.md`, and `.planning/lint.md` at the project root. Manual setup writes their summaries and reading pointers to the root `AGENTS.override.md`. Specs and tickets live under each task's `<PLAN_DIR>`; new ADRs default to the project's `.planning/adr/`, shared across tasks. Preserve existing configuration unless the user explicitly requests a change.
 
 ## Shared initialization
 
-Before a dependent skill reads configuration, follow [references/ensure-config.md](references/ensure-config.md). The script preserves existing files and imports a corresponding `docs/agents/` file unchanged when the `.planning/` file is missing. Otherwise it seeds local Markdown tracking, the five standard triage labels and the PWF domain layout. It reports created, preserved and imported paths.
+Before a dependent skill reads configuration, follow [references/ensure-config.md](references/ensure-config.md). The script preserves existing files and imports a corresponding `docs/agents/` file unchanged when the `.planning/` file is missing. Otherwise it seeds the bundled defaults and reports created, preserved and imported paths.
 
 The automatic path writes configuration only. It does not create issues, labels, glossary/ADR documents or modify agent instruction files, including `AGENTS.override.md`.
 
@@ -76,7 +77,7 @@ Offer a new **multi-context** layout only when exploration found monorepo signal
 Show the user a draft of:
 
 - The `## Agent skills` block to add or update in the project root's `AGENTS.override.md`, including any baseline-reading instruction needed when creating it
-- The contents of `.planning/issue-tracker.md`, `.planning/domain.md`, and `.planning/triage-labels.md` (all three are available to dependent skills)
+- The contents of `.planning/issue-tracker.md`, `.planning/domain.md`, `.planning/triage-labels.md`, and `.planning/lint.md`
 
 Let them edit before writing.
 
@@ -104,6 +105,10 @@ The block:
 ### Domain docs
 
 [one-line summary of layout: "single-context" or "multi-context"]. See `.planning/domain.md`.
+
+### Lint and verification
+
+Before changing code, read `.planning/lint.md` for the project's checks.
 ```
 
 Include the label mapping and its pointer even without `triage`; preserve any existing custom mapping.
@@ -123,8 +128,9 @@ This preserves existing files, including imported legacy configuration. Apply on
 - [issue-tracker-local.md](./issue-tracker-local.md): local-markdown issue tracker
 - [triage-labels.md](./triage-labels.md): label mapping
 - [domain.md](./domain.md): domain doc consumer rules + layout
+- [lint.md](./lint.md): project checks and the retrospective index
 
-For "other" issue trackers, write `.planning/issue-tracker.md` from scratch using the user's description.
+For "other" issue trackers, first write `.planning/issue-tracker.md` using the user's description. Then run the initializer with `--tracker local` to fill the other missing files.
 
 ### 5. Done
 

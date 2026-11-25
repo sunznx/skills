@@ -9,7 +9,7 @@ import tempfile
 
 
 SKILL_ROOT = Path(__file__).resolve().parents[1]
-CONFIGS = ("issue-tracker.md", "triage-labels.md", "domain.md")
+CONFIGS = ("issue-tracker.md", "triage-labels.md", "domain.md", "lint.md")
 
 
 def exists(path: Path) -> bool:

@@ -9,7 +9,7 @@ import unittest
 
 
 SCRIPT = Path(__file__).resolve().parents[1] / "scripts" / "ensure-config.py"
-CONFIGS = ("issue-tracker.md", "triage-labels.md", "domain.md")
+CONFIGS = ("issue-tracker.md", "triage-labels.md", "domain.md", "lint.md")
 
 
 class EnsureConfigTests(unittest.TestCase):
@@ -41,6 +41,8 @@ class EnsureConfigTests(unittest.TestCase):
         domain = (self.project / ".planning/domain.md").read_text()
         self.assertIn(".planning/adr/", domain)
         self.assertNotIn("<PLAN_DIR>/adr/", domain)
+        lint = (self.project / ".planning/lint.md").read_text()
+        self.assertIn(".planning/lint/README.md", lint)
         self.assertEqual({p.name for p in self.project.iterdir()}, {".planning"})
         self.assertEqual({p.name for p in (self.project / ".planning").iterdir()}, set(CONFIGS))
 
@@ -78,7 +80,7 @@ class EnsureConfigTests(unittest.TestCase):
         self.assertEqual(result.returncode, 0, result.stderr)
         self.assertEqual(tracker.read_text(), "# Issue tracker: Linear\nUse the configured MCP.\n")
         self.assertEqual(set(json.loads(result.stdout)["created"]), {
-            ".planning/triage-labels.md", ".planning/domain.md"
+            ".planning/triage-labels.md", ".planning/domain.md", ".planning/lint.md"
         })
 
     def test_legacy_configs_are_carried_forward_without_changing_them(self):
@@ -90,7 +92,9 @@ class EnsureConfigTests(unittest.TestCase):
         self.assertEqual(result.returncode, 0, result.stderr)
         for name in CONFIGS:
             self.assertEqual((self.project / ".planning" / name).read_bytes(), (legacy / name).read_bytes())
-        self.assertEqual(len(json.loads(result.stdout)["imported"]), 3)
+        self.assertEqual(set(json.loads(result.stdout)["imported"]), {
+            f".planning/{name}" for name in CONFIGS
+        })
 
     def test_explicit_remote_choice_seeds_template_without_running_remote_commands(self):
         for tracker in ("github", "gitlab"):
