@@ -54,9 +54,9 @@
 - 页眉左侧用圆麻薯提问表情作小图标，和「需求生长树」排在一起。话题与进度在右侧，树居中。
 - 桌面上，约 64 像素的圆麻薯停在当前芽旁。纸色气泡伸向旁边空处，避开当前芽。题目、「为什么问这个」、选项、待定和补充都在气泡内。气泡必须完整显示：放不下时宁可盖住别的芽，也不压矮成要滚动；四周都放不下才改用底部面板。选择题的补充框默认显示一行，随文字增高。有效的建议在对应选项旁显示「AI 建议」。
 - 宽度不超过 720 像素时，圆麻薯仍跟着芽，气泡变为底部卡片。树和缩放按钮留在卡片上方，长内容在卡片内部滚动。
-- 答题底栏显示轮次、剩余题数、进度小圆点和「够了，先出方案」。点进度可以回看本轮答案。
+- 答题底栏显示轮次、剩余题数、进度小圆点和「够了，先出方案」。点进度可以回看本轮答案。本轮答齐、又没在倒数时，底栏多一个「交给 AI」，点了直接交。最窄的屏幕上这时省掉轮次和小圆点，页头仍有轮次。
 - 本轮答齐且黄叶复核完后，开花表情的麻薯先在最后确认的题旁接一句，约 1.5 秒后提着装花的小篮子飞走。气泡写「这一轮 N 题都定了，我送去给 AI 啦～」，下面显示 5 秒倒数和「等等，我再看看」。窄屏把气泡放在树和底栏之间。
-- 5 秒后自动交给 AI。点「等等，我再看看」或按 Esc 会取消倒数并打开答案列表，列表里可以回看、修改和点「交给 AI」。接话或倒数时点树上的题目会取消交卷，页面切到后台会暂停倒数。提交失败后可在答案列表重试。
+- 5 秒后自动交给 AI。点「等等，我再看看」或按 Esc 会取消倒数并打开答案列表，列表里可以回看、修改和点「交给 AI」。接话时点 × 或按 Esc 跳过这句，篮子马上出发。接话或倒数时点树上的题目会先停下倒数：只看不改、关掉那朵花后，本轮仍答齐且页面状态没变，篮子回来重新倒数 5 秒；点「改」就不再自动交，改完确认时照常从接话开始。本轮没答齐时看别的花，关掉也不会交。切到别的窗口或标签页时倒数照走，到点就交。提交失败后可在答案列表重试。
 - AI 暂停或还没连上时，最近答过的花旁显示带 `zzz` 的睡着表情。气泡在桌面靠着麻薯，在窄屏放在树和底栏之间。点麻薯复制提醒，成功时提示去跟 AI 的聊天窗口粘贴，失败时在气泡里显示原文。两个结果都可以点「再复制一次」。页头也可以复制提醒。AI 恢复在线时，麻薯就地睁眼约 1 秒，再回到常态。
 - 完成页上，开花表情的麻薯留在树旁。树下标题为「问过的，都结成了果。」，说明为「N 颗果子＝方案的 N 章，点果子或章名都能打开」。下方按编号列出全部章节，桌面两列，宽度不超过 720 像素时一列。长章名换行，内容超过一屏时随页面向下滚动。最后一章下面是「打开完整方案」。
 - 树用 SVG 的 `xMidYMid meet` 等比居中。镜头取树干、枝杈、花簇和预留果实的墨迹范围，四周各留 2 个单位。答题时取框宽为 `max(820, 墨迹宽 + 140)`，高为 `max(840, 墨迹高 / 0.9)`。保存后取框宽为 `max(490, 墨迹宽 + 64)`，高为 `max(560, 墨迹高 / 0.9)`，让编号更易读。
@@ -69,3 +69,44 @@
 - 一轮提交后，问题卡显示「正在想下一轮的问题…」，超过 60 秒提示可以回看回答。用户确认先出方案后，显示「正在准备保存…」。
 - 保存后，果子每隔 60 毫秒依次长出，每颗约用 1 秒。
 - 系统开启减少动态效果时，树、圆麻薯和气泡直接显示终态。送答案时直接显示气泡、倒数文字和「等等，我再看看」。
+
+## 网页行为与树的几何（开发参考）
+
+这一节原在 contract.md。跑访谈的 AI 不用读；改网页、树的画法或回归检查时以它和上面各节为准。
+
+The approved visual basis is v7.html and the colors above. The old Claude prototype is an interaction reference. Production contains no prototype questions, simulated answers, fast-forward or fake-generation controls.
+
+The workbench opens the first available question in a speech bubble beside round mochi (圆麻薯). Activating any node brings its question or saved answer into the same bubble. The bubble contains the question, rationale, answer controls, and deferral. Choice questions show an optional expanding note field and mark valid AI suggestions without selecting them. Activating one option confirms a single-choice answer and advances to the next available question. Multi-choice and text answers confirm with **好了**. At widths of 720 pixels or less, the bubble becomes a bottom sheet with internal scrolling and the mascot stays by the bud. Focus moves into the bubble when it opens. Reduced motion shows the final positions immediately.
+
+确认普通答案后，芽开成花。选待定时显示暂停符号。点「没看懂，换个说法」展开「哪里没看懂？（可不填）」。点「请 AI 换个说法」后，树上显示问号，麻薯说「好，我让 AI 换个说法再问你」。这题算本轮已交，决定还没定。单选用所选项的 `reply`，多选优先用题目的 `reply`，再看第一个所选项。文本题用题目的 `reply`。没有台词时轮换模板，待定题用待定模板。约 1.5 秒后转到下一题。减少动态效果时直接换位置。
+
+Store confirmed, deferred and unclear drafts in `localStorage`. While the page is open, a revision change clears drafts for submitted, reopened, and invalidated questions. Save retained drafts under the new revision. On page load, restore drafts only for the same `session_id` and `revision` in the same browser and origin. Guard storage access and keep drafts in memory when storage is unavailable. Unconfirmed form input stays in memory. Submitted answers recover through `/state`.
+
+本轮答齐且没有待复核的黄叶时，麻薯先在最后确认的题旁接一句，约 1.5 秒后带着答案飞走。开启减少动态效果时直接显示倒数，最后一题点了「没看懂」时先显示静止的接话。页面倒数 5 秒后自动 `POST /submit`。待定和没看懂都算本轮已答。如果最后确认的是黄叶，同样先接话再倒数。接话时点 × 或按 Esc 跳过接话，直接开始倒数。接话或倒数时点树上的题目会停下倒数；只读看完关掉时，若本轮仍可提交且 revision 没变，就重新倒数 5 秒；点了「改」则不再恢复。页面切到后台时倒数照走，到点就交。点「等等，我再看看」或按 Esc 可在倒数时打开答案列表并取消交卷。改完并再次确认时，符合条件就从接话开始。本轮可提交且没在倒数时，底栏显示「交给 AI」（无障碍名称「这一轮交给 AI」），点了直接提交；刷新后恢复草稿、在答案列表点 × 关掉、自动提交被取消时都靠它。自动提交失败时显示原有错误，把仍然有效的草稿留在答案列表里供重试。
+
+底栏显示轮次、剩余题数和进度小圆点。点「够了，先出方案」会取消交卷，麻薯在底部气泡里确认。气泡说明还有几题没答，没答的会记成「待定」，写进方案的「待确认」。即使本轮都答完也要确认。点「就先出方案」提交请求，点「再答几题」关闭气泡并保留草稿。
+
+Waiting loops a visual extension, without adding rounds/nodes or cumulative tree height. While the AI is online and preparing the next round, the card shows “正在想下一轮的问题…”, then after 60 seconds “还在想，可以先回看本轮回答”. After the user requests a plan, it shows “正在准备保存…”. The card shows elapsed seconds, including after the last yellow leaf is reviewed. While the AI is online it also shows “生长中”. Timers use a process-local server start timestamp and a browser monotonic clock, survive polling and reconnect, and reset for a genuinely new wait/job. Transport loss reconnects. The human can edit during waiting. All transitive dependencies participate in review. A changed upstream invalidates in-progress review input even when the affected node was already `needs_review`. Unrelated unconfirmed form input survives in the open page. Reduced motion keeps text and stops movement.
+
+等待出题或写文档时，如果页面判定 AI 已暂停或还没连上，麻薯就在最近答过的花旁睡着，气泡提示可以点它复制提醒。页头也能复制。复制成功后，气泡请用户去跟 AI 的聊天窗口粘贴，也可以再复制一次。复制失败时提供原文供手动复制。页面收到 AI 恢复在线的状态时，麻薯睁眼约 1 秒，随后恢复平常的显示。
+
+### Current checks
+
+node --test tests/acceptance.test.mjs tests/document.test.mjs tests/tree-layout.test.mjs tests/wait-flow.test.mjs
+
+python tests/browser_acceptance.py --work <folder>
+
+python tests/browser_acceptance.py --scenario tree --layout-fixture four --work <folder>
+
+python tests/seeded_growth.py --work <folder>
+
+The controlled browser checks use explicitly synthetic input. The four-round fixture preserves the earlier approved 28-question/seven-root shape; the six-round fixture covers the v7 reference geometry. Both are canonical v1 fixtures outside production. They include actual hit testing, entity-overlap checks and root-to-fruit navigation. A separate current-conversation transport actor and real-requirement replay establish model/writer execution; measured requests and real UI times are receipts, never generated by the fixture service.
+
+### Sparse-tree framing (r3)
+Branch generation follows v7: root branches alternate on the appropriate round's trunk segment, children start at 70–80% of their primary parent's quadratic Bezier, their length derives from the parent's length, and their width is max(1.6, parent_width * 0.45). Branch angles, control points and organic perturbations use stable seeds derived from the persisted requirement `session_id` plus node ID. A new requirement gets a unique identity once; refresh, replay, answer edits, revisions and title changes do not reseed it. No clock or timestamp participates, and no geometry seed is stored in tree.json. The first root side and final twigs use the same requirement identity. Deterministic collision resolution re-samples up to 192 candidates within the v7 limits: root angular jitter ±11°, child jitter ±13°, root length factor 0.85–1.15, child factor 0.45–0.70 (minimum 62), root attachment 30–75%, child attachment 70–80%, horizontal curvature factor 10–32 and upward control-point lift 10–24. It prefers a 25-unit endpoint gap and otherwise retains the largest feasible gap; it cannot escape those limits or force endpoints onto rows. Regression coverage checks actual symbol separation as well as parameter bounds. The filled taper has a smooth cubic outline. Fine side twigs also curve; the artificial pair of trunk rungs from r5 is removed. Trunk segment height remains clamp(40 + 12 * question_count, 70, 130).
+
+The entire ink illustration, including its final leader, flowers and fruit, is centred horizontally and vertically in the tree viewport. The viewBox retains at least the previous 1000 by 910 scale and remains fixed throughout a replay; centring changes its origin rather than enlarging the tree. preserveAspectRatio is xMidYMid meet.
+
+A completed interview replays its recorded growth when opened: successive trunk segments and branches, flowers, the 1.4-second tapered leader, then fruit. The replay button repeats this display without changing answers, revision, confirmation counts or document state. Each round takes 1.1 seconds plus 0.2 seconds per same-round dependency depth. Reduced-motion mode shows the full final tree immediately. Fruit is smaller again (5.2-unit radius) with a muted #9a7b6d body, a short stalk and a small leaf. Its hit area remains larger than its painted body; the stalk is paint-only so it cannot intercept the question node at its attachment. There is one fruit per root; clicking opens the matching chapter of the validated writer HTML. The desktop panel remains raised and retains its own overflow area.
+
+The complete flag alone cannot display a successful saved interview: every node must also be answered. A mismatch displays the real count and a state-consistency message, with no fruit. Ready document links additionally require matching source session and revision. tests/tree-layout.test.mjs checks the parent-curve attachment, taper, curved outlines, stable seed geometry and centred frame. The public browser regression checks replay, fruit/chapter navigation, reduced motion and both 28-node fixtures. Historical forced-layer and enlarged-fruit behavior remains superseded by the v7 restoration.
